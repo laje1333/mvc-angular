@@ -38,6 +38,7 @@ namespace MvcApplication2.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
+
             return View();
         }
 
