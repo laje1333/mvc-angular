@@ -15,27 +15,27 @@ namespace TacdisDeluxeClient.Controllers
         }
 
         // GET: WorkOrder
-        public PartialViewResult WOJCustData()
+        public PartialViewResult WOJ_CustData()
         {
-            return PartialView();
+            return PartialView("_WOJ_CustData");
         }
 
         // GET: WorkOrder
         public PartialViewResult WOJob_Kit()
         {
-            return PartialView();
+            return PartialView("_WOJob_Kit");
         }
 
         // GET: WorkOrder
         public PartialViewResult WOJob_Operations()
         {
-            return PartialView();
+            return PartialView("_WOJob_Operations");
         }
 
         // GET: WorkOrder
         public PartialViewResult WOJob_Parts()
         {
-            return PartialView();
+            return PartialView("_WOJob_Parts");
         }
     }
 }
