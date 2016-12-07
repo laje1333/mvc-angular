@@ -1,0 +1,81 @@
+﻿
+
+
+
+
+<ul class="accordion-menu">
+    <li class="accordion-menu-item">
+        <a href="#" class="accordion-menu-main-item-text">Menyval A</a>
+        <ul class="accordion-sub-menu">
+            <li class="accordion-sub-menu-item"><a href="#" class="accordion-menu-item-text">Menu 1</a></li>
+            <li class="accordion-sub-menu-item"><a href="#" class="accordion-menu-item-text">Menu 2</a></li>
+        </ul>
+    </li>
+    <li class="accordion-menu-item">
+        <a href="#" class="accordion-menu-main-item-text">Menyval B</a>
+        <ul class="accordion-sub-menu">
+            <li class="accordion-sub-menu-item"><a href="#" class="accordion-menu-item-text">Menu 1</a></li>
+        </ul>
+    </li>
+    <li class="accordion-menu-item">
+        <a href="#" class="accordion-menu-main-item-text">Menyval C</a>
+        <ul class="accordion-sub-menu">
+            <li class="accordion-sub-menu-item"><a href="#" class="accordion-menu-item-text">Menu 1</a></li>
+            <li class="accordion-sub-menu-item"><a href="#" class="accordion-menu-item-text">Menu 2</a></li>
+            <li class="accordion-sub-menu-item"><a href="#" class="accordion-menu-item-text">Menu 5</a></li>
+        </ul>
+    </li>
+</ul>
+
+
+
+<style type="text/css">
+    ul, li {
+        /*border:1px solid #f00;*/
+    }
+
+        ul.accordion-menu,
+        ul.accordion-menu ul {
+            list-style: none;
+            margin: 0px;
+            padding: 0px;
+        }
+
+    .accordion-menu {
+    }
+
+    .accordion-menu-item {
+    }
+
+    .accordion-menu-main-item-text {
+        font-weight: bold;
+    }
+
+    .accordion-sub-menu {
+        display: none;
+    }
+
+    .accordion-sub-menu-item {
+    }
+
+    .accordion-menu-item-text {
+    }
+</style>
+
+
+
+
+<script>
+    var menu = $('.accordion-menu');
+
+    menu.find('a.accordion-menu-main-item-text').on('click', function () {
+        //menu.find('.accordion-sub-menu').hide();
+        menu.find('ul.accordion-sub-menu').hide('fast');
+        $(this).closest('li').children('ul').show('fast');
+    });
+</script>
+
+
+
+
+
