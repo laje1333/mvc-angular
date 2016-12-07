@@ -13,5 +13,10 @@ namespace TacdisDeluxeClient.Controllers
         {
             return View();
         }
+
+        public PartialViewResult TempAction()
+        {
+            return PartialView("_TempAction");
+        }
     }
 }

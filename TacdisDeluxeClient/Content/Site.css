@@ -22,3 +22,44 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+
+
+/***********************************/
+/* Simple accordion menu           */
+    ul, li {
+        /*border:1px solid #f00;*/
+    }
+
+    ul.accordion-menu,
+    ul.accordion-menu ul {
+        list-style: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .accordion-menu {
+    }
+
+    .accordion-menu-item {
+        border: 1px solid #eeeeee;
+    }
+
+    .accordion-menu-main-item-text {
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .accordion-sub-menu {
+        display: none;
+    }
+
+    .accordion-sub-menu-item {
+    }
+
+    .accordion-menu-item-text {
+    }
+
+
+/* END Simple accordion menu        */
