@@ -1083,16 +1083,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Invoice\Index.cshtml" />
     <Content Include="Scripts\version.json" />
-<<<<<<< HEAD
     <Content Include="Views\Shared\_AccordionMenu.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-=======
     <Content Include="Views\Parts\Index.cshtml" />
     <Content Include="Views\Sales\Index.cshtml" />
     <Content Include="Views\Vehicle\Index.cshtml" />
     <Content Include="Views\WorkOrder\Index.cshtml" />
->>>>>>> 9617fc7dc29e59fab8de3bcdb3e224e3ed31ae5d
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
