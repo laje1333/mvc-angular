@@ -6,12 +6,12 @@ using System.Web.Mvc;
 
 namespace TacdisDeluxeClient.Controllers
 {
-    public class HomeController : Controller
+    public class PartsController : Controller
     {
+        // GET: Parts
         public ActionResult Index()
         {
             return View();
         }
-
     }
 }
