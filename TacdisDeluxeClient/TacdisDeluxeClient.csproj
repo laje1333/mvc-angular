@@ -292,6 +292,8 @@
     <Content Include="Scripts\angular-touch.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\App\app.js" />
+    <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -1095,11 +1097,17 @@
     <Content Include="Views\Vehicle\Index.cshtml" />
     <Content Include="Views\WorkOrder\Index.cshtml" />
     <Content Include="Views\Parts\_Menu.cshtml" />
+    <Content Include="Views\WorkOrder\_Menu.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJob_Kit.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJob_Operations.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJob_Parts.cshtml" />
     <Content Include="Views\Parts\_TempAction.cshtml" />
-    <Content Include="Views\Invoice\_SearchInvoice.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJCustData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Scripts\App\Directives\" />
+    <Folder Include="Scripts\App\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

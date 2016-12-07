@@ -1,7 +1,5 @@
-﻿
-
-@{
-    AjaxOptions options = new AjaxOptions { UpdateTargetId = "partsContent" };
+﻿@{
+    AjaxOptions options = new AjaxOptions { UpdateTargetId = "WOContent" };
 }
 
 
@@ -9,14 +7,16 @@
     <li class="accordion-menu-item">
         <a href="#" class="accordion-menu-main-item-text">Menyval A</a>
         <ul class="accordion-sub-menu">
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Demo content", "TempAction" , new {  }, options)</li>
+            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Demo content", "WOJob_Kit", new { }, options)</li>
             <li class="accordion-sub-menu-item"><a href="#" class="accordion-menu-item-text">Menu 2</a></li>
         </ul>
     </li>
     <li class="accordion-menu-item">
         <a href="#" class="accordion-menu-main-item-text">Menyval B</a>
         <ul class="accordion-sub-menu">
-            <li class="accordion-sub-menu-item"><a href="#" class="accordion-menu-item-text">Menu 1</a></li>
+            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Demo content", "WOJob_Kit", new { }, options)</li>
+            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Demo content", "WOJob_Operations", new { }, options)</li>
+            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Demo content", "WOJob_Parts", new { }, options)</li>
         </ul>
     </li>
     <li class="accordion-menu-item">
@@ -28,12 +28,4 @@
         </ul>
     </li>
 </ul>
-
-
-
-
-
-
-
-
 
