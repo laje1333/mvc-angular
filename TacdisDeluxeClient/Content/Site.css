@@ -1,4 +1,11 @@
-﻿body {
+﻿*:focus {
+    outline: none;
+}
+a:visited, a:hover, a:active, a:link{
+    text-decoration: none;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -44,21 +51,35 @@ textarea {
 
     .accordion-menu-item {
         border: 1px solid #eeeeee;
+        display: block;
+        margin-bottom: 5px;
     }
 
     .accordion-menu-main-item-text {
         font-weight: bold;
-        text-decoration: none;
-    }
+        display: block;
 
+        padding: .75rem 1.25rem;
+        margin-bottom: 0;
+        background-color: #f5f5f5;
+        border-bottom: 1px solid rgba(0,0,0,.125);
+    }
     .accordion-sub-menu {
         display: none;
+
+        position: relative;
+        margin-bottom: .75rem;
+        background-color: #fff;
+        border-radius: .25rem;
     }
 
     .accordion-sub-menu-item {
+        padding: 0.75rem;
+        display: block;
     }
 
     .accordion-menu-item-text {
+        display: block;
     }
 
 
