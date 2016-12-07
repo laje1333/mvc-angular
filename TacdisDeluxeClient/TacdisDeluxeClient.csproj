@@ -1105,6 +1105,7 @@
     <Content Include="Views\Parts\_TempAction.cshtml" />
     <Content Include="Views\WorkOrder\_WOJCustData.cshtml" />
     <Content Include="Views\Invoice\_SearchInvoice.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJ_CustData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
