@@ -1,0 +1,24 @@
+﻿
+
+
+<div class="content" ng-app="spoonbendrApp" ng-controller="UserListController">
+    <div class="page-header">
+        <h1><a href="#/main">Angular rulez</a></h1>
+    </div>
+    <nav class="bottom-margin">
+        <ul class="nav navbar-nav navbar-default">
+            <li><a href="#/list_users" title="Users">Users</a></li>
+            <li><a href="#/new_user" title="New user">New user</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <ng-view></ng-view>
+    </div>
+</div>
+
+
+
+<script src="~/Scripts/App/app.js"></script>
+<script src="~/Scripts/Controllers/UserListController.js"></script>
+<script src="~/Scripts/Services/UserService.js"></script>
+

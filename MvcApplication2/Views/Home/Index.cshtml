@@ -2,11 +2,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div ng-app="MvcApplication2" ng-controller="StuffController">
+<div>
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" ng-click="navbarProperties.isCollapsed = !navbarProperties.isCollapsed">
+                <button type="button" class="navbar-toggle">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -18,6 +18,7 @@
                     <li><a ui-sref="stateOne({ stuff: 12 })">State One</a></li>
                     <li><a ui-sref="stateTwo({ stuff: 12 })">State Two</a></li>
                     <li><a ui-sref="stateThree">State Three</a></li>
+                    <li><a href="/MVCUser">Kalle</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a ui-sref="loginRegister">Login / Register</a></li>
