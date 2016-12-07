@@ -1096,10 +1096,11 @@
     <Content Include="Views\WorkOrder\Index.cshtml" />
     <Content Include="Views\Parts\_Menu.cshtml" />
     <Content Include="Views\WorkOrder\_Menu.cshtml" />
-    <Content Include="Views\WorkOrder\WOJob_Kit.cshtml" />
-    <Content Include="Views\WorkOrder\WOJob_Operations.cshtml" />
-    <Content Include="Views\WorkOrder\WOJob_Parts.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJob_Kit.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJob_Operations.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJob_Parts.cshtml" />
     <Content Include="Views\Parts\_TempAction.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJCustData.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
