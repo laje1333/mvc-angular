@@ -3,8 +3,19 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Invoice</h2>
 
- @{
-     Html.RenderPartial("_AccordionMenu");
- }
+<div class="row">
+    <div class="col-md-2" style="border-right: 1px solid #eeeeee;">
+        <div class="container">
+            @{
+                Html.RenderPartial("_Menu");
+            }
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div class="container">
+            Innehåll
+        </div>
+    </div>
+</div>
