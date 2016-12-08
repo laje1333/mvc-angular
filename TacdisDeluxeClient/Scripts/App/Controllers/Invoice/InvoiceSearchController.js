@@ -18,7 +18,7 @@
 ];
 
 
-app.controller("InvoiceCtrl", function ($scope) {
+tacdisDeluxeApp.controller("InvoiceSearchCtrl", function ($scope) {
     $scope.searchInvoices = function () {
         $scope.records = invoices;
     };

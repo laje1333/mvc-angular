@@ -1,5 +1,9 @@
-﻿<div ng-controller="InvoiceCtrl">
-    <button ng-click="searchInvoices()">OK</button>
+﻿
+<script src="~/Scripts/App/Controllers/Invoice/InvoiceSearchController.js"></script>
+
+
+<div ng-controller="InvoiceSearchCtrl">
+    <button ng-click="searchInvoices()">Search</button>
 
     <table>
         <tr ng-repeat="x in records">
