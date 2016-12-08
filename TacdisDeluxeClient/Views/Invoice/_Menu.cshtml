@@ -1,15 +1,11 @@
-﻿@{
-    AjaxOptions options = new AjaxOptions { UpdateTargetId = "invoiceContent" };
-}
+﻿
 
-
+<br />
 <ul class="accordion-menu">
     <li class="accordion-menu-item">
-        <a href="#" class="accordion-menu-main-item-text">Invoice</a>
+        <a href="#" class="accordion-menu-main-item-text">Search Invoice</a>
         <ul class="accordion-sub-menu">
-            <li class="accordion-sub-menu-item">
-                @Ajax.ActionLink("Search Invoice", "SearchInvoice", new { }, options)
-        </li>
+            <li class="accordion-sub-menu-item"><a href="#search" class="accordion-menu-item-text">Search</a></li>
         <li class="accordion-sub-menu-item"><a href="#" class="accordion-menu-item-text">Menu 2</a></li>
     </ul>
 </li>

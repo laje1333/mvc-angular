@@ -216,6 +216,9 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AngularTemplates\Invoice\invoice_search.html" />
+    <Content Include="AngularTemplates\Vehicle\BuildVehicle\MechanicsTab.html" />
+    <Content Include="AngularTemplates\Vehicle\BuildVehicle\PackageTab.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -295,11 +298,15 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Controllers\IndexController.js" />
+    <Content Include="Scripts\App\Controllers\Invoice\InvoiceMenuController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceSearchController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsModuleConfig.js" />
+    <Content Include="Scripts\App\Controllers\Vehicle\VehicleController.js" />
+    <Content Include="AngularTemplates\Vehicle\BuildVehicle\BuildVehicle.html" />
     <Content Include="Scripts\App\Controllers\Vehicle\VehicleBuildController.js" />
     <Content Include="AngularTemplates\Vehicle\VehicleMechanics.html" />
+    <Content Include="Scripts\App\Controllers\WorkOrder\WorkOrderController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -1065,6 +1072,14 @@
     <Content Include="Scripts\i18n\angular-locale_zh.js" />
     <Content Include="Scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="Scripts\i18n\angular-locale_zu.js" />
+    <Content Include="AngularTemplates\WorkOrder\WOH_CustData.html" />
+    <Content Include="AngularTemplates\WorkOrder\WOH_Manage.html" />
+    <Content Include="AngularTemplates\WorkOrder\WOH_Select.html" />
+    <Content Include="AngularTemplates\WorkOrder\WOJ_Kit.html" />
+    <Content Include="AngularTemplates\WorkOrder\WOJ_Manage.html" />
+    <Content Include="AngularTemplates\WorkOrder\WOJ_Operations.html" />
+    <Content Include="AngularTemplates\WorkOrder\WOJ_Parts.html" />
+    <Content Include="AngularTemplates\WorkOrder\WOJ_Select.html" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
     <Content Include="Scripts\jquery-1.12.4.min.js" />
@@ -1106,22 +1121,13 @@
     <Content Include="Views\WorkOrder\Index.cshtml" />
     <Content Include="Views\Parts\_Menu.cshtml" />
     <Content Include="Views\WorkOrder\_Menu.cshtml" />
-    <Content Include="Views\WorkOrder\_WOJob_Kit.cshtml" />
-    <Content Include="Views\WorkOrder\_WOJob_Operations.cshtml" />
-    <Content Include="Views\WorkOrder\_WOJob_Parts.cshtml" />
     <Content Include="Views\Parts\_TempAction.cshtml" />
-    <Content Include="Views\Vehicle\_BuildVehicle.cshtml" />
     <Content Include="Views\Invoice\_SearchInvoice.cshtml" />
-    <Content Include="Views\WorkOrder\_WOJ_CustData.cshtml" />
-    <Content Include="Views\WorkOrder\_WO_CustData.cshtml" />
-    <Content Include="Views\WorkOrder\_WOJ_Select.cshtml" />
-    <Content Include="Views\WorkOrder\_WO_Select.cshtml" />
-    <Content Include="Views\WorkOrder\_WOJ_Manage.cshtml" />
     <Content Include="Views\Vehicle\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\App\Directives\" />
+    <Folder Include="Scripts\App\Directives\Vehicle\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
