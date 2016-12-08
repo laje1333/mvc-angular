@@ -13,5 +13,10 @@ namespace TacdisDeluxeClient.Controllers
         {
             return View();
         }
+
+        public PartialViewResult BuildVehicle()
+        {
+            return PartialView("_BuildVehicle");
+        }
     }
 }
