@@ -30,7 +30,7 @@ tacdisDeluxeApp.controller("PartsController", function ($scope) {
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider
         .when('/list', {
-            templateUrl: '/Views/Parts/parts_list.html',
+            templateUrl: '/AngularTemplates/Parts/parts_list.html',
             controller: 'PartsController'
         });
 });
