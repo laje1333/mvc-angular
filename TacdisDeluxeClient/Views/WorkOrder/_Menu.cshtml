@@ -1,25 +1,20 @@
-﻿@{
-    AjaxOptions options = new AjaxOptions { UpdateTargetId = "WOContent" };
-}
-
-
-<ul class="accordion-menu">
+﻿<ul class="accordion-menu">
     <li class="accordion-menu-item">
         <a href="#" class="accordion-menu-main-item-text">Workorder</a>
         <ul class="accordion-sub-menu">
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Select Workorder", "WOH_Select", new { }, options)</li>
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Customer Data", "WOH_CustData", new { }, options)</li>
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Manage Workorder", "WOH_Manage", new { }, options)</li>
+            <li class="accordion-sub-menu-item"><a href="#WOH_Select" class="accordion-menu-item-text">Select Workorder</a></li>
+            <li class="accordion-sub-menu-item"><a href="#WOH_CustData" class="accordion-menu-item-text">Customer Data</a></li>
+            <li class="accordion-sub-menu-item"><a href="#WOH_Manage" class="accordion-menu-item-text">Manage Workorder</a></li>
         </ul>
     </li>
     <li class="accordion-menu-item">
         <a href="#" class="accordion-menu-main-item-text">Workorder Jobs</a>
         <ul class="accordion-sub-menu">
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Select WO Job", "WOJ_Select", new { }, options)</li>
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Manage WO Job", "WOJ_Manage", new { }, options)</li>
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Kit", "WOJ_Kit", new { }, options)</li>
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Operations", "WOJ_Operations", new { }, options)</li>
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Parts", "WOJ_Parts", new { }, options)</li>
+            <li class="accordion-sub-menu-item"><a href="#WOJ_Select" class="accordion-menu-item-text">Select WO Job</a></li>
+            <li class="accordion-sub-menu-item"><a href="#WOJ_Manage" class="accordion-menu-item-text">Manage WO Job</a></li>
+            <li class="accordion-sub-menu-item"><a href="#WOJ_Kit" class="accordion-menu-item-text">Kit</a></li>
+            <li class="accordion-sub-menu-item"><a href="#WOJ_Operations" class="accordion-menu-item-text">Operations</a></li>
+            <li class="accordion-sub-menu-item"><a href="#WOJ_Parts" class="accordion-menu-item-text">Parts</a></li>
         </ul>
     </li>
 </ul>

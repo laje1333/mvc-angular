@@ -1,7 +1,5 @@
-﻿@{
-    ViewBag.Title = "Index";
-}
-
+﻿
+<script src="~/Scripts/App/Controllers/WorkOrder/WorkOrderController.js"></script>
 <h2>Workorder</h2>
 
 <div class="row">
@@ -13,7 +11,7 @@
         </div>
     </div>
     <div class="col-md-10">
-        <div id="WOContent" class="container">
+        <div ng-view class="container">
             Innehåll
         </div>
     </div>
