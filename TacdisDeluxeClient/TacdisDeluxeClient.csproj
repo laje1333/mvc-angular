@@ -296,6 +296,8 @@
     <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceSearchController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
+    <Content Include="Scripts\App\Controllers\Vehicle\VehicleBuildController.js" />
+    <Content Include="AngularTemplates\Vehicle\VehicleMechanics.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -1105,7 +1107,6 @@
     <Content Include="Views\WorkOrder\_WOJob_Operations.cshtml" />
     <Content Include="Views\WorkOrder\_WOJob_Parts.cshtml" />
     <Content Include="Views\Parts\_TempAction.cshtml" />
-    <Content Include="Views\Vehicle\_Menu.cshtml" />
     <Content Include="Views\Vehicle\_BuildVehicle.cshtml" />
     <Content Include="Views\Invoice\_SearchInvoice.cshtml" />
     <Content Include="Views\WorkOrder\_WOJ_CustData.cshtml" />
@@ -1113,11 +1114,11 @@
     <Content Include="Views\WorkOrder\_WOJ_Select.cshtml" />
     <Content Include="Views\WorkOrder\_WO_Select.cshtml" />
     <Content Include="Views\WorkOrder\_WOJ_Manage.cshtml" />
+    <Content Include="Views\Vehicle\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Scripts\App\Directives\" />
-    <Folder Include="Scripts\App\Templates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
