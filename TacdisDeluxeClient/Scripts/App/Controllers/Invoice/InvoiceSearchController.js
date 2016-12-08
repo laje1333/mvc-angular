@@ -22,5 +22,8 @@ tacdisDeluxeApp.controller("InvoiceSearchCtrl", function ($scope) {
     $scope.searchInvoices = function () {
         $scope.records = invoices;
     };
-
 });
+
+function myFunction() {
+    alert("JS Test");
+}
