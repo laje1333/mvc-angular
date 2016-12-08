@@ -32,11 +32,35 @@ textarea {
 
 
 
+/***********************************/
+/*  Generic stuff                  */
+    html, body{
+        width: 100%;
+        height: 100%;
+    }
+    body{
+        background-color: #F0F0F0; 
+    }
+    .body-content{
+        max-width: 100%;
+        height: 100%;
+        
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+
 
 /***********************************/
 /* Simple accordion menu           */
-    ul, li {
-        /*border:1px solid #f00;*/
+    .accordion-menu-container{
+        border-right: 1px solid #eeeeee;
+        height: 100%;
+        background-color: #3A3B3D;
+    }
+    .accordion-menu-container,
+    .accordion-menu-container > .container{
+        padding: 0px;
     }
 
     ul.accordion-menu,
@@ -47,40 +71,116 @@ textarea {
     }
 
     .accordion-menu {
+        font-family: Verdana;
+        font-size: 14px;
+    }
+
+    .accordion-menu i.fa
+    {
+        font-weight: normal;
+        /*font-size: 14px;*/
+    }
+
+    .accordion-menu-logo-item{
+        padding: 10px;
+        text-align:center;
+        background-color: #343537
+    }
+
+    .accordion-menu-logo-item > a > img {
+        border-width: 0px;
+        width: 100%;
+        max-width: 129px;
     }
 
     .accordion-menu-item {
-        border: 1px solid #eeeeee;
+        /*border: 1px solid #eeeeee;*/
         display: block;
-        margin-bottom: 5px;
+        /*margin-bottom: 5px;*/
+        background-color: #343537;
     }
 
-    .accordion-menu-main-item-text {
+    a.accordion-menu-main-item-text {
         font-weight: bold;
+        color: #707173;
         display: block;
 
-        padding: .75rem 1.25rem;
+        padding: 10px;
         margin-bottom: 0;
-        background-color: #f5f5f5;
+        /*background-color: #f5f5f5;*/
         border-bottom: 1px solid rgba(0,0,0,.125);
+        text-transform: uppercase;
     }
+
     .accordion-sub-menu {
         display: none;
 
         position: relative;
-        margin-bottom: .75rem;
-        background-color: #fff;
-        border-radius: .25rem;
+        
+        background-color: #3A3B3D;
+
+        /*margin-bottom: .75rem;*/
+        /*background-color: #fff;*/
+        /*border-radius: .25rem;*/
     }
 
     .accordion-sub-menu-item {
-        padding: 0.75rem;
         display: block;
     }
 
-    .accordion-menu-item-text {
+    a.accordion-sub-menu-item-text {
+        padding: 10px;
         display: block;
+        color: #D0D1D3;
+    }
+
+    a.accordion-sub-menu-item-text:hover,
+    a.accordion-sub-menu-item-text.marked{
+        color: #03CB96;
+        border-right: 5px solid #03CB96;
+        padding-right: 5px;
     }
 
 
 /* END Simple accordion menu        */
+
+table.table{
+    border-collapse:collapse;
+    border: 1px solid #D6D6D6;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-spacing: 0;
+    background-color: #F9F9F9;
+}
+/*table {
+    border-collapse: separate;
+    border-spacing: 0;
+}*/
+/*table, td {
+    border: 1px solid black;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    padding: 5px;
+}*/
+
+table.table th {
+    background-color: #4C4D4F;
+    color: #D0D1D3;
+}
+
+table.table td{
+    border: 1px solid #D6D6D6;
+}
+
+table.table tr:last-child td:first-child {
+    border-bottom-left-radius: 3px;
+}
+
+table.table tr:last-child td:last-child {
+    border-bottom-right-radius: 3px;
+}
+
+.navbar-custom{
+    /*background-color: #1A9DD3;*/
+}
+

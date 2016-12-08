@@ -1,7 +1,14 @@
 ﻿
+
+
 <div ng-controller="PartsController">
+
     <button ng-click="listParts()">Go!</button>
-    <table>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+        </tr>
         <tr ng-repeat="x in records">
             <td>{{x.Name}}</td>
             <td>{{x.Country}}</td>
