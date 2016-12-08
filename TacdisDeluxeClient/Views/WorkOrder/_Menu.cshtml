@@ -7,8 +7,9 @@
     <li class="accordion-menu-item">
         <a href="#" class="accordion-menu-main-item-text">Workorder</a>
         <ul class="accordion-sub-menu">
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Select Workorder", "WO_Select", new { }, options)</li>
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Customer Data", "WO_CustData", new { }, options)</li>
+            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Select Workorder", "WOH_Select", new { }, options)</li>
+            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Customer Data", "WOH_CustData", new { }, options)</li>
+            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Manage Workorder", "WOH_Manage", new { }, options)</li>
         </ul>
     </li>
     <li class="accordion-menu-item">
@@ -16,9 +17,9 @@
         <ul class="accordion-sub-menu">
             <li class="accordion-sub-menu-item">@Ajax.ActionLink("Select WO Job", "WOJ_Select", new { }, options)</li>
             <li class="accordion-sub-menu-item">@Ajax.ActionLink("Manage WO Job", "WOJ_Manage", new { }, options)</li>
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Kit", "WOJob_Kit", new { }, options)</li>
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Operations", "WOJob_Operations", new { }, options)</li>
-            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Parts", "WOJob_Parts", new { }, options)</li>
+            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Kit", "WOJ_Kit", new { }, options)</li>
+            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Operations", "WOJ_Operations", new { }, options)</li>
+            <li class="accordion-sub-menu-item">@Ajax.ActionLink("Parts", "WOJ_Parts", new { }, options)</li>
         </ul>
     </li>
 </ul>

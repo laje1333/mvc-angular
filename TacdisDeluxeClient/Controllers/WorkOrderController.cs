@@ -15,15 +15,21 @@ namespace TacdisDeluxeClient.Controllers
         }
 
         // GET: WorkOrder
-        public PartialViewResult WO_Select()
+        public PartialViewResult WOH_Select()
         {
-            return PartialView("_WO_Select");
+            return PartialView("_WOH_Select");
         }
 
         // GET: WorkOrder
-        public PartialViewResult WO_CustData()
+        public PartialViewResult WOH_CustData()
         {
-            return PartialView("_WO_CustData");
+            return PartialView("_WOH_CustData");
+        }
+
+        // GET: WorkOrder
+        public PartialViewResult WOH_Manage()
+        {
+            return PartialView("_WOH_Manage");
         }
 
         // GET: WorkOrder
@@ -39,21 +45,21 @@ namespace TacdisDeluxeClient.Controllers
         }
 
         // GET: WorkOrder
-        public PartialViewResult WOJob_Kit()
+        public PartialViewResult WOJ_Kit()
         {
-            return PartialView("_WOJob_Kit");
+            return PartialView("_WOJ_Kit");
         }
 
         // GET: WorkOrder
-        public PartialViewResult WOJob_Operations()
+        public PartialViewResult WOJ_Operations()
         {
-            return PartialView("_WOJob_Operations");
+            return PartialView("_WOJ_Operations");
         }
 
         // GET: WorkOrder
-        public PartialViewResult WOJob_Parts()
+        public PartialViewResult WOJ_Parts()
         {
-            return PartialView("_WOJob_Parts");
+            return PartialView("_WOJ_Parts");
         }
     }
 }
