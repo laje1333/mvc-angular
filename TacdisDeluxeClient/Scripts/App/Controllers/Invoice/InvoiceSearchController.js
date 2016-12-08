@@ -23,7 +23,3 @@ tacdisDeluxeApp.controller("InvoiceSearchCtrl", function ($scope) {
         $scope.records = invoices;
     };
 });
-
-function myFunction() {
-    alert("JS Test");
-}

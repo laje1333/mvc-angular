@@ -2,8 +2,9 @@
 @{
     ViewBag.Title = "Index";
 }
+<script src="../../Scripts/App/Controllers/Invoice/InvoiceSearchController.js"></script>
+<script src="~/Scripts/App/Controllers/Invoice/InvoiceMenuController.js"></script>
 
-<h2>Invoice</h2>
 
 <div class="row">
     <div class="col-md-2" style="border-right: 1px solid #eeeeee;">
@@ -14,8 +15,8 @@
         </div>
     </div>
     <div class="col-md-10">
-        <div id="invoiceContent" class="container">
-            Innehåll
+        <div ng-view class="container">
+          
         </div>
     </div>
 </div>
