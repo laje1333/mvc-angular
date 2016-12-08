@@ -18,8 +18,8 @@
 ];
 
 
-app.controller("myCtrl", function ($scope) {
-    $scope.myFunc = function () {
+app.controller("InvoiceCtrl", function ($scope) {
+    $scope.searchInvoices = function () {
         $scope.records = invoices;
     };
 

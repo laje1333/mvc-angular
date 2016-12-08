@@ -294,7 +294,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Controllers\IndexController.js" />
-    <Content Include="Scripts\App\Controllers\InvoiceSearchController.js" />
+    <Content Include="Scripts\App\Controllers\Invoice\InvoiceSearchController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
