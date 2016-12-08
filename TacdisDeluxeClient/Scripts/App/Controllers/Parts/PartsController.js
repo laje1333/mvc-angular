@@ -1,4 +1,6 @@
-﻿invoices = [
+﻿'use strict';
+
+var invoices = [
     {
         "Name": "Alfreds Futterkiste",
         "Country": "Germany"
@@ -18,12 +20,18 @@
 ];
 
 
-tacdisDeluxeApp.controller("InvoiceSearchCtrl", function ($scope) {
-    $scope.searchInvoices = function () {
+tacdisDeluxeApp.controller("PartsController", function ($scope) {
+    $scope.listParts = function () {
         $scope.records = invoices;
     };
 });
 
-function myFunction() {
-    alert("JS Test");
-}
+
+tacdisDeluxeApp.config(function ($routeProvider) {
+    $routeProvider
+        .when('/list', {
+            templateUrl: '/AngularTemplates/Parts/parts_list.html',
+            controller: 'PartsController'
+        });
+});
+

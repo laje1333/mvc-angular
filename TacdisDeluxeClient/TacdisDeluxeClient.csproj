@@ -295,6 +295,9 @@
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceSearchController.js" />
+    <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
+    <Content Include="Scripts\App\Controllers\Vehicle\VehicleBuildController.js" />
+    <Content Include="AngularTemplates\Vehicle\VehicleMechanics.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -1076,6 +1079,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="AngularTemplates\Parts\parts_list.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1103,20 +1107,18 @@
     <Content Include="Views\WorkOrder\_WOJ_Operations.cshtml" />
     <Content Include="Views\WorkOrder\_WOJ_Parts.cshtml" />
     <Content Include="Views\Parts\_TempAction.cshtml" />
-    <Content Include="Views\Vehicle\_Menu.cshtml" />
     <Content Include="Views\Vehicle\_BuildVehicle.cshtml" />
     <Content Include="Views\Invoice\_SearchInvoice.cshtml" />
-    <Content Include="Views\WorkOrder\_WOJ_CustData.cshtml" />
     <Content Include="Views\WorkOrder\_WOH_CustData.cshtml" />
     <Content Include="Views\WorkOrder\_WOJ_Select.cshtml" />
     <Content Include="Views\WorkOrder\_WOH_Select.cshtml" />
     <Content Include="Views\WorkOrder\_WOJ_Manage.cshtml" />
     <Content Include="Views\WorkOrder\_WOH_Manage.cshtml" />
+    <Content Include="Views\Vehicle\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\App\Directives\" />
-    <Folder Include="Scripts\App\Templates\" />
+    <Folder Include="Scripts\App\Directives\Vehicle\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
