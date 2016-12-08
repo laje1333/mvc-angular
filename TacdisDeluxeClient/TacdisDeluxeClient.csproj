@@ -1106,6 +1106,12 @@
     <Content Include="Views\WorkOrder\_WOJob_Parts.cshtml" />
     <Content Include="Views\Parts\_TempAction.cshtml" />
     <Content Include="Views\Vehicle\_BuildVehicle.cshtml" />
+    <Content Include="Views\Invoice\_SearchInvoice.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJ_CustData.cshtml" />
+    <Content Include="Views\WorkOrder\_WO_CustData.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJ_Select.cshtml" />
+    <Content Include="Views\WorkOrder\_WO_Select.cshtml" />
+    <Content Include="Views\WorkOrder\_WOJ_Manage.cshtml" />
     <Content Include="Views\Vehicle\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
