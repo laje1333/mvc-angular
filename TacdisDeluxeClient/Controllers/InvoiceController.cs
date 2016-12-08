@@ -13,5 +13,9 @@ namespace TacdisDeluxeClient.Controllers
         {
             return View();
         }
+        public PartialViewResult SearchInvoice()
+        {
+            return PartialView("_SearchInvoice");
+        }
     }
 }
