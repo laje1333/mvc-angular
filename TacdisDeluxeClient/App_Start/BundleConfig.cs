@@ -16,14 +16,13 @@ namespace TacdisDeluxeClient
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                        "~/Scripts/angular.js*",
                         "~/Scripts/angular-resource.js",
-                        "~/Scripts/angular-route.js",
-                        "~/Scripts/angular.js*"));
+                        "~/Scripts/angular-route.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                         "~/Scripts/App/app.js",
-                        "~/Scripts/Custom/accordion-menu.js"
-            ));
+                        "~/Scripts/Custom/accordion-menu.js"));
 
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
