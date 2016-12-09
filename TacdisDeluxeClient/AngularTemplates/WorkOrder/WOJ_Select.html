@@ -1,18 +1,23 @@
 ﻿<div ng-controller="WorkOrderController">
-    <h2>Workorder Job Select</h2>
     <h3>Selected WOJ: </h3>
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">Select job</div>
             <div class="form-group panel-body">
-                <button>Create New</button>
+                <input type="button" class="btn btn-info" value="Create New" ng-click="WOJ_AddNewWoJ()" />
             </div>
             <table class="table table-hover">
                 <tr>
-                    <td><p>Job Number</p></td>
-                    <td><p>Status</p></td>
-                    <td><input type="button" class="btn btn-info" value="Select" /></td>
-                    <td><input type="button" class="btn btn-info" value="Details" /></td>
+                    <th>Job Number</th>
+                    <th>Status</th>
+                    <th>Select</th>
+                    <th>Details</th>
+                </tr>
+                <tr ng-repeat="item in collection">
+                    <td>{{item.JobNr}}</td>
+                    <td>{{item.Status}}</td>
+                    <td><input type="button" class="btn btn-info" value="Select" ng-click="WOJ_Select(item)" /></td>
+                    <td><input type="button" class="btn btn-info" value="Details" ng-click="WOJ_ViewDetails(item)" /></td>
                 </tr>
             </table>
         </div>

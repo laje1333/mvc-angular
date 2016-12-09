@@ -5,18 +5,18 @@
 
     <table class="table table-hover" ng-show="records.length">
         <tr>
-            <th>Fakturanummer</th>
-            <th>Faktura status</th>
-            <th>AO-nummer</th>
-            <th>Jobbnummer</th>
-            <th>Betalare</th>
-            <th>Reg-nummer</th>
-            <th>Kundnummer</th>
-            <th>Fakturadatum</th>
-            <th>Förfallodatum</th>
-            <th>Debit/Kredit</th>
-            <th>Moms</th>
-            <th>Fakturabelopp</th>
+            <th>Invoice number</th>
+            <th>Invoice state</th>
+            <th>Wo number</th>
+            <th>Job number</th>
+            <th>Payer</th>
+            <th>Reg number</th>
+            <th>Customer number</th>
+            <th>Invoice date</th>
+            <th>Due date</th>
+            <th>Debit/Credit</th>
+            <th>Vat</th>
+            <th>Invoice amount</th>
         </tr>
         <tr ng-repeat="record in records">
             <td>{{record.InvoiceNumber}}</td>
@@ -33,9 +33,6 @@
             <td>{{record.InvoiceAmount}}</td>
         </tr>
     </table>
-
-    
 </div>
 
 
-<!--Fakturanummer, Faktura status, AO-nr, Jobbnummer, Betalare, Kundnummer, Fakturadatum, Förfallodatum, Debit/Kredit, Moms, Fakturabelopp-->
