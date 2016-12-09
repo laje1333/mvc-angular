@@ -15,12 +15,10 @@ namespace TacdisDeluxeAPI.Controllers
         [System.Web.Http.HttpGet]
         public string Get()
         {
-            NewVehicleData d = new NewVehicleData();
-            d.carmodel = "Volvo";
 
 
 
-            return d.carmodel;
+            return "Volvo,Ford,BMW=2010,2011,2012";
                            
         }
 

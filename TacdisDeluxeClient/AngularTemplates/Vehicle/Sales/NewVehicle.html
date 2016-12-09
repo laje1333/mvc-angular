@@ -8,16 +8,12 @@
 
                 <label for="modelyearSelect">Model Year:</label>
                 <select class="form-control" id="modelyearSelect">
-                    <option>2011</option>
-                    <option>2012</option>
-                    <option>2013</option>
-                    <option>2014</option>
+                    <option ng-repeat="y in year">{{y}}</option>
                 </select>
 
                 <label for="brandSelect">Brand:</label>
                 <select class="form-control" id="brandSelect">
-                    <option>Volvo</option>
-                    <option>Ford</option>
+                    <option ng-repeat="mod in carmodel">{{mod}}</option>
                 </select>
 
                 <label for="modelSelect">Model:</label>
@@ -151,4 +147,3 @@
 
 <button type="button" class="btn btn-primary btn-md">Save</button>
 <button type="button" class="btn btn-warning btn-md">Discard</button>
-<h3>{{carmodel}}</h3>
