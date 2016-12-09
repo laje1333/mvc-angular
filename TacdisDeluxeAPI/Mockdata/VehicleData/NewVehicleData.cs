@@ -10,22 +10,41 @@ namespace TacdisDeluxeAPI.Mockdata.VehicleData
         public List<String> years  = new List<String>();
         public List<String> models = new List<String>();
 
-        public string getAttr()
+
+        public string getModelAttr()
         {
             string result = "";
 
             //year append
             for (int i = 0; i < years.Count; i++)
             {
-                result += years[i] + ",";
+                if (i < years.Count - 1)
+                {
+                    result += years[i] + ",";
+                }
+                else
+                {
+                    result += years[i];
+                }
+
             }
             result += "=";
             //model append
             for (int i = 0; i < models.Count; i++)
             {
-                result += models[i] + ",";
+                if (i < years.Count - 1)
+                {
+                    result += models[i] + ",";
+                }
+                else
+                {
+                    result += models[i];
+                }
             }
             return result;
         }
+
+
+
     }
 }

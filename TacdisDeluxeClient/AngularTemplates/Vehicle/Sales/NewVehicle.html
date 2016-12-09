@@ -1,15 +1,17 @@
 ﻿
+
 <div id="first_row" class="row">
 
     <div id="model" class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Model</div>
-            <div class="form-group panel-body">
+            <panelheader data-title="Model"></panelheader>
+            <div class="form-group panel-body slidebody">
+                
 
                 <label for="brandSelect">Brand:</label>
-                <select class="form-control" id="brandSelect">
-                    <option>Volvo</option>
-                    <option>Ford</option>
+                <select class="form-control" id="brandSelect" ng-model="selectedBrand" ng-change="brandSelector()">
+                    <option value="Volvo">Volvo</option>
+                    <option value="Ford">Ford</option>
                 </select>
 
                 <label for="modelyearSelect">Model Year:</label>
@@ -35,8 +37,8 @@
 
     <div id="color" class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Exterior</div>
-            <div class="form-group panel-body">
+            <panelheader data-title="Exterior"></panelheader>
+            <div class="form-group panel-body default-collapsed">
 
                 <label for="painttypeSelect">Paint type:</label>
                 <select class="form-control" id="painttypeSelect">
@@ -63,8 +65,8 @@
 
     <div id="interior" class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Interior</div>
-            <div class="form-group panel-body">
+            <panelheader data-title="Interior"></panelheader>
+            <div class="form-group panel-body default-collapsed">
 
                 <label for="material">Material:</label>
                 <select class="form-control" id="material">
@@ -92,8 +94,8 @@
 <div id="second_row" class="row">
     <div id="engine" class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Engine</div>
-            <div class="form-group panel-body">
+            <panelheader data-title="Engine"></panelheader>
+            <div class="form-group panel-body default-collapsed">
 
                 <label for="enginetype">Type:</label>
                 <select class="form-control" id="enginetype">
@@ -119,8 +121,8 @@
 
     <div id="transmission" class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading" id="transmissionHeadSlide">Transmission</div>
-            <div class="form-group panel-body" id="transmissionBodySlide">
+            <panelheader data-title="Transmission"></panelheader>
+            <div class="form-group panel-body default-collapsed">
 
                 <label for="transmissiontype">Type:</label>
                 <select class="form-control" id="transmissiontype">
