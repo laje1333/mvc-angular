@@ -1,24 +1,41 @@
-﻿<div ng-controller ="WorkOrderController">
+﻿<div ng-controller="WorkOrderController">
     <h2>Workorder Customer Data</h2>
-    <div class="panel panel-default">
-        <p>Reg Number</p>
-        <input type="text" class="form-control" />
-        <p>Reg Date</p>
-        <input type="text" class="form-control" />
-        <p>Vehicle Description</p>
-        <input type="text" />
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Vehicle Registration</div>
+            <div class="form-group panel-body">
+                <label>Reg Number</label>
+                <input type="text" class="form-control" />
+                <label>Reg Date</label>
+                <input type="text" class="form-control" />
+                <label>Vehicle Description</label>
+                <input type="text" class="form-control" />
+            </div>
+        </div>
     </div>
-    <div class="panel panel-default">
-        <p>Last Visited Date</p>
-        <input type="date" />
-        <p>Last Visited Mileage</p>
-        <input type="text" class="form-control" />
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Last Visit Details</div>
+            <div class="form-group panel-body">
+                <label>Last Visited Date</label>
+                <input type="date" class="input-append date" />
+                <label>Last Visited Mileage</label>
+                <input type="text" class="form-control" />
+            </div>
+        </div>
     </div>
-    <div class="panel panel-default">
-        <p>Owner</p>
-        <input type="text" class="form-control" />
-        <input type="button" class="btn btn-info" value="View Contact Details" />
-        <p>Driver</p>
-        <input type="text" class="form-control" />
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Customer Information</div>
+            <div class="form-group panel-body">
+                <label>Owner</label>
+                <input type="button" class="btn btn-info" value="Contact Details" />
+                <input type="text" class="form-control" />
+                <div>
+                    <label>Driver</label>
+                    <input type="text" class="form-control" />
+                </div>
+            </div>
+        </div>
     </div>
-</div ng-controller>
+</div>
