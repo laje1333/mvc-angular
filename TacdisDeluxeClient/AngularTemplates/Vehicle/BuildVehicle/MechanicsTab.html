@@ -1,28 +1,95 @@
-﻿<div>
+﻿
+    <div id="first_row" class="row">
 
-    <table class="table table-hover">
-        <!--Table headline-->
-        <tr>
-            <th>Component</th>
-            <th>Customization</th>
-            <th>Type</th>
-            <th>Price</th>
-        </tr>
+        <div id="model" class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Model</div>
+                <div class="form-group panel-body">
 
-        <!--First row-->
-        <tr>
-            <td>Engine</td>
-            <td>Default</td>
-            <td>V6 Turbo Diesel</td>
-            <td>26500</td>
-        </tr>
-        <!--Second row-->
-        <tr>
-            <td>Exhaust</td>
-            <td>Custom</td>
-            <td>Dual rear exit</td>
-            <td>4500</td>
-        </tr>
+                    <label for="modelyearSelect">Model Year:</label>
+                    <select class="form-control" id="modelyearSelect">
+                        <option>2011</option>
+                        <option>2012</option>
+                        <option>2013</option>
+                        <option>2014</option>
+                    </select>
 
-    </table>
+                    <label for="brandSelect">Brand:</label>
+                    <select class="form-control" id="brandSelect">
+                        <option>Volvo</option>
+                        <option>Ford</option>
+                    </select>
+
+                    <label for="modelSelect">Model:</label>
+                    <select class="form-control" id="modelSelect">
+                        <option>XC-90</option>
+                        <option>V-70</option>
+                    </select>
+
+                    <label for="typeSelect">Type:</label>
+                    <select class="form-control" id="typeSelect">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="color" class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Exterior</div>
+                <div class="form-group panel-body">
+
+                    <label for="painttypeSelect">Paint type:</label>
+                    <select class="form-control" id="painttypeSelect">
+                        <option>Matte white</option>
+                        <option>Clear black</option>
+                        <option>Red</option>
+                    </select>
+
+                    <label for="paintdescSelect">Paint description:</label>
+                    <select class="form-control" id="paintdescSelect">
+                        <option>Matte white powderpainted</option>
+                        <option>Clear black</option>
+                    </select>
+
+                    <label for="groupSelect">Group</label>
+                    <select class="form-control" id="groupSelect">
+                        <option>XC-90</option>
+                        <option>V-70</option>
+                    </select>
+
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="second_row" class="row">
+    <div id="engine" class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Engine</div>
+            <div class="form-group panel-body">
+
+                <label for="enginetype">Type:</label>
+                <select class="form-control" id="enginetype">
+                    <option>Diesel</option>
+                    <option>Petrol</option>
+                </select>
+
+                <label for="enginegroup">Engine group:</label>
+                <select class="form-control" id="enginegroup">
+                    <option>Group 1</option>
+                    <option>Group 2</option>
+                </select>
+
+                <label for="enginedesc">Description:</label>
+                <select class="form-control" id="enginedesc">
+                    <option>Very good engine yes</option>
+                    <option>Very bad engine yes</option>
+                </select>
+
+            </div>
+        </div>
+    </div>
 </div>

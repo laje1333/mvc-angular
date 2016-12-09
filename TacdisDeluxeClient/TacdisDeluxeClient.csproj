@@ -304,8 +304,6 @@
     <Content Include="Scripts\App\Controllers\Parts\PartsModuleConfig.js" />
     <Content Include="Scripts\App\Controllers\Vehicle\VehicleController.js" />
     <Content Include="AngularTemplates\Vehicle\BuildVehicle\BuildVehicle.html" />
-    <Content Include="Scripts\App\Controllers\Vehicle\VehicleBuildController.js" />
-    <Content Include="AngularTemplates\Vehicle\VehicleMechanics.html" />
     <Content Include="Scripts\App\Controllers\WorkOrder\WorkOrderController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
