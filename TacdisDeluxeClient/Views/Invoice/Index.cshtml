@@ -1,21 +1,20 @@
 ﻿
-@{
-    ViewBag.Title = "Index";
-}
 <script src="../../Scripts/App/Controllers/Invoice/InvoiceSearchController.js"></script>
 <script src="~/Scripts/App/Controllers/Invoice/InvoiceMenuController.js"></script>
 
+<div class="col-md-2 accordion-menu-container">
+    <div class="container">
+        @{
+            Html.RenderPartial("_Menu");
+        }
+    </div>
+</div>
+<div class="col-md-10">
+    <div ng-view class="container">
+
+    </div>
+</div>
 
 
-    <div class="col-md-2" >
-        <div class="container">
-            @{
-                Html.RenderPartial("_Menu");
-            }
-        </div>
-    </div>
-    <div class="col-md-10">
-        <div ng-view class="container">
-          
-        </div>
-    </div>
+
+
