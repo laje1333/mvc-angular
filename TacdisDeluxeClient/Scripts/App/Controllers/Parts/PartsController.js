@@ -21,6 +21,7 @@ var invoices = [
 
 
 tacdisDeluxeApp.controller("PartsController", function ($scope) {
+    $scope.records = invoices;
     $scope.listParts = function () {
         $scope.records = invoices;
     };
