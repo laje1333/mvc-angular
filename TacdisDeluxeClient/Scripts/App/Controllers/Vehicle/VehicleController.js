@@ -3,10 +3,11 @@
 
 tacdisDeluxeApp.controller("VehicleController", function ($scope, $http) {
     
+    $scope.brandDisabled = true;
+
     $scope.brandSelector = function () {
 
         $scope.urlString = 'http://localhost:57661/api/vehicle/?brand=' + $scope.selectedBrand;
-
 
 
         $http.get($scope.urlString).
@@ -17,12 +18,15 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http) {
 
                 $scope.year = components[0].split(',');
                 $scope.carmodel = components[1].split(',');
-
-
+                
       });
     }
-    
 
+    $scope.brandEnabler = function () {
+        $scope.brandDisabled = false;
+    }
+
+    
 });
 
 
