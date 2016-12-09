@@ -19,12 +19,22 @@
             <th>Fakturabelopp</th>
         </tr>
         <tr ng-repeat="record in records">
-            <td>{{x.Name}}</td>
-            <td>{{x.Country}}</td>
+            <td>{{record.InvoiceNumber}}</td>
+            <td>{{record.InvoiceState}}</td>
+            <td>{{record.WoNumber}}</td>
+            <td>{{record.JobNumber}}</td>
+            <td>{{record.Payer}}</td>
+            <td>{{record.RegNumber}}</td>
+            <td>{{record.CustomerNumber}}</td>
+            <td>{{record.InvoiceDate}}</td>
+            <td>{{record.DueDate}}</td>
+            <td>{{record.DebitCredit}}</td>
+            <td>{{record.Vat}}</td>
+            <td>{{record.InvoiceAmount}}</td>
         </tr>
     </table>
 
-    {{testget}}
+    
 </div>
 
 
