@@ -4,25 +4,27 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Mvc;
+using TacdisDeluxeAPI.Mockdata.VehicleData;
 
 namespace TacdisDeluxeAPI.Controllers
 {
     public class VehicleController : ApiController
     {
         // GET: api/Vehicle
-        [HttpGet]
-        public IEnumerable<string> Get(int id)
+        [System.Web.Http.HttpGet]
+        public string Get()
         {
-            switch(id){
-                case 1:
-                    Console.WriteLine("hej");
-                    break;
-            }
-                
+            NewVehicleData d = new NewVehicleData();
+            d.carmodel = "Volvo";
 
 
-            return new string[] { "value1", "value2" };
+
+            return d.carmodel;
+                           
         }
+
+
 
         // GET: api/Vehicle/5
         public string Get(int id)

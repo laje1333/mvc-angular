@@ -1,8 +1,11 @@
 ﻿
 
 
-tacdisDeluxeApp.controller("VehicleController", function ($scope) {
-    
+tacdisDeluxeApp.controller("VehicleController", function ($scope, $http) {
+    $http.get('http://localhost:57661/api/vehicle').
+         then(function(response) {
+             $scope.carmodel = response.data;
+         });
     
 });
 
