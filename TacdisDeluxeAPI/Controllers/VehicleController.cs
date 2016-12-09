@@ -15,13 +15,8 @@ namespace TacdisDeluxeAPI.Controllers
         [System.Web.Http.HttpGet]
         public string Get()
         {
-            NewVehicleData d = new NewVehicleData();
-            d.carmodel = "Volvo";
 
-
-
-            return d.carmodel;
-                           
+            return " ";                
         }
 
 
@@ -29,7 +24,15 @@ namespace TacdisDeluxeAPI.Controllers
         // GET: api/Vehicle/5
         public string Get(int id)
         {
-            return "value";
+            switch (id)
+            {
+                case 1:
+                    return NewVehicleDataHash.getValue("Volvo").getAttr();
+                case 2:
+                    return NewVehicleDataHash.getValue("Ford").getAttr();
+            }
+
+            return " ";
         }
 
         // POST: api/Vehicle
