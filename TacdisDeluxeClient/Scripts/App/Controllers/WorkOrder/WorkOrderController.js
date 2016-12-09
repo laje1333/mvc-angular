@@ -1,5 +1,5 @@
 ﻿tacdisDeluxeApp.controller("WorkOrderController", function ($scope) {
-    
+
 });
 
 
@@ -35,6 +35,10 @@ tacdisDeluxeApp.config(function ($routeProvider) {
         })
         .when('/WOJ_Select', {
             templateUrl: '/AngularTemplates/WorkOrder/WOJ_Select.html',
+            controller: 'WorkOrderController'
+        })
+        .when('/WOH_Finalize', {
+            templateUrl: '/AngularTemplates/WorkOrder/WOH_Finalize.html',
             controller: 'WorkOrderController'
         });
 });
