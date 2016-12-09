@@ -1,16 +1,17 @@
 ﻿<div ng-controller="WorkOrderController">
-    <h2>Manage Workorder</h2>
     <div class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Status</div>
+            <div class="panel-heading">Date Status</div>
             <div class="form-group panel-body">
                 <p>Status</p>
                 <input type="text" class="form-control" />
                 <p>Date Planned</p>
                 <input type="date" />
-                <p>Date Recieved</p>
                 <div class="checkbox">
-                    <input type="checkbox" />
+                    <label>
+                        <input type="checkbox" value="" />
+                        Date Checked In
+                    </label>
                 </div>
                 <input type="date" />
             </div>
@@ -18,7 +19,7 @@
     </div>
     <div class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Status</div>
+            <div class="panel-heading">Mechanic Status</div>
             <div class="form-group panel-body">
                 <p>Current Milage</p>
                 <input type="text" class="form-control" />
