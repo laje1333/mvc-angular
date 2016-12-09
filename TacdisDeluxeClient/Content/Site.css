@@ -6,7 +6,7 @@ a:visited, a:hover, a:active, a:link{
 }
 
 body {
-    padding-top: 50px;
+    padding-top: 75px;
     padding-bottom: 20px;
 }
 
@@ -34,30 +34,38 @@ textarea {
 
 /***********************************/
 /*  Generic stuff                  */
-    html, body{
-        width: 100%;
-        height: 100%;
+@media (min-width: 768px) {
+    html, body {
+        width: 100% !important;
+        height: 100% !important;
     }
+}
     body{
-        background-color: #F0F0F0; 
+        background-color: #F0F0F0!important; 
     }
     .body-content{
-        max-width: 100%;
-        height: 100%;
+        max-width: 100%!important;
+        height: 100%!important;
         
-        padding-left: 0px;
-        padding-right: 0px;
+        padding-left: 0px!important;
+        padding-right: 0px!important;
     }
-
-
+    .navbar, .navbar-inverse ,.navbar-fixed-top {
+        border: 0px solid transparent;
+    }
 
 /***********************************/
 /* Simple accordion menu           */
-    .accordion-menu-container{
-        border-right: 1px solid #eeeeee;
+@media (min-width: 992px) {
+    .accordion-menu-container {
         height: 100%;
-        background-color: #3A3B3D;
+        padding-top: 50px;
     }
+}
+    .accordion-menu-container {
+        background-color: #259AC5; /*   3A3B3D, 259AC5, */
+    }
+
     .accordion-menu-container,
     .accordion-menu-container > .container{
         padding: 0px;
@@ -84,32 +92,27 @@ textarea {
     .accordion-menu-logo-item{
         padding: 10px;
         text-align:center;
-        background-color: #343537
+        /*background-color: #343537*/
     }
 
-    .accordion-menu-logo-item > a > img {
-        border-width: 0px;
-        width: 100%;
-        max-width: 129px;
-    }
 
     .accordion-menu-item {
         /*border: 1px solid #eeeeee;*/
         display: block;
         /*margin-bottom: 5px;*/
-        background-color: #343537;
+        /*background-color: #343537;*/
     }
 
     a.accordion-menu-main-item-text {
-        font-weight: bold;
-        color: #707173;
+        /*font-weight: bold;*/
+        color: #ffffff; /*  707173  */
         display: block;
 
         padding: 10px;
         margin-bottom: 0;
         /*background-color: #f5f5f5;*/
         border-bottom: 1px solid rgba(0,0,0,.125);
-        text-transform: uppercase;
+        /*text-transform: uppercase;*/
     }
 
     .accordion-sub-menu {
@@ -117,7 +120,7 @@ textarea {
 
         position: relative;
         
-        background-color: #3A3B3D;
+        background-color: #158AB5; /* 3A3B3D, */
 
         /*margin-bottom: .75rem;*/
         /*background-color: #fff;*/
@@ -131,45 +134,35 @@ textarea {
     a.accordion-sub-menu-item-text {
         padding: 10px;
         display: block;
-        color: #D0D1D3;
+        color: #ffffff; /*    D0D1D3, */
     }
 
     a.accordion-sub-menu-item-text:hover,
     a.accordion-sub-menu-item-text.marked{
-        color: #03CB96;
-        border-right: 5px solid #03CB96;
-        padding-right: 5px;
+        /*color: #03CB96;*/
+        border-left: 5px solid #ffffff; /*  03CB96, */
+        padding-left: 5px;
     }
 
 
 /* END Simple accordion menu        */
 
 table.table{
-    border-collapse:collapse;
+    /*border-collapse:collapse;
     border: 1px solid #D6D6D6;
     border-radius: 3px;
     -moz-border-radius: 3px;
     border-spacing: 0;
-    background-color: #F9F9F9;
+    background-color: #F9F9F9;*/
 }
-/*table {
-    border-collapse: separate;
-    border-spacing: 0;
-}*/
-/*table, td {
-    border: 1px solid black;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    padding: 5px;
-}*/
 
 table.table th {
-    background-color: #4C4D4F;
-    color: #D0D1D3;
+    /*background-color: #4C4D4F;
+    color: #D0D1D3;*/
 }
 
 table.table td{
-    border: 1px solid #D6D6D6;
+    /*border: 1px solid #D6D6D6;*/
 }
 
 table.table tr:last-child td:first-child {
@@ -182,5 +175,27 @@ table.table tr:last-child td:last-child {
 
 .navbar-custom{
     /*background-color: #1A9DD3;*/
+    height: 75px;
 }
+.nav-logo{
+    background-color: #259AC5;
+    min-height: 75px;
+    height: 100%;
+}
+
+.nav-logo > a > img {
+    min-height: 100%;
+    height: 50px;
+    /*width: auto;*/
+    /*border-width: 0px;
+    width: 100%;
+    max-width: 129px;*/
+}
+
+.accordion-menu-logo-item > a > img {
+    border-width: 0px;
+    width: 100%;
+    max-width: 129px;
+}
+
 

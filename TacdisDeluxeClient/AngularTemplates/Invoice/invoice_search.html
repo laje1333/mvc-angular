@@ -3,10 +3,29 @@
 <div ng-controller="InvoiceSearchCtrl">
     <button ng-click="searchInvoices()">Search</button>
 
-    <table>
-        <tr ng-repeat="x in records">
+    <table class="table table-hover" ng-show="records.length">
+        <tr>
+            <th>Fakturanummer</th>
+            <th>Faktura status</th>
+            <th>AO-nummer</th>
+            <th>Jobbnummer</th>
+            <th>Betalare</th>
+            <th>Reg-nummer</th>
+            <th>Kundnummer</th>
+            <th>Fakturadatum</th>
+            <th>Förfallodatum</th>
+            <th>Debit/Kredit</th>
+            <th>Moms</th>
+            <th>Fakturabelopp</th>
+        </tr>
+        <tr ng-repeat="record in records">
             <td>{{x.Name}}</td>
             <td>{{x.Country}}</td>
         </tr>
     </table>
+
+    {{testget}}
 </div>
+
+
+<!--Fakturanummer, Faktura status, AO-nr, Jobbnummer, Betalare, Kundnummer, Fakturadatum, Förfallodatum, Debit/Kredit, Moms, Fakturabelopp-->

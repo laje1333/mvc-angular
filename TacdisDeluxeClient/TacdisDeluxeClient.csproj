@@ -217,9 +217,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AngularTemplates\Invoice\invoice_search.html" />
-    <Content Include="AngularTemplates\Vehicle\BuildVehicle\MechanicsTab.html" />
-    <Content Include="AngularTemplates\Vehicle\BuildVehicle\PackageTab.html" />
-    <Content Include="AngularTemplates\WorkOrder\WOH_Finalize.html" />
+    <Content Include="AngularTemplates\Vehicle\Sales\NewVehicle.html" />
+    <Content Include="AngularTemplates\Vehicle\Sales\UsedVehicle.html" />
+	<Content Include="AngularTemplates\WorkOrder\WOH_Finalize.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
@@ -268,6 +268,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\tacdis.png" />
+    <Content Include="Models\InvoiceObj.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\angular-animate.js" />
@@ -304,7 +305,6 @@
     <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsModuleConfig.js" />
     <Content Include="Scripts\App\Controllers\Vehicle\VehicleController.js" />
-    <Content Include="AngularTemplates\Vehicle\BuildVehicle\BuildVehicle.html" />
     <Content Include="Scripts\App\Controllers\WorkOrder\WorkOrderController.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1120,7 +1120,6 @@
     <Content Include="Views\WorkOrder\Index.cshtml" />
     <Content Include="Views\Parts\_Menu.cshtml" />
     <Content Include="Views\WorkOrder\_Menu.cshtml" />
-    <Content Include="Views\Parts\_TempAction.cshtml" />
     <Content Include="Views\Invoice\_SearchInvoice.cshtml" />
     <Content Include="Views\Vehicle\_Menu.cshtml" />
   </ItemGroup>
