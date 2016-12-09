@@ -1,23 +1,25 @@
 ﻿<div ng-controller="WorkOrderController">
     <h2>Manage Workorder</h2>
-    <div style="border: dotted">
+    <div class="panel panel-default">
         <p>Status</p>
-        <input type="text" />
+        <input type="text" class="form-control" />
         <p>Date Planned</p>
         <input type="date" />
         <p>Date Recieved</p>
-        <input type="checkbox" />
+        <div class="checkbox">
+            <input type="checkbox" />
+        </div>
         <input type="date" />
     </div>
-    <div style="border: dotted">
+    <div class="panel panel-default">
         <p>Current Milage</p>
-        <input type="text" />
+        <input type="text" class="form-control" />
         <p>Planned Machanic</p>
-        <input type="text" />
-        <input type="text" />
+        <input type="text" class="form-control" />
+        <input type="text" class="form-control" />
     </div>
-    <div>
-        <input type="button" value="Finalize.." />
-        <input type="button" value="Quick Finilize.." />
+    <div class="panel panel-default">
+        <input type="button" class="btn btn-info" value="Finalize.." />
+        <input type="button" class="btn btn-info" value="Quick Finilize.." />
     </div>
 </div>
