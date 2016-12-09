@@ -267,6 +267,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\tacdis.png" />
+    <Content Include="Models\InvoiceObj.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\angular-animate.js" />
@@ -1122,7 +1123,6 @@
     <Content Include="Views\Parts\_Menu.cshtml" />
     <Content Include="Views\WorkOrder\_Menu.cshtml" />
     <Content Include="Views\Parts\_TempAction.cshtml" />
-    <Content Include="Views\Invoice\_SearchInvoice.cshtml" />
     <Content Include="Views\Vehicle\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
