@@ -1,13 +1,5 @@
 ﻿<div ng-controller="VehicleController">
 
-    <ul class="nav nav-tabs" style="margin-bottom: 20px;">
-        <li><a href="" ng-click="setVisibility('mechanics')">Mechanics</a></li>
-        <li><a href="" ng-click="setVisibility('packages')">Packages</a></li>
-        <li><a href="#">Style</a></li>
-        <li><a href="#">Extra</a></li>
-    </ul>
-
-
     <div ng-include="'AngularTemplates/Vehicle/BuildVehicle/MechanicsTab.html'" ng-show="mechanicsVisible"></div>
     <div ng-include="'AngularTemplates/Vehicle/BuildVehicle/PackageTab.html'" ng-show="packagesVisible"></div>
 </div>
