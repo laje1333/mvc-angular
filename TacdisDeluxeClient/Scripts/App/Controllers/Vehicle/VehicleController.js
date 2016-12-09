@@ -1,31 +1,23 @@
 ﻿
 
 
-tacdisDeluxeApp.controller("VehicleController", function ($scope) {
-    $scope.mechanicsVisible = true;
-    $scope.packagesVisible = false;
-
-
-    $scope.setVisibility = function (tab) {
-        switch (tab) {
-            case "mechanics":
-                $scope.mechanicsVisible = true;
-                $scope.packagesVisible = false;
-                return;
-            case "packages":
-                $scope.mechanicsVisible = false;
-                $scope.packagesVisible = true;
-                return;
-        }
-
-    }
+tacdisDeluxeApp.controller("VehicleController", function ($scope, $http) {
+    $http.get('http://localhost:57661/api/vehicle').
+         then(function(response) {
+             $scope.carmodel = response.data;
+         });
+    
 });
 
 
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider
-        .when('/buildVehicle', {
-            templateUrl: '/AngularTemplates/Vehicle/BuildVehicle/BuildVehicle.html',
+        .when('/newVehicle', {
+            templateUrl: '/AngularTemplates/Vehicle/Sales/NewVehicle.html',
             controller: 'VehicleController'
-        });
+        })
+        .when('/usedVehicle', {
+        templateUrl: '/AngularTemplates/Vehicle/Sales/UsedVehicle.html',
+        controller: 'VehicleController'
+    });
 });
