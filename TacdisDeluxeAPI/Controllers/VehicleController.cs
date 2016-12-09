@@ -16,10 +16,7 @@ namespace TacdisDeluxeAPI.Controllers
         public string Get()
         {
 
-
-
-            return "Volvo,Ford,BMW=2010,2011,2012";
-                           
+            return " ";                
         }
 
 
@@ -27,7 +24,15 @@ namespace TacdisDeluxeAPI.Controllers
         // GET: api/Vehicle/5
         public string Get(int id)
         {
-            return "value";
+            switch (id)
+            {
+                case 1:
+                    return NewVehicleDataHash.getValue("Volvo").getAttr();
+                case 2:
+                    return NewVehicleDataHash.getValue("Ford").getAttr();
+            }
+
+            return " ";
         }
 
         // POST: api/Vehicle
