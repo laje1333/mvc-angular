@@ -2,17 +2,15 @@
 <script src="~/Scripts/App/Controllers/WorkOrder/WorkOrderController.js"></script>
 <h2>Workorder</h2>
 
-<div class="row">
-    <div class="col-md-2" style="border-right: 1px solid #eeeeee;">
-        <div class="container">
-            @{
-                Html.RenderPartial("_Menu");
-            }
-        </div>
+<div class="col-md-2" style="border-right: 1px solid #eeeeee;">
+    <div class="container">
+        @{
+            Html.RenderPartial("_Menu");
+        }
     </div>
-    <div class="col-md-10">
-        <div ng-view class="container">
-            Innehåll
-        </div>
+</div>
+<div class="col-md-10">
+    <div ng-view class="container">
+        Innehåll
     </div>
 </div>
