@@ -4,22 +4,34 @@
         <div class="panel panel-default">
             <div class="panel-heading">Find / Create WO</div>
             <div class="form-group panel-body">
-                    <button class="btn btn-info">Create New</button>
+                    <button class="btn btn-info" ng-click="WOH_AddNewWOH()">Create New</button>
                     <input type="text" class="form-control" placeholder="Search" />
             </div>
             <table class="table table-hover">
                 <tr>
-                    <td><p>WO NR</p></td>
-                    <td><p>Reg nr</p></td>
-                    <td><p>Status</p></td>
-                    <td><p>Vehicle Description</p></td>
-                    <td><p>Created Date</p></td>
-                    <td><p>Main Payer</p></td>
-                    <td><p>Responsible By</p></td>
-                    <td><p>Total Cost</p></td>
-                    <td><input type="button" class="btn btn-info" value="Select" /></td>
-                    <td><input type="button" class="btn btn-info" value="Details" /></td>
+                    <th>WO NR</th>
+                    <th>Reg nr</th>
+                    <th>Status</th>
+                    <th>Vehicle Description</th>
+                    <th>Created Date</th>
+                    <th>Main Payer</th>
+                    <th>Responsible By</th>
+                    <th>Total Cost</th>
+                    <th>Select</th>
+                    <th>Details</th>
                 </tr>
+                <tr ng-repeat ="item in collection">
+                    <td>{{item.WoNr}}</td>
+                    <td>{{item.RegNr}}</td>
+                    <td>{{item.Status}}</td>
+                    <td>{{item.VehDesc}}</td>
+                    <td>{{item.CreatedDate}}</td>
+                    <td>{{item.MainPayer}}</td>
+                    <td>{{item.RespBy}}</td>
+                    <td>{{item.TotCost}}</td>
+                    <td><input type="button" class="btn btn-info" value="Select" ng-click="WOH_Select(item)" /></td>
+                    <td><input type="button" class="btn btn-info" value="Details" ng-click="WOH_ViewDetails(item)" /></td>
+                </tr ng-repeat>
             </table>
         </div>
     </div>
