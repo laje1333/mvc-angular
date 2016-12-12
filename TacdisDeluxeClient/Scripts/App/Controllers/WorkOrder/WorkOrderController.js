@@ -1,14 +1,23 @@
-﻿tacdisDeluxeApp.controller("WorkOrderController", function ($scope, $http) {
+﻿tacdisDeluxeApp.controller("WorkOrderController", function ($rootScope, $scope, $http) {
+    $scope.woh_regNr = $rootScope.woh_regNr;
+    $scope.currentWoh = $rootScope.currentWoh;
+
+    $scope.WOH_SetWOH = function () {
+        $rootScope.currentWoh = $scope.currentWoh;
+    }
     $scope.WOH_AddNewWOH = function () {
+
+        $scope.WOH_SetWOH();
 
     }
 
 
+    
     $scope.RegNrChanged = function () {
+        $rootScope.woh_regNr = $scope.woh_regNr;
 
         $scope.urlString = 'http://localhost:57661/api/workorder/?regnr=' + $scope.woh_regNr;
-
-
+        
         $http.get($scope.urlString).
                 then(function (response) {
                     var components = response.data;
@@ -23,6 +32,9 @@
 
                 });
     }
+
+
+    $scope.RegNrChanged();
 });
 
 
