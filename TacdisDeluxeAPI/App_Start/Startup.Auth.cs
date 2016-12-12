@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using TacdisDeluxeAPI.Providers;
 using TacdisDeluxeAPI.Models;
+using TacdisDeluxeAPI.Mockdata.VehicleData;
 
 namespace TacdisDeluxeAPI
 {
@@ -64,6 +65,7 @@ namespace TacdisDeluxeAPI
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+            NewVehicleDataHash.initialize();
         }
     }
 }

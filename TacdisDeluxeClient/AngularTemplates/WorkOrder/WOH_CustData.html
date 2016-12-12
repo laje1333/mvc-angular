@@ -1,26 +1,14 @@
 ﻿<div ng-controller="WorkOrderController">
-    <h2>Workorder Customer Data</h2>
     <div class="col-md-4">
         <div class="panel panel-default">
             <div class="panel-heading">Vehicle Registration</div>
             <div class="form-group panel-body">
                 <label>Reg Number</label>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" ng-model="woh_regNr" ng-change="RegNrChanged()" />
                 <label>Reg Date</label>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" ng-model="woh_regDate" />
                 <label>Vehicle Description</label>
-                <input type="text" class="form-control" />
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">Last Visit Details</div>
-            <div class="form-group panel-body">
-                <label>Last Visited Date</label>
-                <input type="date" class="input-append date" />
-                <label>Last Visited Mileage</label>
-                <input type="text" class="form-control" />
+                <input type="text" class="form-control" ng-model="woh_vehDesc"/>
             </div>
         </div>
     </div>
@@ -30,11 +18,23 @@
             <div class="form-group panel-body">
                 <label>Owner</label>
                 <input type="button" class="btn btn-info" value="Contact Details" />
-                <input type="text" class="form-control" />
-                <div>
-                    <label>Driver</label>
-                    <input type="text" class="form-control" />
-                </div>
+                <input type="text" class="form-control" ng-model="woh_owner" />
+                <label>Driver</label>
+                <input type="text" class="form-control" ng-model="woh_driver" />
+                <label>Phone number</label>
+                <input type="text" class="form-control" ng-model="woh_phone" />
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">Last Visit Details</div>
+            <div class="form-group panel-body">
+                <label>Last Visited Date</label>
+                <input type="text" class="form-control" ng-model="woh_lastVisDate" />
+                <!--<input type="date" class="input-append date" />-->
+                <label>Last Visited Mileage</label>
+                <input type="text" class="form-control" ng-model="woh_lastVisMileage" />
             </div>
         </div>
     </div>

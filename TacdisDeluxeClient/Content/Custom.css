@@ -1,0 +1,9 @@
+﻿
+
+.panel-heading{
+    cursor:pointer;
+}
+
+.default-collapsed{
+    display:none;
+}
