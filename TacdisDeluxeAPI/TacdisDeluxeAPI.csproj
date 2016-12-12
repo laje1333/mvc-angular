@@ -243,12 +243,15 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PartController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\WorkOrderController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mockdata\VehicleData\NewVehicleData.cs" />
     <Compile Include="Mockdata\VehicleData\NewVehicleDataHash.cs" />
+    <Compile Include="Mockdata\WorkOrderData\NewWoJobData.cs" />
+    <Compile Include="Mockdata\WorkOrderData\NewWorkOrderData.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
