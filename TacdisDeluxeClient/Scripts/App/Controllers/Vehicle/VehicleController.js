@@ -196,9 +196,21 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     
 });
 
-tacdisDeluxeApp.controller("VehicleMaintenanceController", function () {
+tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
+    $scope.getNewVehicles = function () {
+        $http.get("http://localhost:57661/api/vehicle/GetVehicleMaintenanceList")
+    .then(function (response) {
+        var obj = JSON.parse(response.data);
+        $scope.records = obj.VehMain;
 
-});
+        $scope.newVehicleTable = new ngTableParams({
+
+        }, {
+            dataset: $scope.records
+        });
+    });
+    };
+}]);
 
 
 

@@ -43,5 +43,48 @@ namespace TacdisDeluxeAPI.Mockdata.VehicleData
         {
             return vehicles;
         }
+
+        public static string getNewVehicles()
+        {
+
+            string result = "{\"VehMain\":[";
+
+            for (int i = 0; i < vehicles.Count; i++)
+            {
+                result += buildNewVehicle(vehicles[i]);
+                if (i < vehicles.Count - 1)
+                {
+                    result += ",";
+                }
+            }
+            result += "]}";
+
+            return result;
+
+        }
+
+        private static string buildNewVehicle(NewVehicleProperties vehicle)
+        {
+            string result = "";
+
+            result += "{\"Brand\": \"" + vehicle.Brand +
+                    "\",\"ModelYear\": \"" + vehicle.ModelYear +
+                    "\",\"Model\": \"" + vehicle.Model +
+                    "\",\"EngineType\": \"" + vehicle.EngineType +
+                    "\",\"EngineGroup\": \"" + vehicle.EngineGroup +
+                    "\",\"EngineDescription\":\"" + vehicle.EngineDescription +
+                    "\",\"TransmissionType\": \"" + vehicle.TransmissionType +
+                    "\",\"TransmissionGroup\": \"" + vehicle.TransmissionGroup +
+
+                    "\",\"TransmissionDescription\": \"" + vehicle.TransmissionDescription +
+                    "\",\"PaintType\": \"" + vehicle.PaintType +
+                    "\",\"PaintDescription\": \"" + vehicle.PaintDescription +
+                    "\",\"PaintGroup\": \"" + vehicle.PaintGroup +
+                    "\",\"InteriorMaterial\":\"" + vehicle.InteriorMaterial +
+                    "\",\"InteriorColorDescription\": \"" + vehicle.InteriorColorDescription +
+                    "\",\"InteriorColor\": \"" + vehicle.InteriorColor +
+                    "\"}";
+            return result;
+        }
     }
 }
