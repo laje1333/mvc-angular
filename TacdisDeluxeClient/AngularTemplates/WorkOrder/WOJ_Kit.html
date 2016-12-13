@@ -4,16 +4,24 @@
             <div class="panel-heading">Packages</div>
             <div class="form-group panel-body">
                 <input type="text" class="form-control" placeholder="Package Number" />
-                <input type="button" class="btn btn-info" value="Add">
+                <input type="button" class="btn btn-info" value="Add" ng-click="WOH_AddKit()">
             </div>
             <table class="table table-hover">
                 <tr>
-                    <td><p>Packages Number</p></td>
-                    <td><p>Packages Type</p></td>
-                    <td><p>Packages Description</p></td>
-                    <td><p>Quantity</p></td>
-                    <td><p>Price</p></td>
-                    <td><input type="button" class="btn btn-info" value="Details" /></td>
+                    <th>Packages Number</th>
+                    <th>Packages Type</th>
+                    <th>Packages Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Details</th>
+                </tr>
+                <tr ng-repeat="item in collection">
+                    <td>{{item.KitNr}}</td>
+                    <td>{{item.KitType}}</td>
+                    <td>{{item.KitDesc}}</td>
+                    <td>{{item.Quantity}}</td>
+                    <td>{{item.Price}}</td>
+                    <td><input type="button" class="btn btn-info" value="Details" ng-click="WOH_Kit_ViewDetails(item)" /></td>
                 </tr>
             </table>
         </div>

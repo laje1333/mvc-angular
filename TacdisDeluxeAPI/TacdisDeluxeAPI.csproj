@@ -243,12 +243,20 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PartController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\WorkOrderController.cs" />
+    <Compile Include="Controllers\SalesController.cs" />
+    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mockdata\VehicleData\Brand.cs" />
+    <Compile Include="Mockdata\VehicleData\Model.cs" />
+    <Compile Include="Mockdata\VehicleData\ModelYear.cs" />
     <Compile Include="Mockdata\VehicleData\NewVehicleData.cs" />
     <Compile Include="Mockdata\VehicleData\NewVehicleDataHash.cs" />
+    <Compile Include="Mockdata\WorkOrderData\NewWoJobData.cs" />
+    <Compile Include="Mockdata\WorkOrderData\NewWorkOrderData.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -295,6 +303,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Part\" />
+    <Folder Include="Views\Sales\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

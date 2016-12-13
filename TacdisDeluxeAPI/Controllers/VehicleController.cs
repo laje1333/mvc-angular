@@ -12,28 +12,32 @@ namespace TacdisDeluxeAPI.Controllers
     public class VehicleController : ApiController
     {
         // GET: api/Vehicle
-        [System.Web.Http.HttpGet]
-        public string Get()
-        {
-
-            return " ";                
-        }
 
 
 
         // GET: api/Vehicle/5
-        public string Get(int id)
-        {
-            switch (id)
-            {
-                case 1:
-                    return NewVehicleDataHash.getValue("Volvo").getAttr();
-                case 2:
-                    return NewVehicleDataHash.getValue("Ford").getAttr();
-            }
 
-            return " ";
+
+
+
+        //id = brand, panel = model/engine/transmission...
+        
+        public string GetVehicleInfo(string brand)
+        {
+           
+            return NewVehicleDataHash.getValue(brand).getModelYears();
         }
+
+        public string GetVehicleInfo(string modelyear, string brand)
+        {
+            return NewVehicleDataHash.getValue(brand).getModelsFromYear(modelyear);
+        }
+
+        public string GetVehicleInfo(string model, string modelyear, string brand)
+        {
+            return NewVehicleDataHash.getValue(brand).getPropertiesFromModel(modelyear, model);
+        }
+
 
         // POST: api/Vehicle
         public void Post([FromBody]string value)

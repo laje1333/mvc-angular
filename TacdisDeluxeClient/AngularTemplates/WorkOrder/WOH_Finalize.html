@@ -3,8 +3,8 @@
         <div class="panel panel-default">
             <div class="panel-heading">Parts</div>
             <div class="form-group panel-body">
-                <input type="button" class="btn btn-info" value="Create Picklist" />
-                <input type="button" class="btn btn-info" value="Create Reservations" />
+                <input type="button" class="btn btn-info" value="Create Picklist" ng-click="WOH_Picklist()"/>
+                <input type="button" class="btn btn-info" value="Create Reservations" ng-click="WOH_Reservation()" />
             </div>
         </div>
     </div>
@@ -12,8 +12,8 @@
         <div class="panel panel-default">
             <div class="panel-heading">Finalize</div>
             <div class="form-group panel-body">
-                <input type="button" class="btn btn-info" value="Finalize.." />
-                <input type="button" class="btn btn-info" value="Quick Finilize.." />
+                <input type="button" class="btn btn-info" value="Finalize.." ng-click="WOH_Finalize()" />
+                <input type="button" class="btn btn-info" value="Quick Finilize.." ng-click="WOH_QuickFinalize()" />
             </div>
         </div>
     </div>
