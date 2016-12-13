@@ -21,18 +21,29 @@ namespace TacdisDeluxeAPI.Controllers
 
 
         //id = brand, panel = model/engine/transmission...
-        [System.Web.Http.HttpGet]
-        public string GetVehicle(string brand)
+        
+        public string GetVehicleInfo(string brand)
         {
+           
+            return NewVehicleDataHash.getValue(brand).getModelYears();
+        }
 
-             return NewVehicleDataHash.getValue(brand).getModelAttr();
+        public string GetVehicleInfo(string modelyear, string brand)
+        {
+            return NewVehicleDataHash.getValue(brand).getModelsFromYear(modelyear);
+        }
 
+        public string GetVehicleInfo(string model, string modelyear, string brand)
+        {
+            return NewVehicleDataHash.getValue(brand).getPropertiesFromModel(modelyear, model);
         }
 
 
         // POST: api/Vehicle
         public void Post([FromBody]string value)
         {
+            int i = 0;
+            i += 2;
         }
 
         // PUT: api/Vehicle/5

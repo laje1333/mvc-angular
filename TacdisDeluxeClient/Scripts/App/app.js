@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-var tacdisDeluxeApp = angular.module('tacdisDeluxeApp', ['ngResource', 'ngRoute']);
+var tacdisDeluxeApp = angular.module('tacdisDeluxeApp', ['ngResource', 'ngRoute', 'ngTable']);
 
 
 

@@ -8,9 +8,6 @@
         },
         replace: true,
         link: function (scope, element, attrs) {
-                $(element).click(function () {
-                    $(element).next().slideToggle("fast");
-                });
             
             
         }

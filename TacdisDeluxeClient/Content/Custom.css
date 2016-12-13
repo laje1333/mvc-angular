@@ -7,3 +7,7 @@
 .default-collapsed{
     display:none;
 }
+
+.default-extended{
+    display:block;
+}
