@@ -1,7 +1,7 @@
 ﻿
 
 
-tacdisDeluxeApp.controller("InvoiceSearchCtrl", ["$scope", "NgTableParams", "$http", "$filter", "$window", function ($scope, ngTableParams, $http, $filter, $window) {
+tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
     
     $scope.SearchInvoices = function () {
         $http.get("http://localhost:57661/api/invoice/GetInvoice?query=1")
@@ -16,23 +16,14 @@ tacdisDeluxeApp.controller("InvoiceSearchCtrl", ["$scope", "NgTableParams", "$ht
         });
     });
     };
-    
-
-
-    $scope.PreviewInvoices = function (invoiceNumber) {
-
-        console.log("PreviewInvoices");
-        $scope.toggleModal('Success');
-    };
+   
 
  $scope.showModal = false;
-    $scope.invoceviewd = "";
+    $scope.invoceviewed = "";
     $scope.toggleModal = function (invoiceClicked) {
-        $scope.invoceviewd = invoiceClicked;
+        $scope.invoceviewed = invoiceClicked;
         $scope.showModal = !$scope.showModal;
     };
-
-
 }]);
 
 tacdisDeluxeApp.directive('modal', function () {
@@ -42,7 +33,7 @@ tacdisDeluxeApp.directive('modal', function () {
               '<div class="modal-content">' +
                 '<div class="modal-header">' +
                   '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
-                  '<h4 class="modal-title"> Invoice {{ invoceviewd }} </h4>' +
+                  '<h4 class="modal-title"> Invoice {{ invoceviewed }} </h4>' +
                 '</div>' +
                 '<div class="modal-body" ng-transclude></div>' +
               '</div>' +
