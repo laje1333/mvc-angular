@@ -40,7 +40,8 @@ namespace TacdisDeluxeAPI.Controllers
 
 
         // POST: api/Vehicle
-        public void Post([FromBody]string value)
+        [System.Web.Http.HttpPost]
+        public void AddCar(FormCollection car)
         {
             int i = 0;
             i += 2;
