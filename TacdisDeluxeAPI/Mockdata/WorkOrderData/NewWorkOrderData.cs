@@ -7,6 +7,9 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 {
     public class NewWorkOrderData
     {
+        //Temporary Solution
+        private static string CurrentWOHID;
+
         public static string GetVehDesc(string RegNr)
         {
             string response = "";
@@ -32,8 +35,7 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             }
             return response;
         }
-
-
+        
         public static string GetVehRegDate(string RegNr)
         {
             string response = "";
@@ -89,27 +91,7 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
         public static string GetDriver(string RegNr)
         {
             string response = "";
-            //switch (RegNr)
-            //{
-            //    case "HTP804":
-            //        response = "2008-09-19";
-            //        break;
-            //    case "MFB412":
-            //        response = "2011-12-19";
-            //        break;
-            //    case "GMK765":
-            //        response = "2012-04-02";
-            //        break;
-            //    case "WRZ004":
-            //        response = "2005-04-15";
-            //        break;
-            //    case "DSP793":
-            //        response = "2010-04-23";
-            //        break;
-            //    default:
-            //        break;
-            //}
-            response = GetOwner(RegNr);
+            //response = GetOwner(RegNr);
             return response;
         }
 
@@ -189,6 +171,18 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
                     break;
             }
             return response;
+        }
+
+        internal static string GetNewWOH()
+        {
+            Random rand = new Random();
+            CurrentWOHID = (rand.Next(200000) + 1000000).ToString();
+            return CurrentWOHID;
+        }
+
+        internal static string GetCurrentWOH()
+        {
+            return CurrentWOHID;
         }
     }
 }

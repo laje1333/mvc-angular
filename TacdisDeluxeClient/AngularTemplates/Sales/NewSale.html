@@ -26,15 +26,9 @@
                         <div class="col-md-6">
                             <table id="salesValues" class="table table-striped">
                                 <tr>
-                                    <th>
-                                        Type:
-                                    </th>
-                                    <th>
-                                        Info:
-                                    </th>
-                                    <th>
-                                        Cost:
-                                    </th>
+                                    <th>Type:</th>
+                                    <th>Info:</th>
+                                    <th>Cost:</th>
                                 </tr>
                                 <tr ng-repeat="r in record">
                                     <td>
@@ -48,6 +42,8 @@
                                     </td>
                                 </tr>
                             </table>
+                            <p>{{totalCost}}</p>
+                            
                         </div>
                     </div>
                     

@@ -1,17 +1,12 @@
 ﻿
 
 <div id="first_row" class="row">
-
     <div id="model" class="col-md-4">
         <div class="panel panel-default">
-            
             <div class="form-group panel-body slidebody">
-
-
                 <label for="brandSelect">Brand:</label>
-                <select class="form-control" id="brandSelect" ng-model="selectedBrand" ng-change="brandSelector(); brandEnabler()">
+                <select class="form-control" id="brandSelect" ng-model="selectedBrand" ng-change="brandSelector(); brandEnabler();">
                     <option value="Volvo">Volvo</option>
-                    <option value="Ford">Ford</option>
                 </select>
 
                 <label for="modelyearSelect">Model Year:</label>
@@ -22,14 +17,10 @@
                 <label for="modelSelect">Model:</label>
                 <select class="form-control" id="modelSelect" ng-disabled="modelDisabled" ng-model="selectedModel" ng-change="modelSelector(); extendElement('enginePanel')">
                     <option ng-repeat="mYear in modelyear">{{mYear}}</option>
-
                 </select>
-
             </div>
         </div>
     </div>
-
-
 </div>
 <div id="second_row" class="row">
     <div id="engine" class="col-md-4">
@@ -40,9 +31,7 @@
                 <label for="enginetype">Type:</label>
                 <select class="form-control" id="enginetype" ng-model="selectedEngineType" ng-change="engineGroupEnabler()">
                     <option ng-repeat="engType in engineType">{{engType}}</option>
-
                 </select>
-
                 <label for="enginegroup">Engine group:</label>
                 <select class="form-control" id="enginegroup" ng-disabled="engineGroupDisabled" ng-model="selectedEngineGroup" ng-change="engineDescEnabler()">
                     <option ng-repeat="engGroup in engineGroup">{{engGroup}}</option>
@@ -53,85 +42,66 @@
                     <option ng-repeat="engDesc in engineDescription">{{engDesc}}</option>
                 </select>
             </div>
-
         </div>
     </div>
-
     <div id="transmission" class="col-md-4">
         <div class="panel panel-default">
             <panelheader data-title="Transmission"></panelheader>
             <div class="form-group panel-body default-collapsed" id="transmissionPanel">
-
                 <label for="transmissiontype">Type:</label>
                 <select class="form-control" id="transmissiontype" ng-model="selectedTransmissionType" ng-change="transmissionGroupEnabler()">
                     <option ng-repeat="transType in transmissionType">{{transType}}</option>
-
                 </select>
-
                 <label for="transmissiongroup">Transmission group:</label>
                 <select class="form-control" id="transmissiongroup" ng-disabled="transmissionGroupDisabled" ng-model="selectedTransmissionGroup" ng-change="transmissionDescriptionEnabler()">
                     <option ng-repeat="transGrp in transmissionGroup">{{transGrp}}</option>
                 </select>
-
                 <label for="transmissionDesc">Description:</label>
                 <select class="form-control" id="transmissionDesc" ng-disabled="transmissionDescriptionDisabled" ng-model="selectedTransmissionDesc" ng-change="extendElement('colorPanel')">
                     <option ng-repeat="transDesc in transmissionDescription">{{transDesc}}</option>
                 </select>
-
             </div>
         </div>
     </div>
-
     <div id="color" class="col-md-4">
         <div class="panel panel-default">
             <panelheader data-title="Exterior"></panelheader>
             <div class="form-group panel-body default-collapsed" id="colorPanel">
-
                 <label for="painttypeSelect">Paint type:</label>
                 <select class="form-control" id="painttypeSelect" ng-model="selectedPaintType" ng-change="paintDescriptionEnabler()">
                     <option ng-repeat="pType in paintType">{{pType}}</option>
-
                 </select>
-
                 <label for="paintdescSelect">Paint description:</label>
                 <select class="form-control" id="paintdescSelect" ng-disabled="paintDescriptionDisabled" ng-model="selectedPaintDescription" ng-change="paintGroupEnabler()">
                     <option ng-repeat="pDesc in paintDescription">{{pDesc}}</option>
                 </select>
-
                 <label for="groupSelect">Group</label>
                 <select class="form-control" id="groupSelect" ng-disabled="paintGroupDisabled" ng-model="selectedPaintGroup" ng-change="extendElement('interiorPanel')">
                     <option ng-repeat="pGroup in paintGroup">{{pGroup}}</option>
                 </select>
-
             </div>
         </div>
     </div>
-
     <div id="interior" class="col-md-4">
         <div class="panel panel-default">
             <panelheader data-title="Interior"></panelheader>
             <div class="form-group panel-body default-collapsed" id="interiorPanel">
-
                 <label for="material">Material:</label>
                 <select class="form-control" id="material" ng-model="selectedInteriorMaterial" ng-change="interiorDescEnabler()">
-                    >
                     <option ng-repeat="iMaterial in interiorMaterial">{{iMaterial}}</option>
                 </select>
-
                 <label for="colordesc">Color description:</label>
                 <select class="form-control" id="colordesc" ng-disabled="interiorDescDisabled" ng-model="selectedInteriorColorDesc" ng-change="interiorColorEnabler()">
                     <option ng-repeat="iDesc in interiorDescription">{{iDesc}}</option>
                 </select>
-
                 <label for="intcolor">Color:</label>
                 <select class="form-control" id="intcolor" ng-disabled="interiorColorDisabled" ng-model="selectedInteriorColor" ng-change="saveEnabler()">
                     <option ng-repeat="iColor in interiorColor">{{iColor}}</option>
                 </select>
-
             </div>
         </div>
     </div>
 </div>
 
-<button type="button" class="btn btn-primary btn-md" ng-click="saveData()" ng-disabled="saveDisabled">Save</button>
+<button type="button" class="btn btn-primary btn-md" ng-click="saveData()">Save</button>
 <button type="button" class="btn btn-warning btn-md" ng-click="reloadRoute()">Discard</button>

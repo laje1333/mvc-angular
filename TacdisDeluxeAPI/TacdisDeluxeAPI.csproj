@@ -250,6 +250,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
+    <Compile Include="Mockdata\VehicleData\NewVehicleProperties.cs" />
     <Compile Include="Mockdata\VehicleData\Model.cs" />
     <Compile Include="Mockdata\VehicleData\ModelYear.cs" />
     <Compile Include="Mockdata\VehicleData\NewVehicleData.cs" />
