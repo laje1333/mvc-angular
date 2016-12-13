@@ -196,6 +196,11 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     
 });
 
+tacdisDeluxeApp.controller("VehicleMaintenanceController", function () {
+
+});
+
+
 
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider

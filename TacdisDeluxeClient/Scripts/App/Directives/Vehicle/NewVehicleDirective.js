@@ -9,7 +9,6 @@
         replace: true,
         link: function (scope, element, attrs) {
             
-            
         }
     };
 })
@@ -25,7 +24,7 @@ tacdisDeluxeApp.directive('panelheaderwithclick', function () {
         replace: true,
         link: function (scope, element, attrs) {
             $(element).click(function () {
-                $(element).slideToggle();
+                $(element).next().slideToggle();
             });
 
         }
