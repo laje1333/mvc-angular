@@ -1,9 +1,20 @@
 ﻿
 <div ng-controller="VehicleMaintenanceController" class="container">
-    <button ng-click="getNewVehicles()">Click me</button>
+    
+    <form>
+        <div class="input-group">
+            <div class="input-group-btn">
+                <input type="text" class="form-control" placeholder="Search" ng-submit="getNewVehicles()">
+                <button class="btn btn-default" type="submit" ng-click="getNewVehicles()"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+        </div>
+    </form>
+
     <div ng-show="records.length">
         <table ng-table="newVehicleTable" class="table table-striped table-hover">
             <tr ng-repeat="record in $data">
+                <td data-title="'ID'">{{record.ID}}</td>
+                <td data-title="'Brand'">{{record.Brand}}</td>
                 <td data-title="'Model Year'">{{record.ModelYear}}</td>
                 <td data-title="'Model'">{{record.Model}}</td>
                 <td data-title="'Engine Type'">{{record.EngineType}}</td>
@@ -18,6 +29,7 @@
                 <td data-title="'Interior Material'">{{record.InteriorMaterial}}</td>
                 <td data-title="'Interior Color Description'">{{record.InteriorColorDescription}}</td>
                 <td data-title="'Interior Color'">{{record.InteriorColor}}</td>
+                <td><button class="btn btn-warning">Delete</button></td>
             </tr>
         </table>
     </div>
