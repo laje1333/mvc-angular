@@ -204,7 +204,7 @@ tacdisDeluxeApp.config(function ($routeProvider) {
             controller: 'VehicleController'
         })
         .when('/usedVehicle', {
-        templateUrl: '/AngularTemplates/Vehicle/Sales/UsedVehicle.html',
+        templateUrl: '/AngularTemplates/Vehicle/Sales/NewVehicleMaintenance.html',
         controller: 'VehicleController'
     });
 });
