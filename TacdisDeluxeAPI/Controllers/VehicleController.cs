@@ -41,10 +41,9 @@ namespace TacdisDeluxeAPI.Controllers
 
         // POST: api/Vehicle
         [System.Web.Http.HttpPost]
-        public void AddCar(FormCollection car)
+        public void AddCar(NewVehicleProperties properties)
         {
-            int i = 0;
-            i += 2;
+            NewVehicleProperties.addVehicleToRecord(properties);
         }
 
         // PUT: api/Vehicle/5
