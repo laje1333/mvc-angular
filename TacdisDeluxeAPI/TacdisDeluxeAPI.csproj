@@ -254,6 +254,9 @@
     <Compile Include="Mockdata\VehicleData\ModelYear.cs" />
     <Compile Include="Mockdata\VehicleData\NewVehicleData.cs" />
     <Compile Include="Mockdata\VehicleData\NewVehicleDataHash.cs" />
+    <Compile Include="Mockdata\VehicleData\NewVehicleProperties.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Mockdata\WorkOrderData\NewWoJobData.cs" />
     <Compile Include="Mockdata\WorkOrderData\NewWorkOrderData.cs" />
     <Compile Include="Mockdata\WorkOrderData\WohListData.cs" />

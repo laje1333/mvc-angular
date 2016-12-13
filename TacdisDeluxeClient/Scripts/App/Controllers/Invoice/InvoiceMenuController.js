@@ -1,11 +1,15 @@
 ﻿
-// route
+
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider
-        .when('/search', {
-            templateUrl: '/AngularTemplates/Invoice/invoice_search.html',
-            controller: 'InvoiceSearchCtrl'
-        });
+        .when('/WsInvoiceOverview', {
+            templateUrl: '/AngularTemplates/Invoice/WsInvoiceOverview.html',
+            controller: 'WsInvoiceOverviewCtrl'
+        })
+    .when('/WsInvoiceMaintenance', {
+        templateUrl: '/AngularTemplates/Invoice/WsInvoiceMaintenance.html',
+        controller: 'WsInvoiceMaintenanceCtrl'
+    });
 
 
 });

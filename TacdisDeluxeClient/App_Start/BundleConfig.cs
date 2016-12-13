@@ -18,7 +18,8 @@ namespace TacdisDeluxeClient
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                         "~/Scripts/angular.js*",
                         "~/Scripts/angular-resource.js",
-                        "~/Scripts/angular-route.js"));
+                        "~/Scripts/angular-route.js",
+                         "~/Scripts/ng-table.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                         "~/Scripts/App/app.js",
@@ -36,7 +37,8 @@ namespace TacdisDeluxeClient
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/ng-table.min.css"));
         }
     }
 }

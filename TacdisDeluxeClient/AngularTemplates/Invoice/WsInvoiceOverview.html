@@ -1,13 +1,8 @@
-﻿<style>
- 
-</style>
-
-
+﻿
 <h3>Search Workshop Invoice</h3>
 
     <form>
         <div class="input-group">
-            
             <div class="input-group-btn">
                 <input type="text" class="form-control" placeholder="Search" ng-submit="SearchInvoices()">
                 <button class="btn btn-default" type="submit" ng-click="SearchInvoices()"><i class="glyphicon glyphicon-search"></i></button>
@@ -17,10 +12,11 @@
 
 <br/>
 
-<div ng-controller="InvoiceSearchCtrl">
-    <div ng-show="test">
+<div ng-controller="WsInvoiceOverviewCtrl" class="container">
+
+    <div ng-show="records.length">
         <table ng-table="invoiceTable" class="table table-striped table-hover">
-            <tr ng-repeat="record in records">
+            <tr ng-repeat="record in $data">
                 <td data-title="'Invoice number'">{{record.InvoiceNumber}}</td>
                 <td data-title="'Invoice state'">{{record.InvoiceState}}</td>
                 <td data-title="'Wo number'">{{record.WoNumber}}</td>
@@ -33,15 +29,13 @@
                 <td data-title="'Debit/Credit'">{{record.DebitCredit}}</td>
                 <td data-title="'Vat'">{{record.Vat}}</td>
                 <td data-title="'Invoice amount'">{{record.InvoiceAmount}}</td>
-                <td data-title="'Preview'"><a href ng-click="toggleModal(record.InvoiceNumber)">View</a></td>
+                <td data-title="'Preview'"><button ng-click="toggleModal(record.InvoiceNumber)" class="btn btn-default">view</button></td>
             </tr>
         </table>
     </div>
-</div>
-<div ng-controller="MainCtrl" class="container">
-    <button ng-click="toggleModal('Success')" class="btn btn-default">view</button>
     <modal visible="showModal">
-        Any additional data / buttons
+        <img src="http://www.tradeinvoice.com/images_website/InvoiceExample2.png" alt="Invoice" style="width: 543px; height: 767px; ">
     </modal>
 </div>
+
 

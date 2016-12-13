@@ -67,20 +67,63 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
     //Post
 
+    //Glöm för helvete inte api i pathen
+    //Skapa ett objekt, matcha objektets properties namn and baam, woorks.
+
+    $scope.selectedBrand = "";
+    $scope.selectedModelYear = "";
+    $scope.selectedModel = "";
+
+    $scope.selectedEngineType = "";
+    $scope.selectedEngineGroup = "";
+    $scope.selectedEngineDesc = "";
+
+    $scope.selectedTransmissionType = "";
+    $scope.selectedTransmissionGroup = "";
+    $scope.selectedTransmissionDesc = "";
+
+    $scope.selectedPaintType = "";
+    $scope.selectedPaintDescription = "";
+    $scope.selectedPaintGroup = "";
+
+    $scope.selectedInteriorMaterial = "";
+    $scope.selectedInteriorColorDesc = "";
+    $scope.selectedInteriorColor = "";
 
     $scope.saveData = function () {
+        
+        var vehicleData = {
+            Brand: $scope.selectedBrand,
+            ModelYear: $scope.selectedModelYear,
+            Model: $scope.selectedModel,
+
+            EngineType: $scope.selectedEngineType,
+            EngineGroup: $scope.selectedEngineGroup,
+            EngineDescription: $scope.selectedEngineDesc,
+
+            TransmissionType: $scope.selectedTransmissionType,
+            TransmissionGroup: $scope.selectedTransmissionGroup,
+            TransmissionDescription: $scope.selectedTransmissionDesc,
+
+            PaintType: $scope.selectedPaintType,
+            PaintDescription: $scope.selectedPaintDescription,
+            PaintGroup: $scope.selectedPaintGroup,
+
+            InteriorMaterial: $scope.selectedInteriorMaterial,
+            InteriorColorDescription: $scope.selectedInteriorColorDesc,
+            InteriorColor: $scope.selectedInteriorColor,
+        }
 
         $http({
             method: 'POST',
-            url: "http://localhost:57661/Vehicle",
-            headers: { 'Content-Type': 'text/plain' },
-            data: "Halloj",
+            url: "http://localhost:57661/api/Vehicle/AddCar",
+            data: vehicleData
         }).success(function () { });
 
     }
 
     
-    //Blabla
+    //General
     $scope.brandDisabled = true;
     $scope.brandEnabler = function () {
         $scope.brandDisabled = false;
@@ -153,6 +196,11 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     
 });
 
+tacdisDeluxeApp.controller("VehicleMaintenanceController", function () {
+
+});
+
+
 
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider
@@ -161,7 +209,7 @@ tacdisDeluxeApp.config(function ($routeProvider) {
             controller: 'VehicleController'
         })
         .when('/usedVehicle', {
-        templateUrl: '/AngularTemplates/Vehicle/Sales/UsedVehicle.html',
+        templateUrl: '/AngularTemplates/Vehicle/Sales/NewVehicleMaintenance.html',
         controller: 'VehicleController'
     });
 });

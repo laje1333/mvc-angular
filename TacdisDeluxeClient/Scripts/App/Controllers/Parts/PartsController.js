@@ -20,10 +20,40 @@ var invoices = [
 ];
 
 
-tacdisDeluxeApp.controller("PartsController", function ($scope) {
+tacdisDeluxeApp.controller("PartsController", function ($scope, $http) {
+    $scope.showez = false;
+
     $scope.records = invoices;
     $scope.listParts = function () {
         $scope.records = invoices;
+    };
+
+
+    $scope.showezMoi = function () {
+        $http({
+            method: 'GET',
+            url: 'http://localhost:57661/api/Part/Kalle?id=1234444'
+        }).then(function successCallback(response) {
+            console.log(response);
+            $scope.showez = true;
+        }, function errorCallback(response) {
+            console.log(response);
+        });
+    };
+
+    $scope.postez = function () {
+        $http.post('http://localhost:57661/api/Part/Kaka', 
+            {
+                'name': 'Kalle',
+                'email': 'kalle.henriksson@gmail.com'
+            },
+            {
+                'headers': {
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            }
+            ).success(function (data) {
+        });
     };
 });
 

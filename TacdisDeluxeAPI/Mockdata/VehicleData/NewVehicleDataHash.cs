@@ -35,7 +35,8 @@ namespace TacdisDeluxeAPI.Mockdata.VehicleData
             xc90.addInteriorDescriptions("Clear leather");
             xc90.addInteriorColor("Brown");
             xc90.addInteriorColor("White");
-            xc90.addInteriorColor("Gray");
+            xc90.addInteriorColor("Dark-Gray");
+            xc90.addInteriorColor("Light-Gray");
             v2011.addModel(xc90);
 
             Model v70 = new Model("V-70");

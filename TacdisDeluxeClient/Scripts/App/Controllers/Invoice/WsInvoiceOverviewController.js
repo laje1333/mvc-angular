@@ -1,55 +1,30 @@
 ﻿
 
 
-tacdisDeluxeApp.controller("InvoiceSearchCtrl", ["$scope", "NgTableParams", "$http", "$filter", "$window", function ($scope, ngTableParams, $http, $filter, $window) {
-    $scope.test = true;
-
+tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
+    
     $scope.SearchInvoices = function () {
         $http.get("http://localhost:57661/api/invoice/GetInvoice?query=1")
     .then(function (response) {
         var obj = JSON.parse(response.data);
         $scope.records = obj.invoices;
 
-        if ($scope.records.length) {
-            //$scope.$apply(function() { $scope.test = true; });
-
-        }
         $scope.invoiceTable = new ngTableParams({
-            page: 1, // show first page
-            count: 10 // count per page
 
         }, {
-            //total: $scope.records.length, 
-            //getData: function($defer, params) {
-            //    $scope.data = $scope.records.slice((params.page() - 1) * params.count(), params.page() * params.count());
-            //    $defer.resolve($scope.records);
-            //}
-
             dataset: $scope.records
         });
-
     });
-
     };
+   
 
-
-
-    $scope.PreviewInvoices = function (invoiceNumber) {
-        console.log("PreviewInvoices");
-
-        $scope.test = false;
-
-    };
-}]);
-
-tacdisDeluxeApp.controller('MainCtrl', function ($scope) {
-    $scope.showModal = false;
-    $scope.buttonClicked = "";
-    $scope.toggleModal = function (btnClicked) {
-        $scope.buttonClicked = btnClicked;
+ $scope.showModal = false;
+    $scope.invoceviewed = "";
+    $scope.toggleModal = function (invoiceClicked) {
+        $scope.invoceviewed = invoiceClicked;
         $scope.showModal = !$scope.showModal;
     };
-});
+}]);
 
 tacdisDeluxeApp.directive('modal', function () {
     return {
@@ -58,7 +33,7 @@ tacdisDeluxeApp.directive('modal', function () {
               '<div class="modal-content">' +
                 '<div class="modal-header">' +
                   '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>' +
-                  '<h4 class="modal-title">{{ buttonClicked }} clicked!!</h4>' +
+                  '<h4 class="modal-title"> Invoice {{ invoceviewed }} </h4>' +
                 '</div>' +
                 '<div class="modal-body" ng-transclude></div>' +
               '</div>' +
