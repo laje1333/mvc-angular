@@ -42,6 +42,8 @@ namespace TacdisDeluxeAPI.Controllers
         // POST: api/Vehicle
         public void Post([FromBody]string value)
         {
+            int i = 0;
+            i += 2;
         }
 
         // PUT: api/Vehicle/5

@@ -4,7 +4,7 @@
 
     <div id="model" class="col-md-4">
         <div class="panel panel-default">
-            <panelheader data-title="Model"></panelheader>
+            
             <div class="form-group panel-body slidebody">
 
 
@@ -133,5 +133,5 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-primary btn-md" ng-disabled="saveDisabled">Save</button>
-<button type="button" class="btn btn-warning btn-md">Discard</button>
+<button type="button" class="btn btn-primary btn-md" ng-click="saveData()" ng-disabled="saveDisabled">Save</button>
+<button type="button" class="btn btn-warning btn-md" ng-click="reloadRoute()">Discard</button>

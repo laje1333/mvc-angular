@@ -1,8 +1,10 @@
 ﻿
 
 
-tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $timeout) {
+tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route) {
     
+
+    //Get
     var urlBeginning = 'http://localhost:57661/api/vehicle/GetModelYears/';
     $scope.brandSelector = function () {
 
@@ -62,6 +64,23 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $timeou
                 });
     }
 
+
+    //Post
+
+
+    $scope.saveData = function () {
+
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/Vehicle",
+            headers: { 'Content-Type': 'text/plain' },
+            data: "Halloj",
+        }).success(function () { });
+
+    }
+
+    
+    //Blabla
     $scope.brandDisabled = true;
     $scope.brandEnabler = function () {
         $scope.brandDisabled = false;
@@ -127,6 +146,9 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $timeou
         $("#" + id).slideDown("fast");
     }
 
+    $scope.reloadRoute = function () {
+        $route.reload();
+    }
 
     
 });
