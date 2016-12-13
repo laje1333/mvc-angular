@@ -228,6 +228,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Custom.css" />
+    <Content Include="Content\ng-table.min.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -307,8 +308,8 @@
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceMenuController.js" />
-    <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceOverviewController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceMaintenanceController.js" />
+    <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceOverviewController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsModuleConfig.js" />
     <Content Include="Scripts\App\Controllers\Sales\SalesController.js" />
@@ -1132,6 +1133,7 @@
     <Content Include="Views\Invoice\_SearchInvoice.cshtml" />
     <Content Include="Views\Vehicle\_Menu.cshtml" />
     <Content Include="Views\Sales\_Menu.cshtml" />
+    <Content Include="Scripts\ng-table.min.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AngularTemplates\Vehicle\Scripts\" />
