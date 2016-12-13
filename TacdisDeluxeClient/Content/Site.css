@@ -8,6 +8,15 @@ a:visited, a:hover, a:active, a:link{
 body {
     padding-top: 75px;
     padding-bottom: 20px;
+
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #373a3c;
+}
+
+label {
+    font-weight: normal;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -62,7 +71,7 @@ textarea {
     }
 }
     .accordion-menu-container {
-        background-color: #259AC5; /*   3A3B3D, 259AC5, */
+        background-color: #272727; /*   3A3B3D, 259AC5, 272727 */
         padding: 75px 0px 0px 0px;
     }
 
@@ -98,6 +107,7 @@ textarea {
     .accordion-menu-item {
         /*border: 1px solid #eeeeee;*/
         display: block;
+        border-bottom: 1px solid #363636;
         /*margin-bottom: 5px;*/
         /*background-color: #343537;*/
     }
@@ -110,7 +120,6 @@ textarea {
         padding: 10px;
         margin-bottom: 0;
         /*background-color: #f5f5f5;*/
-        border-bottom: 1px solid rgba(0,0,0,.125);
         /*text-transform: uppercase;*/
     }
 
@@ -119,7 +128,7 @@ textarea {
 
         position: relative;
         
-        background-color: #158AB5; /* 3A3B3D, */
+        background-color: #363636; /* 3A3B3D, 158AB5 */
 
         /*margin-bottom: .75rem;*/
         /*background-color: #fff;*/
@@ -136,13 +145,26 @@ textarea {
         color: #ffffff; /*    D0D1D3, */
     }
 
-    a.accordion-sub-menu-item-text:hover,
-    a.accordion-sub-menu-item-text.marked{
+    a.accordion-sub-menu-item-text:hover{
         /*color: #03CB96;*/
-        border-left: 5px solid #ffffff; /*  03CB96, */
+        border-right: 5px solid #1A9DD3; /*  03CB96, */
+        padding-right: 5px;
+    }
+
+    a.accordion-sub-menu-item-text.marked {
+        border-left: 5px solid #1A9DD3; /*  03CB96, */
         padding-left: 5px;
     }
 
+    /*a.accordion-sub-menu-item-text:hover,
+    a.accordion-sub-menu-item-text.marked{
+        width: 0; 
+        height: 0; 
+        border-top: 60px solid transparent;
+        border-bottom: 60px solid transparent;
+  
+        border-left: 60px solid green;
+    }*/
 
 /* END Simple accordion menu        */
 
@@ -172,12 +194,34 @@ table.table tr:last-child td:last-child {
     border-bottom-right-radius: 3px;
 }
 
-.navbar-custom{
-    /*background-color: #1A9DD3;*/
-    height: 75px;
+@media (min-width: 768px) {
+    /*.navbar-custom,
+    .navbar-custom > div,
+    .navbar-custom > div > div,
+    .navbar-custom > div > div > ul,
+    .navbar-custom > div > div > ul > li, 
+    .navbar-custom > div > div > ul > li a{
+        background-color: #1A9DD3; /*   1A9DD3,     
+        height: 75px;
+    }*/
+    .navbar-default .navbar-nav > li > a {
+        color: #ffffff;
+    }
+    .navbar-custom{
+        background-color: #1A9DD3; /*   1A9DD3,     */
+    }
+    .navbar-nav-custom > li > a{
+        height: 75px;
+    }
+    
+    .navbar-custom > div > div > ul > li a{
+        padding-top: 0px;
+        padding-bottom: 0px;
+        line-height: 75px;
+    }
 }
 .nav-logo{
-    background-color: #259AC5;
+    /*background-color: #259AC5;*/
     min-height: 75px;
     height: 100%;
     text-align:center;
@@ -201,6 +245,33 @@ table.table tr:last-child td:last-child {
     border-width: 0px;
     width: 100%;
     max-width: 129px;
+}
+
+.page-content{
+    padding-top: 16px;
+}
+
+.row{
+    margin-bottom: 8px;
+}
+
+fieldset.custom-fieldset {
+    padding-bottom: 16px;
+}
+
+@media (min-width: 576px){
+    .form-inline .form-group {
+        display: inline-block;
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+    .form-inline .form-group .input-group {
+        display: inline-table;
+    }
+
+    .form-inline .input-group .form-control, .form-inline .input-group .input-group-addon, .form-inline .input-group .input-group-btn {
+        width: auto;
+    }
 }
 
 

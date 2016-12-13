@@ -17,6 +17,12 @@ namespace TacdisDeluxeAPI.Controllers
             return "Rulez!" + " id = " + id;
         }
 
+        [System.Web.Http.HttpPost]
+        public void Kaka(FormCollection frm)
+        {
+            var i = 0;
+        }
+
         //// GET: api/Part
         //public string Get()
         //{

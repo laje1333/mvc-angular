@@ -217,8 +217,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AngularTemplates\Invoice\invoice_search.html" />
+    <Content Include="AngularTemplates\Parts\price_query_form.html" />
+    <Content Include="AngularTemplates\Parts\_modal_search.html" />
     <Content Include="AngularTemplates\Sales\NewSale.html" />
     <Content Include="AngularTemplates\Sales\OldSale.html" />
+    <Content Include="AngularTemplates\Invoice\WorkshopInvoiceOwerview.html" />
     <Content Include="AngularTemplates\Vehicle\Sales\NewVehicle.html" />
     <Content Include="AngularTemplates\Vehicle\Sales\UsedVehicle.html" />
     <Content Include="AngularTemplates\WorkOrder\WOH_Finalize.html" />
@@ -305,6 +308,7 @@
     <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceMenuController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceSearchController.js" />
+    <Content Include="Scripts\App\Controllers\Invoice\InvoiceTableController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsModuleConfig.js" />
     <Content Include="Scripts\App\Controllers\Sales\SalesController.js" />

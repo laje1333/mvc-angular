@@ -20,6 +20,14 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $http) {
         $('.searchOptions').hide();
         $('#Search' + $scope.searchTypeOfItem).show();
     };
+
+    $scope.calcTotal = function () {
+        $scope.totalCost = 0;
+        for (var i = 0; i < $scope.record.length; i++) {
+            $scope.totalCost += $scope.record[i].cost;
+        }
+        
+    };
 });
 
 tacdisDeluxeApp.config(function ($routeProvider) {
