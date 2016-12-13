@@ -1,5 +1,40 @@
-﻿tacdisDeluxeApp.controller("WorkOrderController", function ($scope) {
+﻿tacdisDeluxeApp.controller("WorkOrderController", function ($rootScope, $scope, $http) {
+    $scope.woh_regNr = $rootScope.woh_regNr;
+    $scope.currentWoh = $rootScope.currentWoh;
 
+    $scope.WOH_SetWOH = function () {
+        $rootScope.currentWoh = $scope.currentWoh;
+    }
+    $scope.WOH_AddNewWOH = function () {
+
+        $scope.WOH_SetWOH();
+
+    }
+
+
+    
+    $scope.RegNrChanged = function () {
+        $rootScope.woh_regNr = $scope.woh_regNr;
+
+        $scope.urlString = 'http://localhost:57661/api/workorder/?regnr=' + $scope.woh_regNr;
+        
+        $http.get($scope.urlString).
+                then(function (response) {
+                    var components = response.data;
+
+                    $scope.woh_vehDesc = components[0].split(',');
+                    $scope.woh_regDate = components[1].split(',');
+                    $scope.woh_owner = components[2].split(',');
+                    //$scope.woh_driver = components[3].split(',');
+                    $scope.woh_phone = components[4].split(',');
+                    $scope.woh_lastVisDate = components[5].split(',');
+                    $scope.woh_lastVisMileage = components[6].split(',');
+
+                });
+    }
+
+
+    $scope.RegNrChanged();
 });
 
 

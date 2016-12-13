@@ -217,12 +217,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AngularTemplates\Invoice\invoice_search.html" />
+    <Content Include="AngularTemplates\Parts\price_query_form.html" />
+    <Content Include="AngularTemplates\Parts\_modal_search.html" />
+    <Content Include="AngularTemplates\Sales\NewSale.html" />
+    <Content Include="AngularTemplates\Sales\OldSale.html" />
     <Content Include="AngularTemplates\Invoice\WorkshopInvoiceOwerview.html" />
     <Content Include="AngularTemplates\Vehicle\Sales\NewVehicle.html" />
     <Content Include="AngularTemplates\Vehicle\Sales\UsedVehicle.html" />
     <Content Include="AngularTemplates\WorkOrder\WOH_Finalize.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Custom.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -306,8 +311,10 @@
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceTableController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsModuleConfig.js" />
+    <Content Include="Scripts\App\Controllers\Sales\SalesController.js" />
     <Content Include="Scripts\App\Controllers\Vehicle\VehicleController.js" />
     <Content Include="Scripts\App\Controllers\WorkOrder\WorkOrderController.js" />
+    <Content Include="Scripts\App\Directives\Vehicle\NewVehicleDirective.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -1127,8 +1134,8 @@
     <Content Include="Views\Sales\_Menu.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AngularTemplates\Vehicle\Scripts\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Scripts\App\Directives\Vehicle\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

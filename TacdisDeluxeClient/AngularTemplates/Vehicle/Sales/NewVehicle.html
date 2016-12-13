@@ -1,60 +1,106 @@
 ﻿
+
 <div id="first_row" class="row">
 
     <div id="model" class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Model</div>
-            <div class="form-group panel-body">
+            
+            <div class="form-group panel-body slidebody">
+
 
                 <label for="brandSelect">Brand:</label>
-                <select class="form-control" id="brandSelect">
-                    <option>Volvo</option>
-                    <option>Ford</option>
+                <select class="form-control" id="brandSelect" ng-model="selectedBrand" ng-change="brandSelector(); brandEnabler()">
+                    <option value="Volvo">Volvo</option>
+                    <option value="Ford">Ford</option>
                 </select>
 
                 <label for="modelyearSelect">Model Year:</label>
-                <select class="form-control" id="modelyearSelect">
+                <select class="form-control" id="modelyearSelect" ng-disabled="brandDisabled" ng-model="selectedModelYear" ng-change="modelYearSelector(); modelEnabler()">
                     <option ng-repeat="y in year">{{y}}</option>
                 </select>
 
                 <label for="modelSelect">Model:</label>
-                <select class="form-control" id="modelSelect">
-                    <option ng-repeat="mod in carmodel">{{mod}}</option>
+                <select class="form-control" id="modelSelect" ng-disabled="modelDisabled" ng-model="selectedModel" ng-change="modelSelector(); extendElement('enginePanel')">
+                    <option ng-repeat="mYear in modelyear">{{mYear}}</option>
+
                 </select>
 
-                <label for="typeSelect">Type:</label>
-                <select class="form-control" id="typeSelect">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<div id="second_row" class="row">
+    <div id="engine" class="col-md-4">
+        <div class="panel panel-default">
+            <panelheader data-title="Engine"></panelheader>
+            <div class="form-group panel-body default-collapsed" id="enginePanel">
+
+                <label for="enginetype">Type:</label>
+                <select class="form-control" id="enginetype" ng-model="selectedEngineType" ng-change="engineGroupEnabler()">
+                    <option ng-repeat="engType in engineType">{{engType}}</option>
+
                 </select>
+
+                <label for="enginegroup">Engine group:</label>
+                <select class="form-control" id="enginegroup" ng-disabled="engineGroupDisabled" ng-model="selectedEngineGroup" ng-change="engineDescEnabler()">
+                    <option ng-repeat="engGroup in engineGroup">{{engGroup}}</option>
+                </select>
+                <label for="enginedesc">Description:</label>
+                <select class="form-control" id="enginedesc" ng-disabled="engineDescDisabled" ng-model="selectedEngineDesc" ng-change="extendElement('transmissionPanel')">
+                    <option></option>
+                    <option ng-repeat="engDesc in engineDescription">{{engDesc}}</option>
+                </select>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="transmission" class="col-md-4">
+        <div class="panel panel-default">
+            <panelheader data-title="Transmission"></panelheader>
+            <div class="form-group panel-body default-collapsed" id="transmissionPanel">
+
+                <label for="transmissiontype">Type:</label>
+                <select class="form-control" id="transmissiontype" ng-model="selectedTransmissionType" ng-change="transmissionGroupEnabler()">
+                    <option ng-repeat="transType in transmissionType">{{transType}}</option>
+
+                </select>
+
+                <label for="transmissiongroup">Transmission group:</label>
+                <select class="form-control" id="transmissiongroup" ng-disabled="transmissionGroupDisabled" ng-model="selectedTransmissionGroup" ng-change="transmissionDescriptionEnabler()">
+                    <option ng-repeat="transGrp in transmissionGroup">{{transGrp}}</option>
+                </select>
+
+                <label for="transmissionDesc">Description:</label>
+                <select class="form-control" id="transmissionDesc" ng-disabled="transmissionDescriptionDisabled" ng-model="selectedTransmissionDesc" ng-change="extendElement('colorPanel')">
+                    <option ng-repeat="transDesc in transmissionDescription">{{transDesc}}</option>
+                </select>
+
             </div>
         </div>
     </div>
 
     <div id="color" class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Exterior</div>
-            <div class="form-group panel-body">
+            <panelheader data-title="Exterior"></panelheader>
+            <div class="form-group panel-body default-collapsed" id="colorPanel">
 
                 <label for="painttypeSelect">Paint type:</label>
-                <select class="form-control" id="painttypeSelect">
-                    <option>Matte white</option>
-                    <option>Clear black</option>
-                    <option>Red</option>
+                <select class="form-control" id="painttypeSelect" ng-model="selectedPaintType" ng-change="paintDescriptionEnabler()">
+                    <option ng-repeat="pType in paintType">{{pType}}</option>
+
                 </select>
 
                 <label for="paintdescSelect">Paint description:</label>
-                <select class="form-control" id="paintdescSelect">
-                    <option>Matte white powderpainted</option>
-                    <option>Clear black</option>
+                <select class="form-control" id="paintdescSelect" ng-disabled="paintDescriptionDisabled" ng-model="selectedPaintDescription" ng-change="paintGroupEnabler()">
+                    <option ng-repeat="pDesc in paintDescription">{{pDesc}}</option>
                 </select>
 
                 <label for="groupSelect">Group</label>
-                <select class="form-control" id="groupSelect">
-                    <option>XC-90</option>
-                    <option>V-70</option>
+                <select class="form-control" id="groupSelect" ng-disabled="paintGroupDisabled" ng-model="selectedPaintGroup" ng-change="extendElement('interiorPanel')">
+                    <option ng-repeat="pGroup in paintGroup">{{pGroup}}</option>
                 </select>
 
             </div>
@@ -63,81 +109,23 @@
 
     <div id="interior" class="col-md-4">
         <div class="panel panel-default">
-            <div class="panel-heading">Interior</div>
-            <div class="form-group panel-body">
+            <panelheader data-title="Interior"></panelheader>
+            <div class="form-group panel-body default-collapsed" id="interiorPanel">
 
                 <label for="material">Material:</label>
-                <select class="form-control" id="material">
-                    <option>Leather</option>
-                    <option>standard</option>
+                <select class="form-control" id="material" ng-model="selectedInteriorMaterial" ng-change="interiorDescEnabler()">
+                    >
+                    <option ng-repeat="iMaterial in interiorMaterial">{{iMaterial}}</option>
                 </select>
 
                 <label for="colordesc">Color description:</label>
-                <select class="form-control" id="colordesc">
-                    <option>White leather</option>
-                    <option>Black leather</option>
+                <select class="form-control" id="colordesc" ng-disabled="interiorDescDisabled" ng-model="selectedInteriorColorDesc" ng-change="interiorColorEnabler()">
+                    <option ng-repeat="iDesc in interiorDescription">{{iDesc}}</option>
                 </select>
 
                 <label for="intcolor">Color:</label>
-                <select class="form-control" id="intcolor">
-                    <option>White</option>
-                    <option>Black</option>
-                </select>
-
-            </div>
-        </div>
-    </div>
-
-</div>
-<div id="second_row" class="row">
-    <div id="engine" class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">Engine</div>
-            <div class="form-group panel-body">
-
-                <label for="enginetype">Type:</label>
-                <select class="form-control" id="enginetype">
-                    <option>Diesel</option>
-                    <option>Petrol</option>
-                </select>
-
-                <label for="enginegroup">Engine group:</label>
-                <select class="form-control" id="enginegroup">
-                    <option>Group 1</option>
-                    <option>Group 2</option>
-                </select>
-
-                <label for="enginedesc">Description:</label>
-                <select class="form-control" id="enginedesc">
-                    <option>Very good engine yes</option>
-                    <option>Very bad engine yes</option>
-                </select>
-
-            </div>
-        </div>
-    </div>
-
-    <div id="transmission" class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading" id="transmissionHeadSlide">Transmission</div>
-            <div class="form-group panel-body" id="transmissionBodySlide">
-
-                <label for="transmissiontype">Type:</label>
-                <select class="form-control" id="transmissiontype">
-                    <option>Automatic</option>
-                    <option>Manual</option>
-                </select>
-
-                <label for="transmissiongroup">Transmission group:</label>
-                <select class="form-control" id="transmissiongroup">
-                    <option>Group 1</option>
-                    <option>Group 2</option>
-                </select>
-
-                <label for="transmissionDesc">Description:</label>
-                <select class="form-control" id="transmissionDesc">
-                    <option>Very good transmission yes</option>
-                    <option>Very bad transmission yes</option>
+                <select class="form-control" id="intcolor" ng-disabled="interiorColorDisabled" ng-model="selectedInteriorColor" ng-change="saveEnabler()">
+                    <option ng-repeat="iColor in interiorColor">{{iColor}}</option>
                 </select>
 
             </div>
@@ -145,5 +133,5 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-primary btn-md">Save</button>
-<button type="button" class="btn btn-warning btn-md">Discard</button>
+<button type="button" class="btn btn-primary btn-md" ng-click="saveData()" ng-disabled="saveDisabled">Save</button>
+<button type="button" class="btn btn-warning btn-md" ng-click="reloadRoute()">Discard</button>
