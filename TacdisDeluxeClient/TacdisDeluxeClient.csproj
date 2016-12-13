@@ -217,6 +217,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="AngularTemplates\Invoice\invoice_search.html" />
+    <Content Include="AngularTemplates\Parts\price_query_form.html" />
+    <Content Include="AngularTemplates\Parts\_modal_search.html" />
     <Content Include="AngularTemplates\Vehicle\Sales\NewVehicle.html" />
     <Content Include="AngularTemplates\Vehicle\Sales\UsedVehicle.html" />
     <Content Include="AngularTemplates\WorkOrder\WOH_Finalize.html" />
