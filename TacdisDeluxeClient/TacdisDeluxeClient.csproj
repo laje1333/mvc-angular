@@ -308,8 +308,8 @@
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceMenuController.js" />
-    <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceOverviewController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceMaintenanceController.js" />
+    <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceOverviewController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsModuleConfig.js" />
     <Content Include="Scripts\App\Controllers\Sales\SalesController.js" />
