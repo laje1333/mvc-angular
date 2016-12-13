@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Owin;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -12,6 +13,11 @@ namespace TacdisDeluxeAPI.Controllers
         public string Get()
         {
             return "Part,Vehicle";
+        }
+
+        public void Put(int id, FormCollection values)
+        {
+            
         }
     }
 }
