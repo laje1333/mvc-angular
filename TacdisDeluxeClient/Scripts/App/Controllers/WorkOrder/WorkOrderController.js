@@ -1,23 +1,53 @@
-﻿tacdisDeluxeApp.controller("WorkOrderController", function ($rootScope, $scope, $http) {
+﻿tacdisDeluxeApp.controller("WorkOrderController", function ($scope, $rootScope, $http) {
     $scope.woh_regNr = $rootScope.woh_regNr;
-    $scope.currentWoh = $rootScope.currentWoh;
 
-    $scope.WOH_SetWOH = function () {
-        $rootScope.currentWoh = $scope.currentWoh;
-    }
     $scope.WOH_AddNewWOH = function () {
+        $scope.urlString = 'http://localhost:57661/api/workorder/?addNew=' + "WOH";
+        $http.get($scope.urlString).
+                then(function (response) {
+                    var components = response.data;
 
-        $scope.WOH_SetWOH();
+                    $scope.currentWoh = components[0].split(',');
+                });
+    }
 
+    $scope.WOH_GetCurrentWOH = function () {
+        $scope.urlString = 'http://localhost:57661/api/workorder/?getCurrent=' + "WOH";
+        $http.get($scope.urlString).
+                then(function (response) {
+                    var components = response.data;
+
+                    $scope.currentWoh = components[0].split(',');
+                });
+    }
+
+    $scope.WOH_AddNewWOJ = function () {
+        $scope.urlString = 'http://localhost:57661/api/workorder/?addNew=' + "WOJ";
+        $http.get($scope.urlString).
+                then(function (response) {
+                    var components = response.data;
+
+                    $scope.currentWoJ = components[0].split(',');
+                });
+    }
+
+    $scope.WOH_GetCurrentWOJ = function () {
+        $scope.urlString = 'http://localhost:57661/api/workorder/?getCurrent=' + "WOJ";
+        $http.get($scope.urlString).
+                then(function (response) {
+                    var components = response.data;
+
+                    $scope.currentWoJ = components[0].split(',');
+                });
     }
 
 
-    
     $scope.RegNrChanged = function () {
         $rootScope.woh_regNr = $scope.woh_regNr;
 
-        $scope.urlString = 'http://localhost:57661/api/workorder/?regnr=' + $scope.woh_regNr;
-        
+        $scope.WOH_GetCurrentWOH();
+        $scope.urlString = 'http://localhost:57661/api/workorder/?WOH=' + $scope.currentWoh + '&regnr=' + $scope.woh_regNr;
+
         $http.get($scope.urlString).
                 then(function (response) {
                     var components = response.data;
@@ -25,15 +55,18 @@
                     $scope.woh_vehDesc = components[0].split(',');
                     $scope.woh_regDate = components[1].split(',');
                     $scope.woh_owner = components[2].split(',');
-                    //$scope.woh_driver = components[3].split(',');
+                    $scope.woh_driver = components[3].split(',');
                     $scope.woh_phone = components[4].split(',');
                     $scope.woh_lastVisDate = components[5].split(',');
                     $scope.woh_lastVisMileage = components[6].split(',');
 
+                    $scope.woh_driver = $scope.currentWoh;
                 });
     }
 
 
+    $scope.WOH_GetCurrentWOH();
+    $scope.WOH_GetCurrentWOJ();
     $scope.RegNrChanged();
 });
 

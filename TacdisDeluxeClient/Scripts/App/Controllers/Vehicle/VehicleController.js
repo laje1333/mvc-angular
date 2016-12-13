@@ -67,14 +67,13 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
     //Post
 
-
+    //Glöm för helvete inte api i pathen
     $scope.saveData = function () {
 
         $http({
             method: 'POST',
-            url: "http://localhost:57661/Vehicle",
-            headers: { 'Content-Type': 'text/plain' },
-            data: "Halloj",
+            url: "http://localhost:57661/api/Vehicle/AddCar",
+            data: { Name: "Volvo" }
         }).success(function () { });
 
     }
