@@ -20,6 +20,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 case "WOH":
                     responseArr.Add(NewWorkOrderData.GetNewWOH());
+                    WohListData.AddNewWOH(responseArr[0]);
                     NewWoJobData.ResetWoJID();
                     break;
                 case "WOJ":
@@ -50,6 +51,14 @@ namespace TacdisDeluxeAPI.Controllers
 
             return responseArr;
         }
+        
+        [System.Web.Http.HttpGet]
+        public string GetWoHList(string search)
+        {
+            var wohList = WohListData.GetWohList(search);
+            
+            return wohList;
+        }
 
         [System.Web.Http.HttpGet]
         public List<string> GetRegNr(string WOH, string regnr)
@@ -59,7 +68,8 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 regnr = "";
             }
-            responseArr.Add(NewWorkOrderData.GetVehDesc(regnr.ToUpper()));
+            var vehDesc = NewWorkOrderData.GetVehDesc(regnr.ToUpper());
+            responseArr.Add(vehDesc);
             responseArr.Add(NewWorkOrderData.GetVehRegDate(regnr.ToUpper()));
             responseArr.Add(NewWorkOrderData.GetOwner(regnr.ToUpper()));
             responseArr.Add(NewWorkOrderData.GetDriver(regnr.ToUpper()));
@@ -67,7 +77,7 @@ namespace TacdisDeluxeAPI.Controllers
             responseArr.Add(NewWorkOrderData.GetLastVisDate(regnr.ToUpper()));
             responseArr.Add(NewWorkOrderData.GetLastVisMilage(regnr.ToUpper()));
 
-            //SetCurrentCar(WOH, regnr);
+            WohListData.SetCurrentCar(WOH, regnr, vehDesc);
 
             return responseArr;
 
