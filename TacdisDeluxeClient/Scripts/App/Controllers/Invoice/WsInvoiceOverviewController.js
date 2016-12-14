@@ -1,9 +1,11 @@
 ﻿
 
 
-tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
+tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", "$http", "wsInvoiceMaintenanceService", "$filter", function ($scope, ngTableParams, $http, wsInvoiceMaintenanceService, $filter) {
     
     $scope.spinner = false;
+    $scope.showModal = false;
+    $scope.invoceviewed = "";
     
     $scope.SearchInvoices = function () {
         $scope.spinner = true;
@@ -14,20 +16,28 @@ tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", 
         $scope.records = obj.invoices;
 
         $scope.invoiceTable = new ngTableParams({
-
-        }, {
+            page: 1,
+            count: 10,
+            sorting: { Invoice_number: "asc" }
+        },{
             dataset: $scope.records
         });
     });
     };
    
+    $scope.sendToMaintenance = function (invoice) {
+        console.log('sendToMaintenance');
 
- $scope.showModal = false;
-    $scope.invoceviewed = "";
+        wsInvoiceMaintenanceService.addInvoice(invoice);
+    };
+
+   
     $scope.toggleModal = function (invoiceClicked) {
         $scope.invoceviewed = invoiceClicked;
         $scope.showModal = !$scope.showModal;
     };
+
+
 }]);
 
 tacdisDeluxeApp.directive('modal', function () {
