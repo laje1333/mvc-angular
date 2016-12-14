@@ -23,7 +23,9 @@ namespace TacdisDeluxeClient
 
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                         "~/Scripts/App/app.js",
-                        "~/Scripts/Custom/accordion-menu.js"));
+                        "~/Scripts/Custom/accordion-menu.js",
+                        "~/Scripts/angular-ui/ui-bootstrap.js",
+                        "~/Scripts/angular-ui/ui-bootstrap-tpls.js"));
 
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
