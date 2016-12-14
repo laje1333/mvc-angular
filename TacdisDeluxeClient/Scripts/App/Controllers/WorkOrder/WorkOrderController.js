@@ -1,8 +1,8 @@
-﻿tacdisDeluxeApp.controller("WorkOrderController", function ($scope, $rootScope, $http) {
+﻿tacdisDeluxeApp.controller("WorkOrderController", function ($scope, $http, $rootScope) {
     $scope.woh_regNr = $rootScope.woh_regNr;
 
     $scope.WOH_AddNewWOH = function () {
-        $scope.urlString = 'http://localhost:57661/api/workorder/GetNewWO?addNew=' + "WOH";
+        $scope.urlString = 'http://localhost:57661/api/workorder/GetNewWO?addNew=' + "WOH&" + currentWoh;
         $http.get($scope.urlString)
         .then(function (response) {
             var components = response.data;
@@ -24,7 +24,7 @@
     $scope.WOH_GetCurrentWOH();
 
     $scope.WOH_AddNewWOJ = function () {
-        $scope.urlString = 'http://localhost:57661/api/workorder/GetNewWO?addNew=' + "WOJ";
+        $scope.urlString = 'http://localhost:57661/api/workorder/GetNewWO?addNew=' + "WOJ&" + currentWoh;
         $http.get($scope.urlString)
         .then(function (response) {
             var components = response.data;
@@ -64,23 +64,24 @@
         });
     }
     $scope.RegNrChanged();
+});
 
+tacdisDeluxeApp.controller("WorkOrderSearchController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
     $scope.SearchWoH = function () {
         $http.get("http://localhost:57661/api/workorder/GetWoHList?search=" + $scope.woh_Search)
         .then(function (response) {
             var obj = JSON.parse(response.data);
             $scope.records = obj.woh;
 
-            $scope.WohTable = new ngTableParams({
-                page: 1, // show first page
-                count: 10 // count per page
+            $scope.wohTable = new ngTableParams({
+
             }, {
                 dataset: $scope.records
             });
         });
     };
     //$scope.SearchWoH();
-});
+}]);
 
 
 tacdisDeluxeApp.config(function ($routeProvider) {
