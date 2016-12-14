@@ -32,10 +32,21 @@ namespace TacdisDeluxeAPI.Mockdata.VehicleData
         public string InteriorColorDescription { get; set; }
         public string InteriorColor { get; set; }
 
+        public string ID = "1";
+        public static int counter = 164523;
+
+        public void setID()
+        {
+            ID += counter.ToString();
+            counter+= 16;
+        }
+
+
         public static List<NewVehicleProperties> vehicles = new List<NewVehicleProperties>();
 
         public static void addVehicleToRecord(NewVehicleProperties vehicle)
         {
+            vehicle.setID();
             vehicles.Add(vehicle);
         }
 
@@ -67,7 +78,8 @@ namespace TacdisDeluxeAPI.Mockdata.VehicleData
         {
             string result = "";
 
-            result += "{\"Brand\": \"" + vehicle.Brand +
+            result += "{\"ID\": \"" + vehicle.ID +
+                    "\",\"Brand\": \"" + vehicle.Brand +
                     "\",\"ModelYear\": \"" + vehicle.ModelYear +
                     "\",\"Model\": \"" + vehicle.Model +
                     "\",\"EngineType\": \"" + vehicle.EngineType +
