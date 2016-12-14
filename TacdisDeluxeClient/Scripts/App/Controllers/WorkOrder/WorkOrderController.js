@@ -1,14 +1,25 @@
 ﻿tacdisDeluxeApp.controller("WorkOrderController", function ($scope, $http, $rootScope) {
-    $scope.woh_regNr = $rootScope.woh_regNr;
+    $scope.currentWoh = $rootScope.currentWoh;
 
     $scope.WOH_AddNewWOH = function () {
-        $scope.urlString = 'http://localhost:57661/api/workorder/GetNewWO?addNew=' + "WOH&" + currentWoh;
+        $scope.urlString = 'http://localhost:57661/api/workorder/GetNewWO?addNew=' + "WOH" + "&wohId=" + $scope.currentWoh;
         $http.get($scope.urlString)
         .then(function (response) {
             var components = response.data;
 
-            $scope.currentWoh = components + "";//[0].split(',');
-            $rootScope.woh_regNr = "";
+            $rootScope.currentWoh = $scope.currentWoh = components + "";//[0].split(',');
+            $rootScope.woh_regNr = $scope.woh_regNr = ""
+            $scope.GetRegNr();
+        });
+    }
+
+    $scope.WOH_SetCurrentWOH = function (itemWoh) {
+        $scope.urlString = 'http://localhost:57661/api/workorder/SetCurrentWO?setCurrent=' + "WOH" + "&itemId=" + itemWoh;
+        $http.get($scope.urlString)
+        .then(function (response) {
+            var components = response.data;
+
+            $rootScope.currentWoh = $scope.currentWoh = components + "";//[0].split(',');
         });
     }
 
@@ -24,7 +35,7 @@
     $scope.WOH_GetCurrentWOH();
 
     $scope.WOH_AddNewWOJ = function () {
-        $scope.urlString = 'http://localhost:57661/api/workorder/GetNewWO?addNew=' + "WOJ&" + currentWoh;
+        $scope.urlString = 'http://localhost:57661/api/workorder/GetNewWO?addNew=' + "WOJ" + "&wohId=" + $scope.currentWoh;
         $http.get($scope.urlString)
         .then(function (response) {
             var components = response.data;
@@ -44,11 +55,23 @@
     }
     $scope.WOH_GetCurrentWOJ();
 
+    $scope.GetRegNr = function () {
+        $scope.currentWoh = $rootScope.currentWoh;
+        $scope.urlString = 'http://localhost:57661/api/workorder/GetRegNr?WOHID=' + $scope.currentWoh;
+
+        $http.get($scope.urlString)
+        .then(function (response) {
+            var components = response.data;
+
+            $rootScope.woh_regNr = $scope.woh_regNr = components[0].split(',');
+            $scope.RegNrChanged();
+        });
+    }
+
     $scope.RegNrChanged = function () {
         $rootScope.woh_regNr = $scope.woh_regNr;
-
         $scope.WOH_GetCurrentWOH();
-        $scope.urlString = 'http://localhost:57661/api/workorder/GetRegNr?WOH=' + $scope.currentWoh + '&regnr=' + $scope.woh_regNr;
+        $scope.urlString = 'http://localhost:57661/api/workorder/GetRegNrInfo?WOHID=' + $scope.currentWoh + '&regnr=' + $scope.woh_regNr;
 
         $http.get($scope.urlString)
         .then(function (response) {
@@ -63,7 +86,7 @@
             $scope.woh_lastVisMileage = components[6].split(',');
         });
     }
-    $scope.RegNrChanged();
+    $scope.GetRegNr();
 });
 
 tacdisDeluxeApp.controller("WorkOrderSearchController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
@@ -80,7 +103,6 @@ tacdisDeluxeApp.controller("WorkOrderSearchController", ["$scope", "NgTableParam
             });
         });
     };
-    //$scope.SearchWoH();
 }]);
 
 

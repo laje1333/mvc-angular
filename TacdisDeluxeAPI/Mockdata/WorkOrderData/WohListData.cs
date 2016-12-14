@@ -63,6 +63,7 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 
         private static string CreateLine(WorkOrderDB.WorkOrder WO)
         {
+            WO.CalculateTotalCost();
             return "{\"WoNr\": \"" + WO.WoNr +
                     "\",\"RegNr\": \"" + WO.RegNr +
                     "\",\"Status\": \"" + WO.Status +

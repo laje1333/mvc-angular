@@ -59,6 +59,27 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
         [System.Web.Http.HttpGet]
+        public List<string> SetCurrentWO(string setCurrent, string itemId)
+        {
+            List<string> responseArr = new List<string>();
+            switch (setCurrent)
+            {
+                case "WOH":
+                    CurrentWOHID = itemId;
+                    responseArr.Add(CurrentWOHID);
+                    break;
+                case "WOJ":
+                    CurrentWOJID = itemId;
+                    responseArr.Add(CurrentWOJID);
+                    break;
+                default:
+                    break;
+            }
+
+            return responseArr;
+        }
+
+        [System.Web.Http.HttpGet]
         public string GetWoHList(string search)
         {
             var wohList = WohListData.GetWohList(search);
@@ -67,7 +88,19 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public List<string> GetRegNr(string WOHID, string regnr)
+        public List<string> GetRegNr(string WOHID)
+        {
+            List<string> responseArr = new List<string>();
+            if (WOHID == null || WOHID == "undefined")
+            {
+                return responseArr;
+            }
+            responseArr.Add(WorkOrderDB.GetWorkOrder(WOHID).RegNr);
+            return responseArr;
+        }
+
+        [System.Web.Http.HttpGet]
+        public List<string> GetRegNrInfo(string WOHID, string regnr)
         {
             List<string> responseArr = new List<string>();
 
