@@ -12,19 +12,25 @@ namespace TacdisDeluxeAPI.Controllers
 {
     public class WorkOrderController : ApiController
     {
+        static string CurrentWOHID;
+        static string CurrentWOJID;
+
         [System.Web.Http.HttpGet]
-        public List<string> GetNewWO(string addNew)
+        public List<string> GetNewWO(string addNew, string wohId)
         {
             List<string> responseArr = new List<string>();
             switch (addNew)
             {
                 case "WOH":
-                    responseArr.Add(NewWorkOrderData.GetNewWOH());
-                    WohListData.AddNewWOH(responseArr[0]);
-                    NewWoJobData.ResetWoJID();
+                    wohId = WorkOrderDB.CreateNewWorkOrder();
+                    CurrentWOHID = wohId;
+                    CurrentWOJID = "";
+                    responseArr.Add(wohId);
                     break;
                 case "WOJ":
-                    responseArr.Add(NewWoJobData.GetNewWOJ());
+                    var wohJobId = WorkOrderDB.GetWorkOrder(wohId).CreateNewWorkOrderJob();
+                    CurrentWOJID = wohJobId;
+                    responseArr.Add(wohJobId);
                     break;
                 default:
                     break;
@@ -40,10 +46,10 @@ namespace TacdisDeluxeAPI.Controllers
             switch (getCurrent)
             {
                 case "WOH":
-                    responseArr.Add(NewWorkOrderData.GetCurrentWOH());
+                    responseArr.Add(CurrentWOHID);
                     break;
                 case "WOJ":
-                    responseArr.Add(NewWoJobData.GetCurrentWOJ());
+                    responseArr.Add(CurrentWOJID);
                     break;
                 default:
                     break;
@@ -51,33 +57,72 @@ namespace TacdisDeluxeAPI.Controllers
 
             return responseArr;
         }
-        
+
+        [System.Web.Http.HttpGet]
+        public List<string> SetCurrentWO(string setCurrent, string itemId)
+        {
+            List<string> responseArr = new List<string>();
+            switch (setCurrent)
+            {
+                case "WOH":
+                    CurrentWOHID = itemId;
+                    responseArr.Add(CurrentWOHID);
+                    break;
+                case "WOJ":
+                    CurrentWOJID = itemId;
+                    responseArr.Add(CurrentWOJID);
+                    break;
+                default:
+                    break;
+            }
+
+            return responseArr;
+        }
+
         [System.Web.Http.HttpGet]
         public string GetWoHList(string search)
         {
             var wohList = WohListData.GetWohList(search);
-            
+
             return wohList;
         }
 
         [System.Web.Http.HttpGet]
-        public List<string> GetRegNr(string WOH, string regnr)
+        public List<string> GetRegNr(string WOHID)
         {
             List<string> responseArr = new List<string>();
+            if (WOHID == null || WOHID == "undefined")
+            {
+                return responseArr;
+            }
+            responseArr.Add(WorkOrderDB.GetWorkOrder(WOHID).RegNr);
+            return responseArr;
+        }
+
+        [System.Web.Http.HttpGet]
+        public List<string> GetRegNrInfo(string WOHID, string regnr)
+        {
+            List<string> responseArr = new List<string>();
+
             if (!ValidateRegNr(regnr))
             {
                 regnr = "";
             }
-            var vehDesc = NewWorkOrderData.GetVehDesc(regnr.ToUpper());
-            responseArr.Add(vehDesc);
-            responseArr.Add(NewWorkOrderData.GetVehRegDate(regnr.ToUpper()));
-            responseArr.Add(NewWorkOrderData.GetOwner(regnr.ToUpper()));
-            responseArr.Add(NewWorkOrderData.GetDriver(regnr.ToUpper()));
-            responseArr.Add(NewWorkOrderData.GetPhoneNr(regnr.ToUpper()));
-            responseArr.Add(NewWorkOrderData.GetLastVisDate(regnr.ToUpper()));
-            responseArr.Add(NewWorkOrderData.GetLastVisMilage(regnr.ToUpper()));
+            var woh = WorkOrderDB.GetWorkOrder(WOHID);
+            if (woh == null)
+            {
+                return responseArr;
+            }
 
-            WohListData.SetCurrentCar(WOH, regnr, vehDesc);
+            woh.RegNrChanged(regnr.ToUpper());
+
+            responseArr.Add(woh.VehDesc);
+            responseArr.Add(woh.VehRegDate);
+            responseArr.Add(woh.VehOwner);
+            responseArr.Add(woh.VehDriver);
+            responseArr.Add(woh.VehPhoneNr);
+            responseArr.Add(woh.VehLastVisDate);
+            responseArr.Add(woh.VehLastVisMil);
 
             return responseArr;
 
