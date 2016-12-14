@@ -195,17 +195,9 @@ table.table tr:last-child td:last-child {
 }
 
 @media (min-width: 768px) {
-    /*.navbar-custom,
-    .navbar-custom > div,
-    .navbar-custom > div > div,
-    .navbar-custom > div > div > ul,
-    .navbar-custom > div > div > ul > li, 
-    .navbar-custom > div > div > ul > li a{
-        background-color: #1A9DD3; /*   1A9DD3,     
-        height: 75px;
-    }*/
-    .navbar-default .navbar-nav > li > a {
+    .navbar-custom .navbar-nav > li > a {
         color: #ffffff;
+        font-size: 16px;
     }
     .navbar-custom{
         background-color: #1A9DD3; /*   1A9DD3,     */
@@ -213,11 +205,45 @@ table.table tr:last-child td:last-child {
     .navbar-nav-custom > li > a{
         height: 75px;
     }
-    
+    .navbar-custom .navbar-nav > li > a:hover{
+        color: #ffffff;
+        /*background-color: #49B9E9;*/
+    }
+
+    .navbar-custom > div > div > ul > li a {
+        position:relative;
+    }
+
     .navbar-custom > div > div > ul > li a{
         padding-top: 0px;
         padding-bottom: 0px;
         line-height: 75px;
+    }
+
+    /*.navbar-custom .navbar-nav > li:hover .mark-active{
+        position:absolute;
+        top: 0px;
+        width: 0; 
+        height: 0; 
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+  
+        border-top: 5px solid #F0F0F0;
+        left: 50%;
+        margin-left:-5px;
+    }*/
+
+    .navbar-custom .nav-active .mark-active{
+        position:absolute;
+        bottom: 0px;
+        width: 0; 
+        height: 0; 
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+  
+        border-bottom: 10px solid #F0F0F0;
+        left: 50%;
+        margin-left:-15px;
     }
 }
 .nav-logo{

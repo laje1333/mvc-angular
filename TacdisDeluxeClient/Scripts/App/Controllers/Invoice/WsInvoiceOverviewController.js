@@ -1,7 +1,7 @@
 ﻿
 
 
-tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
+tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "ngTableParams", "$http", function ($scope, ngTableParams, $http) {
     
     $scope.SearchInvoices = function () {
         $http.get("http://localhost:57661/api/invoice/GetInvoice?query=1")

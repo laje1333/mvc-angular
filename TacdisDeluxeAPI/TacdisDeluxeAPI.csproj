@@ -249,6 +249,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612141451335_InitialCABLAMCreate.cs" />
+    <Compile Include="Migrations\201612141451335_InitialCABLAMCreate.Designer.cs">
+      <DependentUpon>201612141451335_InitialCABLAMCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
     <Compile Include="Mockdata\VehicleData\Model.cs" />
     <Compile Include="Mockdata\VehicleData\ModelYear.cs" />
@@ -261,14 +266,30 @@
     <Compile Include="Mockdata\WorkOrderData\NewWorkOrderData.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Maps\PartMap.cs" />
+    <Compile Include="Models\Maps\SaleMap.cs" />
+    <Compile Include="Models\Maps\VehicleModelMap.cs" />
+    <Compile Include="Models\TestDataInitializer.cs" />
+    <Compile Include="Models\VehicleBrandEntity.cs" />
+    <Compile Include="Models\DBContext.cs" />
+    <Compile Include="Models\Enums\PaymentType.cs" />
+    <Compile Include="Models\Enums\SalesStatus.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\PartSalesModel.cs" />
+    <Compile Include="Models\PartEntity.cs" />
+    <Compile Include="Models\PayerEntity.cs" />
+    <Compile Include="Models\SaleEntity.cs" />
+    <Compile Include="Models\SalesAddonEntity.cs" />
+    <Compile Include="Models\SalesmanEntity.cs" />
+    <Compile Include="Models\VehicleEntity.cs" />
+    <Compile Include="Models\VehicleModelEntity.cs" />
+    <Compile Include="Models\VehiclePropertyEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\default-data.txt" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -304,13 +325,17 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Part\" />
     <Folder Include="Views\Sales\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201612141451335_InitialCABLAMCreate.resx">
+      <DependentUpon>201612141451335_InitialCABLAMCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

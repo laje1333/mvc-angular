@@ -11,11 +11,20 @@
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-
+    <script src="~/Scripts/ng-table.min.js"></script>
     @Scripts.Render("~/bundles/custom")
 
     <script src="~/Scripts/global.js"></script>
     <link href="~/Content/Custom.css" rel="stylesheet"/>
+
+    @{ 
+        var controller = ViewContext.RouteData.Values["controller"].ToString();
+        string navPartsCss = controller.ToLower() == "parts" ? "nav-active" : "";
+        string navSalesCss = controller.ToLower() == "sales" ? "nav-active" : "";
+        string navVehicleCss = controller.ToLower() == "vehicle" ? "nav-active" : "";
+        string navWorkOrderCss = controller.ToLower() == "workorder" ? "nav-active" : "";
+        string navInvoiceCss = controller.ToLower() == "invoice" ? "nav-active" : "";
+    }
 
 </head>
 <body ng-app="tacdisDeluxeApp">
@@ -26,11 +35,11 @@
             </div>
             <div class="col-md-10">
                 <ul class="nav navbar-nav navbar-nav-custom">
-                    <li>@Html.ActionLink("Parts", "Index", "Parts")</li>
-                    <li>@Html.ActionLink("Sales", "Index", "Sales")</li>
-                    <li>@Html.ActionLink("Vehicle", "Index", "Vehicle")</li>
-                    <li>@Html.ActionLink("Work order", "Index", "WorkOrder")</li>
-                    <li>@Html.ActionLink("Invoice", "Index", "Invoice")</li>
+                    <li class="@navPartsCss">@Html.ActionLink("Parts", "Index", "Parts")<div class="mark-active"></div></li>
+                    <li class="@navSalesCss">@Html.ActionLink("Sales", "Index", "Sales")<div class="mark-active"></div></li>
+                    <li class="@navVehicleCss">@Html.ActionLink("Vehicle", "Index", "Vehicle")<div class="mark-active"></div></li>
+                    <li class="@navWorkOrderCss">@Html.ActionLink("Work order", "Index", "WorkOrder")<div class="mark-active"></div></li>
+                    <li class="@navInvoiceCss">@Html.ActionLink("Invoice", "Index", "Invoice")<div class="mark-active"></div></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
