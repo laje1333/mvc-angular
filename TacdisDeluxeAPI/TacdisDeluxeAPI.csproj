@@ -262,8 +262,19 @@
     <Compile Include="Mockdata\VehicleData\NewVehicleProperties.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Mockdata\WorkOrderData\NewWoJobData.cs" />
-    <Compile Include="Mockdata\WorkOrderData\NewWorkOrderData.cs" />
+    <Compile Include="Mockdata\WorkOrderData\GetRegNrDetails.cs" />
+    <Compile Include="Mockdata\WorkOrderData\WohListData.cs" />
+    <Compile Include="Mockdata\WorkOrderData\WoJob.cs" />
+    <Compile Include="Mockdata\WorkOrderData\WoJobKit.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mockdata\WorkOrderData\WoJobOP.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mockdata\WorkOrderData\WoJobPart.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Mockdata\WorkOrderData\WorkOrder.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Maps\PartMap.cs" />

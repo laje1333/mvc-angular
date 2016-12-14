@@ -196,10 +196,49 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     
 });
 
-tacdisDeluxeApp.controller("VehicleMaintenanceController", function () {
+tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
 
-});
+    $scope.newVehicleTable = this;
 
+    $scope.getNewVehicles = function () {
+        $http.get("http://localhost:57661/api/vehicle/GetVehicleMaintenanceList")
+    .then(function (response) {
+        var obj = JSON.parse(response.data);
+        $scope.records = obj.VehMain;
+        $scope.newVehicles.push(obj.VehMain);
+
+        $scope.newVehicleTable = new ngTableParams({
+
+        }, 
+            {
+                dataset: $scope.newVehicles[0]
+        });
+    });
+    };
+
+    $scope.newVehicles = [];
+    $scope.deleteRow = function (id) {
+        var index = -1;
+
+        for (i = 0; i < $scope.newVehicles[0].length; i++) {
+            var tempID = $scope.newVehicles[0][i].REGNR;
+            if (tempID === id) {
+                index = i;
+                break;
+            }
+        }
+        if (index === -1) {
+            alert("Something gone wrong");
+        }
+
+        $scope.newVehicles[0].splice(index, 1);
+        //update database aswell!
+    }
+
+
+    $scope.reverseSort = false;
+    $scope.orderByField = "REGNR";
+}]);
 
 
 tacdisDeluxeApp.config(function ($routeProvider) {

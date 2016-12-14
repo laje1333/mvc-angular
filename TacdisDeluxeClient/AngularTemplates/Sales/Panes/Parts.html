@@ -1,0 +1,35 @@
+﻿<div ng-controller="SalesController">
+    <div>
+        <div id="model" class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6 text-left">Select what to sell</div>
+                        <div class="col-xs-6 text-right"><button type="button" class="btn btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-search"></span>&nbsp;</button></div>
+                    </div>
+                </div>
+                <div class="control-group panel-body">
+                    <form class="form-horizontal" name="saleForm">
+                        <div class="form-group">
+                            <label for="Type">Type:</label>
+                            <select class="form-control" id="typeOfThing" ng-model="type" ng-options="t for t in types"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Info">Info:</label>
+                            <input class="form-control" type="text" ng-model="info" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Cost">Cost:</label>
+                            <input class="form-control" type="text" ng-pattern="onlyNumbers" ng-model="cost" required />
+                        </div>
+                        <div class="form-group">
+
+                            <button class="btn btn-group" ng-click="addRow()" ng-disabled="saleForm.$invalid">Add</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

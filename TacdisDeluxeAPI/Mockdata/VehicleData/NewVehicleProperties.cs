@@ -32,16 +32,75 @@ namespace TacdisDeluxeAPI.Mockdata.VehicleData
         public string InteriorColorDescription { get; set; }
         public string InteriorColor { get; set; }
 
+        public string REGNR = "1";
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        public void setID()
+        {
+            Random r = new Random();
+            string letters = new string(Enumerable.Repeat(chars, 3)
+                .Select(s => s[r.Next(s.Length)]).ToArray());
+            string numbers = r.Next(999).ToString();
+
+            REGNR = letters + numbers;
+        }
+
+
         public static List<NewVehicleProperties> vehicles = new List<NewVehicleProperties>();
 
         public static void addVehicleToRecord(NewVehicleProperties vehicle)
         {
+            vehicle.setID();
             vehicles.Add(vehicle);
         }
 
         public static List<NewVehicleProperties> getVehicles()
         {
             return vehicles;
+        }
+
+        public static string getNewVehicles()
+        {
+
+            string result = "{\"VehMain\":[";
+
+            for (int i = 0; i < vehicles.Count; i++)
+            {
+                result += buildNewVehicle(vehicles[i]);
+                if (i < vehicles.Count - 1)
+                {
+                    result += ",";
+                }
+            }
+            result += "]}";
+
+            return result;
+
+        }
+
+        private static string buildNewVehicle(NewVehicleProperties vehicle)
+        {
+            string result = "";
+
+            result += "{\"REGNR\": \"" + vehicle.REGNR +
+                    "\",\"Brand\": \"" + vehicle.Brand +
+                    "\",\"ModelYear\": \"" + vehicle.ModelYear +
+                    "\",\"Model\": \"" + vehicle.Model +
+                    "\",\"EngineType\": \"" + vehicle.EngineType +
+                    "\",\"EngineGroup\": \"" + vehicle.EngineGroup +
+                    "\",\"EngineDescription\":\"" + vehicle.EngineDescription +
+                    "\",\"TransmissionType\": \"" + vehicle.TransmissionType +
+                    "\",\"TransmissionGroup\": \"" + vehicle.TransmissionGroup +
+
+                    "\",\"TransmissionDescription\": \"" + vehicle.TransmissionDescription +
+                    "\",\"PaintType\": \"" + vehicle.PaintType +
+                    "\",\"PaintDescription\": \"" + vehicle.PaintDescription +
+                    "\",\"PaintGroup\": \"" + vehicle.PaintGroup +
+                    "\",\"InteriorMaterial\":\"" + vehicle.InteriorMaterial +
+                    "\",\"InteriorColorDescription\": \"" + vehicle.InteriorColorDescription +
+                    "\",\"InteriorColor\": \"" + vehicle.InteriorColor +
+                    "\"}";
+            return result;
         }
     }
 }

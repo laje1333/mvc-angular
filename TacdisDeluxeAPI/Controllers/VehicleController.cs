@@ -38,6 +38,12 @@ namespace TacdisDeluxeAPI.Controllers
             return NewVehicleDataHash.getValue(brand).getPropertiesFromModel(modelyear, model);
         }
 
+        public string GetVehicleMaintenanceList()
+        {
+            return NewVehicleProperties.getNewVehicles();
+        }
+        
+
 
         // POST: api/Vehicle
         [System.Web.Http.HttpPost]

@@ -14,6 +14,7 @@
                     <th>Quantity</th>
                     <th>Price</th>
                     <th>Details</th>
+                    <th>Remove</th>
                 </tr>
                 <tr ng-repeat="item in collection">
                     <td>{{item.KitNr}}</td>
@@ -22,6 +23,7 @@
                     <td>{{item.Quantity}}</td>
                     <td>{{item.Price}}</td>
                     <td><input type="button" class="btn btn-info" value="Details" ng-click="WOH_Kit_ViewDetails(item)" /></td>
+                    <td><input type="button" class="btn btn-info" value="Remove" ng-click="WOJ_Kit_Remove(item)" /></td>
                 </tr>
             </table>
         </div>

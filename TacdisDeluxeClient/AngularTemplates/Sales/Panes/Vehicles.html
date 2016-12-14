@@ -1,0 +1,75 @@
+﻿<div ng-controller="SalesController">
+    <div>
+        <div id="model" class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-6 text-left">Select what to sell</div>
+                        <div class="col-xs-6 text-right"><button type="button" class="btn btn-xs" data-toggle="modal" data-target="#vehModal"><span class="glyphicon glyphicon-search"></span>&nbsp;</button></div>
+                    </div>
+                </div>
+                <div class="control-group panel-body">
+                    <form class="form-horizontal" name="saleForm">
+                        <div class="form-group">
+                            <label for="Type">Type:</label>
+                            <select class="form-control" id="typeOfThing" ng-model="type" ng-options="t for t in types"></select>
+                        </div>
+                        <div class="form-group">
+                            <label for="Info">Info:</label>
+                            <input class="form-control" type="text" ng-model="info" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="Cost">Cost:</label>
+                            <input class="form-control" type="text" ng-pattern="onlyNumbers" ng-model="cost" required />
+                        </div>
+                        <div class="form-group">
+
+                            <button class="btn btn-group" ng-click="addRow()" ng-disabled="saleForm.$invalid">Add</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="vehModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Search Vehicle</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label>Part Id:</label>
+                        <input class="form-control" type="text" ng-model="searchPartId" />
+                        <table id="searchPartsResult" class="table table-striped">
+                            <tr>
+                                <th>Type:</th>
+                                <th>Info:</th>
+                                <th>Cost:</th>
+                            </tr>
+                            <tr ng-repeat="r in searchRecord">
+                                <td>
+                                    {{r.type}}
+                                </td>
+                                <td>
+                                    {{r.info}}
+                                </td>
+                                <td>
+                                    {{r.cost}}
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="addSearchItem()">Add</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
