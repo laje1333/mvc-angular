@@ -209,8 +209,9 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
 
         $scope.newVehicleTable = new ngTableParams({
 
-        }, {
-            dataset: $scope.records
+        }, 
+            {
+                dataset: $scope.newVehicles[0]
         });
     });
     };
@@ -220,7 +221,7 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
         var index = -1;
 
         for (i = 0; i < $scope.newVehicles[0].length; i++) {
-            var tempID = $scope.newVehicles[0][i].ID;
+            var tempID = $scope.newVehicles[0][i].REGNR;
             if (tempID === id) {
                 index = i;
                 break;
@@ -236,9 +237,8 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
 
 
     $scope.reverseSort = false;
-    $scope.orderByField = "ID";
+    $scope.orderByField = "REGNR";
 }]);
-
 
 
 tacdisDeluxeApp.config(function ($routeProvider) {

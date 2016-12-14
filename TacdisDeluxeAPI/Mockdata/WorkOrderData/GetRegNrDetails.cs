@@ -5,11 +5,8 @@ using System.Web;
 
 namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 {
-    public class NewWorkOrderData
+    public class GetRegNrDetails
     {
-        //Temporary Solution
-        private static string CurrentWOHID;
-
         public static string GetVehDesc(string RegNr)
         {
             string response = "";
@@ -171,18 +168,6 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
                     break;
             }
             return response;
-        }
-
-        internal static string GetNewWOH()
-        {
-            Random rand = new Random();
-            CurrentWOHID = (rand.Next(200000) + 1000000).ToString();
-            return CurrentWOHID;
-        }
-
-        internal static string GetCurrentWOH()
-        {
-            return CurrentWOHID;
         }
     }
 }
