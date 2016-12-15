@@ -5,18 +5,18 @@
         <div class="panel panel-default">
             <div class="form-group panel-body slidebody">
                 <label for="brandSelect">Brand:</label>
-                <select class="form-control" id="brandSelect" ng-model="selectedBrand" ng-change="brandSelector(); brandEnabler();">
-                    <option value="Volvo">Volvo</option>
+                <select class="form-control" id="brandSelect" ng-model="selectedBrand" ng-change="brandSelector(); brandEnabler();" ng-init="initializeBrands()">
+                    <option ng-repeat="b in brands">{{b.Name}}</option>
                 </select>
 
                 <label for="modelyearSelect">Model Year:</label>
                 <select class="form-control" id="modelyearSelect" ng-disabled="brandDisabled" ng-model="selectedModelYear" ng-change="modelYearSelector(); modelEnabler()">
-                    <option ng-repeat="y in year">{{y}}</option>
+                    <option ng-repeat="mod in modelType track by $index">{{mod}}</option>
                 </select>
 
                 <label for="modelSelect">Model:</label>
                 <select class="form-control" id="modelSelect" ng-disabled="modelDisabled" ng-model="selectedModel" ng-change="modelSelector(); extendElement('enginePanel')">
-                    <option ng-repeat="mYear in modelyear">{{mYear}}</option>
+                    <option ng-repeat="y in modelYear track by $index">{{y}}</option>
                 </select>
             </div>
         </div>

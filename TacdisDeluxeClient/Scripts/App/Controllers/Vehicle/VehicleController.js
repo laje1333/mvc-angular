@@ -5,30 +5,32 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
 
     //Get
-    var urlBeginning = 'http://localhost:57661/api/vehicle/GetModelYears/';
-    $scope.brandSelector = function () {
 
-        $scope.urlString = urlBeginning + '?brand=' + $scope.selectedBrand;
-
-
+    $scope.initializeBrands = function () {
+        $scope.urlString = 'http://localhost:57661/api/Brand';
         $http.get($scope.urlString).
                 then(function (response) {
-                    $scope.year = response.data.split(',');
+                    $scope.brands = response.data;
+                });
+    }
 
 
+
+
+    var urlBeginning = 'http://localhost:57661/api/Vehicle';
+    $scope.brandSelector = function () {
+
+        $http.get('http://localhost:57661/api/vehicle?brand=' + $scope.selectedBrand).
+                then(function (response) {
+                    $scope.modelType = response.data;
                 });
     }
 
     $scope.modelYearSelector = function () {
 
-        $scope.urlString = urlBeginning + '?modelyear=' + $scope.selectedModelYear + '&brand=' + $scope.selectedBrand;
-
-
-        $http.get($scope.urlString).
+        $http.get('http://localhost:57661/api/vehicle?model=' + $scope.selectedModelYear).
                 then(function (response) {
-                    $scope.modelyear = response.data.split(',');
-
-
+                    $scope.modelYear = response.data;
                 });
     }
     $scope.modelSelector = function () {

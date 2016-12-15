@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
 using TacdisDeluxeAPI.Mockdata.VehicleData;
+using TacdisDeluxeAPI.Models;
 
 namespace TacdisDeluxeAPI.Controllers
 {
@@ -17,31 +18,63 @@ namespace TacdisDeluxeAPI.Controllers
 
         // GET: api/Vehicle/5
 
+        public IEnumerable<String> GetVehicleModels(string brand)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var models = c.VehicleModels.Include("Properties").Distinct().Where(x => x.Brand.Name == brand).Select(x => x.Name);
 
 
 
-        //id = brand, panel = model/engine/transmission...
+                return models.ToList();
+            }
+        }
+
+        public IEnumerable<int> GetModelYear(string model)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var models = c.VehicleModels.Include("Properties").Distinct().Where(x => x.Name == model).Select(x => x.ProductionDate.Year);
+
+
+
+                return models.ToList();
+            }
+        }
+
+        public List<ICollection<VehiclePropertyEntity>> GetModelProperties(string model, int year, string brand)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var models = c.VehicleModels.Include("Properties").Distinct().Where(x => (x.Name == model && x.Brand.Name == brand && x.ProductionDate.Year == year)).Select(x => x.Properties);
+
+
+
+                return models.ToList();
+            }
+        }
+
         
-        public string GetVehicleInfo(string brand)
-        {
+        //public string GetVehicleInfo(string brand)
+        //{
            
-            return NewVehicleDataHash.getValue(brand).getModelYears();
-        }
+        //    return NewVehicleDataHash.getValue(brand).getModelYears();
+        //}
 
-        public string GetVehicleInfo(string modelyear, string brand)
-        {
-            return NewVehicleDataHash.getValue(brand).getModelsFromYear(modelyear);
-        }
+        //public string GetVehicleInfo(string modelyear, string brand)
+        //{
+        //    return NewVehicleDataHash.getValue(brand).getModelsFromYear(modelyear);
+        //}
 
-        public string GetVehicleInfo(string model, string modelyear, string brand)
-        {
-            return NewVehicleDataHash.getValue(brand).getPropertiesFromModel(modelyear, model);
-        }
+        //public string GetVehicleInfo(string model, string modelyear, string brand)
+        //{
+        //    return NewVehicleDataHash.getValue(brand).getPropertiesFromModel(modelyear, model);
+        //}
 
-        public string GetVehicleMaintenanceList()
-        {
-            return NewVehicleProperties.getNewVehicles();
-        }
+        //public string GetVehicleMaintenanceList()
+        //{
+        //    return NewVehicleProperties.getNewVehicles();
+        //}
         
 
 
