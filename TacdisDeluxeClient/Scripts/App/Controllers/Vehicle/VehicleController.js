@@ -112,14 +112,18 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
             InteriorMaterial: $scope.selectedInteriorMaterial,
             InteriorColorDescription: $scope.selectedInteriorColorDesc,
             InteriorColor: $scope.selectedInteriorColor,
+
         }
 
         $http({
             method: 'POST',
             url: "http://localhost:57661/api/Vehicle/AddCar",
             data: vehicleData
-        }).success(function () { });
-
+        }).success(function () {
+            $scope.showPopup();
+            
+        });
+        
     }
 
     
@@ -183,6 +187,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     $scope.saveDisabled = true;
     $scope.saveEnabler = function () {
         $scope.saveDisabled = false;
+
     }
 
     $scope.extendElement = function (id) {
@@ -193,6 +198,10 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
         $route.reload();
     }
 
+    $scope.showPopup = function (id) {
+        $("#" + id).popover();
+        setTimeout(function () { $("#" + id).popover('hide') }, 1000);
+    }
     
 });
 
@@ -239,6 +248,7 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
     $scope.reverseSort = false;
     $scope.orderByField = "REGNR";
 }]);
+
 
 
 tacdisDeluxeApp.config(function ($routeProvider) {
