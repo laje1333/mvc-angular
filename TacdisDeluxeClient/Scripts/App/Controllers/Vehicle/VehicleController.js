@@ -26,42 +26,31 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                 });
     }
 
-    $scope.modelYearSelector = function () {
+    $scope.modelSelector = function () {
 
         $http.get('http://localhost:57661/api/vehicle?model=' + $scope.selectedModelYear).
                 then(function (response) {
                     $scope.modelYear = response.data;
                 });
     }
-    $scope.modelSelector = function () {
+    $scope.yearSelector = function () {
+        
 
-        $scope.urlString = urlBeginning + '?model=' + $scope.selectedModel + '&modelyear=' + $scope.selectedModelYear + '&brand=' + $scope.selectedBrand;
-
-
-        $http.get($scope.urlString).
+        $http.get('http://localhost:57661/api/vehicle?year=' + $scope.modelYear + "&mod=" + $scope.modelType + "&brnd=" + $scope.selectedBrand).
                 then(function (response) {
+                    var properties = response.data;
+                    $scope.engineType = [];
+                    $scope.engineGroup = [];
+                    $scope.engineDescription = [];
 
-                    var engineProperties = response.data.split('=');
-
-                    //Engine
-                    $scope.engineType = engineProperties[0].split(',');
-                    $scope.engineGroup = engineProperties[1].split(',');
-                    $scope.engineDescription = engineProperties[2].split(',');
-
-                    //Transmission
-                    $scope.transmissionType = engineProperties[3].split(',');
-                    $scope.transmissionGroup = engineProperties[4].split(',');
-                    $scope.transmissionDescription = engineProperties[5].split(',');
-
-                    //Exterior
-                    $scope.paintType = engineProperties[6].split(',');
-                    $scope.paintDescription = engineProperties[7].split(',');
-                    $scope.paintGroup = engineProperties[8].split(',');
-
-                    //Interior
-                    $scope.interiorMaterial = engineProperties[9].split(',');
-                    $scope.interiorDescription = engineProperties[10].split(',');
-                    $scope.interiorColor = engineProperties[11].split(',');
+                    for (i = 0; i < properties.length; i++) {
+                        var temp = properties[i].Name.split("=");
+                        $scope.engineType.push(temp[0]);
+                        $scope.engineGroup.push(temp[1]);
+                        $scope.engineDescription.push(temp[2]);
+                    }
+                    
+                   
 
                 });
     }
@@ -71,6 +60,10 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
     //Glöm för helvete inte api i pathen
     //Skapa ett objekt, matcha objektets properties namn and baam, woorks.
+
+    $scope.engineType = [];
+    $scope.engineGroup = [];
+    $scope.engineDescription = [];
 
     $scope.selectedBrand = "";
     $scope.selectedModelYear = "";

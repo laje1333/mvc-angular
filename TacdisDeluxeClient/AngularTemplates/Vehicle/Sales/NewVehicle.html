@@ -9,13 +9,13 @@
                     <option ng-repeat="b in brands">{{b.Name}}</option>
                 </select>
 
-                <label for="modelyearSelect">Model Year:</label>
-                <select class="form-control" id="modelyearSelect" ng-disabled="brandDisabled" ng-model="selectedModelYear" ng-change="modelYearSelector(); modelEnabler()">
+                <label for="modelSelect">Model:</label>
+                <select class="form-control" id="modelSelect" ng-disabled="brandDisabled" ng-model="selectedModelYear" ng-change="modelSelector(); modelEnabler()">
                     <option ng-repeat="mod in modelType track by $index">{{mod}}</option>
                 </select>
 
-                <label for="modelSelect">Model:</label>
-                <select class="form-control" id="modelSelect" ng-disabled="modelDisabled" ng-model="selectedModel" ng-change="modelSelector(); extendElement('enginePanel')">
+                <label for="yearSelect">Availible years:</label>
+                <select class="form-control" id="yearSelect" ng-disabled="modelDisabled" ng-model="selectedModel" ng-change="yearSelector(); extendElement('enginePanel')">
                     <option ng-repeat="y in modelYear track by $index">{{y}}</option>
                 </select>
             </div>
@@ -30,16 +30,16 @@
 
                 <label for="enginetype">Type:</label>
                 <select class="form-control" id="enginetype" ng-model="selectedEngineType" ng-change="engineGroupEnabler()">
-                    <option ng-repeat="engType in engineType">{{engType}}</option>
+                    <option ng-repeat="engType in engineType track by $index">{{engType}}</option>
                 </select>
                 <label for="enginegroup">Engine group:</label>
                 <select class="form-control" id="enginegroup" ng-disabled="engineGroupDisabled" ng-model="selectedEngineGroup" ng-change="engineDescEnabler()">
-                    <option ng-repeat="engGroup in engineGroup">{{engGroup}}</option>
+                    <option ng-repeat="engGroup in engineGroup track by $index">{{engGroup}}</option>
                 </select>
                 <label for="enginedesc">Description:</label>
                 <select class="form-control" id="enginedesc" ng-disabled="engineDescDisabled" ng-model="selectedEngineDesc" ng-change="extendElement('transmissionPanel')">
                     <option></option>
-                    <option ng-repeat="engDesc in engineDescription">{{engDesc}}</option>
+                    <option ng-repeat="engDesc in engineDescription track by $index">{{engDesc}}</option>
                 </select>
             </div>
         </div>

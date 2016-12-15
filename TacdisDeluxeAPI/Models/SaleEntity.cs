@@ -29,5 +29,7 @@ namespace TacdisDeluxeAPI.Models
         public virtual ICollection<SalesAddonEntity> Addons { get; set; }
         public virtual ICollection<PayerEntity> Payers { get; set; }
         public PaymentType PaymentType { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime DateEdited { get; set; }
     }
 }
