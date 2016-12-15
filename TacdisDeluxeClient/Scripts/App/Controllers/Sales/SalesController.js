@@ -1,19 +1,31 @@
 ﻿'use strict';
 
-tacdisDeluxeApp.controller("SalesController", function ($scope, $http) {
+tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http) {
 
     $scope.init = function () {
         $scope.sendGet();
     }
 
-    $scope.totalCost = 0;
-    $scope.calcTotal = function () {
-        $scope.totalCost += parseFloat($scope.cost);
+    $scope.panes = [
+        { title: "Vehicles", template: "AngularTemplates/Sales/Panes/Vehicles.html", active: true },
+        { title: "Parts", template: "AngularTemplates/Sales/Panes/Parts.html" },
+        { title: "Add Ons", template: "AngularTemplates/Sales/Panes/Addons.html" }];
+
+
+    $scope.active = function () {    
+        return $scope.panes.filter(function (pane) {
+            return pane.active;
+        })[0];
     };
 
-    $scope.record = [];
+    $rootScope.totalCost = 0;
+    $scope.calcTotal = function () {
+        $rootScope.totalCost += parseFloat($scope.cost);
+    };
+
+    $rootScope.record = [];
     $scope.addRow = function () {
-        $scope.record.push({ 'type': $scope.type, 'info': $scope.info, 'cost': $scope.cost });
+        $rootScope.record.push({ 'type': $scope.type, 'info': $scope.info, 'cost': $scope.cost });
         $scope.calcTotal();
         $scope.type = '';
         $scope.info = '';
