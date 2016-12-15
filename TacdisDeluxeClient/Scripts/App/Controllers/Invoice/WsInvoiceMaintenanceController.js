@@ -1,11 +1,12 @@
 ﻿
 tacdisDeluxeApp.controller("WsInvoiceMaintenanceCtrl", ["$scope", "wsInvoiceMaintenanceService", function ($scope, wsInvoiceMaintenanceService) {
-    $scope.InvoiceNumber ="";
+    $scope.MaintenanceInvoice = [];
 
-    $scope.getInvoiceFromOverview = function () {
-        console.log('getInvoice');
+   
+    $scope.page_load = function () {
+        console.log("page load");
         $scope.invoices = wsInvoiceMaintenanceService.getInvoice();
-        $scope.InvoiceNumber = $scope.invoices[0].InvoiceNumber;
+        $scope.MaintenanceInvoice = $scope.invoices[0];
     };
    
 }]);
