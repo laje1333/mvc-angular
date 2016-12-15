@@ -224,9 +224,13 @@
     <Content Include="AngularTemplates\Sales\OldSale.html" />
     <Content Include="AngularTemplates\Invoice\WsInvoiceMaintenance.html" />
     <Content Include="AngularTemplates\Sales\Panes\Parts.html" />
+    <Content Include="AngularTemplates\Vehicle\Administration\CreateInventoryRecord.html" />
+    <Content Include="AngularTemplates\Vehicle\Administration\InventoryAdjustments.html" />
+    <Content Include="AngularTemplates\Vehicle\Administration\VehicleValuation.html" />
     <Content Include="AngularTemplates\Vehicle\Sales\NewVehicle.html" />
     <Content Include="AngularTemplates\Vehicle\Sales\NewVehicleMaintenance.html" />
     <Content Include="AngularTemplates\Sales\Panes\Vehicles.html" />
+    <Content Include="AngularTemplates\Vehicle\Sales\VehicleExtensions.html" />
     <Content Include="AngularTemplates\WorkOrder\WOH_Finalize.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
