@@ -40,6 +40,7 @@ namespace TacdisDeluxeAPI.Controllers
             }
         }
 
+
         public IEnumerable<PartEntity> Get(string articleNumber, string articleName)
         {
             using (DBContext c = new DBContext())
