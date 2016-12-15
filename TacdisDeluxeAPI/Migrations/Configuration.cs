@@ -52,8 +52,51 @@ namespace TacdisDeluxeAPI.Migrations
             {
                 context.Parts.AddOrUpdate<PartEntity>(p);
             });
+
+            context.SaveChanges();
+            //Vehicle
+            var vehicleBrands = new List<VehicleBrandEntity>()
+            {
+                new VehicleBrandEntity(){Id = 1, Name = "Volvo"},
+                new VehicleBrandEntity(){Id = 2, Name = "Ford"},
+                new VehicleBrandEntity(){Id = 3, Name = "Audi"},
+                new VehicleBrandEntity(){Id = 4, Name = "BMW"}
+            };
+
+            vehicleBrands.ForEach(v =>
+            {
+                context.VehicleBrands.AddOrUpdate<VehicleBrandEntity>(v);
+            });
             context.SaveChanges();
 
+            var vehicleProperties = new List<VehiclePropertyEntity>()
+            {
+                new VehiclePropertyEntity(){Id = 1, Name = "Petrol=V6=Standard-V6", Price = 34990.90f},
+                new VehiclePropertyEntity(){Id = 2, Name = "Diesel=V6=Standard-V6", Price = 37990.90f},
+                new VehiclePropertyEntity(){Id = 3, Name = "Petrol-Hybrid=Flat-block=Hybrid-Petrol", Price = 43990.90f},
+                new VehiclePropertyEntity(){Id = 4, Name = "Diesel-Hybrid=Flat-block=Hybrid-Diesel", Price = 46990.90f},
+                new VehiclePropertyEntity(){Id = 5, Name = "Petrol-Hybrid=Standard V5 hybrid=Hybrid-Petrol", Price = 51990.90f},
+                new VehiclePropertyEntity(){Id = 6, Name = "Diesel-Hybrid=Standard V5 hybrid=Hybrid-Diesel", Price = 56990.90f},
+            };
+
+            vehicleProperties.ForEach(v =>
+            {
+                context.VehicleProperties.AddOrUpdate<VehiclePropertyEntity>(v);
+            });
+            context.SaveChanges();
+
+
+
+            var vehicleModels = new List<VehicleModelEntity>()
+            {
+                new VehicleModelEntity(){Id = 1, BrandId = 1, Name = "XC-90", Brand = vehicleBrands[0], ProductionDate = new DateTime(2011, 1, 1), Properties = vehicleProperties},
+            };
+
+            vehicleModels.ForEach(v =>
+            {
+                context.VehicleModels.AddOrUpdate<VehicleModelEntity>(v);
+            });
+            context.SaveChanges();
 
 
 
