@@ -24,17 +24,22 @@
                             </form>
                         </div>
                         <div class="col-md-6">
-                            <table id="salesValues" class="table table-striped">
-                                <tr>
-                                    <th>Type:</th>
-                                    <th>Info:</th>
-                                    <th>Cost:</th>
-                                </tr>
-                                <tr ng-repeat="r in record">
-                                    <td>{{r.type}} </td>
-                                    <td>{{r.info}}</td>
-                                    <td>{{r.cost}}</td>
-                                </tr>
+                            <table id="salesValues" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Type:</th>
+                                        <th>Info:</th>
+                                        <th>Cost:</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="r in record">
+                                        <td>{{r.type}} </td>
+                                        <td>{{r.info}}</td>
+                                        <td>{{r.cost}}</td>
+                                    </tr>
+                                </tbody>
+                                
                             </table>
                             <p>{{totalCost}}</p>
                             
@@ -45,7 +50,6 @@
             </div>
         </div>
     </div>
-    <button type="button" class="btn btn-success" ng-click="sendPut()">add the dude</button>
     <uib-tabset active="pane.active">
         <uib-tab ng-repeat="pane in panes" heading="{{pane.title}}" active="pane.active">
             <div ng-include="pane.template"></div>

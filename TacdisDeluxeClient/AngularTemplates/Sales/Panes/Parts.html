@@ -9,22 +9,33 @@
                     </div>
                 </div>
                 <div class="control-group panel-body">
-                    <form class="form-horizontal" name="saleForm">
+                    <form class="form-horizontal" name="partForm">              
                         <div class="form-group">
-                            <label for="Type">Type:</label>
-                            <select class="form-control" id="typeOfThing" ng-model="type" ng-options="t for t in types"></select>
+                            <label for="ArtNum">Article Number:</label>
+                            <input class="form-control" type="text" ng-model="artNum" />
                         </div>
                         <div class="form-group">
-                            <label for="Info">Info:</label>
-                            <input class="form-control" type="text" ng-model="info" required />
+                            <label for="ArtName">Article Name:</label>
+                            <input class="form-control" type="text" ng-model="artName" />
                         </div>
-                        <div class="form-group">
-                            <label for="Cost">Cost:</label>
-                            <input class="form-control" type="text" ng-pattern="onlyNumbers" ng-model="cost" required />
-                        </div>
+                        <button class="btn btn-group" ng-click="GetSearchParts()" ng-disabled="!(artNum || artName)">Search</button>
+                        
+                        <table id="partTable" class="table table-hover">
+                            <tr>
+                                <th>Type:</th>
+                                <th>Info:</th>
+                                <th>Cost:</th>
+                            </tr>
+                            <tr ng-repeat="r in partsRec" ng-class="{'selected':$index == selectedRow}" ng-click="setSelected()">
+                                <td>{{r.number}} </td>
+                                <td>{{r.name}}</td>
+                                <td>{{r.price}}</td>
+                            </tr>
+                        </table>
+
                         <div class="form-group">
 
-                            <button class="btn btn-group" ng-click="addRow()" ng-disabled="saleForm.$invalid">Add</button>
+                            <button class="btn btn-group" ng-click="addRow()">Add</button>
 
                         </div>
                     </form>

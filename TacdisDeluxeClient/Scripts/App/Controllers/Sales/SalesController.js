@@ -3,7 +3,7 @@
 tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http) {
 
     $scope.init = function () {
-        $scope.sendGet();
+        
     }
 
     $scope.panes = [
@@ -38,7 +38,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         $('#Search' + $scope.searchTypeOfItem).show();
     };
 
-    $scope.sendPut = function(obj){
+    $scope.PostSalesman = function(obj){
         var req = {
             method: 'POST',
             url: 'http://localhost:57661/api/sales',
@@ -54,7 +54,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
          );
     }
 
-    $scope.sendGet = function (Data) {
+    $scope.GetAllSales = function (Data) {
         var req = {
             method: 'GET',
             url: 'http://localhost:57661/api/sales',
@@ -70,11 +70,66 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
          }
          );
     }
-    
-    //$http.get('http://localhost:57661/api/sales').
-    //     then(function (response) {
-    //         $scope.types = response.data.split(',');
-    //     });
+
+    $scope.GetSearchSales = function () {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/sales',
+            headers: {
+                //'Authorization': 'Bearer='+ 'token'
+            },
+        }
+        $http(req).
+         then(function (response) {
+             $scope.types = response.data;
+         }, function (response) {
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
+
+    $scope.GetParts = function () {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/part',
+        }
+        $http(req).
+         then(function (response) {
+             $scope.types = response.data;
+         }, function (response) {
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
+
+    $scope.setSelected = function () {
+        $scope.selected = this.r;
+    };
+
+    $scope.GetSearchParts = function () {
+        if (!($scope.artNum)) {
+            $scope.artNum = "";
+        }
+        if (!($scope.artName)) {
+            $scope.artName = "";
+        }
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/part',
+            params: { articleNumber: $scope.artNum, articleName: $scope.artName }
+        }
+        $http(req).
+         then(function (response) {
+             $scope.partsRec = [];
+             for (var i = 0; i < response.data.length; i++) {
+                 $scope.partsRec.push({ 'number': response.data[i].ArticleNumber, 'name': response.data[i].ArticleName, 'price': response.data[i].Price });
+             }
+                 
+         }, function (response) {
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
 
     $scope.init();
 
