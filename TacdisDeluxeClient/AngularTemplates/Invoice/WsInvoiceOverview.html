@@ -31,8 +31,8 @@
                 <td data-title="'Invoice date'">{{record.InvoiceDate}}</td>
                 <td data-title="'Due date'">{{record.DueDate}}</td>
                 <td data-title="'Debit/Credit'">{{record.DebitCredit}}</td>
-                <td data-title="'Vat'">{{record.Vat}}</td>
-                <td data-title="'Invoice amount'">{{record.InvoiceAmount}}</td>
+                <td data-title="'Vat'">{{record.Vat | valuta}}</td>
+                <td data-title="'Invoice amount'">{{record.InvoiceAmount | valuta}}</td>
                 <td data-title="'Preview'"><button ng-click="toggleModal(record.InvoiceNumber)" class="btn btn-default">view</button></td>
             </tr>
         </table>
