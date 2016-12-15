@@ -2,7 +2,7 @@
 
 
 tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route) {
-    
+
 
     //Get
     var urlBeginning = 'http://localhost:57661/api/vehicle/GetModelYears/';
@@ -13,10 +13,10 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
         $http.get($scope.urlString).
                 then(function (response) {
-                $scope.year = response.data.split(',');
-                
-                
-      });
+                    $scope.year = response.data.split(',');
+
+
+                });
     }
 
     $scope.modelYearSelector = function () {
@@ -91,7 +91,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     $scope.selectedInteriorColor = "";
 
     $scope.saveData = function () {
-        
+
         var vehicleData = {
             Brand: $scope.selectedBrand,
             ModelYear: $scope.selectedModelYear,
@@ -112,17 +112,21 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
             InteriorMaterial: $scope.selectedInteriorMaterial,
             InteriorColorDescription: $scope.selectedInteriorColorDesc,
             InteriorColor: $scope.selectedInteriorColor,
+
         }
 
         $http({
             method: 'POST',
             url: "http://localhost:57661/api/Vehicle/AddCar",
             data: vehicleData
-        }).success(function () { });
+        }).success(function () {
+            $scope.showPopup();
+
+        });
 
     }
 
-    
+
     //General
     $scope.brandDisabled = true;
     $scope.brandEnabler = function () {
@@ -183,6 +187,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     $scope.saveDisabled = true;
     $scope.saveEnabler = function () {
         $scope.saveDisabled = false;
+
     }
 
     $scope.extendElement = function (id) {
@@ -193,7 +198,11 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
         $route.reload();
     }
 
-    
+    $scope.showPopup = function (id) {
+        $("#" + id).popover();
+        setTimeout(function () { $("#" + id).popover('hide') }, 1000);
+    }
+
 });
 
 tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
@@ -209,10 +218,10 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
 
         $scope.newVehicleTable = new ngTableParams({
 
-        }, 
+        },
             {
                 dataset: $scope.newVehicles[0]
-        });
+            });
     });
     };
 
@@ -241,14 +250,31 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
 }]);
 
 
+
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider
         .when('/newVehicle', {
             templateUrl: '/AngularTemplates/Vehicle/Sales/NewVehicle.html',
             controller: 'VehicleController'
         })
-        .when('/usedVehicle', {
-        templateUrl: '/AngularTemplates/Vehicle/Sales/NewVehicleMaintenance.html',
-        controller: 'VehicleController'
-    });
+        .when('/vehicleMaintenance', {
+            templateUrl: '/AngularTemplates/Vehicle/Sales/NewVehicleMaintenance.html',
+            controller: 'VehicleMaintenanceController'
+        })
+        .when('/vehicleExtensions', {
+            templateUrl: '/AngularTemplates/Vehicle/Sales/VehicleExtensions.html',
+            controller: 'VehicleController'
+        })
+        .when('/createInventoryRecord', {
+            templateUrl: '/AngularTemplates/Vehicle/Administration/CreateInventoryRecord.html',
+            controller: 'VehicleController'
+        })
+        .when('/inventoryAdjustments', {
+            templateUrl: '/AngularTemplates/Vehicle/Administration/InventoryAdjustments.html',
+            controller: 'VehicleController'
+        })
+        .when('/vehicleValuation', {
+            templateUrl: '/AngularTemplates/Vehicle/Administration/VehicleValuation.html',
+            controller: 'VehicleController'
+        });
 });

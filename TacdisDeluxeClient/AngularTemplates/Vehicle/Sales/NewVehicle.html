@@ -103,5 +103,11 @@
     </div>
 </div>
 
-<button type="button" class="btn btn-primary btn-md" ng-click="saveData()">Save</button>
-<button type="button" class="btn btn-warning btn-md" ng-click="reloadRoute()">Discard</button>
+<button type="button" id="saveButton" class="btn btn-primary btn-md" ng-click="showPopup('saveButton'); saveData()" data-toggle="popover" data-placement="left" data-content="Sucessefully saved">
+    Save
+    <span class="glyphicon glyphicon-floppy-save"></span>
+</button>
+<button type="button" class="btn btn-warning btn-md" ng-click="reloadRoute()">
+    Discard
+    <span class="glyphicon glyphicon-remove"></span>
+</button>

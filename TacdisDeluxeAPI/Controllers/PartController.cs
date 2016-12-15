@@ -11,16 +11,55 @@ namespace TacdisDeluxeAPI.Controllers
 {
     public class PartController : ApiController
     {
-        [System.Web.Http.HttpGet]
-        public string Kalle(int id)
+        public IEnumerable<PartEntity> Get()
         {
-            return "Rulez!" + " id = " + id;
+            using (DBContext c = new DBContext())
+            {
+                var parts = c.Parts;
+
+                return parts.ToList();
+            }
         }
 
-        [System.Web.Http.HttpPost]
-        public void Kaka(FormCollection frm)
+        public PartEntity Get(int id)
         {
-            var i = 0;
+            using (DBContext c = new DBContext())
+            {
+                PartEntity part = null;
+
+                try
+                {
+                    part = c.Parts.Where(p => p.Id == id).Single();
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                return part;
+            }
+        }
+
+        public IEnumerable<PartEntity> Get(string articleNumber, string articleName)
+        {
+
+            using (DBContext c = new DBContext())
+            {
+                var allParts = c.Parts as IQueryable<PartEntity>;
+
+                if (!String.IsNullOrEmpty(articleNumber))
+                {
+                    allParts = allParts.Where(p => p.ArticleNumber.ToString().Contains(articleNumber));
+                }
+
+                if (!String.IsNullOrEmpty(articleName))
+                {
+                    allParts = allParts.Where(p => p.ArticleName.Contains(articleName));
+                }
+
+                return allParts.ToList(); 
+            }
+
         }
 
         //// GET: api/Part
