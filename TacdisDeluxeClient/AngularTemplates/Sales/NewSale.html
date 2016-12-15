@@ -45,6 +45,7 @@
             </div>
         </div>
     </div>
+    <button type="button" class="btn btn-success" ng-click="sendPut()">add the dude</button>
     <uib-tabset active="pane.active">
         <uib-tab ng-repeat="pane in panes" heading="{{pane.title}}" active="pane.active">
             <div ng-include="pane.template"></div>
