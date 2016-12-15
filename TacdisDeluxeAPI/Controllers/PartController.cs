@@ -42,10 +42,18 @@ namespace TacdisDeluxeAPI.Controllers
 
         public IEnumerable<PartEntity> Get(string articleNumber, string articleName)
         {
-
             using (DBContext c = new DBContext())
             {
-                var allParts = c.Parts as IQueryable<PartEntity>;
+                IQueryable<PartEntity> allParts;
+
+                if (string.IsNullOrEmpty(articleName + articleNumber))
+                {
+                    return new List<PartEntity>();
+                }
+                else
+                {
+                    allParts = c.Parts as IQueryable<PartEntity>;
+                }
 
                 if (!String.IsNullOrEmpty(articleNumber))
                 {
@@ -57,7 +65,7 @@ namespace TacdisDeluxeAPI.Controllers
                     allParts = allParts.Where(p => p.ArticleName.Contains(articleName));
                 }
 
-                return allParts.ToList(); 
+                return allParts.ToList();
             }
 
         }

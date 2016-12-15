@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -25,6 +26,7 @@ namespace TacdisDeluxeAPI.Models
         public double VAT { get; set; }
         public bool SpecFsg { get; set; }
 
+        [IgnoreDataMember]
         public ICollection<SaleEntity> Sales { get; set; }
     }
 }
