@@ -243,6 +243,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\PartController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\SalesmanController.cs" />
     <Compile Include="Controllers\WorkOrderController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />

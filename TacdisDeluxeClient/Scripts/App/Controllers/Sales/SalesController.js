@@ -38,14 +38,12 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         $('#Search' + $scope.searchTypeOfItem).show();
     };
 
-    $scope.sendPut = function(Data){
+    $scope.sendPut = function(obj){
         var req = {
-            method: 'PUT',
+            method: 'POST',
             url: 'http://localhost:57661/api/sales',
-            data: Data,
-            headers: {
-                //'Authorization': 'Bearer='+ 'token'
-            },
+            headers: { },
+            data: { FirstName: 'Pelle', LastName: 'Chanslos' },
         }
         $http(req).
          then(function (response) {
@@ -66,7 +64,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         }
         $http(req).
          then(function (response) {
-             $scope.types = response.data.split(',');
+             $scope.types = response.data;
          }, function (response) {
              $scope.statusCode = response.statusCode;
          }
