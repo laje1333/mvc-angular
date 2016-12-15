@@ -218,7 +218,7 @@
   <ItemGroup>
     <Content Include="AngularTemplates\Invoice\WsInvoiceOverview.html" />
     <Content Include="AngularTemplates\Parts\price_query_form.html" />
-    <Content Include="AngularTemplates\Parts\_modal_search.html" />
+    <Content Include="AngularTemplates\Parts\_modal_search_retail_sale_orders.html" />
     <Content Include="AngularTemplates\Sales\Panes\Addons.html" />
     <Content Include="AngularTemplates\Sales\NewSale.html" />
     <Content Include="AngularTemplates\Sales\OldSale.html" />

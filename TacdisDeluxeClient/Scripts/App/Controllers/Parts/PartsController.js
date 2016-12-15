@@ -20,13 +20,18 @@ var invoices = [
 ];
 
 
-tacdisDeluxeApp.controller("PartsController", function ($scope, $http) {
+tacdisDeluxeApp.controller("PartsController", function ($scope, $http, $dialog) {
     $scope.showez = false;
 
     $scope.records = invoices;
     $scope.listParts = function () {
-        $scope.records = invoices;
+        $dialog.dialog({}).open('/AngulatTemplates/Parts/_modal_search_retail_sale_orders.html');
     };
+
+
+
+
+
 
 
     $scope.showezMoi = function () {
