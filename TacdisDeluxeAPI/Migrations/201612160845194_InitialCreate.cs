@@ -3,7 +3,7 @@ namespace TacdisDeluxeAPI.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCABLAMCreate : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
@@ -25,6 +25,8 @@ namespace TacdisDeluxeAPI.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Status = c.Int(nullable: false),
                         PaymentType = c.Int(nullable: false),
+                        DateCreated = c.DateTime(nullable: false),
+                        DateEdited = c.DateTime(nullable: false),
                         Salesman_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
@@ -52,6 +54,10 @@ namespace TacdisDeluxeAPI.Migrations
                         FirsName = c.String(),
                         LastName = c.String(),
                         Trusted = c.Boolean(nullable: false),
+                        CustomerNumber = c.String(),
+                        StreeatAddress = c.String(),
+                        ZipCity = c.String(),
+                        Country = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -62,6 +68,10 @@ namespace TacdisDeluxeAPI.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         FirstName = c.String(),
                         LastName = c.String(),
+                        Company = c.String(),
+                        StreeatAddress = c.String(),
+                        ZipCity = c.String(),
+                        Country = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -105,6 +115,8 @@ namespace TacdisDeluxeAPI.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
+                        Field = c.String(),
+                        ParentId = c.Int(nullable: false),
                         Price = c.Double(nullable: false),
                         VehicleModelEntity_Id = c.Int(),
                     })

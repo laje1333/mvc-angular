@@ -26,6 +26,8 @@ namespace TacdisDeluxeAPI.Models
         public DbSet<VehicleBrandEntity> VehicleBrands { get; set; }
         public DbSet<VehicleModelEntity> VehicleModels { get; set; }
         public DbSet<VehiclePropertyEntity> VehicleProperties { get; set; }
+        public DbSet<InvoiceEntity> Invoices { get; set; }
+        public DbSet<InvoiceRowEntity> InvoiceRows { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder builder)
@@ -43,14 +45,9 @@ namespace TacdisDeluxeAPI.Models
             builder.Entity<VehiclePropertyEntity>().ToTable("VehicleProperty");
 
             builder.Configurations.Add(new PartMap());
-            //builder.Configurations.Add(new PayerMap());
             builder.Configurations.Add(new SaleMap());
-            //builder.Configurations.Add(new SalesAddonMap());
-            //builder.Configurations.Add(new SalesmanMap());
-            //builder.Configurations.Add(new VehicleMap());
-            //builder.Configurations.Add(new VehicleBrandMap());
             builder.Configurations.Add(new VehicleModelMap());
-            //builder.Configurations.Add(new VehiclePropertyMap());
+            builder.Configurations.Add(new InvoiceMap());
 
 
             base.OnModelCreating(builder);

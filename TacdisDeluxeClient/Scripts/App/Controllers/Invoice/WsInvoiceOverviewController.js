@@ -16,9 +16,7 @@ tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", 
         $scope.records = obj.invoices;
 
         $scope.invoiceTable = new ngTableParams({
-            page: 1,
-            count: 10,
-            sorting: { Invoice_number: "asc" }
+          
         },{
             dataset: $scope.records
         });
@@ -39,6 +37,12 @@ tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", 
 
 
 }]);
+
+tacdisDeluxeApp.filter('valuta', function () {
+    return function (item) {
+        return item + " Kr";
+    };
+});
 
 tacdisDeluxeApp.directive('modal', function () {
     return {

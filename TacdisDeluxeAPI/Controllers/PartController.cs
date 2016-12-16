@@ -7,21 +7,30 @@ using System.Web.Http;
 using System.Web.Mvc;
 using TacdisDeluxeAPI.Models;
 
+//  Ordernummer: 1981657 - Butiksförsäljning Tacdis
+
 namespace TacdisDeluxeAPI.Controllers
 {
     public class PartController : ApiController
     {
-        public IEnumerable<PartEntity> Get()
+        public IHttpActionResult Get()
         {
             using (DBContext c = new DBContext())
             {
-                var parts = c.Parts;
+                List<PartEntity> parts = new List<PartEntity>();
 
-                return parts.ToList();
+                var ps = c.Parts;
+
+                if (ps.Any())
+                {
+                    parts = ps.ToList();
+                }
+
+                return Ok(parts.ToList());
             }
         }
 
-        public PartEntity Get(int id)
+        public IHttpActionResult Get(int id)
         {
             using (DBContext c = new DBContext())
             {
@@ -33,19 +42,28 @@ namespace TacdisDeluxeAPI.Controllers
                 }
                 catch (Exception ex)
                 {
-
+                    return BadRequest(ex.Message);
                 }
 
-                return part;
+                return Ok(part);
             }
         }
 
-        public IEnumerable<PartEntity> Get(string articleNumber, string articleName)
-        {
 
+        public IHttpActionResult Get(string articleNumber, string articleName)
+        {
             using (DBContext c = new DBContext())
             {
-                var allParts = c.Parts as IQueryable<PartEntity>;
+                IQueryable<PartEntity> allParts;
+
+                if (string.IsNullOrEmpty(articleName + articleNumber))
+                {
+                    return Ok(new List<PartEntity>());
+                }
+                else
+                {
+                    allParts = c.Parts as IQueryable<PartEntity>;
+                }
 
                 if (!String.IsNullOrEmpty(articleNumber))
                 {
@@ -57,10 +75,32 @@ namespace TacdisDeluxeAPI.Controllers
                     allParts = allParts.Where(p => p.ArticleName.Contains(articleName));
                 }
 
-                return allParts.ToList(); 
+                return Ok(allParts.ToList());
             }
 
         }
+
+
+        public IHttpActionResult Post([FromBody]PartEntity part)
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    db.Parts.Add(part);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok();
+        }
+
+
+
 
         //// GET: api/Part
         //public string Get()

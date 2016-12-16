@@ -41,12 +41,11 @@ namespace TacdisDeluxeAPI.Controllers
                 return models.ToList();
             }
         }
-
-        public List<ICollection<VehiclePropertyEntity>> GetModelProperties(string model, int year, string brand)
+        public IEnumerable<VehiclePropertyEntity> GetModelProperties(int year, string mod, string brnd)
         {
             using (DBContext c = new DBContext())
             {
-                var models = c.VehicleModels.Include("Properties").Distinct().Where(x => (x.Name == model && x.Brand.Name == brand && x.ProductionDate.Year == year)).Select(x => x.Properties);
+                var models = c.VehicleModels.Include("Properties").Distinct().Where(x => (x.Name == mod && x.Brand.Name == brnd && x.ProductionDate.Year == year)).Single().Properties;
 
 
 

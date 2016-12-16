@@ -1,4 +1,32 @@
-﻿
+﻿/*
+Enable-Migrations -ContextTypeName TacdisDeluxeAPI.Models.DBContext
+add-migration InitialCABLAMCreate
+update-database -Verbose
+add-migration
+*/
+
+
+namespace TacdisDeluxeAPI.Migrations
+{
+    using Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
+
+    internal sealed class Configuration : DbMigrationsConfiguration<TacdisDeluxeAPI.Models.DBContext>
+    {
+        public Configuration()
+        {
+            AutomaticMigrationsEnabled = false;
+        }
+
+        protected override void Seed(TacdisDeluxeAPI.Models.DBContext context)
+        {
+
+
+
 
 
             var parts = new List<PartEntity>()
@@ -32,6 +60,77 @@
             {
                 context.Parts.AddOrUpdate<PartEntity>(p);
             });
+
+            context.SaveChanges();
+            //Vehicle
+            var vehicleBrands = new List<VehicleBrandEntity>()
+            {
+                new VehicleBrandEntity(){Id = 1, Name = "Volvo"},
+                new VehicleBrandEntity(){Id = 2, Name = "Ford"},
+                new VehicleBrandEntity(){Id = 3, Name = "Audi"},
+                new VehicleBrandEntity(){Id = 4, Name = "BMW"}
+            };
+
+            vehicleBrands.ForEach(v =>
+            {
+                context.VehicleBrands.AddOrUpdate<VehicleBrandEntity>(v);
+            });
+            context.SaveChanges();
+
+            var vehicleProperties = new List<VehiclePropertyEntity>()
+            {
+                //Engine types:
+                new VehiclePropertyEntity(){Id = 1, Name = "Petrol"     , Field = "Engine-Type"},
+                new VehiclePropertyEntity(){Id = 2, Name = "Diesel"     , Field = "Engine-Type"},
+
+                //Engine groups:
+                new VehiclePropertyEntity(){Id = 3, Name = "V6"         , Field = "Engine-Group"                    , ParentId = 1},
+                new VehiclePropertyEntity(){Id = 4, Name = "V5"         , Field = "Engine-Group"                    , ParentId = 1},
+                new VehiclePropertyEntity(){Id = 5, Name = "Flat 5 Cylinders"         , Field = "Engine-Group"      , ParentId = 1},
+                new VehiclePropertyEntity(){Id = 6, Name = "V5"         , Field = "Engine-Group"                    , ParentId = 2},
+                new VehiclePropertyEntity(){Id = 7, Name = "V6"         , Field = "Engine-Group"                    , ParentId = 2},
+
+                //Engine descriptions:
+                new VehiclePropertyEntity(){Id = 8, Name = "Standard-V6", Field = "Engine-Description", ParentId = 3, Price = 29990},
+                new VehiclePropertyEntity(){Id = 9, Name = "Standard-V5", Field = "Engine-Description", ParentId = 4, Price = 26490},
+                new VehiclePropertyEntity(){Id = 10, Name = "Flat 5 Petrol", Field = "Engine-Description", ParentId = 5, Price = 23490},
+                new VehiclePropertyEntity(){Id = 11, Name = "Standard-V5", Field = "Engine-Description", ParentId = 6, Price = 32500},
+                new VehiclePropertyEntity(){Id = 12, Name = "Standard-V6", Field = "Engine-Description", ParentId = 7, Price = 37490},
+
+                //Transmission types:
+                new VehiclePropertyEntity(){Id = 13, Name = "Automatic"     , Field = "Transmission-Type"},
+                new VehiclePropertyEntity(){Id = 14, Name = "Manual"        , Field = "Transmission-Type"},
+
+                //Transmission groups:
+                new VehiclePropertyEntity(){Id = 15, Name = "5 Gears"       , Field = "Transmission-Group", ParentId = 13},
+                new VehiclePropertyEntity(){Id = 16, Name = "6 Gears"       , Field = "Transmission-Group", ParentId = 13},
+                new VehiclePropertyEntity(){Id = 17, Name = "6 Gears"       , Field = "Transmission-Group", ParentId = 14},
+                new VehiclePropertyEntity(){Id = 18, Name = "5 Gears"       , Field = "Transmission-Group", ParentId = 14},
+
+                //Transmission descriptions:
+                 new VehiclePropertyEntity(){Id = 19, Name = "Standard-Automatic 6-gears", Field = "Transmission-Description", ParentId = 16, Price = 26500},
+                 new VehiclePropertyEntity(){Id = 20, Name = "Standard-Automatic 5-gears", Field = "Transmission-Description", ParentId = 15, Price = 23490},
+                 new VehiclePropertyEntity(){Id = 21, Name = "Standard-Manual 6-gears", Field = "Transmission-Description", ParentId = 17, Price = 22500},
+                 new VehiclePropertyEntity(){Id = 22, Name = "Standard-Manual 5-gears", Field = "Transmission-Description", ParentId = 18, Price = 19490},
+            };
+
+            vehicleProperties.ForEach(v =>
+            {
+                context.VehicleProperties.AddOrUpdate<VehiclePropertyEntity>(v);
+            });
+            context.SaveChanges();
+
+
+
+            var vehicleModels = new List<VehicleModelEntity>()
+            {
+                new VehicleModelEntity(){Id = 1, BrandId = 1, Name = "XC-90", Brand = vehicleBrands[0], ProductionDate = new DateTime(2011, 1, 1), Properties = vehicleProperties},
+            };
+
+            vehicleModels.ForEach(v =>
+            {
+                context.VehicleModels.AddOrUpdate<VehicleModelEntity>(v);
+            });
             context.SaveChanges();
 
 
@@ -40,3 +139,18 @@
 
 
 
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
+        }
+    }
+}
