@@ -259,6 +259,10 @@
     <Compile Include="Migrations\201612160700427_20161216_0800.Designer.cs">
       <DependentUpon>201612160700427_20161216_0800.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612160750467_blaha.cs" />
+    <Compile Include="Migrations\201612160750467_blaha.Designer.cs">
+      <DependentUpon>201612160750467_blaha.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
     <Compile Include="Mockdata\VehicleData\Model.cs" />
@@ -357,6 +361,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612160700427_20161216_0800.resx">
       <DependentUpon>201612160700427_20161216_0800.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612160750467_blaha.resx">
+      <DependentUpon>201612160750467_blaha.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
