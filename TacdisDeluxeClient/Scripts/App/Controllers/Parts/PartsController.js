@@ -1,39 +1,31 @@
 ﻿'use strict';
 
-var invoices = [
-    {
-        "Name": "Alfreds Futterkiste",
-        "Country": "Germany"
-    },
-    {
-        "Name": "Berglunds snabbköp",
-        "Country": "Sweden"
-    },
-    {
-        "Name": "Centro comercial Moctezuma",
-        "Country": "Mexico"
-    },
-    {
-        "Name": "Ernst Handel",
-        "Country": "Austriaaa"
-    }
-];
 
 
-tacdisDeluxeApp.controller("PartsController", function ($scope, $http, $dialog) {
+tacdisDeluxeApp.controller("PartsController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
     $scope.showez = false;
 
-    $scope.records = invoices;
-    $scope.listParts = function () {
-        $dialog.dialog({}).open('/AngulatTemplates/Parts/_modal_search_retail_sale_orders.html');
-    };
+    $http({
+        method: 'GET',
+        url: 'http://localhost:57661/api/Part/'
+    }).then(function successCallback(response) {
+        //$scope.parts = response.data;
+        var d = response.data;
 
+        $scope.tblParts = new ngTableParams({},
+        {
+            dataset: d
+        });
+    },
+    function errorCallback(response) {
+        if (console) {
+            console.log(response);
+        }
+    });
+}],
 
-
-
-
-
-
+function ($scope, $http) {
+    
     $scope.showezMoi = function () {
         $http({
             method: 'GET',
