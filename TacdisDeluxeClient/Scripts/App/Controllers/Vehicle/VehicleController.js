@@ -51,6 +51,12 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                             $scope.engineGroups.push(properties[i]);
                         } else if (properties[i].Field === "Engine-Description") {
                             $scope.engineDescriptions.push(properties[i]);
+                        } else if (properties[i].Field === "Transmission-Type") {
+                            $scope.transmissionTypes.push(properties[i]);
+                        } else if (properties[i].Field === "Transmission-Group") {
+                            $scope.transmissionGroups.push(properties[i]);
+                        } else if (properties[i].Field === "Transmission-Description") {
+                            $scope.transmissionDescriptions.push(properties[i]);
                         }
                     }
                     
@@ -91,16 +97,57 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
         $scope.engineDescDisabled = false;
     }
 
+    $scope.selectTransmissionType = function () {
+        for (i = 0; i < $scope.transmissionTypes.length; i++) {
+            if ($scope.transmissionTypes[i].Name === $scope.selectedTransmissionType) {
+                var id = $scope.transmissionTypes[i].Id;
+                $scope.displayableTransmissionGroups = [];
+                for (x = 0; x < $scope.transmissionGroups.length; x++) {
+                    if ($scope.transmissionGroups[x].ParentId === id) {
+                        $scope.displayableTransmissionGroups.push($scope.transmissionGroups[x]);
+                    }
+                }
+            }
+        }
+        $scope.transmissionGroupDisabled = false;
+    }
+
+    $scope.selectTransmissionGroup = function () {
+        for (i = 0; i < $scope.displayableTransmissionGroups.length; i++) {
+            if ($scope.displayableTransmissionGroups[i].Name === $scope.selectedTransmissionGroup) {
+                var id = $scope.displayableTransmissionGroups[i].Id;
+                $scope.displayableTransmissionDescriptions = [];
+                for (x = 0; x < $scope.transmissionDescriptions.length; x++) {
+                    if ($scope.transmissionDescriptions[x].ParentId === id) {
+                        $scope.displayableTransmissionDescriptions.push($scope.transmissionDescriptions[x]);
+                    }
+                }
+            }
+        }
+        $scope.transmissionDescriptionDisabled = false;
+    }
+
     //Post
 
     //Glöm för helvete inte api i pathen
     //Skapa ett objekt, matcha objektets properties namn and baam, woorks.
 
+
+    //Engine
     $scope.engineTypes = [];
     $scope.engineGroups = [];
     $scope.displayableEngineGroups = [];
     $scope.engineDescriptions = [];
     $scope.displayableEngineDescriptions = [];
+
+    //Transmission
+    $scope.transmissionTypes = [];
+    $scope.transmissionGroups = [];
+    $scope.displayableTransmissionGroups = [];
+    $scope.transmissionDescriptions = [];
+    $scope.displayableTransmissionDescriptions = [];
+
+
 
     $scope.selectedBrand = "";
     $scope.selectedModelYear = "";
