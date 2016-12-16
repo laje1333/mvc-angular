@@ -256,6 +256,7 @@
       <DependentUpon>201612141451335_InitialCABLAMCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
     <Compile Include="Mockdata\VehicleData\Model.cs" />
     <Compile Include="Mockdata\VehicleData\ModelYear.cs" />
