@@ -88,6 +88,22 @@ namespace TacdisDeluxeAPI.Migrations
                 new VehiclePropertyEntity(){Id = 10, Name = "Flat 5 Petrol", Field = "Engine-Description", ParentId = 5, Price = 23490},
                 new VehiclePropertyEntity(){Id = 11, Name = "Standard-V5", Field = "Engine-Description", ParentId = 6, Price = 32500},
                 new VehiclePropertyEntity(){Id = 12, Name = "Standard-V6", Field = "Engine-Description", ParentId = 7, Price = 37490},
+
+                //Transmission types:
+                new VehiclePropertyEntity(){Id = 13, Name = "Automatic"     , Field = "Transmission-Type"},
+                new VehiclePropertyEntity(){Id = 14, Name = "Manual"        , Field = "Transmission-Type"},
+
+                //Transmission groups:
+                new VehiclePropertyEntity(){Id = 15, Name = "5 Gears"       , Field = "Transmission-Group", ParentId = 13},
+                new VehiclePropertyEntity(){Id = 16, Name = "6 Gears"       , Field = "Transmission-Group", ParentId = 13},
+                new VehiclePropertyEntity(){Id = 17, Name = "6 Gears"       , Field = "Transmission-Group", ParentId = 14},
+                new VehiclePropertyEntity(){Id = 18, Name = "5 Gears"       , Field = "Transmission-Group", ParentId = 14},
+
+                //Transmission descriptions:
+                 new VehiclePropertyEntity(){Id = 19, Name = "Standard-Automatic 6-gears", Field = "Transmission-Description", ParentId = 16, Price = 26500},
+                 new VehiclePropertyEntity(){Id = 20, Name = "Standard-Automatic 5-gears", Field = "Transmission-Description", ParentId = 15, Price = 23490},
+                 new VehiclePropertyEntity(){Id = 21, Name = "Standard-Manual 6-gears", Field = "Transmission-Description", ParentId = 17, Price = 22500},
+                 new VehiclePropertyEntity(){Id = 22, Name = "Standard-Manual 5-gears", Field = "Transmission-Description", ParentId = 18, Price = 19490},
             };
 
             vehicleProperties.ForEach(v =>

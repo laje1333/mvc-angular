@@ -29,18 +29,15 @@
             <div class="form-group panel-body default-collapsed" id="enginePanel">
 
                 <label for="enginetype">Type:</label>
-                <select class="form-control" id="enginetype" ng-model="selectedEngineType" ng-change="engineGroupEnabler()">
-                    <option ng-repeat="engType in engineType track by $index">{{engType}}</option>
+                <select class="form-control" id="enginetype" ng-model="selectedEngineType" ng-change="selectEngineType()">
+                    <option ng-repeat="engType in engineTypes track by $index">{{engType.Name}}</option>
                 </select>
                 <label for="enginegroup">Engine group:</label>
-                <select class="form-control" id="enginegroup" ng-disabled="engineGroupDisabled" ng-model="selectedEngineGroup" ng-change="engineDescEnabler()">
-                    <option ng-repeat="engGroup in engineGroup track by $index">{{engGroup}}</option>
+                <select class="form-control" id="enginegroup" ng-disabled="engineGroupDisabled" ng-model="selectedEngineGroup" ng-change="selectEngineGroup(); extendElement('transmissionPanel')">
+                    <option ng-repeat="engGroup in displayableEngineGroups track by $index">{{engGroup.Name}}</option>
                 </select>
                 <label for="enginedesc">Description:</label>
-                <select class="form-control" id="enginedesc" ng-disabled="engineDescDisabled" ng-model="selectedEngineDesc" ng-change="extendElement('transmissionPanel')">
-                    <option></option>
-                    <option ng-repeat="engDesc in engineDescription track by $index">{{engDesc}}</option>
-                </select>
+                <textarea class="form-control" rows="1" id="enginedesc" readonly="true">{{displayableEngineDescriptions[0].Name}}</textarea>
             </div>
         </div>
     </div>
