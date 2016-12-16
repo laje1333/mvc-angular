@@ -48,6 +48,14 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                         $scope.engineType.push(temp[0]);
                         $scope.engineGroup.push(temp[1]);
                         $scope.engineDescription.push(temp[2]);
+
+                        if (properties[i].Field === "Engine-Type") {
+                            $scope.engineType.push(properties[i]);
+                        } else if (properties[i].Field === "Engine-Group") {
+                            $scope.engineGroup.push(properties[i]);
+                        } else if (properties[i].Field === "Engine-Description") {
+                            $scope.engineDescription.push(properties[i]);
+                        }
                     }
                     
                    
@@ -56,6 +64,14 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     }
 
 
+
+    $scope.selectEngineType = function () {
+        for (i = 0; i < $scope.engineType.length; i++) {
+            if ($scope.engineType[i].Name === $scope.selectedEngineType) {
+
+            }
+        }
+    }
     //Post
 
     //Glöm för helvete inte api i pathen
