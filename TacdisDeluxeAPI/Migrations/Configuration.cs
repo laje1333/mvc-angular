@@ -108,10 +108,51 @@ namespace TacdisDeluxeAPI.Migrations
                 new VehiclePropertyEntity(){Id = 18, Name = "5 Gears"       , Field = "Transmission-Group", ParentId = 14},
 
                 //Transmission descriptions:
-                 new VehiclePropertyEntity(){Id = 19, Name = "Standard-Automatic 6-gears", Field = "Transmission-Description", ParentId = 16, Price = 26500},
-                 new VehiclePropertyEntity(){Id = 20, Name = "Standard-Automatic 5-gears", Field = "Transmission-Description", ParentId = 15, Price = 23490},
-                 new VehiclePropertyEntity(){Id = 21, Name = "Standard-Manual 6-gears", Field = "Transmission-Description", ParentId = 17, Price = 22500},
-                 new VehiclePropertyEntity(){Id = 22, Name = "Standard-Manual 5-gears", Field = "Transmission-Description", ParentId = 18, Price = 19490},
+                new VehiclePropertyEntity(){Id = 19, Name = "Standard-Automatic 6-gears", Field = "Transmission-Description", ParentId = 16, Price = 26500},
+                new VehiclePropertyEntity(){Id = 20, Name = "Standard-Automatic 5-gears", Field = "Transmission-Description", ParentId = 15, Price = 23490},
+                new VehiclePropertyEntity(){Id = 21, Name = "Standard-Manual 6-gears",    Field = "Transmission-Description", ParentId = 17, Price = 22500},
+                new VehiclePropertyEntity(){Id = 22, Name = "Standard-Manual 5-gears",    Field = "Transmission-Description", ParentId = 18, Price = 19490},
+
+
+                 //Exterior paint types:
+                new VehiclePropertyEntity(){Id = 23, Name = "White",     Field = "Exterior-Type"},
+                new VehiclePropertyEntity(){Id = 24, Name = "Brown",     Field = "Exterior-Type"},
+                new VehiclePropertyEntity(){Id = 25, Name = "Dark-Gray", Field = "Exterior-Type"},
+
+                 //Exterior paint groups:
+                 new VehiclePropertyEntity(){Id = 26, Name = "Matte-Powder Painted", Field = "Exterior-Group", ParentId = 23},
+                 new VehiclePropertyEntity(){Id = 27, Name = "Clear",                Field = "Exterior-Group", ParentId = 23},
+                 new VehiclePropertyEntity(){Id = 28, Name = "Matte-Powder Painted", Field = "Exterior-Group", ParentId = 24},
+                 new VehiclePropertyEntity(){Id = 29, Name = "Clear",                Field = "Exterior-Group", ParentId = 24},
+                 new VehiclePropertyEntity(){Id = 30, Name = "Clear",                Field = "Exterior-Group", ParentId = 25},
+
+                 //Exerior paint descriptions:
+                 new VehiclePropertyEntity(){Id = 31, Name = "White matte finish",        Field = "Exterior-Description", ParentId = 26, Price = 23490},
+                 new VehiclePropertyEntity(){Id = 32, Name = "White clear finish",        Field = "Exterior-Description", ParentId = 27, Price = 26490},
+                 new VehiclePropertyEntity(){Id = 33, Name = "Brown matte finish",        Field = "Exterior-Description", ParentId = 28, Price = 23490},
+                 new VehiclePropertyEntity(){Id = 34, Name = "Brown clear finish",        Field = "Exterior-Description", ParentId = 29, Price = 26490},
+                 new VehiclePropertyEntity(){Id = 35, Name = "Dark-Gray clear finish",    Field = "Exterior-Description", ParentId = 30, Price = 28490},
+
+                //Interior material types:
+                new VehiclePropertyEntity(){Id = 36, Name = "Leather",      Field = "Interior-Material"},
+                new VehiclePropertyEntity(){Id = 37, Name = "Polyester",    Field = "Interior-Material"},
+                new VehiclePropertyEntity(){Id = 38, Name = "Wool",         Field = "Interior-Material"},
+
+                 //Interior colors:
+                 new VehiclePropertyEntity(){Id = 39, Name = "Brown ",               Field = "Interior-Color", ParentId = 36},
+                 new VehiclePropertyEntity(){Id = 40, Name = "Black",                Field = "Interior-Color", ParentId = 36},
+                 new VehiclePropertyEntity(){Id = 41, Name = "White",                Field = "Interior-Color", ParentId = 37},
+                 new VehiclePropertyEntity(){Id = 42, Name = "Gray",                 Field = "Interior-Color", ParentId = 37},
+                 new VehiclePropertyEntity(){Id = 43, Name = "Blue",                 Field = "Interior-Color", ParentId = 38},
+
+                 //Interior descriptions:
+                 new VehiclePropertyEntity(){Id = 44, Name = "Brown leather interior",    Field = "Interior-Description", ParentId = 39, Price = 34490},
+                 new VehiclePropertyEntity(){Id = 45, Name = "Black leather interior",    Field = "Interior-Description", ParentId = 40, Price = 31490},
+                 new VehiclePropertyEntity(){Id = 46, Name = "White polyester",           Field = "Interior-Description", ParentId = 41, Price = 23490},
+                 new VehiclePropertyEntity(){Id = 47, Name = "Gray polyester",            Field = "Interior-Description", ParentId = 42, Price = 24490},
+                 new VehiclePropertyEntity(){Id = 48, Name = "Blue wool interior",        Field = "Interior-Description", ParentId = 43, Price = 17490},
+
+
             };
 
             vehicleProperties.ForEach(v =>

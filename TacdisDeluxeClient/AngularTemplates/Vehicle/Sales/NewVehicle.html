@@ -50,7 +50,7 @@
                     <option ng-repeat="transType in transmissionTypes">{{transType.Name}}</option>
                 </select>
                 <label for="transmissiongroup">Transmission group:</label>
-                <select class="form-control" id="transmissiongroup" ng-disabled="transmissionGroupDisabled" ng-model="selectedTransmissionGroup" ng-change="selectTransmissionGroup()">
+                <select class="form-control" id="transmissiongroup" ng-disabled="transmissionGroupDisabled" ng-model="selectedTransmissionGroup" ng-change="selectTransmissionGroup(); extendElement('colorPanel')">
                     <option ng-repeat="transGrp in displayableTransmissionGroups">{{transGrp.Name}}</option>
                 </select>
                 <label for="transmissionDesc">Description:</label>
