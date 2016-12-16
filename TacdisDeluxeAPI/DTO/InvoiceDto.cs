@@ -20,5 +20,8 @@ namespace TacdisDeluxeAPI.DTO
         public int WoNumber { get; set; }
         public string JobNumber { get; set; }
         public string RegNumber { get; set; }
+        public ICollection<InvoiceRowDto> InvoiceRows { get; set; }
+        public SalesmanDto Salesman { get; set; }
+        public PayerDto Payer { get; set; }
     }
 }

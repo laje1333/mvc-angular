@@ -20,16 +20,14 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
 
     $rootScope.totalCost = 0;
     $scope.calcTotal = function () {
-        $rootScope.totalCost += parseFloat($scope.cost);
+        $rootScope.totalCost += parseFloat($scope.selected.price);
     };
 
     $rootScope.record = [];
     $scope.addRow = function () {
-        $rootScope.record.push({ 'type': $scope.type, 'info': $scope.info, 'cost': $scope.cost });
+        $rootScope.record.push({ 'type': $scope.selected.type, 'name': $scope.selected.name, 'cost': $scope.selected.price });
         $scope.calcTotal();
-        $scope.type = '';
-        $scope.info = '';
-        $scope.cost = '';
+        $rootScope.selected = '';
     };
     $scope.onlyNumbers = /^\d+(?:\.\d+|)$/;
 
@@ -101,9 +99,11 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
          }
          );
     }
-
+    $rootScope.selected = null;
+    $scope.selectedRow = null;
     $scope.setSelected = function () {
         $scope.selected = this.r;
+        $scope.selectedRow = this.$index;
     };
 
     $scope.GetSearchParts = function () {
@@ -122,7 +122,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
          then(function (response) {
              $scope.partsRec = [];
              for (var i = 0; i < response.data.length; i++) {
-                 $scope.partsRec.push({ 'number': response.data[i].ArticleNumber, 'name': response.data[i].ArticleName, 'price': response.data[i].Price });
+                 $scope.partsRec.push({ 'number': response.data[i].ArticleNumber, 'name': response.data[i].ArticleName, 'price': response.data[i].Price, 'type': 'Part' });
              }
                  
          }, function (response) {

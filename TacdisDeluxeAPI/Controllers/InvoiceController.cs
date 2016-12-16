@@ -51,7 +51,7 @@ namespace TacdisDeluxeAPI.Controllers
         {
             
             var mockInvoice = GetMockInvoice.GetInvoice(1, 1, 12);
-            var invoice = new InvoiceEntity { Payer = new PayerEntity() };
+            //var invoice = new InvoiceEntity { Payer = new PayerEntity() };
 
             var dto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
 
@@ -82,7 +82,7 @@ namespace TacdisDeluxeAPI.Controllers
 
 
                         //db.Invoice.Add(invoice);
-                        db.SaveChanges();
+                       // db.SaveChanges();
                 }
             }
             catch (Exception ex)
