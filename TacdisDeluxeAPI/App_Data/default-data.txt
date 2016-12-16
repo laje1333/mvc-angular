@@ -1,4 +1,8 @@
-﻿
+﻿Enable-Migrations -ContextTypeName TacdisDeluxeAPI.Models.DBContext
+add-migration InitialCABLAMCreate
+update-database -Verbose
+add-migration
+
 
 
             var parts = new List<PartEntity>()

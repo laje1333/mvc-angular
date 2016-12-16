@@ -71,6 +71,14 @@ namespace TacdisDeluxeAPI.Controllers
 
         }
 
+        public void Post([FromBody]string value)
+        {
+            using (DBContext c = new DBContext())
+            {
+                //c.Parts.Add();
+            }
+        }
+
         //// GET: api/Part
         //public string Get()
         //{

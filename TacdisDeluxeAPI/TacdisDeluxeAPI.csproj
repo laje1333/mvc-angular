@@ -255,6 +255,10 @@
     <Compile Include="Migrations\201612141451335_InitialCABLAMCreate.Designer.cs">
       <DependentUpon>201612141451335_InitialCABLAMCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612160700427_20161216_0800.cs" />
+    <Compile Include="Migrations\201612160700427_20161216_0800.Designer.cs">
+      <DependentUpon>201612160700427_20161216_0800.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
     <Compile Include="Mockdata\VehicleData\Model.cs" />
@@ -349,6 +353,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201612141451335_InitialCABLAMCreate.resx">
       <DependentUpon>201612141451335_InitialCABLAMCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612160700427_20161216_0800.resx">
+      <DependentUpon>201612160700427_20161216_0800.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
