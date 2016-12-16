@@ -25,7 +25,7 @@ namespace TacdisDeluxeAPI.Models
         public string DebitCredit { get; set; }
         public double Vat { get; set; }
         public double AmountPaid { get; set; }
-        public ICollection<InvoiceRowEntity> InvoiceRows { get; set; }
+        public virtual ICollection<InvoiceRowEntity> InvoiceRows { get; set; }
         public SalesmanEntity Salesman { get; set; }
         public int WoNumber { get; set; }
         public string JobNumber { get; set; }

@@ -11,3 +11,7 @@
 .default-extended{
     display:block;
 }
+
+.table th{
+    text-align: left;
+}

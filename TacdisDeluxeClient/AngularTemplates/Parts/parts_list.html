@@ -12,17 +12,41 @@
 </div>
 
 <div ng-controller="PartsController" class="panel panel-default">
-    <div class="panel-heading">Panel heading</div>
-    <table class="table">
+    <div class="panel-heading clearfix">
+        <h4 class="pull-left">Parts</h4>
+        <div class="pull-right">
+            <div class="btn-group">
+                <a class="btn btn-default" title="Add"><span class="glyphicon glyphicon-plus"></span></a>
+                <a class="btn btn-default" title="Add"><span class="glyphicon glyphicon-search"></span></a>
+            </div>
+        </div>
+    </div>
+    <table ng-table="tblParts" class="table table-striped">
         <tr>
-            <th>Name</th>
-            <th>Country</th>
+            <th>Article number</th>
+            <th>Article name</th>
+            <th>Price</th>
+            <th>VAT</th>
+            <th>Spec fsg</th>
+            <th></th>
         </tr>
-        <tr ng-repeat="x in records">
-            <td>{{x.Name}}</td>
-            <td>{{x.Country}}</td>
+        <tr ng-repeat="x in $data">
+            <td>{{x.ArticleNumber}}</td>
+            <td>{{x.ArticleName}}</td>
+            <td>{{x.Price}}</td>
+            <td>{{x.VAT}}</td>
+            <td>{{x.SpecFsg}}</td>
+            <td><a class="btn " title="Delete"><span class="glyphicon glyphicon-remove"></span></a></td>
         </tr>
     </table>
 </div>
 
+<!-- 
+            public int ArticleNumber { get; set; }
+        public string ArticleName { get; set; }
+        public double Price { get; set; }
+        public double VAT { get; set; }
+        public bool SpecFsg { get; set; }
+    
+     -->
 
