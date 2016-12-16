@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Http.Results;
 using System.Web.Mvc;
+using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Mockdata.InvoiceData;
 using TacdisDeluxeAPI.Models;
 
@@ -47,8 +49,12 @@ namespace TacdisDeluxeAPI.Controllers
 
         public IHttpActionResult PostInvoice(string invoiceTest)
         {
+            
             var mockInvoice = GetMockInvoice.GetInvoice(1, 1, 12);
             var invoice = new InvoiceEntity { Payer = new PayerEntity() };
+
+            var dto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
+
 
             try
             {
@@ -91,6 +97,9 @@ namespace TacdisDeluxeAPI.Controllers
         // POST api/invoice
         public void Post([FromBody]string value)
         {
+            var mockInvoice = GetMockInvoice.GetInvoice(1, 1, 12);
+
+            var dto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
 
         }
 
