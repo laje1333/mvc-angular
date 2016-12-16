@@ -14,6 +14,7 @@ namespace TacdisDeluxeAPI.Models
         public string FirsName { get; set; }
         public string LastName { get; set; }
         public bool Trusted { get; set; }
+        public string CustomerNumber { get; set; }
         public ICollection<SaleEntity> Sales { get; internal set; }
     }
 }
