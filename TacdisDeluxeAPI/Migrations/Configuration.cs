@@ -73,7 +73,15 @@ namespace TacdisDeluxeAPI.Migrations
             {
                 new VehiclePropertyEntity(){Id = 1, Name = "Petrol"     , Field = "Engine-Type"},
                 new VehiclePropertyEntity(){Id = 2, Name = "V6"         , Field = "Engine-Group"      , ParentId = 1},
-                new VehiclePropertyEntity(){Id = 3, Name = "Standard-V6", Field = "Engine-Description", ParentId = 2, Price = 26490}
+                new VehiclePropertyEntity(){Id = 3, Name = "V5"         , Field = "Engine-Group"      , ParentId = 1},
+                new VehiclePropertyEntity(){Id = 4, Name = "Flat 5 Cylinders"         , Field = "Engine-Group"      , ParentId = 1},
+                new VehiclePropertyEntity(){Id = 5, Name = "Standard-V6", Field = "Engine-Description", ParentId = 2, Price = 26490},
+                new VehiclePropertyEntity(){Id = 6, Name = "Standard-V5", Field = "Engine-Description", ParentId = 3, Price = 26490},
+                new VehiclePropertyEntity(){Id = 7, Name = "Flat 5 Petrol", Field = "Engine-Description", ParentId = 4, Price = 26490},
+
+                new VehiclePropertyEntity(){Id = 4, Name = "Diesel"     , Field = "Engine-Type"},
+                new VehiclePropertyEntity(){Id = 5, Name = "V5"         , Field = "Engine-Group"      , ParentId = 4},
+                new VehiclePropertyEntity(){Id = 6, Name = "Standard-V5", Field = "Engine-Description", ParentId = 5, Price = 32500}
             };
 
             vehicleProperties.ForEach(v =>
