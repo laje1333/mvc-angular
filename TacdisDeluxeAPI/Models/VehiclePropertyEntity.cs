@@ -9,6 +9,12 @@ namespace TacdisDeluxeAPI.Models
 {
     public class VehiclePropertyEntity
     {
+        public VehiclePropertyEntity()
+        {
+            ParentId = 0;
+            Price = 0;
+        }
+
         [Key]
         public int Id { get; set; }
         
@@ -18,5 +24,7 @@ namespace TacdisDeluxeAPI.Models
         public int ParentId { get; set; }
 
         public double Price { get; set; }
+
+        public VehicleModelEntity VehicleModel { get; set; }
     }
 }

@@ -71,6 +71,15 @@ namespace TacdisDeluxeAPI.Controllers
 
         }
 
+        public void Post(PartEntity part)
+        {
+            using (DBContext c = new DBContext())
+            {
+                c.Parts.Add(part);
+                c.SaveChanges();
+            }
+        }
+
         //// GET: api/Part
         //public string Get()
         //{

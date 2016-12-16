@@ -11,7 +11,9 @@ namespace TacdisDeluxeAPI.Models.Maps
     {
         public VehicleModelMap()
         {
-            HasMany<VehiclePropertyEntity>(v => v.Properties);
+            HasMany<VehiclePropertyEntity>(v => v.Properties)
+                .WithRequired(p => p.VehicleModel)
+                .Map(m => m.MapKey("VehicleModelId"));
         }
     }
 }

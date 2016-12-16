@@ -29,18 +29,15 @@
             <div class="form-group panel-body default-collapsed" id="enginePanel">
 
                 <label for="enginetype">Type:</label>
-                <select class="form-control" id="enginetype" ng-model="selectedEngineType" ng-change="engineGroupEnabler()">
-                    <option ng-repeat="engType in engineType track by $index">{{engType}}</option>
+                <select class="form-control" id="enginetype" ng-model="selectedEngineType" ng-change="selectEngineType()">
+                    <option ng-repeat="engType in engineTypes track by $index">{{engType.Name}}</option>
                 </select>
                 <label for="enginegroup">Engine group:</label>
-                <select class="form-control" id="enginegroup" ng-disabled="engineGroupDisabled" ng-model="selectedEngineGroup" ng-change="engineDescEnabler()">
-                    <option ng-repeat="engGroup in engineGroup track by $index">{{engGroup}}</option>
+                <select class="form-control" id="enginegroup" ng-disabled="engineGroupDisabled" ng-model="selectedEngineGroup" ng-change="selectEngineGroup(); extendElement('transmissionPanel')">
+                    <option ng-repeat="engGroup in displayableEngineGroups track by $index">{{engGroup.Name}}</option>
                 </select>
                 <label for="enginedesc">Description:</label>
-                <select class="form-control" id="enginedesc" ng-disabled="engineDescDisabled" ng-model="selectedEngineDesc" ng-change="extendElement('transmissionPanel')">
-                    <option></option>
-                    <option ng-repeat="engDesc in engineDescription track by $index">{{engDesc}}</option>
-                </select>
+                <textarea class="form-control" rows="1" id="enginedesc" readonly="true">{{displayableEngineDescriptions[0].Name}}</textarea>
             </div>
         </div>
     </div>
@@ -49,17 +46,15 @@
             <panelheader data-title="Transmission"></panelheader>
             <div class="form-group panel-body default-collapsed" id="transmissionPanel">
                 <label for="transmissiontype">Type:</label>
-                <select class="form-control" id="transmissiontype" ng-model="selectedTransmissionType" ng-change="transmissionGroupEnabler()">
-                    <option ng-repeat="transType in transmissionType">{{transType}}</option>
+                <select class="form-control" id="transmissiontype" ng-model="selectedTransmissionType" ng-change="selectTransmissionType()">
+                    <option ng-repeat="transType in transmissionTypes">{{transType.Name}}</option>
                 </select>
                 <label for="transmissiongroup">Transmission group:</label>
-                <select class="form-control" id="transmissiongroup" ng-disabled="transmissionGroupDisabled" ng-model="selectedTransmissionGroup" ng-change="transmissionDescriptionEnabler()">
-                    <option ng-repeat="transGrp in transmissionGroup">{{transGrp}}</option>
+                <select class="form-control" id="transmissiongroup" ng-disabled="transmissionGroupDisabled" ng-model="selectedTransmissionGroup" ng-change="selectTransmissionGroup()">
+                    <option ng-repeat="transGrp in displayableTransmissionGroups">{{transGrp.Name}}</option>
                 </select>
                 <label for="transmissionDesc">Description:</label>
-                <select class="form-control" id="transmissionDesc" ng-disabled="transmissionDescriptionDisabled" ng-model="selectedTransmissionDesc" ng-change="extendElement('colorPanel')">
-                    <option ng-repeat="transDesc in transmissionDescription">{{transDesc}}</option>
-                </select>
+                <textarea class="form-control" rows="1" id="transmissionDesc" readonly="true">{{displayableTransmissionDescriptions[0].Name}}</textarea>
             </div>
         </div>
     </div>

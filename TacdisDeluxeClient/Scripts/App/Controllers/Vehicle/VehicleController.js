@@ -39,22 +39,24 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
         $http.get('http://localhost:57661/api/vehicle?year=' + $scope.modelYear + "&mod=" + $scope.modelType + "&brnd=" + $scope.selectedBrand).
                 then(function (response) {
                     var properties = response.data;
-                    $scope.engineType = [];
-                    $scope.engineGroup = [];
-                    $scope.engineDescription = [];
+                    $scope.engineTypes = [];
+                    $scope.engineGroups = [];
+                    $scope.engineDescriptions = [];
 
                     for (i = 0; i < properties.length; i++) {
-                        var temp = properties[i].Name.split("=");
-                        $scope.engineType.push(temp[0]);
-                        $scope.engineGroup.push(temp[1]);
-                        $scope.engineDescription.push(temp[2]);
 
                         if (properties[i].Field === "Engine-Type") {
-                            $scope.engineType.push(properties[i]);
+                            $scope.engineTypes.push(properties[i]);
                         } else if (properties[i].Field === "Engine-Group") {
-                            $scope.engineGroup.push(properties[i]);
+                            $scope.engineGroups.push(properties[i]);
                         } else if (properties[i].Field === "Engine-Description") {
-                            $scope.engineDescription.push(properties[i]);
+                            $scope.engineDescriptions.push(properties[i]);
+                        } else if (properties[i].Field === "Transmission-Type") {
+                            $scope.transmissionTypes.push(properties[i]);
+                        } else if (properties[i].Field === "Transmission-Group") {
+                            $scope.transmissionGroups.push(properties[i]);
+                        } else if (properties[i].Field === "Transmission-Description") {
+                            $scope.transmissionDescriptions.push(properties[i]);
                         }
                     }
                     
@@ -66,20 +68,86 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
 
     $scope.selectEngineType = function () {
-        for (i = 0; i < $scope.engineType.length; i++) {
-            if ($scope.engineType[i].Name === $scope.selectedEngineType) {
-
+        for (i = 0; i < $scope.engineTypes.length; i++) {
+            if ($scope.engineTypes[i].Name === $scope.selectedEngineType) {
+                var id = $scope.engineTypes[i].Id;
+                $scope.displayableEngineGroups = [];
+                for (x = 0; x < $scope.engineGroups.length; x++) {
+                    if ($scope.engineGroups[x].ParentId === id) {
+                        $scope.displayableEngineGroups.push($scope.engineGroups[x]);
+                    }
+                }
             }
         }
+        $scope.engineGroupDisabled = false;
     }
+
+    $scope.selectEngineGroup = function () {
+        for (i = 0; i < $scope.displayableEngineGroups.length; i++) {
+            if ($scope.displayableEngineGroups[i].Name === $scope.selectedEngineGroup) {
+                var id = $scope.displayableEngineGroups[i].Id;
+                $scope.displayableEngineDescriptions = [];
+                for (x = 0; x < $scope.engineDescriptions.length; x++) {
+                    if ($scope.engineDescriptions[x].ParentId === id) {
+                        $scope.displayableEngineDescriptions.push($scope.engineDescriptions[x]);
+                    }
+                }
+            }
+        }
+        $scope.engineDescDisabled = false;
+    }
+
+    $scope.selectTransmissionType = function () {
+        for (i = 0; i < $scope.transmissionTypes.length; i++) {
+            if ($scope.transmissionTypes[i].Name === $scope.selectedTransmissionType) {
+                var id = $scope.transmissionTypes[i].Id;
+                $scope.displayableTransmissionGroups = [];
+                for (x = 0; x < $scope.transmissionGroups.length; x++) {
+                    if ($scope.transmissionGroups[x].ParentId === id) {
+                        $scope.displayableTransmissionGroups.push($scope.transmissionGroups[x]);
+                    }
+                }
+            }
+        }
+        $scope.transmissionGroupDisabled = false;
+    }
+
+    $scope.selectTransmissionGroup = function () {
+        for (i = 0; i < $scope.displayableTransmissionGroups.length; i++) {
+            if ($scope.displayableTransmissionGroups[i].Name === $scope.selectedTransmissionGroup) {
+                var id = $scope.displayableTransmissionGroups[i].Id;
+                $scope.displayableTransmissionDescriptions = [];
+                for (x = 0; x < $scope.transmissionDescriptions.length; x++) {
+                    if ($scope.transmissionDescriptions[x].ParentId === id) {
+                        $scope.displayableTransmissionDescriptions.push($scope.transmissionDescriptions[x]);
+                    }
+                }
+            }
+        }
+        $scope.transmissionDescriptionDisabled = false;
+    }
+
     //Post
 
     //Glöm för helvete inte api i pathen
     //Skapa ett objekt, matcha objektets properties namn and baam, woorks.
 
-    $scope.engineType = [];
-    $scope.engineGroup = [];
-    $scope.engineDescription = [];
+
+    //Engine
+    $scope.engineTypes = [];
+    $scope.engineGroups = [];
+    $scope.displayableEngineGroups = [];
+    $scope.engineDescriptions = [];
+    $scope.displayableEngineDescriptions = [];
+
+    //Transmission
+    $scope.transmissionTypes = [];
+    $scope.transmissionGroups = [];
+    $scope.displayableTransmissionGroups = [];
+    $scope.transmissionDescriptions = [];
+    $scope.displayableTransmissionDescriptions = [];
+
+
 
     $scope.selectedBrand = "";
     $scope.selectedModelYear = "";
