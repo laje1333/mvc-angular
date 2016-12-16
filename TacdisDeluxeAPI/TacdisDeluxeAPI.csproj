@@ -261,6 +261,7 @@
       <DependentUpon>201612160914010_VehicleModel_VehicleProperties_connection.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
     <Compile Include="Mockdata\VehicleData\Model.cs" />
     <Compile Include="Mockdata\VehicleData\ModelYear.cs" />

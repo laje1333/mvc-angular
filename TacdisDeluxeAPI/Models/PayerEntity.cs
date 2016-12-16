@@ -18,9 +18,8 @@ namespace TacdisDeluxeAPI.Models
         public string LastName { get; set; }
 
         public bool Trusted { get; set; }
-
-        public string CustomerNumber { get; set; }
-
+        [Index(IsUnique = true)]
+        public int CustomerNumber { get; set; }
         public string StreeatAddress { get; set; }
 
         public string ZipCity { get; set; }
