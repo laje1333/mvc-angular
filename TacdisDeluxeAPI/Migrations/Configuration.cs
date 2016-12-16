@@ -1,3 +1,11 @@
+/*
+Enable-Migrations -ContextTypeName TacdisDeluxeAPI.Models.DBContext
+add-migration InitialCABLAMCreate
+update-database -Verbose
+add-migration
+*/
+
+
 namespace TacdisDeluxeAPI.Migrations
 {
     using Models;

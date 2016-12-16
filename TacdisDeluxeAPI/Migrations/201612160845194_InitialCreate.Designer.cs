@@ -7,13 +7,13 @@ namespace TacdisDeluxeAPI.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class _20161216_0800 : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_20161216_0800));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612160700427_20161216_0800"; }
+            get { return "201612160845194_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

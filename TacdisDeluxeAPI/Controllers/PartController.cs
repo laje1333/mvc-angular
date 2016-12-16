@@ -71,11 +71,12 @@ namespace TacdisDeluxeAPI.Controllers
 
         }
 
-        public void Post([FromBody]string value)
+        public void Post(PartEntity part)
         {
             using (DBContext c = new DBContext())
             {
-                //c.Parts.Add();
+                c.Parts.Add(part);
+                c.SaveChanges();
             }
         }
 
