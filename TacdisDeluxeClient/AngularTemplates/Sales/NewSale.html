@@ -24,7 +24,7 @@
                             </form>
                         </div>
                         <div class="col-md-6">
-                            <table id="salesValues" class="table table-hover">
+                            <table id="salesValues" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Type:</th>
@@ -35,13 +35,18 @@
                                 <tbody>
                                     <tr ng-repeat="r in record">
                                         <td>{{r.type}} </td>
-                                        <td>{{r.info}}</td>
+                                        <td>{{r.name}}</td>
                                         <td>{{r.cost}}</td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Total Cost: {{totalCost}}</td>
+                                    </tr>
+                                </tfoot>
                                 
                             </table>
-                            <p>{{totalCost}}</p>
+                            <p></p>
                             
                         </div>
                     </div>

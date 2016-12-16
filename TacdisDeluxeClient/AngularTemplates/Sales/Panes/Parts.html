@@ -5,7 +5,6 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6 text-left">Select what to sell</div>
-                        <div class="col-xs-6 text-right"><button type="button" class="btn btn-xs" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-search"></span>&nbsp;</button></div>
                     </div>
                 </div>
                 <div class="control-group panel-body">
@@ -19,26 +18,26 @@
                             <input class="form-control" type="text" ng-model="artName" />
                         </div>
                         <button class="btn btn-group" ng-click="GetSearchParts()" ng-disabled="!(artNum || artName)">Search</button>
-                        
-                        <table id="partTable" class="table table-hover">
-                            <tr>
-                                <th>Type:</th>
-                                <th>Info:</th>
-                                <th>Cost:</th>
-                            </tr>
-                            <tr ng-repeat="r in partsRec" ng-class="{'selected':$index == selectedRow}" ng-click="setSelected()">
-                                <td>{{r.number}} </td>
-                                <td>{{r.name}}</td>
-                                <td>{{r.price}}</td>
-                            </tr>
-                        </table>
-
+                        <div >
+                            <table id="partTable" class="table table-hover">
+                                <tr>
+                                    <th>Number:</th>
+                                    <th>Name:</th>
+                                    <th>Cost:</th>
+                                </tr>
+                                <tr ng-repeat="r in partsRec" ng-class="{'selected':$index == selectedRow}" ng-click="setSelected()">
+                                    <td>{{r.number}} </td>
+                                    <td>{{r.name}}</td>
+                                    <td>{{r.price}}</td>
+                                </tr>
+                            </table>
+                         </div>
                         <div class="form-group">
 
-                            <button class="btn btn-group" ng-click="addRow()">Add</button>
+                            <button class="btn btn-group" ng-click="addRow()" ng-disabled="!(selected)">Add</button>
 
                         </div>
-                    </form>
+</form>
                 </div>
             </div>
         </div>
