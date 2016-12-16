@@ -71,12 +71,23 @@ namespace TacdisDeluxeAPI.Migrations
 
             var vehicleProperties = new List<VehiclePropertyEntity>()
             {
-                new VehiclePropertyEntity(){Id = 1, Name = "Petrol=V6=Standard-V6", Price = 34990.90f},
-                new VehiclePropertyEntity(){Id = 2, Name = "Diesel=V6=Standard-V6", Price = 37990.90f},
-                new VehiclePropertyEntity(){Id = 3, Name = "Petrol-Hybrid=Flat-block=Hybrid-Petrol", Price = 43990.90f},
-                new VehiclePropertyEntity(){Id = 4, Name = "Diesel-Hybrid=Flat-block=Hybrid-Diesel", Price = 46990.90f},
-                new VehiclePropertyEntity(){Id = 5, Name = "Petrol-Hybrid=Standard V5 hybrid=Hybrid-Petrol", Price = 51990.90f},
-                new VehiclePropertyEntity(){Id = 6, Name = "Diesel-Hybrid=Standard V5 hybrid=Hybrid-Diesel", Price = 56990.90f},
+                //Engine types:
+                new VehiclePropertyEntity(){Id = 1, Name = "Petrol"     , Field = "Engine-Type"},
+                new VehiclePropertyEntity(){Id = 2, Name = "Diesel"     , Field = "Engine-Type"},
+
+                //Engine groups:
+                new VehiclePropertyEntity(){Id = 3, Name = "V6"         , Field = "Engine-Group"                    , ParentId = 1},
+                new VehiclePropertyEntity(){Id = 4, Name = "V5"         , Field = "Engine-Group"                    , ParentId = 1},
+                new VehiclePropertyEntity(){Id = 5, Name = "Flat 5 Cylinders"         , Field = "Engine-Group"      , ParentId = 1},
+                new VehiclePropertyEntity(){Id = 6, Name = "V5"         , Field = "Engine-Group"                    , ParentId = 2},
+                new VehiclePropertyEntity(){Id = 7, Name = "V6"         , Field = "Engine-Group"                    , ParentId = 2},
+
+                //Engine descriptions:
+                new VehiclePropertyEntity(){Id = 8, Name = "Standard-V6", Field = "Engine-Description", ParentId = 3, Price = 29990},
+                new VehiclePropertyEntity(){Id = 9, Name = "Standard-V5", Field = "Engine-Description", ParentId = 4, Price = 26490},
+                new VehiclePropertyEntity(){Id = 10, Name = "Flat 5 Petrol", Field = "Engine-Description", ParentId = 5, Price = 23490},
+                new VehiclePropertyEntity(){Id = 11, Name = "Standard-V5", Field = "Engine-Description", ParentId = 6, Price = 32500},
+                new VehiclePropertyEntity(){Id = 12, Name = "Standard-V6", Field = "Engine-Description", ParentId = 7, Price = 37490},
             };
 
             vehicleProperties.ForEach(v =>
