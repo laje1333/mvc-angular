@@ -260,6 +260,10 @@
     <Compile Include="Migrations\201612160914010_VehicleModel_VehicleProperties_connection.Designer.cs">
       <DependentUpon>201612160914010_VehicleModel_VehicleProperties_connection.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612161043136_invoice_stuff.cs" />
+    <Compile Include="Migrations\201612161043136_invoice_stuff.Designer.cs">
+      <DependentUpon>201612161043136_invoice_stuff.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -287,6 +291,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\InvoiceEntity.cs" />
     <Compile Include="Models\InvoiceRowEntity.cs" />
+    <Compile Include="Models\Maps\InvoiceMap.cs" />
     <Compile Include="Models\Maps\PartMap.cs" />
     <Compile Include="Models\Maps\SaleMap.cs" />
     <Compile Include="Models\Maps\VehicleModelMap.cs" />
@@ -359,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612160914010_VehicleModel_VehicleProperties_connection.resx">
       <DependentUpon>201612160914010_VehicleModel_VehicleProperties_connection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612161043136_invoice_stuff.resx">
+      <DependentUpon>201612161043136_invoice_stuff.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

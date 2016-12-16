@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace TacdisDeluxeAPI.Models
 {
+    [Table("Payer")]
     public class PayerEntity
     {
         [Key]
@@ -27,5 +29,6 @@ namespace TacdisDeluxeAPI.Models
         public string Country { get; set; }
 
         public ICollection<SaleEntity> Sales { get; internal set; }
+
     }
 }

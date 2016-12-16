@@ -26,7 +26,7 @@ namespace TacdisDeluxeAPI.Models
         public double Vat { get; set; }
         public double AmountPaid { get; set; }
         public ICollection<InvoiceRowEntity> InvoiceRows { get; set; }
-        public int EmployeeNumber { get; set; }
+        public SalesmanEntity Salesman { get; set; }
         public int WoNumber { get; set; }
         public string JobNumber { get; set; }
         public PayerEntity Payer { get; set; }

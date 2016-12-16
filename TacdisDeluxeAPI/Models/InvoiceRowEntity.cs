@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
 namespace TacdisDeluxeAPI.Models
 {
@@ -15,5 +16,7 @@ namespace TacdisDeluxeAPI.Models
         public double Vat { get; set; }
         public double InvoiceRowAmount { get; set; }
 
+        [IgnoreDataMember]
+        public InvoiceEntity Invoice { get; set; }
     }
 }
