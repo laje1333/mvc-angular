@@ -17,6 +17,7 @@ namespace TacdisDeluxeAPI
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            AutomapperConfig.RegisterMappings();
         }
 
         protected void Application_BeginRequest()
