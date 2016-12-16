@@ -33,6 +33,17 @@ namespace TacdisDeluxeAPI.Mockdata.InvoiceData
                 }
             };
 
+            var salesman = new SalesmanEntity
+            {
+                Company = "Bil Ab",
+                Country = "Sverige",
+                FirstName = "Olle",
+                LastName = "Svensson",
+                StreeatAddress = "gatan 1",
+                ZipCity = "666 66 Åmål",
+                EmployeeNumber = 123456
+            };
+
             var invoice = new InvoiceEntity
             {
                 InvoiceNumber = invoiceNumber,
@@ -46,21 +57,10 @@ namespace TacdisDeluxeAPI.Mockdata.InvoiceData
                 Vat = 250,
                 AmountPaid = 0,
                 InvoiceRows = invoiceRows,
-                //EmployeeNumber = 123456,
+                Salesman = salesman,
                 Payer = payer
             };
-
-            var salesman = new SalesmanEntity
-            {
-                Company = "Bil Ab",
-                Country = "Sverige",
-                FirstName = "Olle",
-                LastName = "Svensson",
-                StreeatAddress = "gatan 1",
-                ZipCity = "666 66 Åmål",
-                EmployeeNumber = 123456
-            };
-
+            
             return invoice;
         }
     }
