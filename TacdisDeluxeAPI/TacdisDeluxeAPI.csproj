@@ -251,17 +251,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612141451335_InitialCABLAMCreate.cs" />
-    <Compile Include="Migrations\201612141451335_InitialCABLAMCreate.Designer.cs">
-      <DependentUpon>201612141451335_InitialCABLAMCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201612160845194_InitialCreate.cs" />
+    <Compile Include="Migrations\201612160845194_InitialCreate.Designer.cs">
+      <DependentUpon>201612160845194_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612160700427_20161216_0800.cs" />
-    <Compile Include="Migrations\201612160700427_20161216_0800.Designer.cs">
-      <DependentUpon>201612160700427_20161216_0800.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612160750467_blaha.cs" />
-    <Compile Include="Migrations\201612160750467_blaha.Designer.cs">
-      <DependentUpon>201612160750467_blaha.cs</DependentUpon>
+    <Compile Include="Migrations\201612160914010_VehicleModel_VehicleProperties_connection.cs" />
+    <Compile Include="Migrations\201612160914010_VehicleModel_VehicleProperties_connection.Designer.cs">
+      <DependentUpon>201612160914010_VehicleModel_VehicleProperties_connection.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -356,14 +352,11 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612141451335_InitialCABLAMCreate.resx">
-      <DependentUpon>201612141451335_InitialCABLAMCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612160845194_InitialCreate.resx">
+      <DependentUpon>201612160845194_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612160700427_20161216_0800.resx">
-      <DependentUpon>201612160700427_20161216_0800.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612160750467_blaha.resx">
-      <DependentUpon>201612160750467_blaha.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612160914010_VehicleModel_VehicleProperties_connection.resx">
+      <DependentUpon>201612160914010_VehicleModel_VehicleProperties_connection.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

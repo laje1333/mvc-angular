@@ -24,5 +24,7 @@ namespace TacdisDeluxeAPI.Models
         public int ParentId { get; set; }
 
         public double Price { get; set; }
+
+        public VehicleModelEntity VehicleModel { get; set; }
     }
 }

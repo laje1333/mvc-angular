@@ -7,13 +7,13 @@ namespace TacdisDeluxeAPI.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class InitialCABLAMCreate : IMigrationMetadata
+    public sealed partial class VehicleModel_VehicleProperties_connection : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCABLAMCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(VehicleModel_VehicleProperties_connection));
         
         string IMigrationMetadata.Id
         {
-            get { return "201612141451335_InitialCABLAMCreate"; }
+            get { return "201612160914010_VehicleModel_VehicleProperties_connection"; }
         }
         
         string IMigrationMetadata.Source
