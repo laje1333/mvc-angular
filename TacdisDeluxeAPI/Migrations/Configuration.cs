@@ -134,9 +134,9 @@ namespace TacdisDeluxeAPI.Migrations
                  new VehiclePropertyEntity(){Id = 35, Name = "Dark-Gray clear finish",    Field = "Exterior-Description", ParentId = 30, Price = 28490},
 
                 //Interior material types:
-                new VehiclePropertyEntity(){Id = 36, Name = "Leather",      Field = "Interior-Material"},
-                new VehiclePropertyEntity(){Id = 37, Name = "Polyester",    Field = "Interior-Material"},
-                new VehiclePropertyEntity(){Id = 38, Name = "Wool",         Field = "Interior-Material"},
+                 new VehiclePropertyEntity(){Id = 36, Name = "Leather",      Field = "Interior-Material"},
+                 new VehiclePropertyEntity(){Id = 37, Name = "Polyester",    Field = "Interior-Material"},
+                 new VehiclePropertyEntity(){Id = 38, Name = "Wool",         Field = "Interior-Material"},
 
                  //Interior colors:
                  new VehiclePropertyEntity(){Id = 39, Name = "Brown ",               Field = "Interior-Color", ParentId = 36},
