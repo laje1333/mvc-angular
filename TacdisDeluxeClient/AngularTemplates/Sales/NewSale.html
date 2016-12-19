@@ -29,14 +29,16 @@
                                     <tr>
                                         <th>Type:</th>
                                         <th>Info:</th>
+                                        <th>ID:</th>
                                         <th>Cost:</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr ng-repeat="r in record">
-                                        <td>{{r.type}} </td>
-                                        <td>{{r.name}}</td>
-                                        <td>{{r.cost}}</td>
+                                        <td>{{r.Type}} </td>
+                                        <td>{{r.Name}}</td>
+                                        <td>{{r.Number}}</td>
+                                        <td>{{r.Cost}}</td>
                                     </tr>
                                 </tbody>
                                 <tfoot>
@@ -56,7 +58,7 @@
         </div>
     </div>
     <uib-tabset active="pane.active">
-        <uib-tab ng-repeat="pane in panes" heading="{{pane.title}}" active="pane.active">
+        <uib-tab ng-repeat="pane in panes track by $index" heading="{{pane.title}}" select="active($index)">
             <div ng-include="pane.template"></div>
         </uib-tab>
     </uib-tabset>

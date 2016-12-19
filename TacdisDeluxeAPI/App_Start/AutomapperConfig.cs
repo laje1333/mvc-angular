@@ -15,6 +15,7 @@ namespace TacdisDeluxeAPI
         {
             AutoMapper.Mapper.Initialize(cfg =>
             {
+                cfg.CreateMap<SaleEntity, SalesDto>();
                 cfg.CreateMap<InvoiceEntity, InvoiceDto>();
             });
             //AutoMapper.Configuration
