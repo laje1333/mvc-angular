@@ -63,17 +63,16 @@
             <panelheader data-title="Exterior"></panelheader>
             <div class="form-group panel-body default-collapsed" id="colorPanel">
                 <label for="painttypeSelect">Paint type:</label>
-                <select class="form-control" id="painttypeSelect" ng-model="selectedPaintType" ng-change="paintDescriptionEnabler()">
-                    <option ng-repeat="pType in paintType">{{pType}}</option>
-                </select>
-                <label for="paintdescSelect">Paint description:</label>
-                <select class="form-control" id="paintdescSelect" ng-disabled="paintDescriptionDisabled" ng-model="selectedPaintDescription" ng-change="paintGroupEnabler()">
-                    <option ng-repeat="pDesc in paintDescription">{{pDesc}}</option>
+                <select class="form-control" id="painttypeSelect" ng-model="selectedPaintType" ng-change="selectExteriorType()">
+                    <option ng-repeat="pType in exteriorTypes">{{pType.Name}}</option>
                 </select>
                 <label for="groupSelect">Group</label>
-                <select class="form-control" id="groupSelect" ng-disabled="paintGroupDisabled" ng-model="selectedPaintGroup" ng-change="extendElement('interiorPanel')">
-                    <option ng-repeat="pGroup in paintGroup">{{pGroup}}</option>
+                <select class="form-control" id="groupSelect" ng-disabled="paintGroupDisabled" ng-model="selectedPaintGroup" ng-change="selectExteriorGroup(); extendElement('interiorPanel')">
+                    <option ng-repeat="pGroup in displayableExteriorGroups">{{pGroup.Name}}</option>
                 </select>
+                <label for="paintdescSelect">Paint description:</label>
+                <textarea class="form-control" rows="1" id="paintdescSelect" readonly="true">{{displayableExteriorDescriptions[0].Name}}</textarea>
+                
             </div>
         </div>
     </div>
