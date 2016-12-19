@@ -16,7 +16,7 @@ namespace TacdisDeluxeAPI.Models
         {
             Vehicles = new List<VehicleEntity>();
             Parts = new List<PartEntity>();
-            Addons = new List<SalesAddonEntity>();
+            Addons = new List<AddonEntity>();
             Payers = new List<PayerEntity>();
         }
 
@@ -26,7 +26,7 @@ namespace TacdisDeluxeAPI.Models
         public virtual ICollection<VehicleEntity> Vehicles { get; set; }
         public virtual ICollection<PartEntity> Parts { get; set; }
         public SalesStatus Status { get; set; }
-        public virtual ICollection<SalesAddonEntity> Addons { get; set; }
+        public virtual ICollection<AddonEntity> Addons { get; set; }
         public virtual ICollection<PayerEntity> Payers { get; set; }
         public PaymentType PaymentType { get; set; }
         public DateTime DateCreated { get; set; }

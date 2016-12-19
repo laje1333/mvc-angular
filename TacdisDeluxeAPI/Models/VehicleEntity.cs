@@ -13,6 +13,11 @@ namespace TacdisDeluxeAPI.Models
         [Key]
         public int Id { get; set; }
         public string RegNo { get; set; }
+        public int ItemId { get; set; }
+        public string ItemName { get; set; }
+        public double ItemPrice { get; set; }
+        public string ItemDesc { get; set; }
+        public double VAT { get; set; }
 
         [IgnoreDataMember]
         public ICollection<SaleEntity> Sales { get; internal set; }
