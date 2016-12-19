@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using AutoMapper;
+using Microsoft.Owin;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Models;
 
 namespace TacdisDeluxeAPI.Controllers
@@ -48,13 +50,19 @@ namespace TacdisDeluxeAPI.Controllers
 
         }
 
-        public IHttpActionResult PostSale([FromBody]SaleEntity request)
+        public IHttpActionResult PostSale([FromBody]SalesDto request)
         {
+            
+            var enti = Mapper.Map<SalesDto, SaleEntity>(request);
+            
+
             try
             {
                 using (DBContext db = new DBContext())
                 {
-                    db.Sales.Add(request);
+                    List<PartEntity> parts = db.Parts.Where(x => request.PartIds.Contains(x.Id)).ToList();
+                    enti.Parts = parts;
+                    db.Sales.Add(enti);
                     db.SaveChanges();
                 }
             }

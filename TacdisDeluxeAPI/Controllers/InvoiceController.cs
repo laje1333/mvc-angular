@@ -47,13 +47,13 @@ namespace TacdisDeluxeAPI.Controllers
 
         }
 
-        public IHttpActionResult PostInvoice(string invoiceTest)
+        public IHttpActionResult PostInvoice([FromBody]SalesDto sale)
         {
             
             var mockInvoice = GetMockInvoice.GetInvoice(1, 1, 12);
             //var invoice = new InvoiceEntity { Payer = new PayerEntity() };
 
-            var dto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
+            var dto = Mapper.Map<SalesDto, SaleEntity>(sale);
 
 
             try

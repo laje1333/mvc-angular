@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace TacdisDeluxeAPI.Models
 {
-    public class SalesAddonEntity
+    public class AddonEntity
     {
         [Key]
         public int Id { get; set; }
-        public string Description { get; set; }
-        public double Price { get; set; }
+        public int ItemId { get; set; }
+        public string ItemName { get; set; }
+        public double ItemPrice { get; set; }
+        public string ItemDesc { get; set; }
         public double VAT { get; set; }
 
         [IgnoreDataMember]

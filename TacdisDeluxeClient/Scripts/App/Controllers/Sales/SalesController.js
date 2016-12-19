@@ -6,26 +6,50 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         
     }
 
+    //Record that holds SaleItems
+    $rootScope.record = [];
+    //TotalCost
+    $rootScope.totalCost = 0;
+    //SaleRec
+    $scope.saleRec = {};
+    $scope.saleRec.PartIds = [];
+    $scope.saleRec.VehicleIds = [];
+    $scope.saleRec.AddonIds = [];
+
     $scope.panes = [
         { title: "Vehicles", template: "AngularTemplates/Sales/Panes/Vehicles.html", active: true },
         { title: "Parts", template: "AngularTemplates/Sales/Panes/Parts.html" },
         { title: "Add Ons", template: "AngularTemplates/Sales/Panes/Addons.html" }];
 
 
-    $scope.active = function () {    
+    $scope.active = function (index) {    
         return $scope.panes.filter(function (pane) {
+            $rootScope.selectedTypeOfThingy = index;
             return pane.active;
         })[0];
     };
 
-    $rootScope.totalCost = 0;
+    
     $scope.calcTotal = function () {
+        $rootScope.selectedTypeOfThingy;
         $rootScope.totalCost += parseFloat($scope.selected.price);
     };
 
-    $rootScope.record = [];
+    
     $scope.addRow = function () {
-        $rootScope.record.push({ 'type': $scope.selected.type, 'name': $scope.selected.name, 'cost': $scope.selected.price });
+        switch ($scope.selectedTypeOfThingy) {
+            case 0:
+                $scope.saleRec.VehicleIds.push($scope.selected.id);           
+                break;
+            case 1:
+                $scope.saleRec.PartIds.push($scope.selected.id);
+                break;
+            case 2:
+                $scope.saleRec.AddonIds.push($scope.selected.id);
+                break;
+        }
+        
+        $rootScope.record.push({ 'Type': 'Part', 'Name': $scope.selected.ItemName, 'Number': $scope.selected.ItemId, 'Price': $scope.selected.ItemPrice });
         $scope.calcTotal();
         $rootScope.selected = '';
     };
@@ -35,6 +59,30 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         $('.searchOptions').hide();
         $('#Search' + $scope.searchTypeOfItem).show();
     };
+
+    $scope.PostSale = function () {
+        var req = {
+            method: 'POST',
+            url: 'http://localhost:57661/api/sales',
+            headers: {},
+            data: { Salesman: $scope.saleRec.Salesman,
+                    VehicleIds: $scope.saleRec.VehicleIds, 
+                    PartIds: $scope.saleRec.PartIds, 
+                    Status: $scope.saleRec.Status, 
+                    AddonIds: $scope.saleRec.AddonIds, 
+                    PayerIds: $scope.saleRec.PayerIds,
+                    PaymentType: $scope.saleRec.PaymentType,
+                    DateCreated: $scope.saleRec.DateCreated,
+                    DateEdited: $scope.saleRec.DateEdited},
+        }
+        $http(req).
+         then(function (response) {
+             $scope.ok = "It's good";
+         }, function (response) {
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
 
     $scope.PostSalesman = function(obj){
         var req = {
@@ -103,16 +151,22 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.selectedRow = null;
     $scope.setSelected = function () {
         $scope.selected = this.r;
+        switch ($scope.selectedTypeOfThingy) {
+            case 0:
+                $scope.selected.id = this.r.Id;
+                break;
+            case 1:
+                $scope.selected.id = this.r.Id;
+                break;
+            case 2:
+                $scope.selected.id = this.r.Id;
+                break;
+        }
         $scope.selectedRow = this.$index;
+        
     };
 
     $scope.GetSearchParts = function () {
-        if (!($scope.artNum)) {
-            $scope.artNum = "";
-        }
-        if (!($scope.artName)) {
-            $scope.artName = "";
-        }
         var req = {
             method: 'GET',
             url: 'http://localhost:57661/api/part',
@@ -122,7 +176,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
          then(function (response) {
              $scope.partsRec = [];
              for (var i = 0; i < response.data.length; i++) {
-                 $scope.partsRec.push({ 'number': response.data[i].ArticleNumber, 'name': response.data[i].ArticleName, 'price': response.data[i].Price, 'type': 'Part' });
+                 $scope.partsRec.push(response.data[i]);
              }
                  
          }, function (response) {
