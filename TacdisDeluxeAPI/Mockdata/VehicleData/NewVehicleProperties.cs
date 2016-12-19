@@ -35,7 +35,7 @@ namespace TacdisDeluxeAPI.Mockdata.VehicleData
         public string REGNR = "1";
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-        public void setID()
+        public void generateRegNumber()
         {
             Random r = new Random();
             string letters = new string(Enumerable.Repeat(chars, 3)
@@ -50,7 +50,7 @@ namespace TacdisDeluxeAPI.Mockdata.VehicleData
 
         public static void addVehicleToRecord(NewVehicleProperties vehicle)
         {
-            vehicle.setID();
+            vehicle.generateRegNumber();
             vehicles.Add(vehicle);
         }
 

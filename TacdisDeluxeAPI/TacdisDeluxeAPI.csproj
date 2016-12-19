@@ -273,6 +273,7 @@
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="DTO\InvoiceDto.cs" />
     <Compile Include="DTO\InvoiceRowDto.cs" />
+    <Compile Include="DTO\NewVehicleDto.cs" />
     <Compile Include="DTO\PayerDto.cs" />
     <Compile Include="DTO\SalesmanDto.cs" />
     <Compile Include="Global.asax.cs">
