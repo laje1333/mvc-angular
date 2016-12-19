@@ -81,17 +81,16 @@
             <panelheader data-title="Interior"></panelheader>
             <div class="form-group panel-body default-collapsed" id="interiorPanel">
                 <label for="material">Material:</label>
-                <select class="form-control" id="material" ng-model="selectedInteriorMaterial" ng-change="interiorDescEnabler()">
-                    <option ng-repeat="iMaterial in interiorMaterial">{{iMaterial}}</option>
-                </select>
-                <label for="colordesc">Color description:</label>
-                <select class="form-control" id="colordesc" ng-disabled="interiorDescDisabled" ng-model="selectedInteriorColorDesc" ng-change="interiorColorEnabler()">
-                    <option ng-repeat="iDesc in interiorDescription">{{iDesc}}</option>
+                <select class="form-control" id="material" ng-model="selectedInteriorMaterial" ng-change="selectInteriorMats()">
+                    <option ng-repeat="iMaterial in interiorMats">{{iMaterial.Name}}</option>
                 </select>
                 <label for="intcolor">Color:</label>
-                <select class="form-control" id="intcolor" ng-disabled="interiorColorDisabled" ng-model="selectedInteriorColor" ng-change="saveEnabler()">
-                    <option ng-repeat="iColor in interiorColor">{{iColor}}</option>
+                <select class="form-control" id="intcolor" ng-disabled="interiorColorDisabled" ng-model="selectedInteriorColor" ng-change="selectInteriorColors()">
+                    <option ng-repeat="iColor in displayableInteriorColors">{{iColor.Name}}</option>
                 </select>
+
+                <label for="colordesc">Color description:</label>
+                <textarea class="form-control" rows="1" id="colordesc" readonly="true">{{displayableInteriorDescriptions[0].Name}}</textarea>
             </div>
         </div>
     </div>
