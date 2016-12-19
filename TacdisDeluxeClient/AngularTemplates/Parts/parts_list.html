@@ -16,8 +16,8 @@
         <h4 class="pull-left">Parts</h4>
         <div class="pull-right">
             <div class="btn-group">
-                <a class="btn btn-default" title="Add"><span class="glyphicon glyphicon-plus"></span></a>
-                <a class="btn btn-default" title="Add"><span class="glyphicon glyphicon-search"></span></a>
+                <a class="btn btn-default" title="Add" data-toggle="modal" data-target="#modalEditPart"><span class="glyphicon glyphicon-plus"></span></a>
+                <a class="btn btn-default" title="Search"><span class="glyphicon glyphicon-search"></span></a>
             </div>
         </div>
     </div>
@@ -40,6 +40,45 @@
         </tr>
     </table>
 </div>
+
+<script>
+    $(function () {
+        $('#modalEditPart').on('shown.bs.modal', function () {
+            $('#myInput').focus();
+        })
+    });
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEditPart" tabindex="-1" role="dialog" aria-labelledby="modalEditPartLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalEditPartLabel">Part</h4>
+            </div>
+            <div class="modal-body">
+                <ng-form>
+                    <div class="form-group row">
+                        <label for="example-text-input" class="col-xs-2 col-form-label">Text</label>
+                        <div class="col-xs-10">
+                            <input class="form-control" type="text" value="Artisanal kale" id="example-text-input">
+                        </div>
+                    </div>
+                </ng-form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 
 <!-- 
             public int ArticleNumber { get; set; }
