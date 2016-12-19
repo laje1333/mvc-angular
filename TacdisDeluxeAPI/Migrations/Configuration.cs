@@ -77,8 +77,16 @@ namespace TacdisDeluxeAPI.Migrations
             });
             context.SaveChanges();
 
-            var vehicleProperties = new List<VehiclePropertyEntity>()
+
+            var vehicleModels = new List<VehicleModelEntity>()
             {
+                new VehicleModelEntity(){Id = 1,
+                    BrandId = 1,
+                    Name = "XC-90",
+                    Brand = vehicleBrands[0],
+                    ProductionDate = new DateTime(2011, 1, 1),
+                    Properties = new List<VehiclePropertyEntity>()
+                    {
                 //Engine types:
                 new VehiclePropertyEntity(){Id = 1, Name = "Petrol"     , Field = "Engine-Type"},
                 new VehiclePropertyEntity(){Id = 2, Name = "Diesel"     , Field = "Engine-Type"},
@@ -134,9 +142,9 @@ namespace TacdisDeluxeAPI.Migrations
                  new VehiclePropertyEntity(){Id = 35, Name = "Dark-Gray clear finish",    Field = "Exterior-Description", ParentId = 30, Price = 28490},
 
                 //Interior material types:
-                 new VehiclePropertyEntity(){Id = 36, Name = "Leather",      Field = "Interior-Material"},
-                 new VehiclePropertyEntity(){Id = 37, Name = "Polyester",    Field = "Interior-Material"},
-                 new VehiclePropertyEntity(){Id = 38, Name = "Wool",         Field = "Interior-Material"},
+                        new VehiclePropertyEntity(){Id = 36, Name = "Leather",      Field = "Interior-Material", },
+                new VehiclePropertyEntity(){Id = 37, Name = "Polyester",    Field = "Interior-Material"},
+                new VehiclePropertyEntity(){Id = 38, Name = "Wool",         Field = "Interior-Material"},
 
                  //Interior colors:
                  new VehiclePropertyEntity(){Id = 39, Name = "Brown ",               Field = "Interior-Color", ParentId = 36},
@@ -151,22 +159,23 @@ namespace TacdisDeluxeAPI.Migrations
                  new VehiclePropertyEntity(){Id = 46, Name = "White polyester",           Field = "Interior-Description", ParentId = 41, Price = 23490},
                  new VehiclePropertyEntity(){Id = 47, Name = "Gray polyester",            Field = "Interior-Description", ParentId = 42, Price = 24490},
                  new VehiclePropertyEntity(){Id = 48, Name = "Blue wool interior",        Field = "Interior-Description", ParentId = 43, Price = 17490},
-
-
+                    }
+                }
             };
 
-            vehicleProperties.ForEach(v =>
-            {
-                context.VehicleProperties.AddOrUpdate<VehiclePropertyEntity>(v);
-            });
-            context.SaveChanges();
+
+            //vehicleProperties.ForEach(v =>
+            //{
+            //    context.VehicleProperties.AddOrUpdate<VehiclePropertyEntity>(v);
+            //});
+            //context.SaveChanges();
 
 
 
-            var vehicleModels = new List<VehicleModelEntity>()
-            {
-                new VehicleModelEntity(){Id = 1, BrandId = 1, Name = "XC-90", Brand = vehicleBrands[0], ProductionDate = new DateTime(2011, 1, 1), Properties = vehicleProperties},
-            };
+            //var vehicleModels = new List<VehicleModelEntity>()
+            //{
+            //    new VehicleModelEntity(){Id = 1, BrandId = 1, Name = "XC-90", Brand = vehicleBrands[0], ProductionDate = new DateTime(2011, 1, 1), Properties = vehicleProperties},
+            //};
 
             vehicleModels.ForEach(v =>
             {
