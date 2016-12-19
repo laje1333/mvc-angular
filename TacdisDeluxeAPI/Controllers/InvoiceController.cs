@@ -55,12 +55,12 @@ namespace TacdisDeluxeAPI.Controllers
 
              invoiceDto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
 
-            try
-            {
+                try
+                {
                 invoiceDto = InvoiceValidator.ValidateAndUpdateInvoiceDto(invoiceDto);
-            }
-            catch (Exception ex)
-            {
+                }
+                catch (Exception ex)
+                {
 
                 return BadRequest("Validation fail!");
             }
@@ -69,10 +69,10 @@ namespace TacdisDeluxeAPI.Controllers
             try
             {
                 invoice = Mapper.Map<InvoiceDto, InvoiceEntity>(invoiceDto);
-            }
+        }
             catch (Exception ex)
-            {
-
+        {
+            
                 return BadRequest("Invoice mapping error!");
             }
 

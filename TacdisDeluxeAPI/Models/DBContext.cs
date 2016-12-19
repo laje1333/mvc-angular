@@ -20,7 +20,7 @@ namespace TacdisDeluxeAPI.Models
         public DbSet<PartEntity> Parts { get; set; }
         public DbSet<PayerEntity> Payers { get; set; }
         public DbSet<SaleEntity> Sales { get; set; }
-        public DbSet<SalesAddonEntity> Addons { get; set; }
+        public DbSet<AddonEntity> Addons { get; set; }
         public DbSet<SalesmanEntity> Salesmen { get; set; }
         public DbSet<VehicleEntity> Vehicles { get; set; }
         public DbSet<VehicleBrandEntity> VehicleBrands { get; set; }
@@ -38,7 +38,7 @@ namespace TacdisDeluxeAPI.Models
             builder.Entity<SaleEntity>().ToTable("Sale");
             builder.Entity<VehicleModelEntity>().ToTable("VehicleModel");
             builder.Entity<PayerEntity>().ToTable("Payer");
-            builder.Entity<SalesAddonEntity>().ToTable("SalesAddon");
+            builder.Entity<AddonEntity>().ToTable("SalesAddon");
             builder.Entity<SalesmanEntity>().ToTable("Salesman");
             builder.Entity<VehicleEntity>().ToTable("Vehicle");
             builder.Entity<VehicleBrandEntity>().ToTable("VehicleBrand");

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacdisDeluxeClient", "TacdisDeluxeClient\TacdisDeluxeClient.csproj", "{89B2789F-5C58-4B11-BA3F-F8032269A26C}"
 EndProject
@@ -10,6 +10,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacdisDeluxeAPI", "TacdisDeluxeAPI\TacdisDeluxeAPI.csproj", "{478FFCB0-F5FE-43C8-B83F-A10836F37594}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TacdisDeluxeAPI.Tests", "TacdisDeluxeAPI.Tests\TacdisDeluxeAPI.Tests.csproj", "{A077B7C7-3E4F-42C3-BAB3-F9E033C7C803}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1F3CF926-6D53-42A6-A811-D072550FAEDF}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

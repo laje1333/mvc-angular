@@ -29,7 +29,7 @@ namespace TacdisDeluxeAPI.Models.Maps
                     m.MapRightKey("PartId");
                 });
             
-            HasMany<SalesAddonEntity>(s => s.Addons)
+            HasMany<AddonEntity>(s => s.Addons)
                 .WithMany(s => s.Sales)
                 .Map(m =>
                 {

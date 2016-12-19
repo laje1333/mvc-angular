@@ -20,9 +20,10 @@ namespace TacdisDeluxeAPI.Models
         [Key]
         public int Id { get; set; }
 
-        public int ArticleNumber { get; set; }
-        public string ArticleName { get; set; }
-        public double Price { get; set; }
+        public int ItemId { get; set; }
+        public string ItemName { get; set; }
+        public double ItemPrice { get; set; }
+        public string ItemDesc { get; set; }
         public double VAT { get; set; }
         public bool SpecFsg { get; set; }
 

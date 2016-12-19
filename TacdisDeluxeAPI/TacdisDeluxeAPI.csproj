@@ -25,6 +25,8 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -273,7 +275,9 @@
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="DTO\InvoiceDto.cs" />
     <Compile Include="DTO\InvoiceRowDto.cs" />
+    <Compile Include="DTO\NewVehicleDto.cs" />
     <Compile Include="DTO\PayerDto.cs" />
+    <Compile Include="DTO\SalesDto.cs" />
     <Compile Include="DTO\SalesmanDto.cs" />
     <Compile Include="DTO\validators\InvoiceValidator.cs" />
     <Compile Include="Global.asax.cs">
@@ -335,7 +339,7 @@
     <Compile Include="Models\PartEntity.cs" />
     <Compile Include="Models\PayerEntity.cs" />
     <Compile Include="Models\SaleEntity.cs" />
-    <Compile Include="Models\SalesAddonEntity.cs" />
+    <Compile Include="Models\AddonEntity.cs" />
     <Compile Include="Models\SalesmanEntity.cs" />
     <Compile Include="Models\VehicleEntity.cs" />
     <Compile Include="Models\VehicleModelEntity.cs" />
@@ -437,7 +441,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

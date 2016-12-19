@@ -6,6 +6,9 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
     //Get
 
+    $scope.idOffset = 0;
+    $scope.offsetMultiplier = 1;
+
     $scope.initializeBrands = function () {
         $scope.urlString = 'http://localhost:57661/api/Brand';
         $http.get($scope.urlString).
@@ -39,10 +42,11 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
         $http.get('http://localhost:57661/api/vehicle?year=' + $scope.modelYear + "&mod=" + $scope.modelType + "&brnd=" + $scope.selectedBrand).
                 then(function (response) {
                     var properties = response.data;
+                    $scope.allProps = properties;
                     $scope.engineTypes = [];
                     $scope.engineGroups = [];
                     $scope.engineDescriptions = [];
-
+                    $scope.idOffset = properties.length * $scope.offsetMultiplier;
                     for (i = 0; i < properties.length; i++) {
 
                         if (properties[i].Field === "Engine-Type") {
@@ -57,13 +61,24 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                             $scope.transmissionGroups.push(properties[i]);
                         } else if (properties[i].Field === "Transmission-Description") {
                             $scope.transmissionDescriptions.push(properties[i]);
+                        } else if (properties[i].Field === "Exterior-Type") {
+                            $scope.exteriorTypes.push(properties[i]);
+                        } else if (properties[i].Field === "Exterior-Group") {
+                            $scope.exteriorGroups.push(properties[i]);
+                        } else if (properties[i].Field === "Exterior-Description") {
+                            $scope.exteriorDescriptions.push(properties[i]);
+                        } else if (properties[i].Field === "Interior-Material") {
+                            $scope.interiorMats.push(properties[i]);
+                        } else if (properties[i].Field === "Interior-Color") {
+                            $scope.interiorColors.push(properties[i]);
+                        } else if (properties[i].Field === "Interior-Description") {
+                            $scope.interiorDescriptions.push(properties[i]);
                         }
                     }
-                    
-                   
 
                 });
     }
+
 
 
 
@@ -73,7 +88,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                 var id = $scope.engineTypes[i].Id;
                 $scope.displayableEngineGroups = [];
                 for (x = 0; x < $scope.engineGroups.length; x++) {
-                    if ($scope.engineGroups[x].ParentId === id) {
+                    if ($scope.engineGroups[x].ParentId + $scope.idOffset === id) {
                         $scope.displayableEngineGroups.push($scope.engineGroups[x]);
                     }
                 }
@@ -88,7 +103,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                 var id = $scope.displayableEngineGroups[i].Id;
                 $scope.displayableEngineDescriptions = [];
                 for (x = 0; x < $scope.engineDescriptions.length; x++) {
-                    if ($scope.engineDescriptions[x].ParentId === id) {
+                    if ($scope.engineDescriptions[x].ParentId + $scope.idOffset === id) {
                         $scope.displayableEngineDescriptions.push($scope.engineDescriptions[x]);
                     }
                 }
@@ -103,7 +118,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                 var id = $scope.transmissionTypes[i].Id;
                 $scope.displayableTransmissionGroups = [];
                 for (x = 0; x < $scope.transmissionGroups.length; x++) {
-                    if ($scope.transmissionGroups[x].ParentId === id) {
+                    if ($scope.transmissionGroups[x].ParentId + $scope.idOffset === id) {
                         $scope.displayableTransmissionGroups.push($scope.transmissionGroups[x]);
                     }
                 }
@@ -118,13 +133,73 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                 var id = $scope.displayableTransmissionGroups[i].Id;
                 $scope.displayableTransmissionDescriptions = [];
                 for (x = 0; x < $scope.transmissionDescriptions.length; x++) {
-                    if ($scope.transmissionDescriptions[x].ParentId === id) {
+                    if ($scope.transmissionDescriptions[x].ParentId + $scope.idOffset === id) {
                         $scope.displayableTransmissionDescriptions.push($scope.transmissionDescriptions[x]);
                     }
                 }
             }
         }
         $scope.transmissionDescriptionDisabled = false;
+    }
+
+    $scope.selectExteriorType = function () {
+        for (i = 0; i < $scope.exteriorTypes.length; i++) {
+            if ($scope.exteriorTypes[i].Name === $scope.selectedPaintType) {
+                var id = $scope.exteriorTypes[i].Id;
+                $scope.displayableExteriorGroups = [];
+                for (x = 0; x < $scope.exteriorGroups.length; x++) {
+                    if ($scope.exteriorGroups[x].ParentId + $scope.idOffset === id) {
+                        $scope.displayableExteriorGroups.push($scope.exteriorGroups[x]);
+                    }
+                }
+            }
+        }
+        $scope.paintGroupDisabled = false;
+    }
+
+    $scope.selectExteriorGroup = function () {
+        for (i = 0; i < $scope.displayableExteriorGroups.length; i++) {
+            if ($scope.displayableExteriorGroups[i].Name === $scope.selectedPaintGroup) {
+                var id = $scope.displayableExteriorGroups[i].Id;
+                $scope.displayableExteriorDescriptions = [];
+                for (x = 0; x < $scope.exteriorDescriptions.length; x++) {
+                    if ($scope.exteriorDescriptions[x].ParentId + $scope.idOffset === id) {
+                        $scope.displayableExteriorDescriptions.push($scope.exteriorDescriptions[x]);
+                    }
+                }
+            }
+        }
+        $scope.paintDescriptionDisabled = false;
+    }
+
+    $scope.selectInteriorMats = function () {
+        for (i = 0; i < $scope.interiorMats.length; i++) {
+            if ($scope.interiorMats[i].Name === $scope.selectedInteriorMaterial) {
+                var id = $scope.interiorMats[i].Id;
+                $scope.displayableInteriorColors = [];
+                for (x = 0; x < $scope.interiorColors.length; x++) {
+                    if ($scope.interiorColors[x].ParentId + $scope.idOffset === id) {
+                        $scope.displayableInteriorColors.push($scope.interiorColors[x]);
+                    }
+                }
+            }
+        }
+        $scope.interiorColorDisabled = false;
+    }
+
+    $scope.selectInteriorColors = function () {
+        for (i = 0; i < $scope.displayableInteriorColors.length; i++) {
+            if ($scope.displayableInteriorColors[i].Name === $scope.selectedInteriorColor) {
+                var id = $scope.displayableInteriorColors[i].Id;
+                $scope.displayableInteriorDescriptions = [];
+                for (x = 0; x < $scope.interiorDescriptions.length; x++) {
+                    if ($scope.interiorDescriptions[x].ParentId + $scope.idOffset === id) {
+                        $scope.displayableInteriorDescriptions.push($scope.interiorDescriptions[x]);
+                    }
+                }
+            }
+        }
+        $scope.paintDescriptionDisabled = false;
     }
 
     //Post
@@ -147,6 +222,19 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     $scope.transmissionDescriptions = [];
     $scope.displayableTransmissionDescriptions = [];
 
+    //Exterior
+    $scope.exteriorTypes = [];
+    $scope.exteriorGroups = [];
+    $scope.displayableExteriorGroups = [];
+    $scope.exteriorDescriptions = [];
+    $scope.displayableExteriorDescriptions = [];
+
+    //Interior
+    $scope.interiorMats = [];
+    $scope.interiorColors = [];
+    $scope.displayableInteriorColors = [];
+    $scope.interiorDescriptions = [];
+    $scope.displayableInteriorDescriptions = [];
 
 
     $scope.selectedBrand = "";
@@ -169,28 +257,56 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     $scope.selectedInteriorColorDesc = "";
     $scope.selectedInteriorColor = "";
 
+
+
+    $scope.fetchParentProperties = function (property, treeLevel) {
+        if (treeLevel === 1) {
+            for (i = 0; i < $scope.allProps.length; i++) {
+                if ($scope.allProps[i].Id === property.ParentId + $scope.idOffset) {
+                    return $scope.allProps[i];
+                }
+            }
+        } else if (treeLevel === 2) {
+            for (i = 0; i < $scope.allProps.length; i++) {
+                if ($scope.allProps[i].Id === property.ParentId + $scope.idOffset) {
+                    var groupLevelID = $scope.allProps[i].ParentId + $scope.idOffset;
+                    for (x = 0; x < $scope.allProps.length; x++) {
+                        if (groupLevelID === $scope.allProps[x].Id) {
+                            return $scope.allProps[x];
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+    }
+
     $scope.saveData = function () {
+
 
         var vehicleData = {
             Brand: $scope.selectedBrand,
             ModelYear: $scope.selectedModelYear,
             Model: $scope.selectedModel,
 
-            EngineType: $scope.selectedEngineType,
-            EngineGroup: $scope.selectedEngineGroup,
-            EngineDescription: $scope.selectedEngineDesc,
+            
+            EngineType: $scope.fetchParentProperties($scope.displayableEngineDescriptions[0], 2),
+            EngineGroup: $scope.fetchParentProperties($scope.displayableEngineDescriptions[0], 1),
+            EngineDescription: $scope.displayableEngineDescriptions[0],
 
-            TransmissionType: $scope.selectedTransmissionType,
-            TransmissionGroup: $scope.selectedTransmissionGroup,
-            TransmissionDescription: $scope.selectedTransmissionDesc,
+            TransmissionType: $scope.fetchParentProperties($scope.displayableTransmissionDescriptions[0], 2),
+            TransmissionGroup: $scope.fetchParentProperties($scope.displayableTransmissionDescriptions[0], 1),
+            TransmissionDescription: $scope.displayableTransmissionDescriptions[0],
 
-            PaintType: $scope.selectedPaintType,
-            PaintDescription: $scope.selectedPaintDescription,
-            PaintGroup: $scope.selectedPaintGroup,
+            PaintType: $scope.fetchParentProperties($scope.displayableExteriorDescriptions[0], 2),
+            PaintDescription: $scope.displayableExteriorDescriptions[0],
+            PaintGroup: $scope.fetchParentProperties($scope.displayableExteriorDescriptions[0], 1),
 
-            InteriorMaterial: $scope.selectedInteriorMaterial,
-            InteriorColorDescription: $scope.selectedInteriorColorDesc,
-            InteriorColor: $scope.selectedInteriorColor,
+            InteriorMaterial: $scope.fetchParentProperties($scope.displayableInteriorDescriptions[0], 2),
+            InteriorColorDescription: $scope.displayableInteriorDescriptions[0],
+            InteriorColor: $scope.fetchParentProperties($scope.displayableInteriorDescriptions[0], 1),
 
         }
 

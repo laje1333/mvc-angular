@@ -50,13 +50,13 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
 
-        public IHttpActionResult Get(string articleNumber, string articleName)
+        public IHttpActionResult Get(string ItemId, string ItemName)
         {
             using (DBContext c = new DBContext())
             {
                 IQueryable<PartEntity> allParts;
 
-                if (string.IsNullOrEmpty(articleName + articleNumber))
+                if (string.IsNullOrEmpty(ItemName + ItemId))
                 {
                     return Ok(new List<PartEntity>());
                 }
@@ -65,14 +65,14 @@ namespace TacdisDeluxeAPI.Controllers
                     allParts = c.Parts as IQueryable<PartEntity>;
                 }
 
-                if (!String.IsNullOrEmpty(articleNumber))
+                if (!String.IsNullOrEmpty(ItemId))
                 {
-                    allParts = allParts.Where(p => p.ArticleNumber.ToString().Contains(articleNumber));
+                    allParts = allParts.Where(p => p.ItemId.ToString().Contains(ItemId));
                 }
 
-                if (!String.IsNullOrEmpty(articleName))
+                if (!String.IsNullOrEmpty(ItemName))
                 {
-                    allParts = allParts.Where(p => p.ArticleName.Contains(articleName));
+                    allParts = allParts.Where(p => p.ItemName.Contains(ItemName));
                 }
 
                 return Ok(allParts.ToList());

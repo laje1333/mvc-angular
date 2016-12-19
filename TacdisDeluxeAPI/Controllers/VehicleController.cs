@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
+using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Mockdata.VehicleData;
 using TacdisDeluxeAPI.Models;
 
@@ -79,9 +80,21 @@ namespace TacdisDeluxeAPI.Controllers
 
         // POST: api/Vehicle
         [System.Web.Http.HttpPost]
-        public void AddCar(NewVehicleProperties properties)
+        public void AddCar(NewVehicleDto props)
         {
-            NewVehicleProperties.addVehicleToRecord(properties);
+
+            props.generateRegNumber();
+            
+
+            using (DBContext c = new DBContext())
+            {
+
+                //Generate reg nr
+
+
+                //c.Vehicles.Add(vehicle);
+
+            }
         }
 
         // PUT: api/Vehicle/5
