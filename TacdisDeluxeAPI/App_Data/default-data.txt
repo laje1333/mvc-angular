@@ -1,6 +1,6 @@
 ﻿/*
 Enable-Migrations -ContextTypeName TacdisDeluxeAPI.Models.DBContext
-add-migration InitialCABLAMCreate
+add-migration InitialCreate
 update-database -Verbose
 add-migration
 */

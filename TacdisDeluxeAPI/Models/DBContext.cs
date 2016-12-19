@@ -38,7 +38,7 @@ namespace TacdisDeluxeAPI.Models
             builder.Entity<SaleEntity>().ToTable("Sale");
             builder.Entity<VehicleModelEntity>().ToTable("VehicleModel");
             builder.Entity<PayerEntity>().ToTable("Payer");
-            builder.Entity<AddonEntity>().ToTable("SalesAddon");
+            builder.Entity<AddonEntity>().ToTable("Addon");
             builder.Entity<SalesmanEntity>().ToTable("Salesman");
             builder.Entity<VehicleEntity>().ToTable("Vehicle");
             builder.Entity<VehicleBrandEntity>().ToTable("VehicleBrand");

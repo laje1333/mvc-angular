@@ -24,7 +24,8 @@ namespace TacdisDeluxeAPI.Migrations
 
         protected override void Seed(TacdisDeluxeAPI.Models.DBContext context)
         {
-
+            //  Aaah, heell no...
+            //return;
 
 
 
@@ -163,8 +164,8 @@ namespace TacdisDeluxeAPI.Migrations
                 new VehiclePropertyEntity(){Id = 46, Name = "White polyester",           Field = "Interior-Description", ParentId = 41, Price = 23490, VehicleModel = vehicleModels[0]},
                 new VehiclePropertyEntity(){Id = 47, Name = "Gray polyester",            Field = "Interior-Description", ParentId = 42, Price = 24490, VehicleModel = vehicleModels[0]},
                 new VehiclePropertyEntity(){Id = 48, Name = "Blue wool interior",        Field = "Interior-Description", ParentId = 43, Price = 17490, VehicleModel = vehicleModels[0]},
-                    
-                
+
+
             };
 
 

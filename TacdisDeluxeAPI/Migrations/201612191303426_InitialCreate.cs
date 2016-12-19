@@ -8,12 +8,14 @@ namespace TacdisDeluxeAPI.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.SalesAddon",
+                "dbo.Addon",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Description = c.String(),
-                        Price = c.Double(nullable: false),
+                        ItemId = c.Int(nullable: false),
+                        ItemName = c.String(),
+                        ItemPrice = c.Double(nullable: false),
+                        ItemDesc = c.String(),
                         VAT = c.Double(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -38,9 +40,10 @@ namespace TacdisDeluxeAPI.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        ArticleNumber = c.Int(nullable: false),
-                        ArticleName = c.String(),
-                        Price = c.Double(nullable: false),
+                        ItemId = c.Int(nullable: false),
+                        ItemName = c.String(),
+                        ItemPrice = c.Double(nullable: false),
+                        ItemDesc = c.String(),
                         VAT = c.Double(nullable: false),
                         SpecFsg = c.Boolean(nullable: false),
                     })
@@ -54,18 +57,20 @@ namespace TacdisDeluxeAPI.Migrations
                         FirsName = c.String(),
                         LastName = c.String(),
                         Trusted = c.Boolean(nullable: false),
-                        CustomerNumber = c.String(),
+                        CustomerNumber = c.Int(nullable: false),
                         StreeatAddress = c.String(),
                         ZipCity = c.String(),
                         Country = c.String(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.CustomerNumber, unique: true);
             
             CreateTable(
                 "dbo.Salesman",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        EmployeeNumber = c.Int(nullable: false),
                         FirstName = c.String(),
                         LastName = c.String(),
                         Company = c.String(),
@@ -73,7 +78,8 @@ namespace TacdisDeluxeAPI.Migrations
                         ZipCity = c.String(),
                         Country = c.String(),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .Index(t => t.EmployeeNumber, unique: true);
             
             CreateTable(
                 "dbo.Vehicle",
@@ -81,6 +87,11 @@ namespace TacdisDeluxeAPI.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         RegNo = c.String(),
+                        ItemId = c.Int(nullable: false),
+                        ItemName = c.String(),
+                        ItemPrice = c.Double(nullable: false),
+                        ItemDesc = c.String(),
+                        VAT = c.Double(nullable: false),
                         VehicleModel_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
@@ -118,11 +129,54 @@ namespace TacdisDeluxeAPI.Migrations
                         Field = c.String(),
                         ParentId = c.Int(nullable: false),
                         Price = c.Double(nullable: false),
-                        VehicleModelEntity_Id = c.Int(),
+                        VehicleModelId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.VehicleModel", t => t.VehicleModelEntity_Id)
-                .Index(t => t.VehicleModelEntity_Id);
+                .ForeignKey("dbo.VehicleModel", t => t.VehicleModelId, cascadeDelete: true)
+                .Index(t => t.VehicleModelId);
+            
+            CreateTable(
+                "dbo.InvoiceRow",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Item = c.String(),
+                        Description = c.String(),
+                        UnitCost = c.Double(nullable: false),
+                        Quantity = c.Int(nullable: false),
+                        Vat = c.Double(nullable: false),
+                        InvoiceRowAmount = c.Double(nullable: false),
+                        InvoiceId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Invoice", t => t.InvoiceId, cascadeDelete: true)
+                .Index(t => t.InvoiceId);
+            
+            CreateTable(
+                "dbo.Invoice",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        InvoiceNumber = c.Int(nullable: false),
+                        InvoiceState = c.String(nullable: false),
+                        DueDate = c.String(),
+                        InvoiceDate = c.String(),
+                        InvoiceAmount = c.Double(nullable: false),
+                        DebitCredit = c.String(),
+                        Vat = c.Double(nullable: false),
+                        AmountPaid = c.Double(nullable: false),
+                        WoNumber = c.Int(nullable: false),
+                        JobNumber = c.String(),
+                        RegNumber = c.String(),
+                        Payer_Id = c.Int(nullable: false),
+                        Salesman_Id = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Payer", t => t.Payer_Id, cascadeDelete: true)
+                .ForeignKey("dbo.Salesman", t => t.Salesman_Id, cascadeDelete: true)
+                .Index(t => t.InvoiceNumber, unique: true)
+                .Index(t => t.Payer_Id)
+                .Index(t => t.Salesman_Id);
             
             CreateTable(
                 "dbo.Sales_Addons",
@@ -133,7 +187,7 @@ namespace TacdisDeluxeAPI.Migrations
                     })
                 .PrimaryKey(t => new { t.SaleId, t.AddonId })
                 .ForeignKey("dbo.Sale", t => t.SaleId, cascadeDelete: true)
-                .ForeignKey("dbo.SalesAddon", t => t.AddonId, cascadeDelete: true)
+                .ForeignKey("dbo.Addon", t => t.AddonId, cascadeDelete: true)
                 .Index(t => t.SaleId)
                 .Index(t => t.AddonId);
             
@@ -180,17 +234,20 @@ namespace TacdisDeluxeAPI.Migrations
         
         public override void Down()
         {
+            DropForeignKey("dbo.Invoice", "Salesman_Id", "dbo.Salesman");
+            DropForeignKey("dbo.Invoice", "Payer_Id", "dbo.Payer");
+            DropForeignKey("dbo.InvoiceRow", "InvoiceId", "dbo.Invoice");
             DropForeignKey("dbo.Sales_Vehicles", "VehicleId", "dbo.Vehicle");
             DropForeignKey("dbo.Sales_Vehicles", "SaleId", "dbo.Sale");
             DropForeignKey("dbo.Vehicle", "VehicleModel_Id", "dbo.VehicleModel");
-            DropForeignKey("dbo.VehicleProperty", "VehicleModelEntity_Id", "dbo.VehicleModel");
+            DropForeignKey("dbo.VehicleProperty", "VehicleModelId", "dbo.VehicleModel");
             DropForeignKey("dbo.VehicleModel", "BrandId", "dbo.VehicleBrand");
             DropForeignKey("dbo.Sale", "Salesman_Id", "dbo.Salesman");
             DropForeignKey("dbo.Sales_Payers", "PayerId", "dbo.Payer");
             DropForeignKey("dbo.Sales_Payers", "SaleId", "dbo.Sale");
             DropForeignKey("dbo.Sales_Parts", "PartId", "dbo.Part");
             DropForeignKey("dbo.Sales_Parts", "SaleId", "dbo.Sale");
-            DropForeignKey("dbo.Sales_Addons", "AddonId", "dbo.SalesAddon");
+            DropForeignKey("dbo.Sales_Addons", "AddonId", "dbo.Addon");
             DropForeignKey("dbo.Sales_Addons", "SaleId", "dbo.Sale");
             DropIndex("dbo.Sales_Vehicles", new[] { "VehicleId" });
             DropIndex("dbo.Sales_Vehicles", new[] { "SaleId" });
@@ -200,14 +257,22 @@ namespace TacdisDeluxeAPI.Migrations
             DropIndex("dbo.Sales_Parts", new[] { "SaleId" });
             DropIndex("dbo.Sales_Addons", new[] { "AddonId" });
             DropIndex("dbo.Sales_Addons", new[] { "SaleId" });
-            DropIndex("dbo.VehicleProperty", new[] { "VehicleModelEntity_Id" });
+            DropIndex("dbo.Invoice", new[] { "Salesman_Id" });
+            DropIndex("dbo.Invoice", new[] { "Payer_Id" });
+            DropIndex("dbo.Invoice", new[] { "InvoiceNumber" });
+            DropIndex("dbo.InvoiceRow", new[] { "InvoiceId" });
+            DropIndex("dbo.VehicleProperty", new[] { "VehicleModelId" });
             DropIndex("dbo.VehicleModel", new[] { "BrandId" });
             DropIndex("dbo.Vehicle", new[] { "VehicleModel_Id" });
+            DropIndex("dbo.Salesman", new[] { "EmployeeNumber" });
+            DropIndex("dbo.Payer", new[] { "CustomerNumber" });
             DropIndex("dbo.Sale", new[] { "Salesman_Id" });
             DropTable("dbo.Sales_Vehicles");
             DropTable("dbo.Sales_Payers");
             DropTable("dbo.Sales_Parts");
             DropTable("dbo.Sales_Addons");
+            DropTable("dbo.Invoice");
+            DropTable("dbo.InvoiceRow");
             DropTable("dbo.VehicleProperty");
             DropTable("dbo.VehicleBrand");
             DropTable("dbo.VehicleModel");
@@ -216,7 +281,7 @@ namespace TacdisDeluxeAPI.Migrations
             DropTable("dbo.Payer");
             DropTable("dbo.Part");
             DropTable("dbo.Sale");
-            DropTable("dbo.SalesAddon");
+            DropTable("dbo.Addon");
         }
     }
 }

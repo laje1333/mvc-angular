@@ -281,21 +281,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612160845194_InitialCreate.cs" />
-    <Compile Include="Migrations\201612160845194_InitialCreate.Designer.cs">
-      <DependentUpon>201612160845194_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612160914010_VehicleModel_VehicleProperties_connection.cs" />
-    <Compile Include="Migrations\201612160914010_VehicleModel_VehicleProperties_connection.Designer.cs">
-      <DependentUpon>201612160914010_VehicleModel_VehicleProperties_connection.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612161043136_invoice_stuff.cs" />
-    <Compile Include="Migrations\201612161043136_invoice_stuff.Designer.cs">
-      <DependentUpon>201612161043136_invoice_stuff.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612161058287_invoice_tables.cs" />
-    <Compile Include="Migrations\201612161058287_invoice_tables.Designer.cs">
-      <DependentUpon>201612161058287_invoice_tables.cs</DependentUpon>
+    <Compile Include="Migrations\201612191303426_InitialCreate.cs" />
+    <Compile Include="Migrations\201612191303426_InitialCreate.Designer.cs">
+      <DependentUpon>201612191303426_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
@@ -392,17 +380,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201612160845194_InitialCreate.resx">
-      <DependentUpon>201612160845194_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612160914010_VehicleModel_VehicleProperties_connection.resx">
-      <DependentUpon>201612160914010_VehicleModel_VehicleProperties_connection.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612161043136_invoice_stuff.resx">
-      <DependentUpon>201612161043136_invoice_stuff.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612161058287_invoice_tables.resx">
-      <DependentUpon>201612161058287_invoice_tables.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612191303426_InitialCreate.resx">
+      <DependentUpon>201612191303426_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
