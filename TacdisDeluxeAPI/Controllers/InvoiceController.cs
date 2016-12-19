@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Mockdata.InvoiceData;
 using TacdisDeluxeAPI.Models;
+using TacdisDeluxeAPI.DTO.validators;
 
 namespace TacdisDeluxeAPI.Controllers
 {
@@ -26,63 +27,62 @@ namespace TacdisDeluxeAPI.Controllers
             return invoices;
         }
 
-        [System.Web.Http.HttpGet]
-        public InvoiceEntity GetInvoices(int query)
+        //[System.Web.Http.HttpGet]
+        //public InvoiceEntity GetInvoices(int query)
+        //{
+        //    using (var db = new DBContext())
+        //    {
+        //        InvoiceEntity invoices = null;
+
+        //        try
+        //        {
+        //            //invoices = db.Invoice.Where(i => i.InvoiceNumber == query).toList();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return null;
+        //        }
+
+        //        return invoices;
+        //    }
+
+        //}
+        [System.Web.Http.HttpPost]
+        public IHttpActionResult CreatInvoice(InvoiceDto invoiceDto)
         {
-            using (var db = new DBContext())
+
+            var mockInvoice = GetMockInvoice.GetInvoice(1, 1, 12);
+
+             invoiceDto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
+
+            try
             {
-                InvoiceEntity invoices = null;
+                invoiceDto = InvoiceValidator.ValidateAndUpdateInvoiceDto(invoiceDto);
+            }
+            catch (Exception ex)
+            {
 
-                try
-                {
-                    //invoices = db.Invoice.Where(i => i.InvoiceNumber == query).toList();
-                }
-                catch (Exception ex)
-                {
-                    return null;
-                }
-
-                return invoices;
+                return BadRequest("Validation fail!");
             }
 
-        }
+            InvoiceEntity invoice;
+            try
+            {
+                invoice = Mapper.Map<InvoiceDto, InvoiceEntity>(invoiceDto);
+            }
+            catch (Exception ex)
+            {
 
-        public IHttpActionResult PostInvoice(string invoiceTest)
-        {
-            
-            var mockInvoice = GetMockInvoice.GetInvoice(1, 1, 12);
-            //var invoice = new InvoiceEntity { Payer = new PayerEntity() };
-
-            var dto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
+                return BadRequest("Invoice mapping error!");
+            }
 
 
             try
             {
                 using (var db = new DBContext())
                 {
-                    ////kolla faktura nummer
-                    //if (invoice.InvoiceNumber != null)
-                    //{
-                    //    var invoceNumber = db.Invoice.Where(i => i.InvoiceNumber == invoice.InvoiceNumber);
-                    //    if (invoceNumber == null)
-                    //        return BadRequest("Invoice already exist");
-                    //}
-                    //else
-                    //{
-                    //    return BadRequest("missing InvoiceNumber");
-                    //}
-
-                    ////kolla payer nummber
-                    //var customerNumber = db.Payer.Where(p => p.CustomerNumber == invoice.Payer.CustomerNumber);
-                    //if (customerNumber == null)
-                    //{
-                    //    var newCustomerNumber = db.Payer.Max(p => p.CustomerNumber);
-                    //    invoice.Payer.CustomerNumber = newCustomerNumber ++;
-                    //}
-
-
-                        //db.Invoice.Add(invoice);
-                       // db.SaveChanges();
+                    db.Invoices.Add(invoice);
+                    db.SaveChanges();
                 }
             }
             catch (Exception ex)
@@ -94,23 +94,23 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
 
-        // POST api/invoice
-        public void Post([FromBody]string value)
-        {
-            var mockInvoice = GetMockInvoice.GetInvoice(1, 1, 12);
+        //// POST api/invoice
+        //public void Post([FromBody]string value)
+        //{
+        //    var mockInvoice = GetMockInvoice.GetInvoice(1, 1, 12);
 
-            var dto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
+        //    var dto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
 
-        }
+        //}
 
-        // PUT api/invoice/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
+        //// PUT api/invoice/5
+        //public void Put(int id, [FromBody]string value)
+        //{
+        //}
 
-        // DELETE api/invoice/5
-        public void Delete(int id)
-        {
-        }
+        //// DELETE api/invoice/5
+        //public void Delete(int id)
+        //{
+        //}
     }
 }

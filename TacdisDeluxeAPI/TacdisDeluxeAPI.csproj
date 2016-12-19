@@ -275,6 +275,7 @@
     <Compile Include="DTO\InvoiceRowDto.cs" />
     <Compile Include="DTO\PayerDto.cs" />
     <Compile Include="DTO\SalesmanDto.cs" />
+    <Compile Include="DTO\validators\InvoiceValidator.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
