@@ -7,7 +7,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     //Get
 
     $scope.idOffset = 0;
-    $scope.offsetMultiplier = 3;
+    $scope.offsetMultiplier = 1;
 
     $scope.initializeBrands = function () {
         $scope.urlString = 'http://localhost:57661/api/Brand';
@@ -42,6 +42,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
         $http.get('http://localhost:57661/api/vehicle?year=' + $scope.modelYear + "&mod=" + $scope.modelType + "&brnd=" + $scope.selectedBrand).
                 then(function (response) {
                     var properties = response.data;
+                    $scope.allProps = properties;
                     $scope.engineTypes = [];
                     $scope.engineGroups = [];
                     $scope.engineDescriptions = [];
@@ -256,28 +257,56 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
     $scope.selectedInteriorColorDesc = "";
     $scope.selectedInteriorColor = "";
 
+
+
+    $scope.fetchParentProperties = function (property, treeLevel) {
+        if (treeLevel === 1) {
+            for (i = 0; i < $scope.allProps.length; i++) {
+                if ($scope.allProps[i].Id === property.ParentId + $scope.idOffset) {
+                    return $scope.allProps[i];
+                }
+            }
+        } else if (treeLevel === 2) {
+            for (i = 0; i < $scope.allProps.length; i++) {
+                if ($scope.allProps[i].Id === property.ParentId + $scope.idOffset) {
+                    var groupLevelID = $scope.allProps[i].ParentId + $scope.idOffset;
+                    for (x = 0; x < $scope.allProps.length; x++) {
+                        if (groupLevelID === $scope.allProps[x].Id) {
+                            return $scope.allProps[x];
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+    }
+
     $scope.saveData = function () {
+
 
         var vehicleData = {
             Brand: $scope.selectedBrand,
             ModelYear: $scope.selectedModelYear,
             Model: $scope.selectedModel,
 
-            EngineType: $scope.selectedEngineType,
-            EngineGroup: $scope.selectedEngineGroup,
-            EngineDescription: $scope.selectedEngineDesc,
+            
+            EngineType: $scope.fetchParentProperties($scope.displayableEngineDescriptions[0], 2),
+            EngineGroup: $scope.fetchParentProperties($scope.displayableEngineDescriptions[0], 1),
+            EngineDescription: $scope.displayableEngineDescriptions[0],
 
-            TransmissionType: $scope.selectedTransmissionType,
-            TransmissionGroup: $scope.selectedTransmissionGroup,
-            TransmissionDescription: $scope.selectedTransmissionDesc,
+            TransmissionType: $scope.fetchParentProperties($scope.displayableTransmissionDescriptions[0], 2),
+            TransmissionGroup: $scope.fetchParentProperties($scope.displayableTransmissionDescriptions[0], 1),
+            TransmissionDescription: $scope.displayableTransmissionDescriptions[0],
 
-            PaintType: $scope.selectedPaintType,
-            PaintDescription: $scope.selectedPaintDescription,
-            PaintGroup: $scope.selectedPaintGroup,
+            PaintType: $scope.fetchParentProperties($scope.displayableExteriorDescriptions[0], 2),
+            PaintDescription: $scope.displayableExteriorDescriptions[0],
+            PaintGroup: $scope.fetchParentProperties($scope.displayableExteriorDescriptions[0], 1),
 
-            InteriorMaterial: $scope.selectedInteriorMaterial,
-            InteriorColorDescription: $scope.selectedInteriorColorDesc,
-            InteriorColor: $scope.selectedInteriorColor,
+            InteriorMaterial: $scope.fetchParentProperties($scope.displayableInteriorDescriptions[0], 2),
+            InteriorColorDescription: $scope.displayableInteriorDescriptions[0],
+            InteriorColor: $scope.fetchParentProperties($scope.displayableInteriorDescriptions[0], 1),
 
         }
 

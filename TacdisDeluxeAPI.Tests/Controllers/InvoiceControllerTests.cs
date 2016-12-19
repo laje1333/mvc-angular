@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TacdisDeluxeAPI.Controllers;
+using TacdisDeluxeAPI.DTO;
+using TacdisDeluxeAPI.Mockdata.InvoiceData;
+using TacdisDeluxeAPI.Models;
 
 namespace TacdisDeluxeAPI.Tests.Controllers
 {
@@ -15,8 +18,8 @@ namespace TacdisDeluxeAPI.Tests.Controllers
         public void PostInvoice_Mapping()
         {
             InvoiceController controller = new InvoiceController();
-            //var response = controller.PostInvoice("test");
-            //Assert.IsNotNull(response);
+            var response = controller.CreatInvoice(new InvoiceDto());
+            Assert.IsNotNull(response);
 
         }
     }
