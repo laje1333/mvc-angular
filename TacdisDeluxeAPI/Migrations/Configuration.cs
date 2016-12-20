@@ -25,7 +25,7 @@ namespace TacdisDeluxeAPI.Migrations
         protected override void Seed(TacdisDeluxeAPI.Models.DBContext context)
         {
             //  Aaah, heell no...
-            //return;
+            return;
 
 
 
