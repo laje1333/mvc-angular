@@ -12,9 +12,9 @@ tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", 
         $http.get("http://localhost:57661/api/invoice/GetInvoice?query=1")
     .then(function (response) {
         $scope.spinner = false;
-        var obj = JSON.parse(response.data);
-        $scope.records = obj.invoices;
-
+        //var obj = JSON.parse(response.data);
+        //$scope.records = obj.invoices;
+                $scope.records = response.data;
         $scope.invoiceTable = new ngTableParams({
           
         },{
