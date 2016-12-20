@@ -11,14 +11,66 @@
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-
+    <script src="~/Scripts/ng-table.min.js"></script>
     @Scripts.Render("~/bundles/custom")
 
     <script src="~/Scripts/global.js"></script>
     <link href="~/Content/Custom.css" rel="stylesheet"/>
 
+    @{ 
+        var controller = ViewContext.RouteData.Values["controller"].ToString();
+        string navPartsCss = controller.ToLower() == "parts" ? "nav-active" : "";
+        string navSalesCss = controller.ToLower() == "sales" ? "nav-active" : "";
+        string navVehicleCss = controller.ToLower() == "vehicle" ? "nav-active" : "";
+        string navWorkOrderCss = controller.ToLower() == "workorder" ? "nav-active" : "";
+        string navInvoiceCss = controller.ToLower() == "invoice" ? "nav-active" : "";
+    }
+
 </head>
 <body ng-app="tacdisDeluxeApp">
+    <script>
+        //  .alert-success, .alert-info, .alert-warning or .alert-danger
+        window.feedbackPopup = function (msg, options) {
+            var level = (options === undefined || options.level === undefined) ? 'success' : options.level.toLowerCase();
+            var timeout = (options === undefined || options.timeout === undefined) ? 2000 : options.timeout;
+            var glyph = 'ok';
+            
+
+            switch (level.toLowerCase()) {
+                case 'info':
+                    level = 'Info'
+                    glyph = 'info-sign';
+                    break;
+                case 'warning':
+                case 'danger':
+                    level = 'Danger'
+                    glyph = 'fire';
+                    break;
+                default:
+                    level = 'Success';
+                    glyph = 'ok';
+                    break;
+            }
+
+
+            var msgBox = $('#__ajaxFeedbackMessage');
+
+            msgBox.removeClass('alert-info').removeClass('alert-success').removeClass('alert-danger');
+            msgBox.find('.message-level').removeClass('glyphicon-info-sign').removeClass('glyphicon-fire').removeClass('glyphicon-ok');
+
+            msgBox.addClass('alert-' + level.toLowerCase());
+            msgBox.find('.message-level').addClass('glyphicon-' + glyph);
+            msgBox.find('.message-text').html(msg);
+            msgBox.show('fast');
+            setTimeout(function () { $('#__ajaxFeedbackMessage').fadeOut(500); }, timeout);
+        }
+    </script>
+
+    <div id="__ajaxFeedbackMessage" class="alert alert-dismissable">
+        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span class="message-level glyphicon"></span> <span class="message-text"></span>
+    </div>
+
     <div class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container-fluid">
             <div class="col-md-2 nav-logo">
@@ -26,15 +78,15 @@
             </div>
             <div class="col-md-10">
                 <ul class="nav navbar-nav navbar-nav-custom">
-                    <li>@Html.ActionLink("Parts", "Index", "Parts")</li>
-                    <li>@Html.ActionLink("Sales", "Index", "Sales")</li>
-                    <li>@Html.ActionLink("Vehicle", "Index", "Vehicle")</li>
-                    <li>@Html.ActionLink("Work order", "Index", "WorkOrder")</li>
-                    <li>@Html.ActionLink("Invoice", "Index", "Invoice")</li>
+                    <li class="@navPartsCss">@Html.ActionLink("Parts", "Index", "Parts")<div class="mark-active"></div></li>
+                    <li class="@navSalesCss">@Html.ActionLink("Sales", "Index", "Sales")<div class="mark-active"></div></li>
+                    <li class="@navVehicleCss">@Html.ActionLink("Vehicle", "Index", "Vehicle")<div class="mark-active"></div></li>
+                    <li class="@navWorkOrderCss">@Html.ActionLink("Work order", "Index", "WorkOrder")<div class="mark-active"></div></li>
+                    <li class="@navInvoiceCss">@Html.ActionLink("Invoice", "Index", "Invoice")<div class="mark-active"></div></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log out</a></li>
+
                 </ul>
             </div>
         </div>

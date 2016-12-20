@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TacdisDeluxeAPI.Models
+namespace TacdisDeluxeAPI.Models.Enums
 {
-    public class PartSalesModel
+    public enum PaymentType
     {
+        Credit = 1,
+        Cash = 2 // ...is king
     }
 }

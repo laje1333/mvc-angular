@@ -26,6 +26,8 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -218,12 +220,22 @@
   <ItemGroup>
     <Content Include="AngularTemplates\Invoice\WsInvoiceOverview.html" />
     <Content Include="AngularTemplates\Parts\price_query_form.html" />
-    <Content Include="AngularTemplates\Parts\_modal_search.html" />
+    <Content Include="AngularTemplates\Parts\_modal_search_retail_sale_orders.html" />
+    <Content Include="AngularTemplates\Sales\OldSalesmen.html" />
+    <Content Include="AngularTemplates\Sales\Panes\Addons.html" />
     <Content Include="AngularTemplates\Sales\NewSale.html" />
     <Content Include="AngularTemplates\Sales\OldSale.html" />
     <Content Include="AngularTemplates\Invoice\WsInvoiceMaintenance.html" />
+    <Content Include="AngularTemplates\Sales\Panes\Parts.html" />
+    <Content Include="AngularTemplates\Sales\NewPayer.html" />
+    <Content Include="AngularTemplates\Sales\NewSalesman.html" />
+    <Content Include="AngularTemplates\Vehicle\Administration\CreateInventoryRecord.html" />
+    <Content Include="AngularTemplates\Vehicle\Administration\InventoryAdjustments.html" />
+    <Content Include="AngularTemplates\Vehicle\Administration\VehicleValuation.html" />
     <Content Include="AngularTemplates\Vehicle\Sales\NewVehicle.html" />
     <Content Include="AngularTemplates\Vehicle\Sales\NewVehicleMaintenance.html" />
+    <Content Include="AngularTemplates\Sales\Panes\Vehicles.html" />
+    <Content Include="AngularTemplates\Vehicle\Sales\VehicleExtensions.html" />
     <Content Include="AngularTemplates\WorkOrder\WOH_Finalize.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -270,6 +282,7 @@
     <Content Include="Content\themes\base\tabs.css" />
     <Content Include="Content\themes\base\theme.css" />
     <Content Include="Content\themes\base\tooltip.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -303,15 +316,21 @@
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap-tpls.min.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.js" />
+    <Content Include="Scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\App\app.js" />
+    <Content Include="Scripts\App\Controllers\Account\AccountController.js" />
     <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceMenuController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceMaintenanceController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceOverviewController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsModuleConfig.js" />
+    <Content Include="Scripts\App\Controllers\Sales\PayerSalesmanController.js" />
     <Content Include="Scripts\App\Controllers\Sales\SalesController.js" />
     <Content Include="Scripts\App\Controllers\Vehicle\VehicleController.js" />
     <Content Include="Scripts\App\Controllers\WorkOrder\WorkOrderController.js" />
@@ -1180,7 +1199,9 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

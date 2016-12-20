@@ -6,6 +6,7 @@ using System.Web.Http;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using System.Web.Http.Cors;
+using System.Net.Http.Headers;
 
 namespace TacdisDeluxeAPI
 {
@@ -13,7 +14,7 @@ namespace TacdisDeluxeAPI
     {
         public static void Register(HttpConfiguration config)
         {
-
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
 
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.

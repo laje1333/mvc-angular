@@ -1,177 +1,95 @@
 ﻿
+<style>
+    th {
+        white-space: nowrap;
+    }
+
+</style>
+
 <div ng-controller="VehicleMaintenanceController" class="container">
-    
     <form>
         <div class="input-group">
             <div class="input-group-btn">
-                <input type="text" class="form-control" placeholder="Search" ng-submit="getNewVehicles()">
-                <button class="btn btn-default" type="submit" ng-click="getNewVehicles()"><i class="glyphicon glyphicon-search"></i></button>
+                <input type="text" class="form-control" placeholder="Search" ng-model="inputSearch">
+                <button class="btn btn-default" type="submit" ng-click="getNewVehicles()">
+                    <i class="glyphicon glyphicon-search"></i>
+                    <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
+                </button>
             </div>
         </div>
     </form>
-
-    <div ng-show="records.length">
-        <table ng-table="newVehicleTable" class="table table-hover">
-
+    <div ng-show="records.length" style="overflow-x:scroll" ng-table="newVehicleTable">
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>
-                        <a href="" ng-click="orderByField='ID'; reverseSort = !reverseSort">ID
-                            <span ng-show="orderByField == 'ID'">
+                        <a href="" ng-click="orderByField='RegNo'; reverseSort = !reverseSort">
+                            Reg Number
+                            <span ng-show="orderByField == 'RegNo'">
                                 <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
                                 <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
                             </span>
-                        </a
+                        </a>
                     </th>
-
                     <th>
-                        <a href="" ng-click="orderByField='Brand'; reverseSort = !reverseSort">Brand</a>
-                        <span ng-show="orderByField == 'Brand'">
+                        <a href="" ng-click="orderByField='ItemId'; reverseSort = !reverseSort">Item ID</a>
+                        <span ng-show="orderByField == 'ItemId'">
                             <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
                             <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
                         </span>
                     </th>
-
                     <th>
-                        <a href="" ng-click="orderByField='ModelYear'; reverseSort = !reverseSort">Model Year</a>
-                        <span ng-show="orderByField == 'ModelYear'">
+                        <a href="" ng-click="orderByField='ItemName'; reverseSort = !reverseSort">Type</a>
+                        <span ng-show="orderByField == 'ItemName'">
                             <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
                             <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
                         </span>
                     </th>
-
                     <th>
-                        <a href="" ng-click="orderByField='Model'; reverseSort = !reverseSort">Model</a>
-                        <span ng-show="orderByField == 'Model'">
+                        <a href="" ng-click="orderByField='ItemPrice'; reverseSort = !reverseSort">Price</a>
+                        <span ng-show="orderByField == 'ItemPrice'">
                             <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
                             <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
                         </span>
                     </th>
-
                     <th>
-                        <a href="" ng-click="orderByField='EngineType'; reverseSort = !reverseSort">Engine Type</a>
-                        <span ng-show="orderByField == 'EngineType'">
+                        <a href="" ng-click="orderByField='ItemDesc'; reverseSort = !reverseSort">Description</a>
+                        <span ng-show="orderByField == 'ItemDesc'">
                             <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
                             <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
                         </span>
                     </th>
-
                     <th>
-                        <a href="" ng-click="orderByField='EngineGroup'; reverseSort = !reverseSort">Engine Group</a>
-                        <span ng-show="orderByField == 'EngineGroup'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-
-                    <th>
-                        <a href="" ng-click="orderByField='EngineDescription'; reverseSort = !reverseSort">Engine Description</a>
-                        <span ng-show="orderByField == 'EngineDescription'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-
-                    <th>
-                        <a href="" ng-click="orderByField='TransmissionType'; reverseSort = !reverseSort">Transmission Type</a>
-                        <span ng-show="orderByField == 'TransmissionType'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-
-                    <th>
-                        <a href="" ng-click="orderByField='TransmissionGroup'; reverseSort = !reverseSort">Transmission Group</a>
-                        <span ng-show="orderByField == 'TransmissionGroup'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-
-                    <th>
-                        <a href="" ng-click="orderByField='TransmissionDescription'; reverseSort = !reverseSort">Transmission Description</a>
-                        <span ng-show="orderByField == 'TransmissionDescription'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-
-                    <th>
-                        <a href="" ng-click="orderByField='PaintType'; reverseSort = !reverseSort">Paint Type</a>
-                        <span ng-show="orderByField == 'PaintType'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-
-                    <th>
-                        <a href="" ng-click="orderByField='PaintDescription'; reverseSort = !reverseSort">Paint Description</a>
-                        <span ng-show="orderByField == 'PaintDescription'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-
-                    <th>
-                        <a href="" ng-click="orderByField='PaintGroup'; reverseSort = !reverseSort">Paint Group</a>
-                        <span ng-show="orderByField == 'PaintGroup'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-
-                    <th>
-                        <a href="" ng-click="orderByField='InteriorMaterial'; reverseSort = !reverseSort">Interior Material</a>
-                        <span ng-show="orderByField == 'InteriorMaterial'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-
-                    <th>
-                        <a href="" ng-click="orderByField='InteriorColorDescription'; reverseSort = !reverseSort">Interior Color Description</a>
-                        <span ng-show="orderByField == 'InteriorColorDescription'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-
-                    <th>
-                        <a href="" ng-click="orderByField='InteriorColor'; reverseSort = !reverseSort">Interior Color</a>
-                        <span ng-show="orderByField == 'InteriorColor'">
+                        <a href="" ng-click="orderByField='VAT'; reverseSort = !reverseSort">VAT</a>
+                        <span ng-show="orderByField == 'VAT'">
                             <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
                             <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
                         </span>
                     </th>
                 </tr>
-
             </thead>
 
             <tbody>
-                <tr ng-repeat="record in newVehicles[0]|orderBy:orderByField:reverseSort">
-                    <td>{{record.ID}}</td>
-                    <td>{{record.Brand}}</td>
-                    <td>{{record.ModelYear}}</td>
-                    <td>{{record.Model}}</td>
-                    <td>{{record.EngineType}}</td>
-                    <td>{{record.EngineGroup}}</td>
-                    <td>{{record.EngineDescription}}</td>
-                    <td>{{record.TransmissionType}}</td>
-                    <td>{{record.TransmissionGroup}}</td>
-                    <td>{{record.TransmissionDescription}}</td>
-                    <td>{{record.PaintType}}</td>
-                    <td>{{record.PaintDescription}}</td>
-                    <td>{{record.PaintGroup}}</td>
-                    <td>{{record.InteriorMaterial}}</td>
-                    <td>{{record.InteriorColorDescription}}</td>
-                    <td>{{record.InteriorColor}}</td>
-                    <td><button class="btn btn-warning" ng-click="deleteRow(record.ID)">Delete</button></td>
+                <tr ng-repeat="record in $data|orderBy:orderByField:reverseSort|filter:inputSearch">
+                    <td>{{record.RegNo}}</td>
+                    <td>{{record.ItemId}}</td>
+                    <td>{{record.ItemName}}</td>
+                    <td>{{record.ItemPrice + " SEK"}}</td>
+                    <td>{{record.ItemDesc}}</td>
+                    <td>{{record.VAT}}</td>
+                    <td>
+                        <button class="btn btn-warning" ng-click="deleteRow(record.RegNo)">
+                            Delete
+                            <span class="glyphicon glyphicon-trash"></span>
+
+                        </button>
+                    </td>
                 </tr>
 
             </tbody>
 
 
-            
+
         </table>
     </div>
 </div>

@@ -12,17 +12,106 @@
 </div>
 
 <div ng-controller="PartsController" class="panel panel-default">
-    <div class="panel-heading">Panel heading</div>
-    <table class="table">
+    <div class="panel-heading clearfix">
+        <h4 class="pull-left">Parts</h4>
+        <div class="pull-right">
+            <div class="btn-group">
+                <a class="btn btn-default" title="Add" data-toggle="modal" data-target="#modalEditPart"><span class="glyphicon glyphicon-plus"></span></a>
+                <a class="btn btn-default" title="Search"><span class="glyphicon glyphicon-search"></span></a>
+            </div>
+        </div>
+    </div>
+    <table ng-table="tblParts" class="table table-striped">
         <tr>
-            <th>Name</th>
-            <th>Country</th>
+            <th>Article number</th>
+            <th>Article name</th>
+            <th>Price</th>
+            <th>VAT</th>
+            <th>Spec fsg</th>
+            <th></th>
         </tr>
-        <tr ng-repeat="x in records">
-            <td>{{x.Name}}</td>
-            <td>{{x.Country}}</td>
+        <tr ng-repeat="x in $data">
+            <td>{{x.ItemId}}</td>
+            <td>{{x.ItemName}}</td>
+            <td>{{x.ItemPrice}}</td>
+            <td>{{x.VAT}}</td>
+            <td>{{x.SpecFsg}}</td>
+            <td><a class="btn " title="Delete"><span class="glyphicon glyphicon-remove"></span></a></td>
         </tr>
     </table>
 </div>
 
+<script>
+    $(function () {
+        $('#modalEditPart').on('shown.bs.modal', function () {
+            $('#myInput').focus();
+        });
+    });
+</script>
+
+<!-- Modal -->
+<div class="modal fade" id="modalEditPart" tabindex="-1" role="dialog" aria-labelledby="modalEditPartLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalEditPartLabel">Part</h4>
+            </div>
+            <div class="modal-body">
+                <ng-form>
+
+                    <div class="form-group row">
+                        <label for="txtArticleNumber" class="col-md-3 col-xs-2 col-form-label">Article number</label>
+                        <div class="col-xs-9">
+                            <input class="form-control" type="number" value="" id="txtArticleNumber">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtArticleName" class="col-md-3 col-xs-2 col-form-label">Article name</label>
+                        <div class="col-xs-9">
+                            <input class="form-control" type="text" value="" id="txtArticleName">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtPrice" class="col-md-3 col-xs-2 col-form-label">Text</label>
+                        <div class="col-xs-9">
+                            <input class="form-control" type="number" value="" id="txtPrice">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="txtVAT" class="col-md-3 col-xs-2 col-form-label">Text</label>
+                        <div class="col-xs-9">
+                            <input class="form-control" type="number" value="" id="txtVAT">
+                        </div>
+                    </div>
+                    <div class="form-check row">
+                        <label for="chkSpecFsg" class="col-md-3 col-xs-2 col-form-label">Text</label>
+                        <div class="col-xs-9">
+                            <input class="form-check-input" type="checkbox" value="" id="chkSpecFsg">
+                        </div>
+                    </div>
+
+                </ng-form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<!-- 
+            public int ArticleNumber { get; set; }
+        public string ArticleName { get; set; }
+        public double Price { get; set; }
+        public double VAT { get; set; }
+        public bool SpecFsg { get; set; }
+    
+     -->
 

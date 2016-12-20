@@ -12,13 +12,11 @@ tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", 
         $http.get("http://localhost:57661/api/invoice/GetInvoice?query=1")
     .then(function (response) {
         $scope.spinner = false;
-        var obj = JSON.parse(response.data);
-        $scope.records = obj.invoices;
-
+        //var obj = JSON.parse(response.data);
+        //$scope.records = obj.invoices;
+                $scope.records = response.data;
         $scope.invoiceTable = new ngTableParams({
-            page: 1,
-            count: 10,
-            sorting: { Invoice_number: "asc" }
+          
         },{
             dataset: $scope.records
         });
@@ -39,6 +37,12 @@ tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", 
 
 
 }]);
+
+tacdisDeluxeApp.filter('valuta', function () {
+    return function (item) {
+        return item + " Kr";
+    };
+});
 
 tacdisDeluxeApp.directive('modal', function () {
     return {

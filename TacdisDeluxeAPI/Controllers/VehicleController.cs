@@ -5,7 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
+using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Mockdata.VehicleData;
+using TacdisDeluxeAPI.Models;
 
 namespace TacdisDeluxeAPI.Controllers
 {
@@ -17,39 +19,104 @@ namespace TacdisDeluxeAPI.Controllers
 
         // GET: api/Vehicle/5
 
+        public IEnumerable<String> GetVehicleModels(string brand)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var models = c.VehicleModels.Include("Properties").Distinct().Where(x => x.Brand.Name == brand).Select(x => x.Name);
 
 
 
-        //id = brand, panel = model/engine/transmission...
+                return models.ToList();
+            }
+        }
+
+        public IEnumerable<int> GetModelYear(string model)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var models = c.VehicleModels.Include("Properties").Distinct().Where(x => x.Name == model).Select(x => x.ProductionDate.Year);
+
+
+
+                return models.ToList();
+            }
+        }
+        public IEnumerable<VehiclePropertyEntity> GetModelProperties(int year, string mod, string brnd)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var models = c.VehicleModels.Include("Properties").Distinct().Where(x => (x.Name == mod && x.Brand.Name == brnd && x.ProductionDate.Year == year)).Single().Properties;
+
+
+
+                return models.ToList();
+            }
+        }
+
+        public IEnumerable<VehicleEntity> GetVehicleBySearch(string regNR, int itemNR, string name)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var vehicles = c.Vehicles.Distinct().Where(x => (x.RegNo.Equals(regNR) || x.ItemId == itemNR || x.ItemName.Contains(name)));
+
+
+
+                return vehicles.ToList();
+            }
+        }
+
+        public IEnumerable<VehicleEntity> GetAllVehicles()
+        {
+            using (DBContext c = new DBContext())
+            {
+                var vehicles = c.Vehicles;
+
+
+
+                return vehicles.ToList();
+            }
+        }
+
         
-        public string GetVehicleInfo(string brand)
-        {
+        //public string GetVehicleInfo(string brand)
+        //{
            
-            return NewVehicleDataHash.getValue(brand).getModelYears();
-        }
+        //    return NewVehicleDataHash.getValue(brand).getModelYears();
+        //}
 
-        public string GetVehicleInfo(string modelyear, string brand)
-        {
-            return NewVehicleDataHash.getValue(brand).getModelsFromYear(modelyear);
-        }
+        //public string GetVehicleInfo(string modelyear, string brand)
+        //{
+        //    return NewVehicleDataHash.getValue(brand).getModelsFromYear(modelyear);
+        //}
 
-        public string GetVehicleInfo(string model, string modelyear, string brand)
-        {
-            return NewVehicleDataHash.getValue(brand).getPropertiesFromModel(modelyear, model);
-        }
+        //public string GetVehicleInfo(string model, string modelyear, string brand)
+        //{
+        //    return NewVehicleDataHash.getValue(brand).getPropertiesFromModel(modelyear, model);
+        //}
 
-        public string GetVehicleMaintenanceList()
-        {
-            return NewVehicleProperties.getNewVehicles();
-        }
+        //public string GetVehicleMaintenanceList()
+        //{
+        //    return NewVehicleProperties.getNewVehicles();
+        //}
         
 
 
         // POST: api/Vehicle
         [System.Web.Http.HttpPost]
-        public void AddCar(NewVehicleProperties properties)
+        public void AddCar(NewVehicleDto vehicleData)
         {
-            NewVehicleProperties.addVehicleToRecord(properties);
+
+            //props.generateRegNumber();
+            VehicleEntity v = vehicleData.convertToVehicleEntity();
+
+            using (DBContext c = new DBContext())
+            {
+
+                c.Vehicles.Add(v);
+                c.SaveChanges();
+
+            }
         }
 
         // PUT: api/Vehicle/5
@@ -58,8 +125,18 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
         // DELETE: api/Vehicle/5
-        public void Delete(int id)
+        [System.Web.Http.HttpDelete]
+        public void Delete(string regNumber)
         {
+            using (DBContext c = new DBContext())
+            {
+
+                var vehicle = c.Vehicles.Where(x => x.RegNo == regNumber).Single();
+
+                c.Vehicles.Remove(vehicle);
+                c.SaveChanges();
+
+            }
         }
     }
 }

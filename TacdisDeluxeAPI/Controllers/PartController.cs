@@ -7,21 +7,100 @@ using System.Web.Http;
 using System.Web.Mvc;
 using TacdisDeluxeAPI.Models;
 
+//  Ordernummer: 1981657 - Butiksförsäljning Tacdis
+
 namespace TacdisDeluxeAPI.Controllers
 {
     public class PartController : ApiController
     {
-        [System.Web.Http.HttpGet]
-        public string Kalle(int id)
+        public IHttpActionResult Get()
         {
-            return "Rulez!" + " id = " + id;
+            using (DBContext c = new DBContext())
+            {
+                List<PartEntity> parts = new List<PartEntity>();
+
+                var ps = c.Parts;
+
+                if (ps.Any())
+                {
+                    parts = ps.ToList();
+                }
+
+                return Ok(parts.ToList());
+            }
         }
 
-        [System.Web.Http.HttpPost]
-        public void Kaka(FormCollection frm)
+        public IHttpActionResult Get(int id)
         {
-            var i = 0;
+            using (DBContext c = new DBContext())
+            {
+                PartEntity part = null;
+
+                try
+                {
+                    part = c.Parts.Where(p => p.Id == id).Single();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+
+                return Ok(part);
+            }
         }
+
+
+        public IHttpActionResult Get(string ItemId, string ItemName)
+        {
+            using (DBContext c = new DBContext())
+            {
+                IQueryable<PartEntity> allParts;
+
+                if (string.IsNullOrEmpty(ItemName + ItemId))
+                {
+                    return Ok(new List<PartEntity>());
+                }
+                else
+                {
+                    allParts = c.Parts as IQueryable<PartEntity>;
+                }
+
+                if (!String.IsNullOrEmpty(ItemId))
+                {
+                    allParts = allParts.Where(p => p.ItemId.ToString().Contains(ItemId));
+                }
+
+                if (!String.IsNullOrEmpty(ItemName))
+                {
+                    allParts = allParts.Where(p => p.ItemName.Contains(ItemName));
+                }
+
+                return Ok(allParts.ToList());
+            }
+
+        }
+
+
+        public IHttpActionResult Post([FromBody]PartEntity part)
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    db.Parts.Add(part);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok();
+        }
+
+
+
 
         //// GET: api/Part
         //public string Get()
