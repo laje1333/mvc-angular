@@ -14,7 +14,7 @@ namespace TacdisDeluxeAPI.Mockdata.InvoiceData
             {
                 Country = "Sverige",
                 CustomerNumber = customerNumber,
-                FirsName = "Anders",
+                FirstName = "Anders",
                 LastName = "Andersson",
                 StreeatAddress = "Gatan 2",
                 ZipCity = "666 66 Säffle"

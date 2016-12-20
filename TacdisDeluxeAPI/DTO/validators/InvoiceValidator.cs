@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using AutoMapper;
 using TacdisDeluxeAPI.Models;
 
 namespace TacdisDeluxeAPI.DTO.validators
@@ -12,8 +13,13 @@ namespace TacdisDeluxeAPI.DTO.validators
         {
             invoice.InvoiceNumber = invoice.InvoiceNumber ?? GetInvoiceNumber();
 
+            if (invoice.Payer != null && invoice.Payer.CustomerNumber != null)
+                invoice.Payer = GetCustomer(invoice.Payer);
+
             if (invoice.Payer != null)
                 invoice.Payer.CustomerNumber = invoice.Payer.CustomerNumber ?? GetCustomerNumber();
+
+            invoice.Salesman = GetSalesman(invoice.Salesman);
 
             invoice.Vat = invoice.Vat ?? 0;
             invoice.InvoiceAmount = invoice.InvoiceAmount ?? 0;
@@ -40,12 +46,31 @@ namespace TacdisDeluxeAPI.DTO.validators
                 return ++newInvoiceNumber;
             }
         }
+
         private static int GetCustomerNumber()
         {
             using (var db = new DBContext())
             {
-                var newCustomerNumber = db.Payers.Max(i => i.CustomerNumber);
+                var newCustomerNumber = db.Payers.Max(c => c.CustomerNumber);
                 return ++newCustomerNumber;
+            }
+        }
+
+        private static PayerDto GetCustomer(PayerDto payer)
+        {
+            using (var db = new DBContext())
+            {
+                var customer = db.Payers.Single(p => p.CustomerNumber == payer.CustomerNumber);
+                return customer != null ? Mapper.Map<PayerEntity, PayerDto>(customer) : payer;
+            }
+        }
+
+        private static SalesmanDto GetSalesman(SalesmanDto salesman)
+        {
+            using (var db = new DBContext())
+            {
+                var employ = db.Salesmen.Single(s => s.EmployeeNumber == salesman.EmployeeNumber);
+                return employ != null ? Mapper.Map<SalesmanEntity, SalesmanDto>(employ) : salesman;
             }
         }
     }

@@ -73,37 +73,37 @@
     <div class="form-group row">
         <label for="example-text-input" class="col-xs-5 col-form-label">Payer</label>
         <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer}}" id="Payer">
+            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.FirstName + ' ' + MaintenanceInvoice.Payer.LastName}}" id="Payer">
         </div>
     </div>
     <div class="form-group row">
         <label for="example-text-input" class="col-xs-5 col-form-label">Customer number</label>
         <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.CustomerNumber}}" id="customer-number">
+            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.CustomerNumber}}" id="customer-number">
         </div>
     </div>
     <div class="form-group row">
         <label for="example-text-input" class="col-xs-5 col-form-label">Reg number</label>
         <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.RegNumber}}" id="reg-number">
+            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.RegNumber}}" id="reg-number">
         </div>
     </div>
     <div class="form-group row">
         <label for="example-text-input" class="col-xs-5 col-form-label">Streeat address</label>
         <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{}}" id="cus-address">
+            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.StreeatAddress}}" id="cus-address">
         </div>
     </div>
     <div class="form-group row">
         <label for="example-text-input" class="col-xs-5 col-form-label">Zip & City</label>
         <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{}}" id="cus-zip-city">
+            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.ZipCity}}" id="cus-zip-city">
         </div>
     </div>
     <div class="form-group row">
         <label for="example-text-input" class="col-xs-5 col-form-label">Country</label>
         <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{}}" id="cus-country">
+            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.Country}}" id="cus-country">
         </div>
     </div>
 </div>
@@ -113,7 +113,7 @@
     <div class="form-group row">
         <label for="example-text-input" class="col-xs-5 col-form-label">Seller</label>
         <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{}}" id="seller">
+            <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.FirstName +' '+ MaintenanceInvoice.Salesman.LastName}}" id="seller">
         </div>
     </div>
     <div class="form-group row">
