@@ -5,10 +5,10 @@
         <div class="panel panel-default">
             <div class="form-group panel-body slidebody">
                 <label for="brandSelect">Brand:</label>
+                <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
                 <select class="form-control" id="brandSelect" ng-model="selectedBrand" ng-change="brandSelector(); brandEnabler();" ng-init="initializeBrands()">
                     <option ng-repeat="b in brands">{{b.Name}}</option>
                 </select>
-
                 <label for="modelSelect">Model:</label>
                 <select class="form-control" id="modelSelect" ng-disabled="brandDisabled" ng-model="selectedModelYear" ng-change="modelSelector(); modelEnabler()">
                     <option ng-repeat="mod in modelType track by $index">{{mod}}</option>
@@ -96,7 +96,7 @@
     </div>
 </div>
 
-<button type="button" id="saveButton" class="btn btn-primary btn-md" ng-click="showPopup('saveButton'); saveData()" data-toggle="popover" data-placement="left" data-content="Sucessefully saved">
+<button type="button" id="saveButton" ng-init="showPopup('saveButton')" class="btn btn-primary btn-md" ng-click="showPopup('saveButton'); saveData()" data-toggle="popover" data-placement="left" data-content="Sucessefully saved">
     Save
     <span class="glyphicon glyphicon-floppy-save"></span>
 </button>
