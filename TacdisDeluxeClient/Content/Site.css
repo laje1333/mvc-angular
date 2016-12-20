@@ -311,6 +311,9 @@ fieldset.custom-fieldset {
     z-index: 10000;
     bottom: 25px;
     right: 50px;
+}
+
+#__ajaxFeedbackMessage{
     display: none;
 }
 
