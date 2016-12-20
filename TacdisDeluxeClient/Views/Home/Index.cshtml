@@ -1,6 +1,45 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<script src="~/Scripts/App/Controllers/Account/AccountController.js"></script>
 
-<div class="row">
+
+
+<div class="col-md-4 col-md-offset-4">
+    <div ng-controller="AccountController" class="panel panel-default">
+        <div class=" panel-heading">Log in</div>
+        <div class="form-group panel-body">
+
+            <form name="uName" ng-class="{'has-error': uName.usName.$invalid, 'has-success': uName.usName.$valid}" class="col-md-6 col-md-offset-3" style="margin-top:5px">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                    <input class="form-control" type="text" name="usName" ng-model="userName" placeholder="User name" required />
+                </div>
+            </form>
+            <form name="psWord" ng-class="{'has-error': psWord.pWord.$invalid , 'has-success': psWord.pWord.$valid}" class="col-md-6 col-md-offset-3" style="margin-top:5px">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                    <input class="form-control" type="password" name="pWord" ng-model="lastName" placeholder="Password" required />
+                </div>
+            </form>
+
+            <form name="dbase"class="col-md-6 col-md-offset-3" style="margin-top:5px">
+                <select name="dbSel" id="db" class="form-control selectpicker">
+                    <option value="" selected disabled>Database</option>
+                    <option>04-U</option>
+
+                </select>
+                <button style="margin-top:5px" type="button" class="btn btn-primary col-md-4 col-md-offset-4"
+                        ng-disabled="uName.usName.$invalid ||
+                                     psWord.pWord.$invalid">
+
+                    Log in
+                </button>
+            </form>
+
+
+
+        </div>
+
+    </div>
 </div>

@@ -40,9 +40,26 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 
             public string CreateNewWorkOrderJob()
             {
-                string newWoHJobID = (WorkOrders.Count).ToString();
+                string newWoHJobID = (WOJ_List.Count).ToString();
                 WOJ_List.Add(new WoJob(newWoHJobID));
                 return newWoHJobID;
+            }
+
+            public WoJob GetWoJList(string WoJNr)
+            {
+                foreach (var woj in WOJ_List)
+                {
+                    if (woj.WoJNr == WoJNr)
+                    {
+                        return woj;
+                    }
+                }
+                return null;
+            }
+
+            public List<WoJob> GetWoJList()
+            {
+                return WOJ_List;
             }
 
             List<WoJob> WOJ_List = new List<WoJob>();

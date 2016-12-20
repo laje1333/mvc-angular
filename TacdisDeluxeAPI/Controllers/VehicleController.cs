@@ -147,8 +147,18 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
         // DELETE: api/Vehicle/5
-        public void Delete(int id)
+        [System.Web.Http.HttpDelete]
+        public void Delete(string regNumber)
         {
+            using (DBContext c = new DBContext())
+            {
+
+                var vehicle = c.Vehicles.Where(x => x.RegNo == regNumber).Single();
+
+                c.Vehicles.Remove(vehicle);
+                c.SaveChanges();
+
+            }
         }
     }
 }

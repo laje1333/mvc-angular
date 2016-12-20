@@ -317,6 +317,19 @@ fieldset.custom-fieldset {
     display: none;
 }
 
+#__ajaxFeedbackMessage .message-level{
+    font-size: 24px;
+    line-height: 24px;
+    vertical-align: top;
+    margin-right: 16px;
+}
+
+#__ajaxFeedbackMessage .message-text{
+    line-height: 24px;
+    vertical-align: middle;
+    margin-right: 16px;
+}
+
 .ng-table-pager.ng-scope {
     padding: 8px;
 }
