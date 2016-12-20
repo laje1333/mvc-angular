@@ -5,21 +5,23 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-md-6 text-left">New Sale</div>
+                        <div class="col-md-3 text-left">New Sale</div>
+                        <div class="col-md-3 text-left">Salesman: {{salesman.FirstName}} {{salesman.LastName}}</div>
                         <div class="col-md-6 text-right">Status: {{status}}</div>
                     </div>
                 </div>
                 <div class="form-group panel-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <form class="form-horizontal">
-                                <div class="form-group">
-                                    <label for="salesman">Salesman:</label>
-                                    <input type="text" class="form-control" id="salesmanId">
-                                </div>
-                                <div class="form-group">
-                                    <label for="stuff">Stuff:</label>
-                                    <input type="text" class="form-control" id="stuff">
+                            <form name="saleForm">
+                                <div class="input-group">
+                                    <div class="input-group-btn" ng-controller="PayerSalesmanController">
+                                        <input type="text" class="form-control" placeholder="Employee Number" ng-model="empNr">
+                                        <button id="searchButton" class="btn btn-default" type="submit" ng-click="GetSalesmanById()">
+                                            <i id="searchIcon" class="glyphicon glyphicon-search"></i>
+                                            <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -62,4 +64,24 @@
             <div ng-include="pane.template"></div>
         </uib-tab>
     </uib-tabset>
+
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="modalDialogLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="modalDialogLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

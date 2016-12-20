@@ -1,11 +1,16 @@
 ﻿'use strict';
 
-tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http) {
+tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http, SaleFactory) {
 
     $scope.init = function () {
         
     }
-    //Used for searhing parts
+    //Used for searching  vehicles
+    $scope.vehName = "";
+    $scope.vehNr = "";
+    $scope.vehReg = "";
+
+    //Used for searching parts
     $scope.artName = "";
     $scope.artNum = "";
 
@@ -20,6 +25,8 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.saleRec.PartIds = [];
     $scope.saleRec.VehicleIds = [];
     $scope.saleRec.AddonIds = [];
+
+    $scope.salesman = {};
 
     $scope.panes = [
         { title: "Vehicles", template: "AngularTemplates/Sales/Panes/Vehicles.html", active: true },
@@ -90,18 +97,26 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.GetSearchVeh = function (Data) {
         var req = {
             method: 'GET',
-            url: 'http://localhost:57661/api/vehicles',
+            url: 'http://localhost:57661/api/vehicle',
             headers: {
                 //'Authorization': 'Bearer='+ 'token'
             },
+            params: { regNR: $scope.vehReg, itemNR: $scope.vehNr, name: $scope.vehName }
         }
         $http(req).
          then(function (response) {
-             $scope.types = response.data;
+             $scope.vehRec = [];
+             for (var i = 0; i < response.data.length; i++) {
+                 $scope.vehRec.push(response.data[i]);
+             }
          }, function (response) {
              $scope.statusCode = response.statusCode;
          }
          );
+    }
+
+    $scope.showInfo = function(){
+        null;
     }
 
     $scope.GetAllSales = function (Data) {
@@ -170,6 +185,10 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
          }
          );
     }
+
+    $scope.$watch(function () { return SaleFactory.getSalesman(); }, function (newValue, oldValue) {
+        if (newValue !== oldValue) $scope.salesman = newValue;
+    });
 
     $scope.init();
 

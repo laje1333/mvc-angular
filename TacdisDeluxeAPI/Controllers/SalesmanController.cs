@@ -12,6 +12,22 @@ namespace TacdisDeluxeAPI.Controllers
 {
     public class SalesmanController : ApiController
     {
+
+        public IHttpActionResult Get(int empNr)
+        {
+            using (DBContext db = new DBContext())
+            {
+                SalesmanEntity salesman = db.Salesmen.Where(x => x.EmployeeNumber == empNr).FirstOrDefault<SalesmanEntity>();
+                if (salesman != null)
+                {
+                    return Ok(salesman);
+                }
+                else
+                {
+                    return BadRequest();
+                }
+            }
+        }
         // GET: api/Sales
         public IHttpActionResult Get(string FirstName, string LastName, string Company)
         {
