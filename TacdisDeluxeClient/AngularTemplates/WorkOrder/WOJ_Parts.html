@@ -1,12 +1,12 @@
-﻿<div ng-controller="WorkOrderController">
+﻿<div ng-controller="WOActivePartController">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">Packages</div>
             <div class="form-group panel-body">
-                <input type="text" class="form-control" placeholder="Part Number" />
-                <input type="button" class="btn btn-info" value="Add" ng-click="WOJ_AddPart()">
+                <input type="text" class="form-control" placeholder="Part Number" ng-model="wjpCode" />
+                <input type="button" class="btn btn-info" value="Add" ng-click="AddNewPart()">
             </div>
-            <table class="table table-hover">
+            <table ng-table="wjpTable" class="table table-striped table-hover">
                 <tr>
                     <th>Part Number</th>
                     <th>Part Description</th>
@@ -14,7 +14,7 @@
                     <th>Price</th>
                     <th>Details</th>
                 </tr>
-                <tr ng-repeat="item in collection">
+                <tr ng-repeat="item in $data">
                     <td data-title="'Part Number'">{{item.PartNr}}</td>
                     <td data-title="'Part Description'">{{item.PartDesc}}</td>
                     <td data-title="'Quantity'">{{item.Quantity}}</td>

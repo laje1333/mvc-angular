@@ -6,10 +6,12 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Web.Routing;
 using TacdisDeluxeAPI.Mockdata.WorkOrderData;
 
 namespace TacdisDeluxeAPI.Controllers
 {
+    [System.Web.Http.RoutePrefix("api/workorder")]
     public class WorkOrderController : ApiController
     {
         static string CurrentWOHID;
@@ -87,12 +89,46 @@ namespace TacdisDeluxeAPI.Controllers
             return wohList;
         }
 
+        [System.Web.Http.Route("GetWoJobList")]
+        [System.Web.Http.HttpGet]
+        public string GetWoJobList(string wohid)
+        {
+            var wohList = WohListData.GetWojList(wohid);
+
+            return wohList;
+        }
+
+        [System.Web.Http.HttpGet]
+        public string GetWJKList(string wjkcode, string wohId, string wojId)
+        {
+            WorkOrderDB.GetWorkOrder(wohId).GetWoJList(wojId).AddNewWJK(wjkcode);
+            var wohList = WohListData.GetWjkList(wohId, wojId);
+            return wohList;
+        }
+
+        [System.Web.Http.HttpGet]
+        public string GetWJOList(string wjocode, string wohId, string wojId)
+        {
+            WorkOrderDB.GetWorkOrder(wohId).GetWoJList(wojId).AddNewWJO(wjocode);
+            var wohList = WohListData.GetWjoList(wohId, wojId);
+            return wohList;
+        }
+
+        [System.Web.Http.HttpGet]
+        public string GetWJPList(string wjpcode, string wohId, string wojId)
+        {
+            WorkOrderDB.GetWorkOrder(wohId).GetWoJList(wojId).AddNewWJP(wjpcode);
+            var wohList = WohListData.GetWjpList(wohId, wojId);
+            return wohList;
+        }
+
         [System.Web.Http.HttpGet]
         public List<string> GetRegNr(string WOHID)
         {
             List<string> responseArr = new List<string>();
             if (WOHID == null || WOHID == "undefined")
             {
+                responseArr.Add("");
                 return responseArr;
             }
             responseArr.Add(WorkOrderDB.GetWorkOrder(WOHID).RegNr);

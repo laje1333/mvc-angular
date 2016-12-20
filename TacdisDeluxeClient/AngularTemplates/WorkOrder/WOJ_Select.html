@@ -1,25 +1,28 @@
-﻿<div ng-controller="WorkOrderController">
+﻿<div ng-controller="WorkOrderJobController">
     <h3>Selected WOJ: <label>{{currentWoJ}}</label></h3>
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">Select job</div>
             <div class="form-group panel-body">
-                <input type="button" class="btn btn-info" value="Create New" ng-click="WOH_AddNewWOJ()" />
+                <input type="button" class="btn btn-info" value="Create New" ng-click="WOH_AddNewWOJ(); SearchWoJ()" />
+                <button class="btn btn-default" type="submit" ng-click="SearchWoJ()"><i class="glyphicon glyphicon-search"></i></button>
             </div>
-            <table class="table table-hover">
+            <table ng-table="wojTable" class="table table-striped table-hover">
                 <tr>
                     <th>Job Number</th>
                     <th>Status</th>
+                    <th>Total Cost</th>
                     <th>Select</th>
                     <th>Details</th>
                     <th>Remove</th>
                 </tr>
-                <tr ng-repeat="item in collection">
-                    <td>{{item.JobNr}}</td>
+                <tr ng-repeat="item in $data">
+                    <td>{{item.WoJNr}}</td>
                     <td>{{item.Status}}</td>
-                    <td><input type="button" class="btn btn-info" value="Select" ng-click="WOJ_Select(item)" /></td>
-                    <td><input type="button" class="btn btn-info" value="Details" ng-click="WOJ_ViewDetails(item)" /></td>
-                    <td><input type="button" class="btn btn-info" value="Remove" ng-click="WOJ_Remove(item)" /></td>
+                    <td>{{item.TotCost}}</td>
+                    <td><input type="button" class="btn btn-info" value="Select" ng-click="WOJ_Select(item.JobNr)" /></td>
+                    <td><input type="button" class="btn btn-info" value="Details" ng-click="WOJ_ViewDetails(item.JobNr)" /></td>
+                    <td><input type="button" class="btn btn-info" value="Remove" ng-click="WOJ_Remove(item.JobNr)" /></td>
                 </tr>
             </table>
         </div>

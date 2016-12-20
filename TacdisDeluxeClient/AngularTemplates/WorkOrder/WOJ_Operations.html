@@ -1,12 +1,12 @@
-﻿<div ng-controller="WorkOrderController">
+﻿<div ng-controller="WOActiveOpController">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">Packages</div>
             <div class="form-group panel-body">
-                <input type="text" class="form-control" placeholder="Operation Number" />
-                <input type="button" class="btn btn-info" value="Add" ng-click="item.WOJ_AddOp()">
+                <input type="text" class="form-control" placeholder="Operation Number" ng-model="wjoCode" />
+                <input type="button" class="btn btn-info" value="Add" ng-click="AddNewOp()">
             </div>
-            <table class="table table-hover">
+            <table ng-table="wjoTable" class="table table-striped table-hover">
                 <tr>
                     <th>Operation Number</th>
                     <th>Operation Description</th>
@@ -14,8 +14,8 @@
                     <th>Price</th>
                     <th>Details</th>
                 </tr>
-                <tr ng-repeat="item in collection">
-                    <td>{{item.OpNr}}</td>
+                <tr ng-repeat="item in $data">
+                    <td>{{item.OPNr}}</td>
                     <td>{{item.OpDesc}}</td>
                     <td>{{item.Quantity}}</td>
                     <td>{{item.Price}}</td>
