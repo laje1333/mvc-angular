@@ -479,9 +479,28 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
 
 tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http){
 
-    $scope.regNrSearch = function () {
+    $scope.regNumber = "";
 
+    $scope.regNrSearch = function () {
+        if ($scope.regNumber.length == 6) {
+            $scope.regNumber = $scope.regNumber.toUpperCase();
+            $http.get("http://localhost:57661/api/VehicleInventory/GetSingleVehicleByRegnumber?regNumber=" + $scope.regNumber)
+            .then(function (response) {
+                feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
+                $scope.regNumber = response.data.RegNo;
+                $scope.orderNumber = response.data.ItemId;
+                var itemName = response.data.ItemName.split(" ");
+                $scope.brand = itemName[0];
+                $scope.model = itemName[1];
+                $scope.year = itemName[2];
+                $scope.itemDesc = response.data.ItemDesc;
+
+            }, function (response) {
+                feedbackPopup("Could fetch data", { level: 'warning', timeout: 2000 });
+            });
+        }
     }
+
 
     
 
