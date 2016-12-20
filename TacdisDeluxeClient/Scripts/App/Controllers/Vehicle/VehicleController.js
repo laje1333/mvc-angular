@@ -5,15 +5,18 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
 
     //Get
+    $scope.spinner = false;
 
     $scope.idOffset = 0;
     $scope.offsetMultiplier = 0;
 
     $scope.initializeBrands = function () {
+        $scope.spinner = true;
         $scope.urlString = 'http://localhost:57661/api/Brand';
         $http.get($scope.urlString).
                 then(function (response) {
                     $scope.brands = response.data;
+                    $scope.spinner = false;
                 });
     }
 
@@ -310,13 +313,12 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
             Properties: props,
         }
-
+        
         $http({
             method: 'POST',
             url: "http://localhost:57661/api/Vehicle/AddCar",
             data: vehicleData
         }).success(function () {
-            $scope.showPopup();
 
         });
 
@@ -404,13 +406,16 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
 
     $scope.newVehicleTable = this;
+    $scope.spinner = false;
 
     $scope.getNewVehicles = function () {
-        $http.get("http://localhost:57661/api/vehicle/GetVehicleMaintenanceList")
+        $scope.spinner = true;
+        $http.get("http://localhost:57661/api/vehicle/GetAllVehicles")
     .then(function (response) {
-        var obj = JSON.parse(response.data);
-        $scope.records = obj.VehMain;
-        $scope.newVehicles.push(obj.VehMain);
+        var obj = response.data;
+        $scope.records = obj;
+        $scope.newVehicles.push(obj);
+        $scope.spinner = false;
 
         $scope.newVehicleTable = new ngTableParams({
 

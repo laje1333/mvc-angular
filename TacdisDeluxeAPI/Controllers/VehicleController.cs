@@ -66,6 +66,18 @@ namespace TacdisDeluxeAPI.Controllers
             }
         }
 
+        public IEnumerable<VehicleEntity> GetAllVehicles()
+        {
+            using (DBContext c = new DBContext())
+            {
+                var vehicles = c.Vehicles;
+
+
+
+                return vehicles.ToList();
+            }
+        }
+
         
         //public string GetVehicleInfo(string brand)
         //{
