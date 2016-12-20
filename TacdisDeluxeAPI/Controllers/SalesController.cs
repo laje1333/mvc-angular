@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Http;
 using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Models;
+using System.Data.Entity;
 
 namespace TacdisDeluxeAPI.Controllers
 {
@@ -18,7 +19,7 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext db = new DBContext())
             {
-                List<SaleEntity> allSales = db.Sales.Include("Salesman").ToList();
+                List<SaleEntity> allSales = db.Sales.Include(i => i.Salesman).ToList();
                 return Ok(allSales);
             }
 

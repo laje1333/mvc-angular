@@ -28,6 +28,41 @@
 
 </head>
 <body ng-app="tacdisDeluxeApp">
+    <script>
+        //  .alert-success, .alert-info, .alert-warning or .alert-danger
+        window.showAjaxFeedbackMessage = function (msgLevel, msg) {
+            var level = 'success';
+
+            switch (msgLevel) {
+                case 'info':
+                    level = 'Info'
+                    break;
+                case 'warning':
+                    level = 'Warning'
+                    break;
+                case 'danger':
+                    level = 'Danger'
+                    break;
+                default:
+                    level = 'Success';
+                    break;
+            }
+
+
+            var msgBox = $('#__ajaxFeedbackMessage');
+            msgBox.addClass('alert-' + level);
+            msgBox.find('.message-level').html(level + '!');
+            msgBox.find('.message-text').html(msg);
+            msgBox.show('fast');
+            setTimeout(function () { $('#__ajaxFeedbackMessage').fadeOut(500); }, 2000);
+        }
+    </script>
+
+    <div id="__ajaxFeedbackMessage" class="alert alert-dismissable">
+        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong class="message-level">Success!</strong> <span class="message-text">Indicates a successful or positive action.</span>
+    </div>
+
     <div class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container-fluid">
             <div class="col-md-2 nav-logo">

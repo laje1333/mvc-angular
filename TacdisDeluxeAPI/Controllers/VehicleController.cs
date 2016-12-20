@@ -54,6 +54,30 @@ namespace TacdisDeluxeAPI.Controllers
             }
         }
 
+        public IEnumerable<VehicleEntity> GetVehicleBySearch(string regNR, int itemNR, string name)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var vehicles = c.Vehicles.Distinct().Where(x => (x.RegNo.Equals(regNR) || x.ItemId == itemNR || x.ItemName.Contains(name)));
+
+
+
+                return vehicles.ToList();
+            }
+        }
+
+        public IEnumerable<VehicleEntity> GetAllVehicles()
+        {
+            using (DBContext c = new DBContext())
+            {
+                var vehicles = c.Vehicles;
+
+
+
+                return vehicles.ToList();
+            }
+        }
+
         
         //public string GetVehicleInfo(string brand)
         //{
@@ -80,19 +104,17 @@ namespace TacdisDeluxeAPI.Controllers
 
         // POST: api/Vehicle
         [System.Web.Http.HttpPost]
-        public void AddCar(NewVehicleDto props)
+        public void AddCar(NewVehicleDto vehicleData)
         {
 
-            props.generateRegNumber();
-            
+            //props.generateRegNumber();
+            VehicleEntity v = vehicleData.convertToVehicleEntity();
 
             using (DBContext c = new DBContext())
             {
 
-                //Generate reg nr
-
-
-                //c.Vehicles.Add(vehicle);
+                c.Vehicles.Add(v);
+                c.SaveChanges();
 
             }
         }
