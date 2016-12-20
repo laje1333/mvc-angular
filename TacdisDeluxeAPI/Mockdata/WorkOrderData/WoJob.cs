@@ -60,5 +60,35 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             //IF Fixedprice
             return TotCost;
         }
+
+        internal void AddNewWJK(string wjkcode)
+        {
+            WOJ_KitList.Add(new WoJobKit(wjkcode));
+        }
+
+        internal void AddNewWJO(string wjocode)
+        {
+            WOJ_OPList.Add(new WoJobOP(wjocode));
+        }
+
+        internal void AddNewWJP(string wjpcode)
+        {
+            WOJ_PartList.Add(new WoJobPart(wjpcode));
+        }
+
+        internal List<WoJobKit> GetWOJ_KitList()
+        {
+            return WOJ_KitList;
+        }
+
+        internal List<WoJobOP> GetWOJ_OPList()
+        {
+            return WOJ_OPList;
+        }
+
+        internal List<WoJobPart> GetWOJ_PartList()
+        {
+            return WOJ_PartList;
+        }
     }
 }
