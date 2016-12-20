@@ -7,9 +7,11 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 {
     class WoJobKit
     {
-        public WoJobKit()
+        public WoJobKit(string wjkcode)
         {
+            // TODO: add stuff
             TotCost = (0).ToString();
+            KitNr = wjkcode;
         }
 
         List<WoJobOP> WOJ_OPList = new List<WoJobOP>();

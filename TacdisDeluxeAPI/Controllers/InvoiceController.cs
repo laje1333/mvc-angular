@@ -32,7 +32,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 using (var db = new DBContext())
                 {
-                    invoices = db.Invoices.Include(p => p.Payer).Include(s => s.Salesman).Include(r => r.InvoiceRows).Where(i => i.InvoiceNumber.ToString().Contains(query)).ToList();
+                   invoices = db.Invoices.Include(p => p.Payer).Include(s => s.Salesman).Include(r => r.InvoiceRows).Where(i => i.InvoiceNumber.ToString().Contains(query)).ToList();
                 }
             }
             catch (Exception ex)
@@ -46,7 +46,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 result.Add(Mapper.Map<InvoiceEntity, InvoiceDto>(invoice));
             }
-
+            
             return result;
         }
 
@@ -85,7 +85,7 @@ namespace TacdisDeluxeAPI.Controllers
                     var original = db.Invoices.Single(i => i.Id == invoice.Id);
 
                     db.Entry(original).CurrentValues.SetValues(invoice);
-                    
+
                     db.SaveChanges();
                     
                 }

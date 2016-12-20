@@ -11,6 +11,8 @@ namespace TacdisDeluxeAPI
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
+        public object IdentityConfig { get; private set; }
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();

@@ -1,7 +1,33 @@
-﻿<div>
+﻿<div ng-controller="VehicleInventoryController">
 
 
-    <h3>Create Inventory Record</h3>
+    <div id="color" class="col-md-4">
+        <div class="panel panel-default">
+            <panelheader data-title="New Inventory Record"></panelheader>
+            <div class="form-group panel-body">
+                <label for="regNumber">Reg number:</label>
+                <input class="form-control" type="text" name="regNumber" placeholder="Reg number" required />
+                <label for="orderNumber">Order number:</label>
+                <input class="form-control" type="text" name="orderNumber" placeholder="Order number" required />
+                <label for="brand">Brand:</label>
+                <input class="form-control" type="text" name="brand" placeholder="Brand" required />
+                <label for="year">Year:</label>
+                <input class="form-control" type="text" name="year" placeholder="Year" required />
+                <label for="model">Model:</label>
+                <input class="form-control" type="text" name="model" placeholder="Model" required />
+                <label for="specs">Specifications:</label>
+                <input class="form-control" type="text" name="specs" placeholder="Specifications" required />
+                <label for="invoiceNumber">Invoice number:</label>
+                <input class="form-control" type="text" name="invoiceNumber" placeholder="Invoice number" required />
+                <label for="invoiceDate">Invoice date:</label>
+                <input class="form-control" type="text" name="invoiceDate" placeholder="Invoice date" required />
+                <div>
+                    <button type="button" class="btn btn-primary btn-md" style="margin-top: 10px">Create record</button>
+                    <button type="button" class="btn btn-warning btn-md" style="margin-top: 10px">Discard</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </div>

@@ -1,12 +1,12 @@
-﻿<div ng-controller="WorkOrderController">
+﻿<div ng-controller="WOActiveKitsController">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">Packages</div>
             <div class="form-group panel-body">
-                <input type="text" class="form-control" placeholder="Package Number" />
-                <input type="button" class="btn btn-info" value="Add" ng-click="WOH_AddKit()">
+                <input type="text" class="form-control" placeholder="Package Number" ng-model="wjkCode" />
+                <input type="button" class="btn btn-info" value="Add" ng-click="AddNewKit()">
             </div>
-            <table class="table table-hover">
+            <table ng-table="wjkTable" class="table table-striped table-hover">
                 <tr>
                     <th>Packages Number</th>
                     <th>Packages Type</th>
@@ -16,7 +16,7 @@
                     <th>Details</th>
                     <th>Remove</th>
                 </tr>
-                <tr ng-repeat="item in collection">
+                <tr ng-repeat="item in $data">
                     <td>{{item.KitNr}}</td>
                     <td>{{item.KitType}}</td>
                     <td>{{item.KitDesc}}</td>

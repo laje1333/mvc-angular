@@ -17,6 +17,9 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                 then(function (response) {
                     $scope.brands = response.data;
                     $scope.spinner = false;
+                    feedbackPopup('Successefully fetched data', { level: 'success', timeout: 2000 });
+                }, function (response) {
+                    feedbackPopup('Could not fetch data', { level: 'warning', timeout: 2000 });
                 });
     }
 
@@ -29,6 +32,8 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
         $http.get('http://localhost:57661/api/vehicle?brand=' + $scope.selectedBrand).
                 then(function (response) {
                     $scope.modelType = response.data;
+                }, function (response) {
+                    feedbackPopup("Could not fetch data", { level: 'warning', timeout: 2000 });
                 });
     }
 
@@ -37,6 +42,8 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
         $http.get('http://localhost:57661/api/vehicle?model=' + $scope.selectedModelYear).
                 then(function (response) {
                     $scope.modelYear = response.data;
+                }, function (response) {
+                    feedbackPopup("Could not fetch data", { level: 'warning', timeout: 2000 });
                 });
     }
     $scope.yearSelector = function () {
@@ -79,6 +86,8 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                         }
                     }
 
+                }, function (response) {
+                    feedbackPopup("Could not fetch data", { level: 'warning', timeout: 2000 });
                 });
     }
 
@@ -319,7 +328,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
             url: "http://localhost:57661/api/Vehicle/AddCar",
             data: vehicleData
         }).success(function () {
-
+            feedbackPopup('Successefully saved new vehicle', { level: 'success', timeout: 2000 });
         });
 
     }
@@ -405,13 +414,13 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
 tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
 
-    $scope.newVehicleTable = this;
     $scope.spinner = false;
 
     $scope.getNewVehicles = function () {
         $scope.spinner = true;
         $http.get("http://localhost:57661/api/vehicle/GetAllVehicles")
     .then(function (response) {
+        feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
         var obj = response.data;
         $scope.records = obj;
         $scope.newVehicles.push(obj);
@@ -423,6 +432,8 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
             {
                 dataset: $scope.newVehicles[0]
             });
+    }, function (response) {
+        feedbackPopup("Could not fetch data", { level: 'warning', timeout: 2000 });
     });
     };
 
@@ -431,7 +442,7 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
         var index = -1;
 
         for (i = 0; i < $scope.newVehicles[0].length; i++) {
-            var tempID = $scope.newVehicles[0][i].REGNR;
+            var tempID = $scope.newVehicles[0][i].RegNo;
             if (tempID === id) {
                 index = i;
                 break;
@@ -439,9 +450,25 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
         }
         if (index === -1) {
             alert("Something gone wrong");
+        } else {
+
+            var path = "http://localhost:57661/api/vehicle/Delete?regNumber=" + $scope.newVehicles[0][index].RegNo;
+
+            $http.delete(path)
+            .then(
+                function (response) {
+                    feedbackPopup($scope.newVehicles[0][index].RegNo + " sucessefully deleted", { level: 'info', timeout: 3000 });
+                    $scope.newVehicles[0].splice(index, 1);
+                    $scope.newVehicleTable.reload();
+                    
+            },
+                function (response) {
+                    feedbackPopup("Could not delete vehicle", { level: 'warning', timeout: 2000 });
+       }
+    );
+            
         }
 
-        $scope.newVehicles[0].splice(index, 1);
         //update database aswell!
     }
 
@@ -450,7 +477,15 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
     $scope.orderByField = "REGNR";
 }]);
 
+tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http){
 
+    $scope.regNrSearch = function () {
+
+    }
+
+    
+
+});
 
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider

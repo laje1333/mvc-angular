@@ -10,6 +10,8 @@ namespace TacdisDeluxeAPI
 {
     public partial class Startup
     {
+        public static object PublicClientId { get; internal set; }
+
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);

@@ -7,9 +7,11 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 {
     public class WoJobOP
     {
-        public WoJobOP()
+        public WoJobOP(string wjocode)
         {
+            // TODO: add stuff
             Price = (0).ToString();
+            OPNr = wjocode;
         }
         
         public string OPNr { get; set; }

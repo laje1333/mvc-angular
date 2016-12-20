@@ -4,7 +4,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-6 text-left">Select what to sell</div>
+                        <div class="col-xs-6 text-left">Select Parts to sell</div>
                     </div>
                 </div>
                 <div class="control-group panel-body">
@@ -19,25 +19,22 @@
                         </div>
                         <button class="btn btn-group" ng-click="GetSearchParts()" ng-disabled="!(artNum || artName)">Search</button>
                         <div >
-                            <table id="partTable" class="table table-hover">
+                            <table ng-table="partTable" class="table table-striped">
                                 <tr>
                                     <th>Number:</th>
                                     <th>Name:</th>
                                     <th>Cost:</th>
                                 </tr>
-                                <tr ng-repeat="r in partsRec" ng-class="{'selected':$index == selectedRow}" ng-click="setSelected()">
-                                    <td>{{r.ArticleNumber}} </td>
-                                    <td>{{r.ArticleName}}</td>
-                                    <td>{{r.Price}}</td>
+                                <tr ng-repeat="r in partsRec">
+                                    <td>{{r.ItemId}} </td>
+                                    <td>{{r.ItemName}}</td>
+                                    <td>{{r.ItemPrice}}</td>
+                                    <td><a class="btn " title="Add" ng-click="addRow()"><span class="glyphicon glyphicon-plus"></span></a></td>
                                 </tr>
                             </table>
                          </div>
-                        <div class="form-group">
-
-                            <button class="btn btn-group" ng-click="addRow()" ng-disabled="!(selected)">Add</button>
-
-                        </div>
-</form>
+                        
+                    </form>
                 </div>
             </div>
         </div>
