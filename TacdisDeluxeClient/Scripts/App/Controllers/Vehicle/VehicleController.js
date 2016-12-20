@@ -405,7 +405,6 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
 tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
 
-    $scope.newVehicleTable = this;
     $scope.spinner = false;
 
     $scope.getNewVehicles = function () {
@@ -431,7 +430,7 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
         var index = -1;
 
         for (i = 0; i < $scope.newVehicles[0].length; i++) {
-            var tempID = $scope.newVehicles[0][i].REGNR;
+            var tempID = $scope.newVehicles[0][i].RegNo;
             if (tempID === id) {
                 index = i;
                 break;
@@ -439,9 +438,25 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
         }
         if (index === -1) {
             alert("Something gone wrong");
+        } else {
+
+            var path = "http://localhost:57661/api/vehicle/Delete?regNumber=" + $scope.newVehicles[0][index].RegNo;
+
+            $http.delete(path)
+            .then(
+                function (response) {
+                    $scope.newVehicles[0].splice(index, 1);
+                    $scope.newVehicleTable.reload();
+                    
+                    
+            },
+                function (response) {
+                    alert("Could not delete from database");
+       }
+    );
+            
         }
 
-        $scope.newVehicles[0].splice(index, 1);
         //update database aswell!
     }
 
