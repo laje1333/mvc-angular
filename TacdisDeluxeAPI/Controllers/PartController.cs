@@ -1,10 +1,12 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Mvc;
+using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Models;
 
 //  Ordernummer: 1981657 - Butiksförsäljning Tacdis
@@ -81,13 +83,15 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
 
-        public IHttpActionResult Post([FromBody]PartEntity part)
+        public IHttpActionResult Post([FromBody]PartDto part)
         {
             try
             {
+                var entity = Mapper.Map<PartDto, PartEntity>(part);
+
                 using (DBContext db = new DBContext())
                 {
-                    db.Parts.Add(part);
+                    db.Parts.Add(entity);
                     db.SaveChanges();
                 }
             }

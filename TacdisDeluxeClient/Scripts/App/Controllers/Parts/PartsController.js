@@ -28,26 +28,28 @@ tacdisDeluxeApp.controller("PartsController", ["$scope", "NgTableParams", "$http
     });
 
     $scope.savePart = function () {
-        var data = $.param({
+        var data = {
             ItemId: $scope.ItemId,
             ItemName: $scope.ItemName,
             ItemPrice: $scope.ItemPrice,
             VAT: $scope.VAT,
             SpecFsg: $scope.SpecFsg
-        });
+        };
 
         var config = {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            }
+            //headers: {
+            //    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
+            //}
         };
 
         $http.post('http://localhost:57661/api/Part/', data, config)
             .success(function (data, status, headers, config) {
                 $scope.PostDataResponse = data;
+                feedbackPopup('Part saved.');
+                $('#modalEditPart').modal('hide');
             })
             .error(function (data, status, header, config) {
-                feedbackMessage('Failed to save part.', { level: 'warning' });
+                //feedbackMessage('Failed to save part.', { level: 'warning' });
                 $scope.ResponseDetails = "Data: " + data +
                     "<hr />status: " + status +
                     "<hr />headers: " + header +
