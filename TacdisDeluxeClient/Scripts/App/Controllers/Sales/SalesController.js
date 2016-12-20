@@ -170,7 +170,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         var req = {
             method: 'GET',
             url: 'http://localhost:57661/api/part',
-            params: { articleNumber: $scope.artNum, articleName: $scope.artName }
+            params: { ItemId: $scope.artNum, ItemName: $scope.artName }
         }
         $http(req).
          then(function (response) {
