@@ -39,9 +39,13 @@ namespace TacdisDeluxeAPI.Controllers
                 throw;
             }
 
-            var result = Mapper.Map<List<InvoiceEntity>, List<InvoiceDto>>(invoices);
-            
+            var result = new List<InvoiceDto>();
 
+            foreach (var invoice in invoices)
+            {
+                result.Add(Mapper.Map<InvoiceEntity, InvoiceDto>(invoice));
+            }
+            
             return result;
         }
 
