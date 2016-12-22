@@ -17,15 +17,15 @@
             <th>Price</th>
             <th>VAT</th>
             <th>Spec fsg</th>
-            <th></th>
+            <th width="10"></th>
         </tr>
-        <tr ng-repeat="x in $data">
-            <td>{{x.ItemId}}</td>
-            <td>{{x.ItemName}}</td>
-            <td>{{x.ItemPrice}}</td>
-            <td>{{x.VAT}}</td>
-            <td>{{x.SpecFsg}}</td>
-            <td><a class="btn " title="Delete"><span class="glyphicon glyphicon-remove"></span></a></td>
+        <tr ng-repeat="item in $data">
+            <td>{{item.ItemId}}</td>
+            <td>{{item.ItemName}}</td>
+            <td>{{item.ItemPrice}}</td>
+            <td>{{item.VAT}}</td>
+            <td>{{item.SpecFsg}}</td>
+            <td><a class="btn" ng-click="deletePart(item)" title="Delete"><span class="glyphicon glyphicon-remove"></span></a></td>
         </tr>
     </table>
 

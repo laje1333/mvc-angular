@@ -27,6 +27,30 @@ tacdisDeluxeApp.controller("PartsController", ["$scope", "NgTableParams", "$http
         }
     });
 
+    $scope.deletePart = function (item) {
+        var data = {
+            ItemId: item.ItemId
+        };
+
+        var config = {};
+
+        $http.delete('http://localhost:57661/api/Part/', data, config)
+            .success(function (data, status, headers, config) {
+                $scope.PostDataResponse = data;
+                feedbackPopup('Part deleted.');
+                $('#modalEditPart').modal('hide');
+            })
+            .error(function (data, status, header, config) {
+                $scope.ResponseDetails = "Data: " + data +
+                    "<hr />status: " + status +
+                    "<hr />headers: " + header +
+                    "<hr />config: " + config;
+                if (console) {
+                    console.log($scope.ResponseDetails);
+                }
+            });
+    };
+
     $scope.savePart = function () {
         var data = {
             ItemId: $scope.ItemId,
@@ -36,11 +60,7 @@ tacdisDeluxeApp.controller("PartsController", ["$scope", "NgTableParams", "$http
             SpecFsg: $scope.SpecFsg
         };
 
-        var config = {
-            //headers: {
-            //    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-            //}
-        };
+        var config = {};
 
         $http.post('http://localhost:57661/api/Part/', data, config)
             .success(function (data, status, headers, config) {
