@@ -14,6 +14,7 @@ using TacdisDeluxeAPI.Mockdata.InvoiceData;
 using TacdisDeluxeAPI.Models;
 using TacdisDeluxeAPI.DTO.validators;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 
 namespace TacdisDeluxeAPI.Controllers
 {
@@ -49,28 +50,58 @@ namespace TacdisDeluxeAPI.Controllers
             return result;
         }
 
-        //[System.Web.Http.HttpGet]
-        //public InvoiceEntity GetInvoices(int query)
-        //{
-        //    using (var db = new DBContext())
-        //    {
-        //        InvoiceEntity invoices = null;
-
-        //        try
-        //        {
-        //            //invoices = db.Invoice.Where(i => i.InvoiceNumber == query).toList();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return null;
-        //        }
-
-        //        return invoices;
-        //    }
-
-        //}
+        [System.Web.Http.Route("api/invoice/UpdateInvoice/Update")]
         [System.Web.Http.HttpPost]
-        public IHttpActionResult CreatInvoice(InvoiceDto invoiceDto)
+        public IHttpActionResult UpdateInvoice(InvoiceDto invoiceDto)
+        {
+            try
+            {
+                invoiceDto = InvoiceValidator.ValidateAndUpdateInvoiceDto(invoiceDto);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest("Validation fail!");
+            }
+
+            InvoiceEntity invoice;
+            try
+            {
+                invoice = Mapper.Map<InvoiceDto, InvoiceEntity>(invoiceDto);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest("Invoice mapping error!");
+            }
+
+            try
+            {
+                using (var db = new DBContext())
+                {
+                    db.Payers.Attach(invoice.Payer);
+                    db.Salesmen.Attach(invoice.Salesman);
+
+                    var original = db.Invoices.Single(i => i.Id == invoice.Id);
+
+                    db.Entry(original).CurrentValues.SetValues(invoice);
+
+                    db.SaveChanges();
+                    
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok();
+
+        }
+
+        [System.Web.Http.Route("api/invoice/CreatInvoice/Create")]
+        [System.Web.Http.HttpPost]
+        public IHttpActionResult CreateInvoice(InvoiceDto invoiceDto)
         {
 
             //Test
@@ -105,6 +136,7 @@ namespace TacdisDeluxeAPI.Controllers
                 {
                     db.Payers.Attach(invoice.Payer);
                     db.Salesmen.Attach(invoice.Salesman);
+
                     db.Invoices.Add(invoice);
                     db.SaveChanges();
                 }

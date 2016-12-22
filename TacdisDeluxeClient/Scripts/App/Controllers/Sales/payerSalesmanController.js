@@ -1,11 +1,13 @@
 ﻿'use strict'
 
-tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootScope, $http) {
+tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootScope, $http, SaleFactory) {
 
     $scope.allSalesmen = [];
     $scope.firstName = "";
     $scope.lastName = "";
     $scope.company = "";
+    $scope.salesman = "";
+
     $scope.PostPayer = function (obj) {
         var req = {
             method: 'POST',
@@ -53,6 +55,29 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
         null;
     }
 
+    $scope.GetSalesmanById = function () {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/salesman',
+            params: { empNr: parseInt($scope.empNr) }
+        }
+        
+        $http(req).
+         then(function (response) {
+             document.getElementById('searchIcon').className = 'glyphicon glyphicon-ok-sign';
+             document.getElementById('searchButton').className = 'btn btn-success';
+             $scope.salesman = response.data;
+         }, function (response) {
+             document.getElementById('searchIcon').className = 'glyphicon glyphicon-search';
+             document.getElementById('searchButton').className = 'btn btn-default';
+             $scope.statusCode = response.statusCode;
+         });
+    }
+
+    $scope.$watch('salesman', function (newValue, oldValue) {
+        if (newValue !== oldValue) SaleFactory.setSalesman(newValue);
+    });
+
     $scope.GetSalesmen = function () {
         var req = {
             method: 'GET',
@@ -61,6 +86,7 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
         }
         $http(req).
          then(function (response) {
+             $scope.allSalesmen = [];
              for (var i = 0; i < response.data.length; i++) {
                  $scope.allSalesmen.push(response.data[i]);
              }
@@ -68,4 +94,5 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
              $scope.statusCode = response.statusCode;
          });
     }
+
 });

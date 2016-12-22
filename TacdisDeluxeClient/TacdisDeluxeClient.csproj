@@ -335,6 +335,7 @@
     <Content Include="Scripts\App\Controllers\Vehicle\VehicleController.js" />
     <Content Include="Scripts\App\Controllers\WorkOrder\WorkOrderController.js" />
     <Content Include="Scripts\App\Directives\Vehicle\NewVehicleDirective.js" />
+    <Content Include="Scripts\App\Factories\SaleFactory.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

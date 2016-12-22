@@ -24,7 +24,7 @@ namespace TacdisDeluxeAPI.Controllers
             }
 
         }
-
+        
         public IHttpActionResult Get1(Dictionary<string, string> searchPar)
         {
             using (DBContext db = new DBContext())
