@@ -280,6 +280,7 @@
     <Compile Include="DTO\SalesDto.cs" />
     <Compile Include="DTO\SalesmanDto.cs" />
     <Compile Include="DTO\validators\InvoiceValidator.cs" />
+    <Compile Include="DTO\WorkOrderDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -322,6 +323,7 @@
     <Compile Include="Models\Maps\PartMap.cs" />
     <Compile Include="Models\Maps\SaleMap.cs" />
     <Compile Include="Models\Maps\VehicleModelMap.cs" />
+    <Compile Include="Models\Maps\WorkOrderMap.cs" />
     <Compile Include="Models\TestDataInitializer.cs" />
     <Compile Include="Models\VehicleBrandEntity.cs" />
     <Compile Include="Models\DBContext.cs" />
@@ -336,6 +338,10 @@
     <Compile Include="Models\VehicleEntity.cs" />
     <Compile Include="Models\VehicleModelEntity.cs" />
     <Compile Include="Models\VehiclePropertyEntity.cs" />
+    <Compile Include="Models\WoJobEntity.cs" />
+    <Compile Include="Models\WoKitsEntity.cs" />
+    <Compile Include="Models\WoOpEntitys.cs" />
+    <Compile Include="Models\WorkOrderEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
