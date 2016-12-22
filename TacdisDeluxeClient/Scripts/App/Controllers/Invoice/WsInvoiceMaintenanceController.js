@@ -17,9 +17,9 @@ tacdisDeluxeApp.controller("WsInvoiceMaintenanceCtrl", ["$scope", "wsInvoiceMain
             data: JSON.stringify($scope.MaintenanceInvoice),
             headers: { 'Content-Type': 'application/json' }
         }).success(function (data, status, headers, config) {
-            console.log("test success");
+            feedbackPopup('Successefully fetched data', { level: 'success', timeout: 2000 });
         }).error(function (data, status, headers, config) {
-            console.log("test error");
+            feedbackPopup('Could not fetch data', { level: 'warning', timeout: 2000 });
         });
         
     };

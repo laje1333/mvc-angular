@@ -1,26 +1,26 @@
 ﻿<div ng-controller="VehicleInventoryController">
 
-
     <div id="color" class="col-md-4">
         <div class="panel panel-default">
             <panelheader data-title="New Inventory Record"></panelheader>
             <div class="form-group panel-body">
                 <label for="regNumber">Reg number:</label>
-                <input class="form-control" type="text" name="regNumber" placeholder="Reg number" required />
+                <input ng-change="regNrSearch()" ng-model="regNumber" class="form-control" type="text" name="regNumber" placeholder="Reg number" required />
                 <label for="orderNumber">Order number:</label>
-                <input class="form-control" type="text" name="orderNumber" placeholder="Order number" required />
+                <input class="form-control" type="text" name="orderNumber" placeholder="Order number" ng-value="orderNumber" />
                 <label for="brand">Brand:</label>
-                <input class="form-control" type="text" name="brand" placeholder="Brand" required />
+                <input class="form-control" type="text" name="brand" placeholder="Brand" ng-value="brand" />
                 <label for="year">Year:</label>
-                <input class="form-control" type="text" name="year" placeholder="Year" required />
+                <input class="form-control" type="text" name="year" placeholder="Year" ng-value="year" />
                 <label for="model">Model:</label>
-                <input class="form-control" type="text" name="model" placeholder="Model" required />
+                <input class="form-control" type="text" name="model" placeholder="Model" ng-value="model" />
                 <label for="specs">Specifications:</label>
-                <input class="form-control" type="text" name="specs" placeholder="Specifications" required />
+                <a href=""><span class="glyphicon glyphicon-info-sign" id="info" title="Specifications" ng-click="displayFurtherInformation('info')"></span></a>
+                <input class="form-control" type="text" name="specs" placeholder="Specifications" ng-value="itemDesc" />
                 <label for="invoiceNumber">Invoice number:</label>
-                <input class="form-control" type="text" name="invoiceNumber" placeholder="Invoice number" required />
+                <input class="form-control" type="text" name="invoiceNumber" placeholder="Invoice number" />
                 <label for="invoiceDate">Invoice date:</label>
-                <input class="form-control" type="text" name="invoiceDate" placeholder="Invoice date" required />
+                <input class="form-control" type="text" name="invoiceDate" placeholder="Invoice date" />
                 <div>
                     <button type="button" class="btn btn-primary btn-md" style="margin-top: 10px">Create record</button>
                     <button type="button" class="btn btn-warning btn-md" style="margin-top: 10px">Discard</button>
@@ -31,3 +31,4 @@
 
 
 </div>
+
