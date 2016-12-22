@@ -503,14 +503,27 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
 
     $scope.displayFurtherInformation = function (id) {
         $("#" + id).popover({
+            title: "Specifications",
             trigger: 'focus',
             placement: 'right',
-            content: $scope.itemDesc,
+            html: true,
+            content: $scope.popoverLines($scope.itemDesc)
         });
         $("#" + id).popover('toggle');
     }
     
+    $scope.popoverLines = function (text) {
+        var temp = text.split("\n");
+        var result = "<table class='table table-hover'><thead><tr><th>Engine</th><th>Transmission</th><th>Exterior</th><th>Interior</th></tr></thead><tbody><tr>";
 
+
+	
+        for (i = 0; i < temp.length; i++) {
+            result += "<td>" + temp[i] + "</td>";
+        }
+        result += "</tr></tbody></table>";
+        return result;
+    }
 });
 
 tacdisDeluxeApp.config(function ($routeProvider) {
