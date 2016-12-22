@@ -9,12 +9,11 @@ tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", 
     
     $scope.SearchInvoices = function () {
         $scope.spinner = true;
-        $http.get("http://localhost:57661/api/invoice/GetInvoice?query=1")
+        $http.get("http://localhost:57661/api/invoice/GetInvoice?query=" + $scope.inputVal)
     .then(function (response) {
         $scope.spinner = false;
-        //var obj = JSON.parse(response.data);
-        //$scope.records = obj.invoices;
-                $scope.records = response.data;
+        
+        $scope.records = response.data;
         $scope.invoiceTable = new ngTableParams({
           
         },{

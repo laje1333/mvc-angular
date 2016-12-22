@@ -54,15 +54,37 @@ namespace TacdisDeluxeAPI.Controllers
             }
         }
 
-        public IEnumerable<VehicleEntity> GetVehicleBySearch(string regNR, int itemNR, string name)
+        public IHttpActionResult GetVehicleBySearch(string regNR, string itemNR, string name)
         {
             using (DBContext c = new DBContext())
             {
-                var vehicles = c.Vehicles.Distinct().Where(x => (x.RegNo.Equals(regNR) || x.ItemId == itemNR || x.ItemName.Contains(name)));
+                IQueryable<VehicleEntity> allVeh;
 
+                if (string.IsNullOrEmpty(regNR + itemNR + name))
+                {
+                    return Ok(new List<VehicleEntity>());
+                }
+                else
+                {
+                    allVeh = c.Vehicles as IQueryable<VehicleEntity>;
+                }
 
+                if (!String.IsNullOrEmpty(regNR))
+                {
+                    allVeh = allVeh.Where(p => p.RegNo.Contains(regNR));
+                }
 
-                return vehicles.ToList();
+                if (!String.IsNullOrEmpty(itemNR))
+                {
+                    allVeh = allVeh.Where(p => p.ItemId.ToString().Contains(itemNR));
+                }
+
+                if (!String.IsNullOrEmpty(name))
+                {
+                    allVeh = allVeh.Where(p => p.ItemName.Contains(name));
+                }
+
+                return Ok(allVeh.ToList());
             }
         }
 

@@ -4,7 +4,7 @@
     <form>
         <div class="input-group">
             <div class="input-group-btn">
-                <input type="text" class="form-control" placeholder="Search" ng-submit="SearchInvoices()">
+                <input type="text" class="form-control" placeholder="Search" ng-submit="SearchInvoices()" ng-model="inputVal">
                 <button class="btn btn-default" type="submit" ng-click="SearchInvoices()">
                     <i ng-show="!spinner" class="glyphicon glyphicon-search"></i>
                     <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
