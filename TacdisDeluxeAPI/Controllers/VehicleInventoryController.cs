@@ -15,8 +15,15 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext c = new DBContext())
             {
-                return c.Vehicles.Distinct().Where(x => (x.RegNo.Equals(regNumber))).Single();
-
+                var vehicle =  c.Vehicles.Distinct().Where(x => (x.RegNo.Equals(regNumber))).FirstOrDefault();
+                if (vehicle == null)
+                {
+                    return new VehicleEntity();
+                }
+                else
+                {
+                    return vehicle;
+                }
             }
         }
 

@@ -501,7 +501,14 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
         }
     }
 
-
+    $scope.displayFurtherInformation = function (id) {
+        $("#" + id).popover({
+            trigger: 'focus',
+            placement: 'right',
+            content: $scope.itemDesc,
+        });
+        $("#" + id).popover('toggle');
+    }
     
 
 });
@@ -533,3 +540,4 @@ tacdisDeluxeApp.config(function ($routeProvider) {
             controller: 'VehicleController'
         });
 });
+
