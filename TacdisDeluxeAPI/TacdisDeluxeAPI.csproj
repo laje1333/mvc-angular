@@ -293,6 +293,10 @@
     <Compile Include="Migrations\201612200815327_namnbyte.Designer.cs">
       <DependentUpon>201612200815327_namnbyte.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612220701449_lars.cs" />
+    <Compile Include="Migrations\201612220701449_lars.Designer.cs">
+      <DependentUpon>201612220701449_lars.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -401,6 +405,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612200815327_namnbyte.resx">
       <DependentUpon>201612200815327_namnbyte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612220701449_lars.resx">
+      <DependentUpon>201612220701449_lars.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
