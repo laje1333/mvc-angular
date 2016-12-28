@@ -7,7 +7,7 @@
         <div class="input-group">
             <div class="input-group-btn">
                 <input type="text" class="form-control" placeholder="Search">
-                <button class="btn btn-default" type="button" ng-click="searchForInventoryItems()">
+                <button class="btn btn-default" type="button" ng-click="searchForInventoryItems(); extendElement('adjustmentPanel')">
                     <i class="glyphicon glyphicon-search"></i>
                 </button>
             </div>
@@ -15,6 +15,28 @@
     </form>
 
     <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
+    <div class="panel panel-default" style="margin-top: 10px" ng-show="extended">
+        <panelheader data-title="Inventory adjustments"></panelheader>
+        <div class="form-group panel-body slidebody default-collapsed" id="adjustmentPanel">
+            <label for="partname">Item:</label>
+            <textarea class="form-control" rows="1" id="partname" readonly="true">{{itemName}}</textarea>
+
+            <label for="maininvamount">Main inventory:</label>
+            <textarea class="form-control" rows="1" id="maininvamount" readonly="true">{{mainInvAmount}}</textarea>
+
+            <div class="input-group">
+                <label for="workshopinvamount">Workshop inventory:</label>
+                <input class="form-control" rows="1" id="workshopinvamount" ng-value="workshopInvAmount">
+                <button style="margin-left: 4px" class="btn btn-success" type="button" ng-click="increaseWorkshopAmount(1)">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+                <button style="margin-left: 4px" class="btn btn-danger" type="button" ng-click="increaseWorkshopAmount(-1)" ng-disabled="decreaseDisabled">
+                    <i class="glyphicon glyphicon-minus"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
 
 

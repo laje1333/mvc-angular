@@ -304,6 +304,14 @@
     <Compile Include="Migrations\201612280807358_inventory3.Designer.cs">
       <DependentUpon>201612280807358_inventory3.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612280906125_inventory4.cs" />
+    <Compile Include="Migrations\201612280906125_inventory4.Designer.cs">
+      <DependentUpon>201612280906125_inventory4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612281027017_inventory5.cs" />
+    <Compile Include="Migrations\201612281027017_inventory5.Designer.cs">
+      <DependentUpon>201612281027017_inventory5.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -336,6 +344,7 @@
     <Compile Include="Models\IdentityContext.cs" />
     <Compile Include="Models\InvoiceEntity.cs" />
     <Compile Include="Models\InvoiceRowEntity.cs" />
+    <Compile Include="Models\MainInventoryItem.cs" />
     <Compile Include="Models\Maps\InvoiceMap.cs" />
     <Compile Include="Models\Maps\PartMap.cs" />
     <Compile Include="Models\Maps\SaleMap.cs" />
@@ -421,6 +430,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612280807358_inventory3.resx">
       <DependentUpon>201612280807358_inventory3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612280906125_inventory4.resx">
+      <DependentUpon>201612280906125_inventory4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612281027017_inventory5.resx">
+      <DependentUpon>201612281027017_inventory5.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

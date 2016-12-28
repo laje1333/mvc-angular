@@ -25,7 +25,6 @@ namespace TacdisDeluxeAPI.Migrations
         protected override void Seed(TacdisDeluxeAPI.Models.DBContext context)
         {
             //  Aaah, heell no...
-            return;
 
 
 
@@ -186,6 +185,21 @@ namespace TacdisDeluxeAPI.Migrations
             workshopInventoryItems.ForEach(v =>
             {
                 context.WorkshopInventoryItems.AddOrUpdate<WorkshopInventoryItem>(v);
+
+            });
+
+            context.SaveChanges();
+
+            var mainInventoryItems = new List<MainInventoryItem>()
+            {
+                new MainInventoryItem(){Id = 1, Amount = 421, PartId = 14309},
+                new MainInventoryItem(){Id = 2, Amount = 612, PartId = 14376},
+                new MainInventoryItem(){Id = 3, Amount = 328, PartId = 14443},
+            };
+
+            mainInventoryItems.ForEach(v =>
+            {
+                context.MainInventoryItems.AddOrUpdate<MainInventoryItem>(v);
 
             });
 

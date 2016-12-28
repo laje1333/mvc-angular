@@ -553,12 +553,41 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
 
     $scope.filterInventoryItems = function () {
         for (i = 0; i < $scope.inventoryData.length; i++) {
-            $scope.inventoryTypes.push($scope.inventoryData[i].Part);
-            $scope.mainInventoryAmounts.push($scope.inventoryData[i].Amount);
-            $scope.shopInventoryAmounts.push($scope.inventoryData[i].WorkshopAmount);
+            $scope.inventoryTypes.push($scope.inventoryData[i].PartName);
+            $scope.mainInventoryAmounts.push($scope.inventoryData[i].MainInventoryAmount);
+            $scope.shopInventoryAmounts.push($scope.inventoryData[i].WorkshopInventoryAmount);
         }
     }
 
+    $scope.mainInvAmount = 0;
+    $scope.workshopInvAmount = 0;
+    $scope.limitInvAmount = 0;
+    $scope.itemName = "";
+    $scope.decreaseDisabled = false;
+
+    $scope.updateAdjustments = function (type) {
+        for (i = 0; i < $scope.inventoryData.length; i++) {
+            if (type === $scope.inventoryData[i].PartName) {
+                $scope.mainInvAmount = $scope.inventoryData[i].MainInventoryAmount;
+                $scope.workshopInvAmount = $scope.inventoryData[i].WorkshopInventoryAmount;
+                $scope.itemName = $scope.inventoryData[i].PartName;
+                $scope.limitInvAmount = $scope.mainInvAmount;
+                $scope.$apply();
+            }
+        }
+    }
+
+    $scope.increaseWorkshopAmount = function (x) {
+
+        $scope.workshopInvAmount += x;
+        $scope.mainInvAmount += -x;
+    }
+
+    $scope.extendElement = function (id) {
+        $("#" + id).slideDown("fast");
+        $scope.extended = true;
+    }
+    $scope.extended = false;
 
     $scope.initializeCharts = function () {
         $(function () {
@@ -598,7 +627,8 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
                         point: {
                             events: {
                                 click: function () {
-                                    alert('Category: ' + this.category + ', value: ' + this.y);
+                                    $scope.updateAdjustments(this.category);
+                                    
                                 }
                             }
                         }
