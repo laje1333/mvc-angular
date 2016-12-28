@@ -66,10 +66,12 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
          then(function (response) {
              document.getElementById('searchIcon').className = 'glyphicon glyphicon-ok-sign';
              document.getElementById('searchButton').className = 'btn btn-success';
+             feedbackPopup('Salesman saved', { level: 'success', timeout: 2000 });
              $scope.salesman = response.data;
          }, function (response) {
              document.getElementById('searchIcon').className = 'glyphicon glyphicon-search';
              document.getElementById('searchButton').className = 'btn btn-default';
+             feedbackPopup('No salesman found', { level: 'warning', timeout: 2000 });
              $scope.statusCode = response.statusCode;
          });
     }
