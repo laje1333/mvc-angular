@@ -53,10 +53,12 @@ namespace TacdisDeluxeAPI.Controllers
                 {
                     InventoryDto d = new InventoryDto();
 
-                    PartEntity p = c.Parts.Where(x => x.ItemId == inventoryItems[i].PartId).Single();
-                    d.PartName = p.ItemName;
+                    int prtID = inventoryItems[i].PartId;
+
+                    string p = c.Parts.Where(x => x.ItemId == prtID).Select(x => x.ItemName).Single();
+                    d.PartName = p;
                     d.WorkshopInventoryAmount = inventoryItems[i].Amount;
-                    d.MainInventoryAmount = 0;
+                    d.MainInventoryAmount = c.MainInventoryItems.Where(x => x.PartId == prtID).Select(x => x.Amount).Single();
 
                     invDto.Add(d);
                 }
