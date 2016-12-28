@@ -30,6 +30,7 @@ namespace TacdisDeluxeAPI.Models
         public DbSet<InvoiceEntity> Invoices { get; set; }
         public DbSet<InvoiceRowEntity> InvoiceRows { get; set; }
         public DbSet<WorkOrderEntity> WorkOrder { get; set; }
+        public DbSet<WorkshopInventoryItem> WorkshopInventoryItems { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder builder)
@@ -46,6 +47,8 @@ namespace TacdisDeluxeAPI.Models
             builder.Entity<VehicleBrandEntity>().ToTable("VehicleBrand");
             builder.Entity<VehiclePropertyEntity>().ToTable("VehicleProperty");
             builder.Entity<WorkOrderEntity>().ToTable("WorkOrder");
+
+            builder.Entity<WorkshopInventoryItem>().ToTable("WorkshopInventoryItem");
 
             builder.Configurations.Add(new PartMap());
             builder.Configurations.Add(new SaleMap());

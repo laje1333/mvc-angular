@@ -299,13 +299,9 @@
     <Compile Include="Migrations\201612220701449_lars.Designer.cs">
       <DependentUpon>201612220701449_lars.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201612221443458_inventory.cs" />
-    <Compile Include="Migrations\201612221443458_inventory.Designer.cs">
-      <DependentUpon>201612221443458_inventory.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201612221454384_inventory2.cs" />
-    <Compile Include="Migrations\201612221454384_inventory2.Designer.cs">
-      <DependentUpon>201612221454384_inventory2.cs</DependentUpon>
+    <Compile Include="Migrations\201612280807358_inventory3.cs" />
+    <Compile Include="Migrations\201612280807358_inventory3.Designer.cs">
+      <DependentUpon>201612280807358_inventory3.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
@@ -362,6 +358,8 @@
     <Compile Include="Models\WoKitsEntity.cs" />
     <Compile Include="Models\WoOpEntitys.cs" />
     <Compile Include="Models\WorkOrderEntity.cs" />
+    <Compile Include="Models\WorkshopInventory.cs" />
+    <Compile Include="Models\WorkshopInventoryItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -420,11 +418,8 @@
     <EmbeddedResource Include="Migrations\201612220701449_lars.resx">
       <DependentUpon>201612220701449_lars.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612221443458_inventory.resx">
-      <DependentUpon>201612221443458_inventory.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201612221454384_inventory2.resx">
-      <DependentUpon>201612221454384_inventory2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201612280807358_inventory3.resx">
+      <DependentUpon>201612280807358_inventory3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

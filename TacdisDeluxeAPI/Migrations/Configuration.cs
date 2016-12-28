@@ -175,14 +175,21 @@ namespace TacdisDeluxeAPI.Migrations
             });
             context.SaveChanges();
 
-            
 
-            //context.WorkshopInventories.AddOrUpdate<WorkshopInventoryEntity>(new WorkshopInventoryEntity() { Id = 1, Name = "Bilia" });
-            //context.SaveChanges();
+            var workshopInventoryItems = new List<WorkshopInventoryItem>()
+            {
+                new WorkshopInventoryItem(){Id = 1, WorkshopId = 1, Amount = 63, PartId = 14309},
+                new WorkshopInventoryItem(){Id = 2, WorkshopId = 1, Amount = 343, PartId = 14376},
+                new WorkshopInventoryItem(){Id = 3, WorkshopId = 1, Amount = 124, PartId = 14443},
+            };
 
+            workshopInventoryItems.ForEach(v =>
+            {
+                context.WorkshopInventoryItems.AddOrUpdate<WorkshopInventoryItem>(v);
 
-            //context.WorkshopInventoryPartConnections.AddOrUpdate<WorkshopInventoryPartEntity>(new WorkshopInventoryPartEntity() { PartId = 14912, Count = 85, workshopID = 1 });
-            //context.SaveChanges();
+            });
+
+            context.SaveChanges();
 
             //  This method will be called after migrating to the latest version.
 

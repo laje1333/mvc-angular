@@ -9,8 +9,8 @@ namespace TacdisDeluxeAPI.DTO
     public class InventoryDto
     {
         public int MainInventoryAmount { get; set; }
-        public int WorkshopAmount { get; set; }
-        public string Name { get; set; }
+        public int WorkshopInventoryAmount { get; set; }
+        public string PartName { get; set; }
         
     }
 }
