@@ -1,15 +1,4 @@
 ﻿
-<div class="row">
-    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-        <div class="btn-group" role="group" aria-label="Search menu">
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modalDialogSearch">Search</button>
-        </div>
-        <div class="btn-group" role="group" aria-label="First group">
-            <button type="button" class="btn btn-default">Save</button>
-            <button type="button" class="btn btn-default">Clear</button>
-        </div>
-    </div>
-</div>
 
 <div ng-controller="PartsController" class="panel panel-default">
     <div class="panel-heading clearfix">
@@ -28,79 +17,77 @@
             <th>Price</th>
             <th>VAT</th>
             <th>Spec fsg</th>
-            <th></th>
+            <th width="10"></th>
         </tr>
-        <tr ng-repeat="x in $data">
-            <td>{{x.ItemId}}</td>
-            <td>{{x.ItemName}}</td>
-            <td>{{x.ItemPrice}}</td>
-            <td>{{x.VAT}}</td>
-            <td>{{x.SpecFsg}}</td>
-            <td><a class="btn " title="Delete"><span class="glyphicon glyphicon-remove"></span></a></td>
+        <tr ng-repeat="item in $data">
+            <td>{{item.ItemId}}</td>
+            <td>{{item.ItemName}}</td>
+            <td>{{item.ItemPrice}}</td>
+            <td>{{item.VAT}}</td>
+            <td>{{item.SpecFsg}}</td>
+            <td><a class="btn" ng-click="deletePart(item)" title="Delete"><span class="glyphicon glyphicon-remove"></span></a></td>
         </tr>
     </table>
-</div>
 
-<script>
-    $(function () {
-        $('#modalEditPart').on('shown.bs.modal', function () {
-            $('#myInput').focus();
-        });
-    });
-</script>
 
-<!-- Modal -->
-<div class="modal fade" id="modalEditPart" tabindex="-1" role="dialog" aria-labelledby="modalEditPartLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="modalEditPartLabel">Part</h4>
-            </div>
-            <div class="modal-body">
-                <ng-form>
+    <!-- Modal -->
+    <div class="modal fade" id="modalEditPart" tabindex="-1" role="dialog" aria-labelledby="modalEditPartLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="modalEditPartLabel">Part</h4>
+                </div>
+                <div class="modal-body">
+                    <ng-form>
 
-                    <div class="form-group row">
-                        <label for="txtArticleNumber" class="col-md-3 col-xs-2 col-form-label">Article number</label>
-                        <div class="col-xs-9">
-                            <input class="form-control" type="number" value="" id="txtArticleNumber">
+                        <div class="form-group row">
+                            <label for="txtItemId" class="col-md-3 col-xs-2 col-form-label">Article number</label>
+                            <div class="col-xs-9">
+                                <input class="form-control" type="number" value="" id="txtItemId" ng-model="ItemId">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="txtArticleName" class="col-md-3 col-xs-2 col-form-label">Article name</label>
-                        <div class="col-xs-9">
-                            <input class="form-control" type="text" value="" id="txtArticleName">
+                        <div class="form-group row">
+                            <label for="txtItemName" class="col-md-3 col-xs-2 col-form-label">Article name</label>
+                            <div class="col-xs-9">
+                                <input class="form-control" type="text" value="" id="txtItemName" ng-model="ItemName">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="txtPrice" class="col-md-3 col-xs-2 col-form-label">Text</label>
-                        <div class="col-xs-9">
-                            <input class="form-control" type="number" value="" id="txtPrice">
+                        <div class="form-group row">
+                            <label for="txtItemPrice" class="col-md-3 col-xs-2 col-form-label">Price</label>
+                            <div class="col-xs-9">
+                                <input class="form-control" type="number" value="" id="txtItemPrice" ng-model="ItemPrice">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label for="txtVAT" class="col-md-3 col-xs-2 col-form-label">Text</label>
-                        <div class="col-xs-9">
-                            <input class="form-control" type="number" value="" id="txtVAT">
+                        <div class="form-group row">
+                            <label for="txtVAT" class="col-md-3 col-xs-2 col-form-label">VAT</label>
+                            <div class="col-xs-9">
+                                <input class="form-control" type="number" value="" id="txtVAT" ng-model="VAT">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-check row">
-                        <label for="chkSpecFsg" class="col-md-3 col-xs-2 col-form-label">Text</label>
-                        <div class="col-xs-9">
-                            <input class="form-check-input" type="checkbox" value="" id="chkSpecFsg">
+                        <div class="form-check row">
+                            <label for="chkSpecFsg" class="col-md-3 col-xs-2 col-form-label">SpecFsg</label>
+                            <div class="col-xs-9">
+                                <input class="form-check-input" type="checkbox" value="" id="chkSpecFsg" ng-model="SpecFsg">
+                            </div>
                         </div>
-                    </div>
 
-                </ng-form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                    </ng-form>
+                </div>
+                <div class="modal-footer">
+                    <div class="" role="group" aria-label="First group">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="savePart()">Save</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
+    <script>
+
+    </script>
+</div>
 
 
 

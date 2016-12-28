@@ -31,3 +31,4 @@ tacdisDeluxeApp.directive('panelheaderwithclick', function () {
     };
 })
 
+

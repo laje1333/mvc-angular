@@ -15,6 +15,7 @@ namespace TacdisDeluxeAPI
         {
             AutoMapper.Mapper.Initialize(cfg =>
             {
+                cfg.CreateMap<PartEntity, PartDto>();
                 cfg.CreateMap<SaleEntity, SalesDto>();
                 cfg.CreateMap<InvoiceEntity, InvoiceDto>();
                 cfg.CreateMap<InvoiceRowEntity, InvoiceRowDto>();
@@ -22,13 +23,16 @@ namespace TacdisDeluxeAPI
                 cfg.CreateMap<SalesmanEntity, SalesmanDto>();
                 cfg.CreateMap<List<InvoiceEntity>, List<InvoiceDto>>();
                 cfg.CreateMap<List<InvoiceRowEntity>, List<InvoiceRowDto>>();
+                cfg.CreateMap<List<WorkOrderEntity>, List<WorkOrderDto>>();
 
+                cfg.CreateMap<PartDto, PartEntity>();
                 cfg.CreateMap<InvoiceDto, InvoiceEntity>();
                 cfg.CreateMap<InvoiceRowDto,InvoiceRowEntity >();
                 cfg.CreateMap<PayerDto, PayerEntity>();
                 cfg.CreateMap<SalesmanDto, SalesmanEntity>();
                 cfg.CreateMap<List<InvoiceDto>, List<InvoiceEntity>>();
                 cfg.CreateMap<List<InvoiceRowDto>, List<InvoiceRowEntity>>();
+                cfg.CreateMap<List<WorkOrderDto>, List<WorkOrderEntity>>();
             });
             //AutoMapper.Configuration
             //Mapper.CreateMap<InvoiceEntity, InvoideDto>();

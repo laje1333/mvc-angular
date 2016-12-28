@@ -122,6 +122,7 @@ namespace TacdisDeluxeAPI.Controllers
             return wohList;
         }
 
+        [System.Web.Http.Route("GetRegNr")]
         [System.Web.Http.HttpGet]
         public List<string> GetRegNr(string WOHID)
         {

@@ -12,8 +12,9 @@ namespace TacdisDeluxeAPI.Models
 {
     public class DBContext : DbContext
     {
-    
-        public DBContext() : base("DBContext")
+
+        public DBContext()
+            : base("DBContext")
         {
         }
 
@@ -28,6 +29,7 @@ namespace TacdisDeluxeAPI.Models
         public DbSet<VehiclePropertyEntity> VehicleProperties { get; set; }
         public DbSet<InvoiceEntity> Invoices { get; set; }
         public DbSet<InvoiceRowEntity> InvoiceRows { get; set; }
+        public DbSet<WorkOrderEntity> WorkOrder { get; set; }
 
 
         protected override void OnModelCreating(DbModelBuilder builder)
@@ -43,15 +45,19 @@ namespace TacdisDeluxeAPI.Models
             builder.Entity<VehicleEntity>().ToTable("Vehicle");
             builder.Entity<VehicleBrandEntity>().ToTable("VehicleBrand");
             builder.Entity<VehiclePropertyEntity>().ToTable("VehicleProperty");
+            builder.Entity<WorkOrderEntity>().ToTable("WorkOrder");
 
             builder.Configurations.Add(new PartMap());
             builder.Configurations.Add(new SaleMap());
             builder.Configurations.Add(new VehicleModelMap());
             builder.Configurations.Add(new InvoiceMap());
+            builder.Configurations.Add(new WorkOrderMap());
 
 
             base.OnModelCreating(builder);
         }
     }
+
+
 }
 
