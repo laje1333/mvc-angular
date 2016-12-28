@@ -12,8 +12,9 @@ namespace TacdisDeluxeAPI.Models
 {
     public class DBContext : DbContext
     {
-    
-        public DBContext() : base("DBContext")
+
+        public DBContext()
+            : base("DBContext")
         {
         }
 
@@ -56,5 +57,7 @@ namespace TacdisDeluxeAPI.Models
             base.OnModelCreating(builder);
         }
     }
+
+
 }
 

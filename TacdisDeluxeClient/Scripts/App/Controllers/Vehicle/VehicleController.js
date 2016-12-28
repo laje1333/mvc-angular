@@ -509,7 +509,11 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
             html: true,
             content: $scope.popoverLines($scope.itemDesc)
         });
-        $("#" + id).popover('toggle');
+        $("#" + id).popover('show');
+    }
+
+    $scope.hidePopover = function () {
+        $("#info").popover('hide');
     }
     
     $scope.popoverLines = function (text) {
@@ -522,9 +526,106 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
             result += "<td>" + temp[i] + "</td>";
         }
         result += "</tr></tbody></table>";
+        result += "<button type='button' class='btn btn-warning btn-md' onclick='hidePopover()'>Close</button>";
         return result;
     }
+
+
+    $scope.searchForInventoryItems = function () {
+        $scope.inventoryData = [];
+        $scope.inventoryTypes = [];
+        $scope.mainInventoryAmounts = [];
+        $scope.shopInventoryAmounts = [];
+
+        $http.get("http://localhost:57661/api/Inventory/GetAllWorkshopItems")
+            .then(function (response) {
+                feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
+                $scope.inventoryData = response.data;
+                $scope.filterInventoryItems();
+                $scope.initializeCharts();
+
+            }, function (response) {
+                feedbackPopup("Could fetch data", { level: 'warning', timeout: 2000 });
+            });
+
+       
+    }
+
+    $scope.filterInventoryItems = function () {
+        for (i = 0; i < $scope.inventoryData.length; i++) {
+            $scope.inventoryTypes.push($scope.inventoryData[i].Part);
+            $scope.mainInventoryAmounts.push($scope.inventoryData[i].Amount);
+            $scope.shopInventoryAmounts.push($scope.inventoryData[i].WorkshopAmount);
+        }
+    }
+
+
+    $scope.initializeCharts = function () {
+        $(function () {
+            $('#container').highcharts({
+                chart: {
+                    type: 'column',
+
+                },
+                title: {
+                    text: 'Inventory records'
+                },
+                subtitle: {
+                    text: 'Parts and vehicles'
+                },
+                xAxis: {
+                    categories: $scope.inventoryTypes,
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Amount'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+
+                    series: {
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function () {
+                                    alert('Category: ' + this.category + ', value: ' + this.y);
+                                }
+                            }
+                        }
+                    },
+
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Main inventory',
+                    data: $scope.mainInventoryAmounts
+
+                }, {
+                    name: 'Shop inventory',
+                    data: $scope.shopInventoryAmounts
+
+                }]
+            });
+        });
+    }
 });
+
+hidePopover = function () {
+    $("#info").popover('hide');
+}
 
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider

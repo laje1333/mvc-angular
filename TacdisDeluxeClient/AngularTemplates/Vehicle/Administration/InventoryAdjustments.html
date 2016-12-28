@@ -1,7 +1,21 @@
-﻿<div>
+﻿
+
+<div ng-controller="VehicleInventoryController">
 
 
-    <h3>Inventory Adjustments</h3>
+    <form style="margin-bottom: 10px">
+        <div class="input-group">
+            <div class="input-group-btn">
+                <input type="text" class="form-control" placeholder="Search">
+                <button class="btn btn-default" type="button" ng-click="searchForInventoryItems()">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
 
 
 </div>

@@ -266,6 +266,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BrandController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\PartController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\SalesmanController.cs" />
@@ -273,6 +274,7 @@
     <Compile Include="Controllers\WorkOrderController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
+    <Compile Include="DTO\InventoryDto.cs" />
     <Compile Include="DTO\InvoiceDto.cs" />
     <Compile Include="DTO\InvoiceRowDto.cs" />
     <Compile Include="DTO\NewVehicleDto.cs" />
@@ -297,9 +299,18 @@
     <Compile Include="Migrations\201612220701449_lars.Designer.cs">
       <DependentUpon>201612220701449_lars.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201612221443458_inventory.cs" />
+    <Compile Include="Migrations\201612221443458_inventory.Designer.cs">
+      <DependentUpon>201612221443458_inventory.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612221454384_inventory2.cs" />
+    <Compile Include="Migrations\201612221454384_inventory2.Designer.cs">
+      <DependentUpon>201612221454384_inventory2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
+    <Compile Include="Mockdata\VehicleData\InventoryData.cs" />
     <Compile Include="Mockdata\VehicleData\Model.cs" />
     <Compile Include="Mockdata\VehicleData\ModelYear.cs" />
     <Compile Include="Mockdata\VehicleData\NewVehicleData.cs" />
@@ -408,6 +419,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612220701449_lars.resx">
       <DependentUpon>201612220701449_lars.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221443458_inventory.resx">
+      <DependentUpon>201612221443458_inventory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612221454384_inventory2.resx">
+      <DependentUpon>201612221454384_inventory2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
