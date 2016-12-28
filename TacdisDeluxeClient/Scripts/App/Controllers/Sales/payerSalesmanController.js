@@ -1,6 +1,6 @@
 ﻿'use strict'
 
-tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootScope, $http, SaleFactory) {
+tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootScope, $http, SaleFactory, $route) {
 
     $scope.allSalesmen = [];
     $scope.firstName = "";
@@ -17,15 +17,18 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
                 FirstName: $scope.firstName,
                 LastName: $scope.lastName,
                 Trusted: $scope.trusted,
-                Address: $scope.address,
+                StreeatAddress: $scope.address,
                 ZipCity: $scope.zipCity,
                 Country: $scope.country
             },
         }
         $http(req).
          then(function (response) {
+             $route.reload();
+             feedbackPopup('Payer saved', { level: 'success', timeout: 2000 });
              $scope.ok = "It's good";
          }, function (response) {
+             feedbackPopup('Something went wrong', { level: 'warning', timeout: 2000 });
              $scope.statusCode = response.statusCode;
          });
     }
@@ -46,13 +49,45 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
         }
         $http(req).
          then(function (response) {
+             $route.reload();
+             feedbackPopup('Salesman saved', { level: 'success', timeout: 2000 });
              $scope.ok = "It's good";
          }, function (response) {
+             feedbackPopup('Salesman saved', { level: 'warning', timeout: 2000 });
              $scope.statusCode = response.statusCode;
          });
     }
     $scope.showInfo = function () {
         null;
+    }
+
+    $scope.GetPayerById = function () {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/payer',
+            params: { CustNr: parseInt($scope.CustNr) }
+        }
+
+        $http(req).
+         then(function (response) {
+             document.getElementById('searchIconP').className = 'glyphicon glyphicon-ok-sign';
+             document.getElementById('searchButtonP').className = 'btn btn-success';
+             feedbackPopup('Payer found', { level: 'success', timeout: 2000 });
+             $scope.payer = response.data;
+         }, function (response) {
+             document.getElementById('searchIconP').className = 'glyphicon glyphicon-search';
+             document.getElementById('searchButtonP').className = 'btn btn-default';
+             feedbackPopup('No payer found', { level: 'warning', timeout: 2000 });
+             $scope.payer = {};
+             $scope.statusCode = response.statusCode;
+         });
+    }
+
+    $scope.checkIfEmpty = function (str, btnId, iconId) {
+        if (str.length == 0) {
+            document.getElementById(iconId).className = 'glyphicon glyphicon-search';
+            document.getElementById(btnId).className = 'btn btn-default';
+        }
     }
 
     $scope.GetSalesmanById = function () {
@@ -66,12 +101,13 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
          then(function (response) {
              document.getElementById('searchIcon').className = 'glyphicon glyphicon-ok-sign';
              document.getElementById('searchButton').className = 'btn btn-success';
-             feedbackPopup('Salesman saved', { level: 'success', timeout: 2000 });
+             feedbackPopup('Salesman found', { level: 'success', timeout: 2000 });
              $scope.salesman = response.data;
          }, function (response) {
              document.getElementById('searchIcon').className = 'glyphicon glyphicon-search';
              document.getElementById('searchButton').className = 'btn btn-default';
              feedbackPopup('No salesman found', { level: 'warning', timeout: 2000 });
+             $scope.salesman = {};
              $scope.statusCode = response.statusCode;
          });
     }

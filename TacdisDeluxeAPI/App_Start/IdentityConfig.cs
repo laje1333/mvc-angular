@@ -6,6 +6,10 @@ using Microsoft.Owin;
 using TacdisDeluxeAPI.Models;
 using Owin;
 using Microsoft.Owin.Security.Cookies;
+using Microsoft.Owin.Security.OAuth;
+using Microsoft.Owin.Security.Infrastructure;
+using TacdisDeluxeAPI.Providers;
+using System;
 
 namespace TacdisDeluxeAPI
 {
@@ -13,6 +17,10 @@ namespace TacdisDeluxeAPI
 
     public class IdentityConfig
     {
+        public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
+
+        public static string PublicClientId { get; private set; }
+
         public void Configuration(IAppBuilder app)
         {
             app.CreatePerOwinContext(() => new IdentityContext());
@@ -24,9 +32,23 @@ namespace TacdisDeluxeAPI
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Home/Login"),
+                LoginPath = new PathString("/Login"),
             });
+
+            OAuthOptions = new OAuthAuthorizationServerOptions
+            {
+                TokenEndpointPath = new PathString("/Token"),
+                Provider = new ApplicationOAuthProvider("bubbel"),
+                AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
+                // In production mode set AllowInsecureHttp = false
+                AllowInsecureHttp = true
+            };
+
+            // Enable the application to use bearer tokens to authenticate users
+            app.UseOAuthBearerTokens(OAuthOptions);
         }
+
+
 
         //public IdentityConfig(IUserStore<ApplicationUser> store)
         //    : base(store)

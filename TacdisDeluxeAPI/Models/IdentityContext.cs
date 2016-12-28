@@ -10,7 +10,7 @@ namespace TacdisDeluxeAPI.Models
     public class IdentityContext : IdentityDbContext<AppUser>
     {
         public IdentityContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("IdentityContext", throwIfV1Schema: false)
         {
         }
 

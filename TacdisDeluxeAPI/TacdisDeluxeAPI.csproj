@@ -269,6 +269,7 @@
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\PartController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\PayerController.cs" />
     <Compile Include="Controllers\SalesmanController.cs" />
     <Compile Include="Controllers\VehicleInventoryController.cs" />
     <Compile Include="Controllers\WorkOrderController.cs" />
