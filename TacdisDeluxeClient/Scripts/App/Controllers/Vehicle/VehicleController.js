@@ -531,13 +531,85 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
     }
 
 
+    $scope.tableItems = [];
+
+    $scope.order = function () {
+
+        var data = {
+            Name: $scope.itemName,
+            Amount: ($scope.limitInvAmount - $scope.mainInvAmount),
+            ItemID: $scope.itemId,
+        };
+
+        $scope.checkForDuplicates(data);
+        $scope.transferDisabled = false;
+        
+
+    }
+
+    $scope.deleteRow = function (id) {
+        var index = -1;
+
+        for (i = 0; i < $scope.tableItems.length; i++) {
+            var tempID = $scope.tableItems[i].ItemID;
+            if (tempID === id) {
+                index = i;
+                break;
+            }
+        }
+        if (index === -1) {
+            alert("Something gone wrong");
+        }
+
+        feedbackPopup($scope.tableItems[index].ItemID + " sucessefully deleted", { level: 'info', timeout: 3000 });
+        $scope.tableItems.splice(index, 1);
+    }
+
+
+    $scope.checkForDuplicates = function (data) {
+        for (i = 0; i < $scope.tableItems.length; i++) {
+            if (data.Name === $scope.tableItems[i].Name) {
+                $scope.tableItems[i].Amount += data.Amount;
+                return;
+            }
+        }
+        $scope.tableItems.push(data);
+    }
+
+    $scope.transferDisabled = true;
+
+    $scope.transfer = function () {
+
+        var invData = $scope.tableItems;
+
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/Inventory/PostTransfer",
+            data: { '': invData }
+        }).success(function () {
+            feedbackPopup('Successefully saved new vehicle', { level: 'success', timeout: 2000 });
+            $scope.initializeCharts();
+            $scope.tableItems = [];
+            $scope.mainInvAmount = 0;
+            $scope.workshopInvAmount = 0;
+            $scope.limitInvAmount = 0;
+            $scope.itemName = "";
+            $scope.itemId = 0;
+            $scope.decreaseDisabled = false;
+            $scope.orderButtonDisabled = true;
+            $scope.transferDisabled = true;
+        });
+    }
+
+    $scope.searchFieldText = "";
+
     $scope.searchForInventoryItems = function () {
         $scope.inventoryData = [];
         $scope.inventoryTypes = [];
         $scope.mainInventoryAmounts = [];
         $scope.shopInventoryAmounts = [];
 
-        $http.get("http://localhost:57661/api/Inventory/GetAllWorkshopItems")
+        $http.get("http://localhost:57661/api/Inventory/GetAllWorkshopItems?partName=" + $scope.searchFieldText)
             .then(function (response) {
                 feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
                 $scope.inventoryData = response.data;
@@ -545,7 +617,7 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
                 $scope.initializeCharts();
 
             }, function (response) {
-                feedbackPopup("Could fetch data", { level: 'warning', timeout: 2000 });
+                feedbackPopup("Could not fetch data", { level: 'warning', timeout: 2000 });
             });
 
        
@@ -563,7 +635,9 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
     $scope.workshopInvAmount = 0;
     $scope.limitInvAmount = 0;
     $scope.itemName = "";
+    $scope.itemId = 0;
     $scope.decreaseDisabled = false;
+    $scope.orderButtonDisabled = true;
 
     $scope.updateAdjustments = function (type) {
         for (i = 0; i < $scope.inventoryData.length; i++) {
@@ -572,15 +646,43 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
                 $scope.workshopInvAmount = $scope.inventoryData[i].WorkshopInventoryAmount;
                 $scope.itemName = $scope.inventoryData[i].PartName;
                 $scope.limitInvAmount = $scope.mainInvAmount;
+                $scope.itemId = $scope.inventoryData[i].itemID;
+                $scope.chartActivated = false;
                 $scope.$apply();
             }
         }
     }
 
-    $scope.increaseWorkshopAmount = function (x) {
+    $scope.increaseWorkshopAmount = function () {
+            $scope.workshopInvAmount += 1;
+            $scope.mainInvAmount -= 1;
+            $scope.orderButtonDisabled = false;
+    }
 
-        $scope.workshopInvAmount += x;
-        $scope.mainInvAmount += -x;
+    $scope.descreaseWorkshopAmount = function () {
+        if ($scope.limitInvAmount - $scope.mainInvAmount > 1) {
+            $scope.workshopInvAmount -= 1;
+            $scope.mainInvAmount += 1;
+            $scope.orderButtonDisabled = false;
+        } else {
+            $scope.orderButtonDisabled = true;
+            $scope.workshopInvAmount -= 1;
+            $scope.mainInvAmount += 1;
+        }
+    }
+
+    $scope.updateCachedData = function () {
+        for (i = 0; i < $scope.tableItems.length; i++) {
+
+            for (x = 0; x < $scope.inventoryData.length; x++) {
+
+                if ($scope.tableItems[i].Name === $scope.inventoryData[x].PartName) {
+                    $scope.mainInventoryAmounts[x] -= $scope.tableItems[i].Amount;
+                    $scope.shopInventoryAmounts[x] += $scope.tableItems[i].Amount;
+                }
+            }
+        }
+
     }
 
     $scope.extendElement = function (id) {
@@ -588,6 +690,8 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
         $scope.extended = true;
     }
     $scope.extended = false;
+
+    $scope.chartActivated = true;
 
     $scope.initializeCharts = function () {
         $(function () {
@@ -648,6 +752,17 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
                     data: $scope.shopInventoryAmounts
 
                 }]
+            });
+
+            $('#transfer').click(function () {
+                var chart = $('#container').highcharts();
+
+                $scope.updateCachedData();
+
+
+                chart.series[0].setData($scope.mainInventoryAmounts, false);
+                chart.series[1].setData($scope.shopInventoryAmounts, true);
+                
             });
         });
     }

@@ -27,7 +27,7 @@ namespace TacdisDeluxeAPI.DTO
             Random r = new Random();
             string letters = new string(Enumerable.Repeat(chars, 3)
                 .Select(s => s[r.Next(s.Length)]).ToArray());
-            string numbers = r.Next(999).ToString();
+            string numbers = r.Next(100,999).ToString();
 
             return letters + numbers;
         }
