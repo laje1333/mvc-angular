@@ -14,101 +14,106 @@
         </div>
     </form>
 
-    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
-    <div class="panel panel-default" style="margin-top: 10px" ng-show="extended">
-        <panelheader data-title="Inventory adjustments">
+    <div class="panel panel-primary" style="margin-top: 10px" ng-show="extended">
+        <panelheader data-title="Inventory distributions"></panelheader>
+        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        </div>
+
+        <div class="panel panel-primary" style="margin-top: 10px" ng-show="extended">
+            <panelheader data-title="Inventory adjustments"></panelheader>
 
 
-        </panelheader>
-        <div class="form-group panel-body slidebody default-collapsed" id="adjustmentPanel">
-            <div id="adjustments" class="col-md-5">
+
+            <div class="form-group panel-body slidebody default-collapsed" id="adjustmentPanel">
+                <div id="adjustments" class="col-md-5">
 
 
-                <label for="partname">Item:</label>
-                <textarea class="form-control" rows="1" id="partname" readonly="true">{{itemName}}</textarea>
+                    <label for="partname">Item:</label>
+                    <textarea class="form-control" rows="1" id="partname" readonly="true">{{itemName}}</textarea>
 
-                <label for="maininvamount">Main inventory:</label>
-                <textarea class="form-control" rows="1" id="maininvamount" readonly="true">{{mainInvAmount}}</textarea>
+                    <label for="maininvamount">Main inventory:</label>
+                    <textarea class="form-control" rows="1" id="maininvamount" readonly="true">{{mainInvAmount}}</textarea>
 
-                <div class="input-group">
-                    <label for="workshopinvamount">Workshop inventory:</label>
-                    <input ng-disabled="true" class="form-control" rows="1" id="workshopinvamount" ng-model="workshopInvAmount">
+                    <div class="input-group">
+                        <label for="workshopinvamount">Workshop inventory:</label>
+                        <input ng-disabled="true" class="form-control" rows="1" id="workshopinvamount" ng-model="workshopInvAmount">
 
-                    <span class="btn-group-vertical" style="margin-left:4px">
-                        <button ng-disabled="chartActivated" class="btn btn-primary btn-sm" type="button" ng-click="increaseWorkshopAmount()">
-                            <i class="glyphicon glyphicon-chevron-up"></i>
-                        </button>
-                        <button ng-disabled="true" class="btn btn-default" style="margin-bottom:4px; margin-top:4px">{{limitInvAmount - mainInvAmount}}</button>
-                        <button ng-disabled="chartActivated || orderButtonDisabled" class="btn btn-primary btn-sm" type="button" ng-click="descreaseWorkshopAmount()" ng-disabled="decreaseDisabled">
-                            <i class="glyphicon glyphicon-chevron-down"></i>
-                        </button>
-                    </span>
+                        <span class="btn-group-vertical" style="margin-left:4px">
+                            <button ng-disabled="chartActivated" class="btn btn-primary btn-sm" type="button" ng-click="increaseWorkshopAmount()">
+                                <i class="glyphicon glyphicon-chevron-up"></i>
+                            </button>
+                            <button ng-disabled="true" class="btn btn-default" style="margin-bottom:4px; margin-top:4px">{{limitInvAmount - mainInvAmount}}</button>
+                            <button ng-disabled="chartActivated || orderButtonDisabled" class="btn btn-primary btn-sm" type="button" ng-click="descreaseWorkshopAmount()" ng-disabled="decreaseDisabled">
+                                <i class="glyphicon glyphicon-chevron-down"></i>
+                            </button>
+                        </span>
+
+                    </div>
+
+
+
+
                 </div>
 
-
-
-
-            </div>
-
-            <div id="orders" class="col-md-7">
-                <label>
-                    Orders
-                    <i class="glyphicon glyphicon-sort-by-attributes"></i>
-                </label>
-                <table class="table table-hover">
-
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Amount</th>
-                            <th>Item id</th>
-                            <th></th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        <tr ng-repeat="rec in tableItems track by $index">
-                            <td>{{rec.Name}}</td>
-                            <td>{{rec.Amount}}</td>
-                            <td>{{rec.ItemID}}</td>
-                            <td>
-                                <button ng-click="deleteRow(rec.ItemID)" class="btn btn-warning btn-sm" style="margin-top:4px">
-                                    Delete
-                                    <i class="glyphicon glyphicon-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-
-                    </tbody>
-
-
-                </table>
-
-
-            </div>
-        </div>
-        <div class="panel-footer">
-
-            <div class="row">
-                <div class="col-md-5">
-                    <button ng-disabled="orderButtonDisabled" ng-click="order()" class="btn btn-primary btn-sm" style="margin-top:4px">
-                        Order
+                <div id="orders" class="col-md-7">
+                    <label>
+                        Orders
                         <i class="glyphicon glyphicon-sort-by-attributes"></i>
-                    </button>
-                </div>
-                <div class="col-md-7">
-                    <button ng-disabled="transferDisabled" ng-click="transfer()" id="transfer" class="btn btn-primary btn-sm" style="margin-top:4px">
-                        Transfer
-                        <i class="glyphicon glyphicon-retweet"></i>
-                    </button>
+                    </label>
+                    <table class="table table-hover">
+
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Amount</th>
+                                <th>Item id</th>
+                                <th></th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr ng-repeat="rec in tableItems track by $index">
+                                <td>{{rec.Name}}</td>
+                                <td>{{rec.Amount}}</td>
+                                <td>{{rec.ItemID}}</td>
+                                <td>
+                                    <button ng-click="deleteRow(rec.ItemID)" class="btn btn-warning btn-sm" style="margin-top:4px">
+                                        Delete
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+
+                    </table>
+
 
                 </div>
             </div>
+            <div class="panel-footer">
+
+                <div class="row">
+                    <div class="col-md-5">
+                        <button ng-disabled="orderButtonDisabled" ng-click="order()" class="btn btn-primary btn-sm" style="margin-top:4px">
+                            Order
+                            <i class="glyphicon glyphicon-sort-by-attributes"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-7">
+                        <button ng-disabled="transferDisabled" ng-click="transfer()" id="transfer" class="btn btn-primary btn-sm" style="margin-top:4px">
+                            Transfer
+                            <i class="glyphicon glyphicon-retweet"></i>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
-
-
-
-    </div>

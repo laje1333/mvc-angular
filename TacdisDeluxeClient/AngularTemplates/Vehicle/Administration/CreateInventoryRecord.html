@@ -9,7 +9,7 @@
 <div ng-controller="VehicleInventoryController">
 
     <div id="color" class="col-md-4">
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <panelheader data-title="New Inventory Record"></panelheader>
             <div class="form-group panel-body">
                 <label for="regNumber">Reg number:</label>
@@ -29,12 +29,14 @@
                 <input class="form-control" type="text" name="invoiceNumber" placeholder="Invoice number" />
                 <label for="invoiceDate">Invoice date:</label>
                 <input class="form-control" type="text" name="invoiceDate" placeholder="Invoice date" />
-                <div>
-                    <button type="button" class="btn btn-primary btn-md" style="margin-top: 10px">Create record</button>
-                    <button type="button" class="btn btn-warning btn-md" style="margin-top: 10px">Discard</button>
-                </div>
+
+            </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary btn-md" style="margin-top: 10px">Create record</button>
+                <button type="button" class="btn btn-warning btn-md" style="margin-top: 10px">Discard</button>
             </div>
         </div>
+        
     </div>
 
 
