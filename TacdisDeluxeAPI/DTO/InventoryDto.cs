@@ -11,6 +11,7 @@ namespace TacdisDeluxeAPI.DTO
         public int MainInventoryAmount { get; set; }
         public int WorkshopInventoryAmount { get; set; }
         public string PartName { get; set; }
+        public int itemID { get; set; }
         
     }
 }

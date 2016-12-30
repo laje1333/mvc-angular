@@ -14,54 +14,68 @@ namespace TacdisDeluxeAPI.Controllers
     public class InventoryController : ApiController
     {
         // GET: api/Inventory
-        public IEnumerable<InventoryDto> GetAllWorkshopItems()
+        public IEnumerable<InventoryDto> GetAllWorkshopItems(string partName)
         {
             using (DBContext c = new DBContext())
             {
 
-                //InventoryData d1 = new InventoryData();
-                //d1.Amount = 128;
-                //d1.Part = "Screw";
-                //d1.WorkshopAmount = 275;
-
-                //InventoryData d2 = new InventoryData();
-                //d2.Amount = 34;
-                //d2.Part = "Pipe";
-                //d2.WorkshopAmount = 75;
-
-                //InventoryData d3 = new InventoryData();
-                //d3.Amount = 512;
-                //d3.Part = "Rubber tube";
-                //d3.WorkshopAmount = 89;
-
-                //List<InventoryData> data = new List<InventoryData>();
-                //data.Add(d1);
-                //data.Add(d2);
-                //data.Add(d3);
-
-                //return data;
-                
-
                 //First get the workshop id of your current workshop from the sessionmanager
                 int workshopId = 1;
 
-                List<WorkshopInventoryItem> inventoryItems = c.WorkshopInventoryItems.Where(x => x.WorkshopId == workshopId).ToList();
+                List<WorkshopInventoryItem> inventoryItems;
+
+
+
+                inventoryItems = c.WorkshopInventoryItems.Where(x => x.WorkshopId == workshopId).ToList();
+                
 
                 List<InventoryDto> invDto = new List<InventoryDto>();
 
-                for (int i = 0; i < inventoryItems.Count; i++)
+                int index = 10;
+
+                if (inventoryItems.Count < 10)
                 {
-                    InventoryDto d = new InventoryDto();
-
-                    int prtID = inventoryItems[i].PartId;
-
-                    string p = c.Parts.Where(x => x.ItemId == prtID).Select(x => x.ItemName).Single();
-                    d.PartName = p;
-                    d.WorkshopInventoryAmount = inventoryItems[i].Amount;
-                    d.MainInventoryAmount = c.MainInventoryItems.Where(x => x.PartId == prtID).Select(x => x.Amount).Single();
-
-                    invDto.Add(d);
+                    index = inventoryItems.Count;
                 }
+
+                if (!String.IsNullOrEmpty(partName))
+                {
+                    for (int i = 0; i < index; i++)
+                    {
+                        InventoryDto d = new InventoryDto();
+
+                        int prtID = inventoryItems[i].PartId;
+
+                        PartEntity p = c.Parts.Where(x => x.ItemId == prtID && x.ItemName.Contains(partName)).SingleOrDefault();
+                        if (p != null)
+                        {
+                            d.PartName = p.ItemName;
+                            d.WorkshopInventoryAmount = inventoryItems[i].Amount;
+                            d.MainInventoryAmount = c.MainInventoryItems.Where(x => x.PartId == prtID).Select(x => x.Amount).Single();
+                            d.itemID = p.ItemId;
+                            invDto.Add(d);
+                        }
+                      
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < inventoryItems.Count; i++)
+                    {
+                        InventoryDto d = new InventoryDto();
+
+                        int prtID = inventoryItems[i].PartId;
+
+                        PartEntity p = c.Parts.Where(x => x.ItemId == prtID).Single();
+                        d.PartName = p.ItemName;
+                        d.WorkshopInventoryAmount = inventoryItems[i].Amount;
+                        d.MainInventoryAmount = c.MainInventoryItems.Where(x => x.PartId == prtID).Select(x => x.Amount).Single();
+                        d.itemID = p.ItemId;
+                        invDto.Add(d);
+                    }
+                }
+
+
 
 
                 return invDto;
@@ -76,8 +90,22 @@ namespace TacdisDeluxeAPI.Controllers
 
 
         // POST: api/Inventory
-        public void Post([FromBody]string value)
+        [System.Web.Http.HttpPost]
+        public void PostTransfer(ICollection<InventoryTableData> invData)
         {
+            using (DBContext c = new DBContext())
+            {
+                if (invData != null) { 
+                for (int i = 0; i < invData.Count; i++)
+                {
+                    int itemId = invData.ToList()[i].ItemID;
+                    int amount = invData.ToList()[i].Amount;
+                    c.WorkshopInventoryItems.Where(x => x.PartId == itemId).Single().Amount += amount;
+                    c.MainInventoryItems.Where(x => x.PartId == itemId).Single().Amount -= amount;
+                }
+                c.SaveChanges();
+            }
+            }
         }
 
         // PUT: api/Inventory/5
