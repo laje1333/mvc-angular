@@ -1,7 +1,187 @@
 ﻿<div>
 
+    <div class="panel panel-primary" style="margin-top: 10px">
+        <panelheader data-title="Vehicle valuation"></panelheader>
+        <div class="form-group panel-body">
 
-    <h3>Valuation</h3>
+            <div class="col-md-12">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="regnumber">Reg number:</label>
+                        <input class="form-control" rows="1" id="regnumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="model">Model:</label>
+                        <input class="form-control" rows="1" id="model">
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Year:</label>
+                        <input class="form-control" rows="1" id="year">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <input class="form-control" rows="1" id="description">
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-4" style="margin-top:20px">
+                <div class="panel panel-default" style="margin-top: 10px">
+                    <panelheader data-title="Vehicle information"></panelheader>
+                    <div class="form-group panel-body">
+
+                        <form class="form-group">
+
+                            <div class="form-group">
+                                <label for="milage">Milage:</label>
+                                <input class="form-control" rows="1" id="milage">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="inspection">Inspection date:</label>
+                                <input class="form-control" rows="1" id="inspection">
+                            </div>
+
+                            <label for="vattype">Vat type:</label>
+                            <select class="form-control" id="vattype">
+                                <option>Normal</option>
+                                <option>Discounted</option>
+                            </select>
+
+
+                            <div class="form-group" style="margin-top:20px">
+                                <label>
+                                    Extensions
+                                    <i class="glyphicon glyphicon-sort-by-attributes"></i>
+                                </label>
+                                <div class="panel panel-default" style="margin-top: 10px">
+
+                                    <div class="form-group panel-body">
+
+                                        <table class="table table-hover">
+
+                                            <thead>
+                                                <tr>
+                                                    <th>Extension</th>
+                                                    <th>Date</th>
+                                                    <th>Price</th>
+                                                </tr>
+
+                                            </thead>
+
+                                            <tbody>
+                                                <tr>
+                                                    <td>Light kit</td>
+                                                    <td>2013-07-14</td>
+                                                    <td>4990</td>
+                                                </tr>
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" style="margin-top:20px">
+
+                <div class="panel panel-default" style="margin-top: 10px">
+                    <panelheader data-title="Owner information"></panelheader>
+                    <div class="form-group panel-body">
+                        <form class="form-group">
+
+                            <div class="form-group">
+                                <label for="owner">Owner:</label>
+                                <input class="form-control" rows="1" id="owner">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="driver">Driver:</label>
+                                <input class="form-control" rows="1" id="driver">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lessee">Lessee:</label>
+                                <input class="form-control" rows="1" id="lessee">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="primdeldate">Primary delivery date:</label>
+                                <input class="form-control" rows="1" id="primdeldate">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="latestdeldate">Latest delivery date:</label>
+                                <input class="form-control" rows="1" id="latestdeldate">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="interalwithdraw">Internal withdraw:</label>
+                                <input class="form-control" rows="1" id="interalwithdraw">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4" style="margin-top:20px">
+
+                <div class="panel panel-default" style="margin-top: 10px">
+                    <panelheader data-title="Valuation information"></panelheader>
+                    <div class="form-group panel-body">
+                        <form class="form-group">
+
+                            <div class="form-group">
+                                <label for="salesman">Salesman:</label>
+                                <input class="form-control" rows="1" id="salesman">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="testedby">Tested by:</label>
+                                <input class="form-control" rows="1" id="testedby">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="workshop">Workshop:</label>
+                                <input class="form-control" rows="1" id="workshop">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="valuationdata">Valuation date:</label>
+                                <input class="form-control" rows="1" id="valuationdata">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="panel-footer">
+
+
+
+                    <button class="btn btn-primary btn-sm" style="margin-top:4px">
+                        Save
+                        <i class="glyphicon glyphicon-save"></i>
+                    </button>
+
+
+                    <button id="transfer" class="btn btn-warning btn-sm" style="margin-top:4px">
+                        Discard
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </button>
+
+        </div>
+    </div>
 
 
 </div>
