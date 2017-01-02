@@ -328,6 +328,7 @@
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceMenuController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceMaintenanceController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceOverviewController.js" />
+    <Content Include="Scripts\App\Controllers\Layout\LayoutController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsModuleConfig.js" />
     <Content Include="Scripts\App\Controllers\Sales\PayerSalesmanController.js" />
@@ -335,6 +336,8 @@
     <Content Include="Scripts\App\Controllers\Vehicle\VehicleController.js" />
     <Content Include="Scripts\App\Controllers\WorkOrder\WorkOrderController.js" />
     <Content Include="Scripts\App\Directives\Vehicle\NewVehicleDirective.js" />
+    <Content Include="Scripts\App\Factories\AuthInterceptorService.js" />
+    <Content Include="Scripts\App\Factories\AuthService.js" />
     <Content Include="Scripts\App\Factories\SaleFactory.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

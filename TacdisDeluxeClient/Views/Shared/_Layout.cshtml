@@ -13,6 +13,10 @@
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/ng-table.min.js"></script>
     @Scripts.Render("~/bundles/custom")
+    
+    <script src="~/Scripts/App/Factories/AuthService.js"></script>
+    <script src="~/Scripts/App/Factories/AuthInterceptorService.js"></script>
+    <script src="~/Scripts/App/Controllers/Layout/LayoutController.js"></script>
 
     <script src="~/Scripts/global.js"></script>
     <link href="~/Content/Custom.css" rel="stylesheet"/>
@@ -27,7 +31,7 @@
     }
 
 </head>
-<body ng-app="tacdisDeluxeApp">
+<body ng-app="tacdisDeluxeApp" ng-controller="LayoutController">
     <script>
         //  .alert-success, .alert-info, .alert-warning or .alert-danger
         window.feedbackPopup = function (msg, options) {
@@ -71,7 +75,7 @@
         <span class="message-level glyphicon"></span> <span class="message-text"></span>
     </div>
 
-    <div class="navbar navbar-default navbar-fixed-top navbar-custom">
+    <div class="navbar navbar-default navbar-fixed-top navbar-custom" ng-show="isAuth" ng-cloak>
         <div class="container-fluid">
             <div class="col-md-2 nav-logo">
                 <a href="/"><img src="~/Images/tacdis.png" /></a>

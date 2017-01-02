@@ -105,18 +105,18 @@ namespace TacdisDeluxeAPI.Controllers
         {
 
             //Test
-            //var mockInvoice = GetMockInvoice.GetInvoice(2, 2, 12);
-            //invoiceDto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
+            var mockInvoice = GetMockInvoice.GetInvoice(2, 2, 100001);
+            invoiceDto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
 
-            try
-            {
-                invoiceDto = InvoiceValidator.ValidateAndUpdateInvoiceDto(invoiceDto);
-            }
-            catch (Exception ex)
-            {
+            //try
+            //{
+            //    invoiceDto = InvoiceValidator.ValidateAndUpdateInvoiceDto(invoiceDto);
+            //}
+            //catch (Exception ex)
+            //{
 
-                return BadRequest("Validation fail!");
-            }
+            //    return BadRequest("Validation fail!");
+            //}
 
             InvoiceEntity invoice;
             try
