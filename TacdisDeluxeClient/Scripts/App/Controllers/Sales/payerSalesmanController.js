@@ -12,7 +12,7 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
         var req = {
             method: 'POST',
             url: 'http://localhost:57661/api/payer',
-            headers: {},
+            headers: {Authorization: 'bearer ' + window.sessionStorage.getItem('Token')},
             data: {
                 FirstName: $scope.firstName,
                 LastName: $scope.lastName,
@@ -70,6 +70,7 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
 
         $http(req).
          then(function (response) {
+             window.sessionStorage.getItem('Token');
              document.getElementById('searchIconP').className = 'glyphicon glyphicon-ok-sign';
              document.getElementById('searchButtonP').className = 'btn btn-success';
              feedbackPopup('Payer found', { level: 'success', timeout: 2000 });

@@ -16,7 +16,7 @@
          then(function (response) {
              $route.reload();
              feedbackPopup('YEY', { level: 'success', timeout: 2000 });
-             $scope.token = response.data.access_token;
+             window.sessionStorage.setItem('Token', response.data.access_token);
          }, function (response) {
              feedbackPopup('Something went wrong', { level: 'warning', timeout: 2000 });
              $scope.statusCode = response.statusCode;
