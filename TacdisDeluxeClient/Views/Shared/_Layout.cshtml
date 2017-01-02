@@ -26,7 +26,12 @@
         string navInvoiceCss = controller.ToLower() == "invoice" ? "nav-active" : "";
     }
 
+  
+
 </head>
+
+
+
 <body ng-app="tacdisDeluxeApp">
     <script>
         //  .alert-success, .alert-info, .alert-warning or .alert-danger
@@ -34,7 +39,7 @@
             var level = (options === undefined || options.level === undefined) ? 'success' : options.level.toLowerCase();
             var timeout = (options === undefined || options.timeout === undefined) ? 2000 : options.timeout;
             var glyph = 'ok';
-            
+
 
             switch (level.toLowerCase()) {
                 case 'info':
@@ -97,4 +102,5 @@
 
     @RenderSection("scripts", required: false)
 </body>
+
 </html>

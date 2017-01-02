@@ -29,7 +29,7 @@
     </div>
     <div id="second_row" class="row">
         <div id="engine" class="col-md-3">
-            <div class="panel panel-primary">
+            <div class="panel panel-default">
                 <panelheader data-title="Engine"></panelheader>
                 <div class="form-group panel-body default-collapsed" id="enginePanel">
                     <div class="col-md-12">
@@ -48,7 +48,7 @@
             </div>
         </div>
         <div id="transmission" class="col-md-3">
-            <div class="panel panel-primary">
+            <div class="panel panel-default">
                 <panelheader data-title="Transmission"></panelheader>
                 <div class="form-group panel-body default-collapsed" id="transmissionPanel">
                     <div class="col-md-12">
@@ -67,7 +67,7 @@
             </div>
         </div>
         <div id="color" class="col-md-3">
-            <div class="panel panel-primary">
+            <div class="panel panel-default">
                 <panelheader data-title="Exterior"></panelheader>
                 <div class="form-group panel-body default-collapsed" id="colorPanel">
                     <div class="col-md-12">
@@ -86,7 +86,7 @@
             </div>
         </div>
         <div id="interior" class="col-md-3">
-            <div class="panel panel-primary">
+            <div class="panel panel-default">
                 <panelheader data-title="Interior"></panelheader>
                 <div class="form-group panel-body default-collapsed" id="interiorPanel">
                     <div class="col-md-12">
@@ -108,13 +108,14 @@
     </div>
 
     <div class="panel-footer">
-        <button type="button" id="saveButton" class="btn btn-primary btn-md" ng-click="saveData()" data-toggle="popover" data-placement="left" data-content="Sucessefully saved">
+        <button type="button" id="saveButton" class="btn btn-primary btn-sm" ng-click="saveData()" data-toggle="popover" data-placement="left" data-content="Sucessefully saved">
             Save
-            <span class="glyphicon glyphicon-floppy-save"></span>
+            <span class="glyphicon glyphicon-save"></span>
         </button>
-        <button type="button" class="btn btn-warning btn-md" ng-click="reloadRoute()">
+        <button type="button" class="btn btn-warning btn-sm" ng-click="reloadRoute()">
             Discard
             <span class="glyphicon glyphicon-remove"></span>
+
         </button>
     </div>
 </div>
