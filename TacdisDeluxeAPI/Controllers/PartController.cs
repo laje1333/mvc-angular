@@ -85,6 +85,8 @@ namespace TacdisDeluxeAPI.Controllers
 
         public IHttpActionResult Post([FromBody]PartDto part)
         {
+            PartDto responseDto = null;
+
             try
             {
                 var entity = Mapper.Map<PartDto, PartEntity>(part);
@@ -92,6 +94,28 @@ namespace TacdisDeluxeAPI.Controllers
                 using (DBContext db = new DBContext())
                 {
                     db.Parts.Add(entity);
+                    db.SaveChanges();
+
+                    responseDto = Mapper.Map<PartEntity, PartDto>(entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+            return Ok(responseDto);
+        }
+
+
+        public IHttpActionResult Delete(int id)
+        {
+            try
+            {
+                using (DBContext db = new DBContext())
+                {
+                    var entity = db.Parts.Where(p => p.Id == id).SingleOrDefault();
+                    db.Parts.Remove(entity);
                     db.SaveChanges();
                 }
             }
@@ -102,7 +126,6 @@ namespace TacdisDeluxeAPI.Controllers
 
             return Ok();
         }
-
 
 
 
@@ -133,4 +156,4 @@ namespace TacdisDeluxeAPI.Controllers
         //{
         //}
     }
-}
+    }
