@@ -58,10 +58,16 @@ tacdisDeluxeApp.directive("tframe", function () {
             $scope.frameBodyId = $scope.generateFrameId();
             $scope.frameHeaderId = $scope.generateFrameId();
             $scope.resizeId = $scope.generateFrameId();
+            $scope.rightResizeId = $scope.generateFrameId();
+            $scope.cornerResizeId = $scope.generateFrameId();
+
+
             document.getElementById("frame").id = $scope.frameId;
             document.getElementById("framebody").id = $scope.frameBodyId;
             document.getElementById("frameheader").id = $scope.frameHeaderId;
             document.getElementById("resize").id = $scope.resizeId;
+            document.getElementById("right-resize").id = $scope.rightResizeId;
+            document.getElementById("corner-resize").id = $scope.cornerResizeId;
             frameTracker.push($scope.frameId);
             selectedFrame = $scope.frameId;
 
@@ -69,11 +75,23 @@ tacdisDeluxeApp.directive("tframe", function () {
             window.addEventListener('mouseup', mouseUp, false);
             
             var resizer = document.getElementById($scope.resizeId);
+            var rightResizer = document.getElementById($scope.rightResizeId);
+            var cornerResizer = document.getElementById($scope.cornerResizeId);
+
+            rightResizer.addEventListener('mousedown', initDrag, false);
             resizer.addEventListener('mousedown', initDrag, false);
+            cornerResizer.addEventListener('mousedown', initDrag, false);
+            rightResizer.style.height = document.getElementById($scope.frameId).offsetHeight + "px";
             resizer.style.width = document.getElementById($scope.frameId).offsetWidth + "px";
-            document.getElementById($scope.resizeId).style.left = tempX + "px";
-            document.getElementById($scope.resizeId).style.top = (tempY + document.getElementById($scope.frameBodyId).offsetHeight + 50) + "px";
+
+            var framecont = $('#' + $scope.resizeId).closest('.framecontainer');
             p = document.getElementById($scope.frameId);
+            p.style.width = "1138px";
+            //document.getElementById($scope.resizeId).style.left = framecont.position().left + "px";
+            $('#' + $scope.resizeId).css({ left: framecont.position().left+"px", top: (p.offsetHeight + p.offsetTop) + "px", width: p.offsetWidth + "px"});
+            
+
+            
         }
 
         
@@ -85,12 +103,21 @@ tacdisDeluxeApp.directive("tframe", function () {
             var div = document.getElementById($scope.frameId);
             if (div.offsetLeft < 0) {
                 div.style.left = "1px";
+                document.getElementById($scope.resizeId).style.left = 1 + "px";
+                document.getElementById($scope.rightResizeId).style.left = (1 + 50 + document.getElementById($scope.frameBodyId).offsetWidth + "px");
+                document.getElementById($scope.cornerResizeId).style.left = (1 + 50 + document.getElementById($scope.frameBodyId).offsetWidth + "px");
             }
             if (div.offsetTop < 0) {
                 div.style.top = "auto";
+                document.getElementById($scope.resizeId).style.top = (document.getElementById($scope.frameBodyId).offsetHeight + 65 + document.getElementById($scope.frameBodyId).offsetTop) + "px";
+                document.getElementById($scope.rightResizeId).style.top = (document.getElementById($scope.frameBodyId).offsetTop + 60) + "px";
+                document.getElementById($scope.cornerResizeId).style.top = (document.getElementById($scope.frameBodyId).offsetHeight + document.getElementById($scope.frameBodyId).offsetTop + 65) + "px";
             }
             
         }
+
+
+
 
         function mouseDown(e) {
             selectedFrame = $scope.frameId;
@@ -112,29 +139,52 @@ tacdisDeluxeApp.directive("tframe", function () {
                 div.style.left = (e.clientX - offX) + 'px';
                 tempX = (e.clientX - offX);
                 tempY = (e.clientY - offY);
+                document.getElementById($scope.resizeId).style.width = document.getElementById($scope.frameId).offsetWidth + "px";
+                document.getElementById($scope.rightResizeId).style.height = (document.getElementById($scope.frameId).offsetHeight - 42) + "px";
+                document.getElementById($scope.rightResizeId).style.left = (tempX + 50 + document.getElementById($scope.frameBodyId).offsetWidth) + "px";
+                document.getElementById($scope.rightResizeId).style.top = (tempY + 42) + "px";
+                document.getElementById($scope.resizeId).style.left = tempX + "px";
+                document.getElementById($scope.resizeId).style.top = (tempY + document.getElementById($scope.frameBodyId).offsetHeight + 50) + "px";
+                document.getElementById($scope.cornerResizeId).style.top = (tempY + document.getElementById($scope.frameBodyId).offsetHeight + 50) + "px";
+                document.getElementById($scope.cornerResizeId).style.left = (tempX + document.getElementById($scope.frameBodyId).offsetWidth + 50) + "px";
             }
         }
 
         var tempX, tempY;
         var startX, startY, startWidth, startHeight;
+        var srcId;
         function initDrag(e) {
+            srcId = e.srcElement.id;
             startX = e.clientX;
             startY = e.clientY;
             startWidth = parseInt(document.defaultView.getComputedStyle(p).width, 10);
             startHeight = parseInt(document.defaultView.getComputedStyle(p).height, 10);
+
             document.documentElement.addEventListener('mousemove', doDrag, false);
             document.documentElement.addEventListener('mouseup', stopDrag, false);
         }
 
         function doDrag(e) {
+            if (srcId == $scope.resizeId) {
+                p.style.height = (startHeight + e.clientY - startY) + 'px';
+            } else if (srcId == $scope.rightResizeId) {
+                p.style.width = (startWidth + e.clientX - startX) + 'px';
+            } else if (srcId == $scope.cornerResizeId) {
+                p.style.width = (startWidth + e.clientX - startX) + 'px';
+                p.style.height = (startHeight + e.clientY - startY) + 'px';
+            }
+            
 
-            p.style.width = (startWidth + e.clientX - startX) + 'px';
-            p.style.height = (startHeight + e.clientY - startY) + 'px';
             document.getElementById($scope.frameBodyId).style.width = (document.getElementById($scope.frameId).offsetWidth-50) + "px";
             document.getElementById($scope.frameBodyId).style.height = (document.getElementById($scope.frameId).offsetHeight - 50) + "px";
             document.getElementById($scope.resizeId).style.width = document.getElementById($scope.frameId).offsetWidth + "px";
+            document.getElementById($scope.rightResizeId).style.height = (document.getElementById($scope.frameId).offsetHeight-42) + "px";
+            document.getElementById($scope.rightResizeId).style.left = (tempX + 50 + document.getElementById($scope.frameBodyId).offsetWidth) + "px";
+            document.getElementById($scope.rightResizeId).style.top = (tempY + 42) + "px";
             document.getElementById($scope.resizeId).style.left = tempX + "px";
             document.getElementById($scope.resizeId).style.top = (tempY + document.getElementById($scope.frameBodyId).offsetHeight + 50) + "px";
+            document.getElementById($scope.cornerResizeId).style.top = (tempY + document.getElementById($scope.frameBodyId).offsetHeight + 50) + "px";
+            document.getElementById($scope.cornerResizeId).style.left = (tempX + document.getElementById($scope.frameBodyId).offsetWidth + 50) + "px";
         }
 
         function stopDrag(e) {
@@ -142,6 +192,7 @@ tacdisDeluxeApp.directive("tframe", function () {
         }
 
 
+        
 
         $scope.frameIsVisible = true;
         $scope.frameIsMinimized = false;
