@@ -98,23 +98,23 @@ namespace TacdisDeluxeAPI.Controllers
 
         }
 
-        [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromSalesDto")]
+        [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromSales")]
         [System.Web.Http.HttpPost]
-        public IHttpActionResult CreateInvoice(SalesDto salesDto)
+        public IHttpActionResult CreateInvoiceFromSales(SalesDto salesDto)
         {
 
             var invoice = new InvoiceEntity();
-            
+
             try
             {
-               invoice = InvoiceValidator.CreateInvoiceEntityFromSalesDto(salesDto);
+                invoice = InvoiceValidator.CreateInvoiceEntityFromSalesDto(salesDto);
             }
             catch (Exception ex)
             {
 
                 return BadRequest("Validation fail!");
             }
-
+            
             try
             {
                 using (var db = new DBContext())
