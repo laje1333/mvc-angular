@@ -338,7 +338,8 @@ ul.pagination.ng-table-pagination.ng-scope {
     margin: 0px;
 }
 
-
+        .resizable {position: relative; }
+        .resizer { width: 10px; height: 10px; background: blue; position:absolute; right: 0; bottom: 0; cursor: se-resize; }
 
 
 

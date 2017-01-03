@@ -7,7 +7,9 @@ using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
+using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Mockdata.WorkOrderData;
+using TacdisDeluxeAPI.Models;
 
 namespace TacdisDeluxeAPI.Controllers
 {
@@ -24,6 +26,13 @@ namespace TacdisDeluxeAPI.Controllers
             switch (addNew)
             {
                 case "WOH":
+                    var WoEntity = new WorkOrderEntity();
+
+                    using (DBContext c = new DBContext())
+                    {
+                        c.WorkOrder.Add(WoEntity);
+                    }
+
                     wohId = WorkOrderDB.CreateNewWorkOrder();
                     CurrentWOHID = wohId;
                     CurrentWOJID = "";
@@ -190,8 +199,27 @@ namespace TacdisDeluxeAPI.Controllers
 
 
         // POST: api/WorkOrder
-        public void Post([FromBody]string value)
+        [System.Web.Http.HttpPost]
+        public void PostWOH(WorkOrderDto wohData)
         {
+            WorkOrderEntity wohEnt = new WorkOrderEntity();
+            wohEnt.Status = wohData.Status;
+
+            using (DBContext c = new DBContext())
+            {
+                var tempEnt = c.WorkOrder.FirstOrDefault();
+                if (tempEnt == null)
+                {
+                    wohEnt.WoNr = 120000;
+                }
+                else
+                {
+                    wohEnt.WoNr = tempEnt.WoNr + 1;
+                }
+                wohEnt.CreatedDate = DateTime.Now;
+                c.WorkOrder.Add(wohEnt);
+                c.SaveChanges();
+            }
         }
 
         // PUT: api/WorkOrder/5

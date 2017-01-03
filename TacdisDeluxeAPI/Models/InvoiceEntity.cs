@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Cryptography.X509Certificates;
+using TacdisDeluxeAPI.Models.Enums;
 
 namespace TacdisDeluxeAPI.Models
 {
@@ -18,9 +20,9 @@ namespace TacdisDeluxeAPI.Models
         [Index(IsUnique = true)]
         public int InvoiceNumber { get; set; }
         [Required]
-        public string InvoiceState { get; set; }
-        public string DueDate { get; set; }
-        public string InvoiceDate { get; set; }
+        public InvoiceState InvoiceState { get; set; }
+        public DateTime DueDate { get; set; }
+        public DateTime InvoiceDate { get; set; }
         public double InvoiceAmount { get; set; }
         public string DebitCredit { get; set; }
         public double Vat { get; set; }
