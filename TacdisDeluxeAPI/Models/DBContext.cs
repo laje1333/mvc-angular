@@ -44,7 +44,7 @@ namespace TacdisDeluxeAPI.Models
             builder.Entity<VehicleEntity>().ToTable("Vehicle");
             builder.Entity<VehicleBrandEntity>().ToTable("VehicleBrand");
             builder.Entity<VehiclePropertyEntity>().ToTable("VehicleProperty");
-            builder.Entity<WorkOrderEntity>().ToTable("WorkOrder");
+            builder.Entity<WorkOrderEntity>().ToTable("WorkOrder");//.Property(f => f.CheckedInDate).HasColumnType("datetime2");
 
             builder.Configurations.Add(new PartMap());
             builder.Configurations.Add(new SaleMap());
