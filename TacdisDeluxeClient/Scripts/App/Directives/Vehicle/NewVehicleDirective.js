@@ -88,8 +88,8 @@ tacdisDeluxeApp.directive("tframe", function () {
             p = document.getElementById($scope.frameId);
             p.style.width = "1138px";
             //document.getElementById($scope.resizeId).style.left = framecont.position().left + "px";
-            $('#' + $scope.resizeId).css({ left: framecont.position().left+"px", top: (p.offsetHeight + p.offsetTop) + "px", width: p.offsetWidth + "px"});
-            
+            $('#' + $scope.resizeId).css({ left: framecont.position().left + "px", top: (p.offsetHeight + p.offsetTop) + "px", width: p.offsetWidth + "px" });
+            $('#' + $scope.rightResizeId).css({ left: (framecont.position().left + p.offsetWidth) + "px", top: "60px", height: p.offsetHeight + "px" });
 
             
         }
