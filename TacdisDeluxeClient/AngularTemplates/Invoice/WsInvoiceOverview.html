@@ -1,45 +1,45 @@
-﻿
-<h3>Search Workshop Invoice</h3>
+﻿<tframe data-title="Search Workshop Invoice">
+    <h3>Search Workshop Invoice</h3>
 
-    <form>
-        <div class="input-group">
-            <div class="input-group-btn">
-                <input type="text" class="form-control" placeholder="Search" ng-submit="SearchInvoices()" ng-model="inputVal">
-                <button class="btn btn-default" type="submit" ng-click="SearchInvoices()">
-                    <i ng-show="!spinner" class="glyphicon glyphicon-search"></i>
-                    <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
-                </button>
-               
+   
+    <div ng-controller="WsInvoiceOverviewCtrl" class="container">
+        <form>
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <input type="text" class="form-control" placeholder="Search" ng-submit="SearchInvoices()" ng-model="inputVal">
+                    <button class=" btn btn-primary" type="submit" ng-click="SearchInvoices()">
+                        <i ng-show="!spinner" class="glyphicon glyphicon-search"></i>
+                        <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: white"></i>
+                    </button>
+
+                </div>
             </div>
+        </form>
+
+        <br />
+
+        <div ng-show="records.length">
+            <table ng-table="invoiceTable" class="table table-striped table-hover" show-filter="true">
+                <tr ng-repeat="record in $data">
+                    <td data-title="'Invoice number'" ng-click="sendToMaintenance(record)"> <a href="http://localhost:53615/Invoice#/WsInvoiceMaintenance" title="Send to Maintenance">{{record.InvoiceNumber}}</a></td>
+                    <td data-title="'Invoice state'">{{record.InvoiceState | invoicestate}}</td>
+                    <td data-title="'Wo number'">{{record.WoNumber}}</td>
+                    <td data-title="'Job number'">{{record.JobNumber}}</td>
+                    <td data-title="'Payer'">{{record.Payer.FirstName +" "+ record.Payer.LastName}}</td>
+                    <td data-title="'Reg number'">{{record.RegNumber}}</td>
+                    <td data-title="'Customer number'">{{record.Payer.CustomerNumber}}</td>
+                    <td data-title="'Invoice date'">{{record.InvoiceDate}}</td>
+                    <td data-title="'Due date'">{{record.DueDate}}</td>
+                    <td data-title="'Debit/Credit'">{{record.DebitCredit}}</td>
+                    <td data-title="'Vat'">{{record.InvoiceAmount * (record.Vat / 100 ) | valuta}}</td>
+                    <td data-title="'Invoice amount'">{{record.InvoiceAmount | valuta}}</td>
+                    <td data-title="'Preview'"><button ng-click="toggleModal(record.InvoiceNumber)" class=" btn btn-primary">view</button></td>
+                </tr>
+            </table>
         </div>
-    </form>
-
-<br/>
-
-<div ng-controller="WsInvoiceOverviewCtrl" class="container">
-
-    <div ng-show="records.length">
-        <table ng-table="invoiceTable" class="table table-striped table-hover" show-filter="true">
-            <tr ng-repeat="record in $data">
-                <td data-title="'Invoice number'" ng-click="sendToMaintenance(record)"> <a href="http://localhost:53615/Invoice#/WsInvoiceMaintenance" title="Send to Maintenance">{{record.InvoiceNumber}}</a></td>
-                <td data-title="'Invoice state'">{{record.InvoiceState | invoicestate}}</td>
-                <td data-title="'Wo number'">{{record.WoNumber}}</td>
-                <td data-title="'Job number'">{{record.JobNumber}}</td>
-                <td data-title="'Payer'">{{record.Payer.FirstName +" "+ record.Payer.LastName}}</td>
-                <td data-title="'Reg number'">{{record.RegNumber}}</td>
-                <td data-title="'Customer number'">{{record.Payer.CustomerNumber}}</td>
-                <td data-title="'Invoice date'">{{record.InvoiceDate}}</td>
-                <td data-title="'Due date'">{{record.DueDate}}</td>
-                <td data-title="'Debit/Credit'">{{record.DebitCredit}}</td>
-                <td data-title="'Vat'">{{record.Vat | valuta}}</td>
-                <td data-title="'Invoice amount'">{{record.InvoiceAmount | valuta}}</td>
-                <td data-title="'Preview'"><button ng-click="toggleModal(record.InvoiceNumber)" class="btn btn-default">view</button></td>
-            </tr>
-        </table>
+        <modal visible="showModal">
+            <img src="http://www.tradeinvoice.com/images_website/InvoiceExample2.png" alt="Invoice" style="width: 543px; height: 767px; ">
+        </modal>
     </div>
-    <modal visible="showModal">
-        <img src="http://www.tradeinvoice.com/images_website/InvoiceExample2.png" alt="Invoice" style="width: 543px; height: 767px; ">
-    </modal>
-</div>
 
-
+</tframe>
