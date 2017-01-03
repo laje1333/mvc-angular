@@ -412,7 +412,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
 });
 
-tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
+tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgTableParams, $http) {
 
     $scope.spinner = false;
 
@@ -422,11 +422,11 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
     .then(function (response) {
         feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
         var obj = response.data;
-        $scope.records = obj;
+        $scope.records = obj.length;
         $scope.newVehicles.push(obj);
         $scope.spinner = false;
 
-        $scope.newVehicleTable = new ngTableParams({
+        $scope.newVehicleTable = new NgTableParams({
 
         },
             {
@@ -475,7 +475,7 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
 
     $scope.reverseSort = false;
     $scope.orderByField = "REGNR";
-}]);
+});
 
 tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http){
 
@@ -509,7 +509,11 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
             html: true,
             content: $scope.popoverLines($scope.itemDesc)
         });
-        $("#" + id).popover('toggle');
+        $("#" + id).popover('show');
+    }
+
+    $scope.hidePopover = function () {
+        $("#info").popover('hide');
     }
     
     $scope.popoverLines = function (text) {
@@ -522,9 +526,376 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
             result += "<td>" + temp[i] + "</td>";
         }
         result += "</tr></tbody></table>";
+        result += "<button type='button' class='btn btn-warning btn-md' onclick='hidePopover()'>Close</button>";
         return result;
     }
+
+
+    $scope.tableItems = [];
+
+    $scope.order = function () {
+
+        var data = {
+            Name: $scope.itemName,
+            Amount: ($scope.limitInvAmount - $scope.mainInvAmount),
+            ItemID: $scope.itemId,
+        };
+
+        $scope.checkForDuplicates(data);
+        $scope.transferDisabled = false;
+        
+
+    }
+
+    $scope.deleteRow = function (id) {
+        var index = -1;
+
+        for (i = 0; i < $scope.tableItems.length; i++) {
+            var tempID = $scope.tableItems[i].ItemID;
+            if (tempID === id) {
+                index = i;
+                break;
+            }
+        }
+        if (index === -1) {
+            alert("Something gone wrong");
+        }
+
+        feedbackPopup($scope.tableItems[index].ItemID + " sucessefully deleted", { level: 'info', timeout: 3000 });
+        $scope.tableItems.splice(index, 1);
+    }
+
+
+    $scope.checkForDuplicates = function (data) {
+        for (i = 0; i < $scope.tableItems.length; i++) {
+            if (data.Name === $scope.tableItems[i].Name) {
+                $scope.tableItems[i].Amount += data.Amount;
+                return;
+            }
+        }
+        $scope.tableItems.push(data);
+    }
+
+    $scope.transferDisabled = true;
+
+    $scope.transfer = function () {
+
+        var invData = $scope.tableItems;
+
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/Inventory/PostTransfer",
+            data: { '': invData }
+        }).success(function () {
+            feedbackPopup('Successefully saved new vehicle', { level: 'success', timeout: 2000 });
+            $scope.initializeCharts();
+            $scope.tableItems = [];
+            $scope.mainInvAmount = 0;
+            $scope.workshopInvAmount = 0;
+            $scope.limitInvAmount = 0;
+            $scope.itemName = "";
+            $scope.itemId = 0;
+            $scope.decreaseDisabled = false;
+            $scope.orderButtonDisabled = true;
+            $scope.transferDisabled = true;
+        });
+    }
+
+    $scope.searchFieldText = "";
+
+    $scope.searchForInventoryItems = function () {
+        $scope.inventoryData = [];
+        $scope.inventoryTypes = [];
+        $scope.mainInventoryAmounts = [];
+        $scope.shopInventoryAmounts = [];
+
+        $http.get("http://localhost:57661/api/Inventory/GetAllWorkshopItems?partName=" + $scope.searchFieldText)
+            .then(function (response) {
+                feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
+                $scope.inventoryData = response.data;
+                $scope.filterInventoryItems();
+                $scope.initializeCharts();
+
+            }, function (response) {
+                feedbackPopup("Could not fetch data", { level: 'warning', timeout: 2000 });
+            });
+
+       
+    }
+
+    $scope.filterInventoryItems = function () {
+        for (i = 0; i < $scope.inventoryData.length; i++) {
+            $scope.inventoryTypes.push($scope.inventoryData[i].PartName);
+            $scope.mainInventoryAmounts.push($scope.inventoryData[i].MainInventoryAmount);
+            $scope.shopInventoryAmounts.push($scope.inventoryData[i].WorkshopInventoryAmount);
+        }
+    }
+
+    $scope.mainInvAmount = 0;
+    $scope.workshopInvAmount = 0;
+    $scope.limitInvAmount = 0;
+    $scope.itemName = "";
+    $scope.itemId = 0;
+    $scope.decreaseDisabled = false;
+    $scope.orderButtonDisabled = true;
+
+    $scope.updateAdjustments = function (type) {
+        for (i = 0; i < $scope.inventoryData.length; i++) {
+            if (type === $scope.inventoryData[i].PartName) {
+                $scope.mainInvAmount = $scope.inventoryData[i].MainInventoryAmount;
+                $scope.workshopInvAmount = $scope.inventoryData[i].WorkshopInventoryAmount;
+                $scope.itemName = $scope.inventoryData[i].PartName;
+                $scope.limitInvAmount = $scope.mainInvAmount;
+                $scope.itemId = $scope.inventoryData[i].itemID;
+                $scope.chartActivated = false;
+                $scope.$apply();
+            }
+        }
+    }
+
+    $scope.increaseWorkshopAmount = function () {
+            $scope.workshopInvAmount += 1;
+            $scope.mainInvAmount -= 1;
+            $scope.orderButtonDisabled = false;
+    }
+
+    $scope.descreaseWorkshopAmount = function () {
+        if ($scope.limitInvAmount - $scope.mainInvAmount > 1) {
+            $scope.workshopInvAmount -= 1;
+            $scope.mainInvAmount += 1;
+            $scope.orderButtonDisabled = false;
+        } else {
+            $scope.orderButtonDisabled = true;
+            $scope.workshopInvAmount -= 1;
+            $scope.mainInvAmount += 1;
+        }
+    }
+
+    $scope.updateCachedData = function () {
+        for (i = 0; i < $scope.tableItems.length; i++) {
+
+            for (x = 0; x < $scope.inventoryData.length; x++) {
+
+                if ($scope.tableItems[i].Name === $scope.inventoryData[x].PartName) {
+                    $scope.mainInventoryAmounts[x] -= $scope.tableItems[i].Amount;
+                    $scope.shopInventoryAmounts[x] += $scope.tableItems[i].Amount;
+                }
+            }
+        }
+
+    }
+
+    $scope.extendElement = function (id) {
+        $("#" + id).slideDown("fast");
+        $scope.extended = true;
+    }
+    $scope.extended = false;
+
+    $scope.chartActivated = true;
+
+    $scope.initializeCharts = function () {
+        $(function () {
+            $('#container').highcharts({
+                chart: {
+                    type: 'column',
+
+                },
+                title: {
+                    text: 'Inventory records'
+                },
+                subtitle: {
+                    text: 'Parts and vehicles'
+                },
+                xAxis: {
+                    categories: $scope.inventoryTypes,
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Amount'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.0f}</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+
+                    series: {
+                        cursor: 'pointer',
+                        point: {
+                            events: {
+                                click: function () {
+                                    $scope.updateAdjustments(this.category);
+                                    
+                                }
+                            }
+                        }
+                    },
+
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Main inventory',
+                    data: $scope.mainInventoryAmounts
+
+                }, {
+                    name: 'Workshop inventory',
+                    data: $scope.shopInventoryAmounts
+
+                }]
+            });
+
+            $('#transfer').click(function () {
+                var chart = $('#container').highcharts();
+
+                $scope.updateCachedData();
+
+
+                chart.series[0].setData($scope.mainInventoryAmounts, false);
+                chart.series[1].setData($scope.shopInventoryAmounts, true);
+                
+            });
+        });
+    }
 });
+
+
+tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, $http){
+    $scope.regNumber = "";
+
+    $scope.regNrSearch = function () {
+        if ($scope.regNumber.length == 6) {
+            $scope.regNumber = $scope.regNumber.toUpperCase();
+            $http.get("http://localhost:57661/api/VehicleInventory/GetSingleVehicleByRegnumber?regNumber=" + $scope.regNumber)
+            .then(function (response) {
+                feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
+                $scope.regNumber = response.data.RegNo;
+                $scope.orderNumber = response.data.ItemId;
+                var itemName = response.data.ItemName.split(" ");
+                $scope.brand = itemName[0];
+                $scope.model = itemName[1];
+                $scope.year = itemName[2];
+                $scope.itemDesc = response.data.ItemDesc;
+
+            }, function (response) {
+                feedbackPopup("Could fetch data", { level: 'warning', timeout: 2000 });
+            });
+        }
+    }
+
+    $scope.displayFurtherInformation = function (id) {
+        $("#" + id).popover({
+            title: "Specifications",
+            trigger: 'focus',
+            placement: 'right',
+            html: true,
+            content: $scope.popoverLines($scope.itemDesc)
+        });
+        $("#" + id).popover('show');
+    }
+
+    $scope.hidePopover = function () {
+        $("#info").popover('hide');
+    }
+
+    $scope.popoverLines = function (text) {
+        var temp = text.split("\n");
+        var result = "<table class='table table-hover'><thead><tr><th>Engine</th><th>Transmission</th><th>Exterior</th><th>Interior</th></tr></thead><tbody><tr>";
+
+
+
+        for (i = 0; i < temp.length; i++) {
+            result += "<td>" + temp[i] + "</td>";
+        }
+        result += "</tr></tbody></table>";
+        result += "<button type='button' class='btn btn-warning btn-md' onclick='hidePopover()'>Close</button>";
+        return result;
+    }
+
+    $scope.selectedInventory = "";
+
+    $scope.selectInventory = function (name) {
+        $scope.selectedInventory = name;
+        $scope.$apply();
+    }
+
+    $(function () {
+        Highcharts.chart('container', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            title: {
+                text: 'Inventory<br>space<br>',
+                align: 'center',
+                verticalAlign: 'middle',
+                y: 40
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true,
+                        distance: -50,
+                        style: {
+                            fontWeight: 'bold',
+                            color: 'white'
+                        }
+                    },
+                    startAngle: -90,
+                    endAngle: 90,
+                    center: ['50%', '75%']
+                },
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                
+                                $scope.selectInventory(this.name);
+                            }
+                        }
+                    }
+                },
+
+            },
+            series: [{
+                type: 'pie',
+                name: 'Inventory space',
+                innerSize: '50%',
+                
+                data: [
+                    ['Workshop inventory', 10.38],
+                    ['Main inventory', 56.33],
+                    {
+                        name: 'Proprietary or Undetectable',
+                        y: 0.2,
+                        dataLabels: {
+                            enabled: false
+                        }
+                    }
+                ]
+            }]
+        });
+    });
+
+});
+
+hidePopover = function () {
+    $("#info").popover('hide');
+}
 
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider

@@ -3,10 +3,10 @@
     th {
         white-space: nowrap;
     }
-
 </style>
 
 <div ng-controller="VehicleMaintenanceController" class="container">
+
     <form>
         <div class="input-group">
             <div class="input-group-btn">
@@ -18,78 +18,80 @@
             </div>
         </div>
     </form>
-    <div ng-show="records.length" style="overflow-x:scroll" ng-table="newVehicleTable">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>
-                        <a href="" ng-click="orderByField='RegNo'; reverseSort = !reverseSort">
-                            Reg Number
-                            <span ng-show="orderByField == 'RegNo'">
+    <tframe data-title="Vehicle maintenance" style="width: 600px; height: 400px; margin-top:10px">
+        <div ng-show="records" ng-table="newVehicleTable">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <a href="" ng-click="orderByField='RegNo'; reverseSort = !reverseSort">
+                                Reg Number
+                                <span ng-show="orderByField == 'RegNo'">
+                                    <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
+                                    <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
+                                </span>
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" ng-click="orderByField='ItemId'; reverseSort = !reverseSort">Item ID</a>
+                            <span ng-show="orderByField == 'ItemId'">
                                 <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
                                 <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
                             </span>
-                        </a>
-                    </th>
-                    <th>
-                        <a href="" ng-click="orderByField='ItemId'; reverseSort = !reverseSort">Item ID</a>
-                        <span ng-show="orderByField == 'ItemId'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-                    <th>
-                        <a href="" ng-click="orderByField='ItemName'; reverseSort = !reverseSort">Type</a>
-                        <span ng-show="orderByField == 'ItemName'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-                    <th>
-                        <a href="" ng-click="orderByField='ItemPrice'; reverseSort = !reverseSort">Price</a>
-                        <span ng-show="orderByField == 'ItemPrice'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-                    <th>
-                        <a href="" ng-click="orderByField='ItemDesc'; reverseSort = !reverseSort">Description</a>
-                        <span ng-show="orderByField == 'ItemDesc'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-                    <th>
-                        <a href="" ng-click="orderByField='VAT'; reverseSort = !reverseSort">VAT</a>
-                        <span ng-show="orderByField == 'VAT'">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
-                        </span>
-                    </th>
-                </tr>
-            </thead>
+                        </th>
+                        <th>
+                            <a href="" ng-click="orderByField='ItemName'; reverseSort = !reverseSort">Type</a>
+                            <span ng-show="orderByField == 'ItemName'">
+                                <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
+                            </span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="orderByField='ItemPrice'; reverseSort = !reverseSort">Price</a>
+                            <span ng-show="orderByField == 'ItemPrice'">
+                                <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
+                            </span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="orderByField='ItemDesc'; reverseSort = !reverseSort">Description</a>
+                            <span ng-show="orderByField == 'ItemDesc'">
+                                <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
+                            </span>
+                        </th>
+                        <th>
+                            <a href="" ng-click="orderByField='VAT'; reverseSort = !reverseSort">VAT</a>
+                            <span ng-show="orderByField == 'VAT'">
+                                <span class="glyphicon glyphicon-chevron-up" ng-show="reverseSort"></span>
+                                <span class="glyphicon glyphicon-chevron-down" ng-show="!reverseSort"></span>
+                            </span>
+                        </th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <tr ng-repeat="record in $data|orderBy:orderByField:reverseSort|filter:inputSearch">
-                    <td>{{record.RegNo}}</td>
-                    <td>{{record.ItemId}}</td>
-                    <td>{{record.ItemName}}</td>
-                    <td>{{record.ItemPrice + " SEK"}}</td>
-                    <td>{{record.ItemDesc}}</td>
-                    <td>{{record.VAT}}</td>
-                    <td>
-                        <button class="btn btn-warning" ng-click="deleteRow(record.RegNo)">
-                            Delete
-                            <span class="glyphicon glyphicon-trash"></span>
+                <tbody>
+                    <tr ng-repeat="rec in $data|orderBy:orderByField:reverseSort|filter:inputSearch">
+                        <td>{{rec.RegNo}}</td>
+                        <td>{{rec.ItemId}}</td>
+                        <td>{{rec.ItemName}}</td>
+                        <td>{{rec.ItemPrice + " SEK"}}</td>
+                        <td>{{rec.ItemDesc}}</td>
+                        <td>{{rec.VAT}}</td>
+                        <td>
+                            <button class="btn btn-warning" ng-click="deleteRow(record.RegNo)">
+                                Delete
+                                <span class="glyphicon glyphicon-trash"></span>
 
-                        </button>
-                    </td>
-                </tr>
+                            </button>
+                        </td>
+                    </tr>
 
-            </tbody>
+                </tbody>
 
 
 
-        </table>
-    </div>
+            </table>
+        </div>
+    </tframe>
 </div>

@@ -1,33 +1,55 @@
-﻿<div ng-controller="VehicleInventoryController">
+﻿<style>
+    .popover {
+        max-width: 100%;
+    }
+</style>
 
-    <div id="color" class="col-md-4">
-        <div class="panel panel-default">
+<div ng-controller="VehicleCreateInventoryController">
+
+    <div id="color" class="col-md-12">
+        <div class="panel panel-primary">
             <panelheader data-title="New Inventory Record"></panelheader>
             <div class="form-group panel-body">
-                <label for="regNumber">Reg number:</label>
-                <input ng-change="regNrSearch()" ng-model="regNumber" class="form-control" type="text" name="regNumber" placeholder="Reg number" required />
-                <label for="orderNumber">Order number:</label>
-                <input class="form-control" type="text" name="orderNumber" placeholder="Order number" ng-value="orderNumber" />
-                <label for="brand">Brand:</label>
-                <input class="form-control" type="text" name="brand" placeholder="Brand" ng-value="brand" />
-                <label for="year">Year:</label>
-                <input class="form-control" type="text" name="year" placeholder="Year" ng-value="year" />
-                <label for="model">Model:</label>
-                <input class="form-control" type="text" name="model" placeholder="Model" ng-value="model" />
-                <label for="specs">Specifications:</label>
-                <a href=""><span class="glyphicon glyphicon-info-sign" id="info" ng-click="displayFurtherInformation('info')"></span></a>
-                <input class="form-control" type="text" name="specs" placeholder="Specifications" ng-value="itemDesc" />
-                <label for="invoiceNumber">Invoice number:</label>
-                <input class="form-control" type="text" name="invoiceNumber" placeholder="Invoice number" />
-                <label for="invoiceDate">Invoice date:</label>
-                <input class="form-control" type="text" name="invoiceDate" placeholder="Invoice date" />
-                <div>
-                    <button type="button" class="btn btn-primary btn-md" style="margin-top: 10px">Create record</button>
-                    <button type="button" class="btn btn-warning btn-md" style="margin-top: 10px">Discard</button>
+                <div class="col-md-4">
+                    <label for="regNumber">Reg number:</label>
+                    <input ng-change="regNrSearch()" ng-model="regNumber" class="form-control" type="text" name="regNumber" placeholder="Reg number" required />
+                    <label for="orderNumber">Order number:</label>
+                    <input class="form-control" type="text" name="orderNumber" placeholder="Order number" ng-value="orderNumber" />
+                    <label for="brand">Brand:</label>
+                    <input class="form-control" type="text" name="brand" placeholder="Brand" ng-value="brand" />
+                    <label for="year">Year:</label>
+                    <input class="form-control" type="text" name="year" placeholder="Year" ng-value="year" />
+                    <label for="model">Model:</label>
+                    <input class="form-control" type="text" name="model" placeholder="Model" ng-value="model" />
+                    <label for="specs">Specifications:</label>
+                    <a href=""><span class="glyphicon glyphicon-info-sign" id="info" ng-click="displayFurtherInformation('info')"></span></a>
+                    <input class="form-control" type="text" name="specs" placeholder="Specifications" ng-value="itemDesc" />
+                    <label for="invoiceNumber">Invoice number:</label>
+                    <input class="form-control" type="text" name="invoiceNumber" placeholder="Invoice number" />
+                    <label for="invoiceDate">Invoice date:</label>
+                    <input class="form-control" type="text" name="invoiceDate" placeholder="Invoice date" />
+                </div>
+                <div class="col-md-8">
+                    <div class="panel panel-default">
+                        <panelheader data-title="Inventory distributions"></panelheader>
+                        <div class="form-group panel-body">
+                            <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                            <label for="selectedinventory">Selected inventory:</label>
+                            <input class="form-control" type="text" name="selectedinventory" placeholder="Inventory" ng-model="selectedInventory" />
+                            <label for="duration">Duration:</label>
+                            <input class="form-control" type="text" name="duration" placeholder="Duration" />
+                        </div>
+                    </div>
                 </div>
             </div>
+            <div class="panel-footer">
+                <button type="button" class="btn btn-primary btn-sm" style="margin-top: 10px">Create record</button>
+                <button type="button" class="btn btn-warning btn-sm" style="margin-top: 10px">Discard</button>
+            </div>
         </div>
+
     </div>
+
 
 
 </div>

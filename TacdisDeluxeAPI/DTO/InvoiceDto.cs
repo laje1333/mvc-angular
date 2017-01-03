@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TacdisDeluxeAPI.Models.Enums;
 
 namespace TacdisDeluxeAPI.DTO
 {
@@ -15,7 +16,7 @@ namespace TacdisDeluxeAPI.DTO
 
         public int? Id { get; set; }
         public int? InvoiceNumber { get; set; }
-        public string InvoiceState { get; set; }
+        public InvoiceState InvoiceState { get; set; }
         public string DueDate { get; set; }
         public string InvoiceDate { get; set; }
         public double? InvoiceAmount { get; set; }

@@ -25,7 +25,6 @@ namespace TacdisDeluxeAPI.Migrations
         protected override void Seed(TacdisDeluxeAPI.Models.DBContext context)
         {
             //  Aaah, heell no...
-            return;
 
 
 
@@ -175,11 +174,41 @@ namespace TacdisDeluxeAPI.Migrations
             });
             context.SaveChanges();
 
+      
+            var workshopInventoryItems = new List<WorkshopInventoryItem>()
+            {
+                new WorkshopInventoryItem(){Id = 1, WorkshopId = 1, Amount = 63, PartId = 14309},
+                new WorkshopInventoryItem(){Id = 2, WorkshopId = 1, Amount = 343, PartId = 14376},
+                new WorkshopInventoryItem(){Id = 3, WorkshopId = 1, Amount = 124, PartId = 14443},
+                new WorkshopInventoryItem(){Id = 4, WorkshopId = 1, Amount = 21, PartId = 15582},
+                new WorkshopInventoryItem(){Id = 5, WorkshopId = 1, Amount = 274, PartId = 15783},
+                new WorkshopInventoryItem(){Id = 6, WorkshopId = 1, Amount = 35, PartId = 15247},
+            };
 
+            workshopInventoryItems.ForEach(v =>
+            {
+                context.WorkshopInventoryItems.AddOrUpdate<WorkshopInventoryItem>(v);
 
+            });
 
+            context.SaveChanges();
+            var mainInventoryItems = new List<MainInventoryItem>()
+            {
+                new MainInventoryItem(){Id = 1, Amount = 421, PartId = 14309},
+                new MainInventoryItem(){Id = 2, Amount = 612, PartId = 14376},
+                new MainInventoryItem(){Id = 3, Amount = 328, PartId = 14443},
+                new MainInventoryItem(){Id = 4, Amount = 843, PartId = 15582},
+                new MainInventoryItem(){Id = 5, Amount = 689, PartId = 15783},
+                new MainInventoryItem(){Id = 6, Amount = 432, PartId = 15247},
+            };
 
+            mainInventoryItems.ForEach(v =>
+            {
+                context.MainInventoryItems.AddOrUpdate<MainInventoryItem>(v);
 
+            });
+
+            context.SaveChanges();
 
             //  This method will be called after migrating to the latest version.
 

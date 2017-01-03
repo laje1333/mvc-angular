@@ -5,8 +5,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-md-3 text-left">New Sale</div>
-                        <div class="col-md-3 text-left">Salesman: {{salesman.FirstName}} {{salesman.LastName}}</div>
+                        <div class="col-md-2 text-left">New Sale</div>
+                        <div class="col-md-2 text-left">Salesman: {{salesman.FirstName}} {{salesman.LastName}}</div>
+                        <div class="col-md-2 text-left">Payer: {{payer.FirstName}} {{payer.LastName}}</div>
                         <div class="col-md-6 text-right">Status: {{status}}</div>
                     </div>
                 </div>
@@ -16,7 +17,7 @@
                             <form>
                                 <div class="input-group">
                                     <div class="input-group-btn" ng-controller="PayerSalesmanController">
-                                        <input type="text" class="form-control" placeholder="Employee Number" ng-model="empNr">
+                                        <input type="text" class="form-control" placeholder="Employee Number" ng-model="empNr" ng-change="checkIfEmpty(empNr, 'searchButton', 'searchIcon')">
                                         <button id="searchButton" class="btn btn-default" type="submit" ng-click="GetSalesmanById()">
                                             <i id="searchIcon" class="glyphicon glyphicon-search"></i>
                                             <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
@@ -27,9 +28,9 @@
                             <form>
                                 <div class="input-group">
                                     <div class="input-group-btn" ng-controller="PayerSalesmanController">
-                                        <input type="text" class="form-control" placeholder="Payer number" ng-model="payerNr">
-                                        <button id="searchPayer" class="btn btn-default" type="submit" ng-click="GetSalesmanById()">
-                                            <i id="searchIcon" class="glyphicon glyphicon-search"></i>
+                                        <input type="text" class="form-control" placeholder="Payer number" ng-model="CustNr">
+                                        <button id="searchButtonP" class="btn btn-default" type="submit" ng-click="GetPayerById()">
+                                            <i id="searchIconP" class="glyphicon glyphicon-search"></i>
                                             <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
                                         </button>
                                     </div>

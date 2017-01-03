@@ -12,7 +12,7 @@ namespace TacdisDeluxeAPI.Controllers
 {
     public class SalesmanController : ApiController
     {
-
+        [Authorize]
         public IHttpActionResult Get(int empNr)
         {
             using (DBContext db = new DBContext())

@@ -1,106 +1,121 @@
 ﻿
 
-<div id="first_row" class="row">
-    <div id="model" class="col-md-4">
-        <div class="panel panel-default">
-            <div class="form-group panel-body slidebody">
-                <label for="brandSelect">Brand:</label>
-                <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
-                <select class="form-control" id="brandSelect" ng-model="selectedBrand" ng-change="brandSelector(); brandEnabler();" ng-init="initializeBrands()">
-                    <option ng-repeat="b in brands">{{b.Name}}</option>
-                </select>
-                <label for="modelSelect">Model:</label>
-                <select class="form-control" id="modelSelect" ng-disabled="brandDisabled" ng-model="selectedModelYear" ng-change="modelSelector(); modelEnabler()">
-                    <option ng-repeat="mod in modelType track by $index">{{mod}}</option>
-                </select>
 
-                <label for="yearSelect">Availible years:</label>
-                <select class="form-control" id="yearSelect" ng-disabled="modelDisabled" ng-model="selectedModel" ng-change="yearSelector(); extendElement('enginePanel')">
-                    <option ng-repeat="y in modelYear track by $index">{{y}}</option>
-                </select>
+
+
+<div class="panel panel-primary">
+    <panelheader data-title="New vehicle"></panelheader>
+    <div id="first_row" class="row">
+        <div id="model" class="col-md-4 col-md-offset-4">
+            
+                <div class="form-group panel-body slidebody">
+                    <label for="brandSelect">Brand:</label>
+                    <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
+                    <select class="form-control" id="brandSelect" ng-model="selectedBrand" ng-change="brandSelector(); brandEnabler();" ng-init="initializeBrands()">
+                        <option ng-repeat="b in brands">{{b.Name}}</option>
+                    </select>
+                    <label for="modelSelect">Model:</label>
+                    <select class="form-control" id="modelSelect" ng-disabled="brandDisabled" ng-model="selectedModelYear" ng-change="modelSelector(); modelEnabler()">
+                        <option ng-repeat="mod in modelType track by $index">{{mod}}</option>
+                    </select>
+
+                    <label for="yearSelect">Availible years:</label>
+                    <select class="form-control" id="yearSelect" ng-disabled="modelDisabled" ng-model="selectedModel" ng-change="yearSelector(); extendElement('enginePanel')">
+                        <option ng-repeat="y in modelYear track by $index">{{y}}</option>
+                    </select>
+                </div>
+            
+        </div>
+    </div>
+    <div id="second_row" class="row">
+        <div id="engine" class="col-md-3">
+            <div class="panel panel-default">
+                <panelheader data-title="Engine"></panelheader>
+                <div class="form-group panel-body default-collapsed" id="enginePanel">
+                    <div class="col-md-12">
+                        <label for="enginetype">Type:</label>
+                        <select class="form-control" id="enginetype" ng-model="selectedEngineType" ng-change="selectEngineType()">
+                            <option ng-repeat="engType in engineTypes track by $index">{{engType.Name}}</option>
+                        </select>
+                        <label for="enginegroup">Engine group:</label>
+                        <select class="form-control" id="enginegroup" ng-disabled="engineGroupDisabled" ng-model="selectedEngineGroup" ng-change="selectEngineGroup(); extendElement('transmissionPanel')">
+                            <option ng-repeat="engGroup in displayableEngineGroups track by $index">{{engGroup.Name}}</option>
+                        </select>
+                        <label for="enginedesc">Description:</label>
+                        <textarea class="form-control" rows="2" id="enginedesc" readonly="true">{{displayableEngineDescriptions[0].Name}}</textarea>
+                    </div>
+                </div>
             </div>
         </div>
+        <div id="transmission" class="col-md-3">
+            <div class="panel panel-default">
+                <panelheader data-title="Transmission"></panelheader>
+                <div class="form-group panel-body default-collapsed" id="transmissionPanel">
+                    <div class="col-md-12">
+                        <label for="transmissiontype">Type:</label>
+                        <select class="form-control" id="transmissiontype" ng-model="selectedTransmissionType" ng-change="selectTransmissionType()">
+                            <option ng-repeat="transType in transmissionTypes">{{transType.Name}}</option>
+                        </select>
+                        <label for="transmissiongroup">Transmission group:</label>
+                        <select class="form-control" id="transmissiongroup" ng-disabled="transmissionGroupDisabled" ng-model="selectedTransmissionGroup" ng-change="selectTransmissionGroup(); extendElement('colorPanel')">
+                            <option ng-repeat="transGrp in displayableTransmissionGroups">{{transGrp.Name}}</option>
+                        </select>
+                        <label for="transmissionDesc">Description:</label>
+                        <textarea class="form-control" rows="2" id="transmissionDesc" readonly="true">{{displayableTransmissionDescriptions[0].Name}}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="color" class="col-md-3">
+            <div class="panel panel-default">
+                <panelheader data-title="Exterior"></panelheader>
+                <div class="form-group panel-body default-collapsed" id="colorPanel">
+                    <div class="col-md-12">
+                        <label for="painttypeSelect">Paint type:</label>
+                        <select class="form-control" id="painttypeSelect" ng-model="selectedPaintType" ng-change="selectExteriorType()">
+                            <option ng-repeat="pType in exteriorTypes">{{pType.Name}}</option>
+                        </select>
+                        <label for="groupSelect">Group</label>
+                        <select class="form-control" id="groupSelect" ng-disabled="paintGroupDisabled" ng-model="selectedPaintGroup" ng-change="selectExteriorGroup(); extendElement('interiorPanel')">
+                            <option ng-repeat="pGroup in displayableExteriorGroups">{{pGroup.Name}}</option>
+                        </select>
+                        <label for="paintdescSelect">Paint description:</label>
+                        <textarea class="form-control" rows="2" id="paintdescSelect" readonly="true">{{displayableExteriorDescriptions[0].Name}}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="interior" class="col-md-3">
+            <div class="panel panel-default">
+                <panelheader data-title="Interior"></panelheader>
+                <div class="form-group panel-body default-collapsed" id="interiorPanel">
+                    <div class="col-md-12">
+                        <label for="material">Material:</label>
+                        <select class="form-control" id="material" ng-model="selectedInteriorMaterial" ng-change="selectInteriorMats()">
+                            <option ng-repeat="iMaterial in interiorMats">{{iMaterial.Name}}</option>
+                        </select>
+                        <label for="intcolor">Color:</label>
+                        <select class="form-control" id="intcolor" ng-disabled="interiorColorDisabled" ng-model="selectedInteriorColor" ng-change="selectInteriorColors()">
+                            <option ng-repeat="iColor in displayableInteriorColors">{{iColor.Name}}</option>
+                        </select>
+
+                        <label for="colordesc">Color description:</label>
+                        <textarea class="form-control" rows="2" id="colordesc" readonly="true">{{displayableInteriorDescriptions[0].Name}}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel-footer">
+        <button type="button" id="saveButton" class="btn btn-primary btn-sm" ng-click="saveData()" data-toggle="popover" data-placement="left" data-content="Sucessefully saved">
+            Save
+            <span class="glyphicon glyphicon-save"></span>
+        </button>
+        <button type="button" class="btn btn-warning btn-sm" ng-click="reloadRoute()">
+            Discard
+            <span class="glyphicon glyphicon-remove"></span>
+
+        </button>
     </div>
 </div>
-<div id="second_row" class="row">
-    <div id="engine" class="col-md-4">
-        <div class="panel panel-default">
-            <panelheader data-title="Engine"></panelheader>
-            <div class="form-group panel-body default-collapsed" id="enginePanel">
-
-                <label for="enginetype">Type:</label>
-                <select class="form-control" id="enginetype" ng-model="selectedEngineType" ng-change="selectEngineType()">
-                    <option ng-repeat="engType in engineTypes track by $index">{{engType.Name}}</option>
-                </select>
-                <label for="enginegroup">Engine group:</label>
-                <select class="form-control" id="enginegroup" ng-disabled="engineGroupDisabled" ng-model="selectedEngineGroup" ng-change="selectEngineGroup(); extendElement('transmissionPanel')">
-                    <option ng-repeat="engGroup in displayableEngineGroups track by $index">{{engGroup.Name}}</option>
-                </select>
-                <label for="enginedesc">Description:</label>
-                <textarea class="form-control" rows="1" id="enginedesc" readonly="true">{{displayableEngineDescriptions[0].Name}}</textarea>
-            </div>
-        </div>
-    </div>
-    <div id="transmission" class="col-md-4">
-        <div class="panel panel-default">
-            <panelheader data-title="Transmission"></panelheader>
-            <div class="form-group panel-body default-collapsed" id="transmissionPanel">
-                <label for="transmissiontype">Type:</label>
-                <select class="form-control" id="transmissiontype" ng-model="selectedTransmissionType" ng-change="selectTransmissionType()">
-                    <option ng-repeat="transType in transmissionTypes">{{transType.Name}}</option>
-                </select>
-                <label for="transmissiongroup">Transmission group:</label>
-                <select class="form-control" id="transmissiongroup" ng-disabled="transmissionGroupDisabled" ng-model="selectedTransmissionGroup" ng-change="selectTransmissionGroup(); extendElement('colorPanel')">
-                    <option ng-repeat="transGrp in displayableTransmissionGroups">{{transGrp.Name}}</option>
-                </select>
-                <label for="transmissionDesc">Description:</label>
-                <textarea class="form-control" rows="1" id="transmissionDesc" readonly="true">{{displayableTransmissionDescriptions[0].Name}}</textarea>
-            </div>
-        </div>
-    </div>
-    <div id="color" class="col-md-4">
-        <div class="panel panel-default">
-            <panelheader data-title="Exterior"></panelheader>
-            <div class="form-group panel-body default-collapsed" id="colorPanel">
-                <label for="painttypeSelect">Paint type:</label>
-                <select class="form-control" id="painttypeSelect" ng-model="selectedPaintType" ng-change="selectExteriorType()">
-                    <option ng-repeat="pType in exteriorTypes">{{pType.Name}}</option>
-                </select>
-                <label for="groupSelect">Group</label>
-                <select class="form-control" id="groupSelect" ng-disabled="paintGroupDisabled" ng-model="selectedPaintGroup" ng-change="selectExteriorGroup(); extendElement('interiorPanel')">
-                    <option ng-repeat="pGroup in displayableExteriorGroups">{{pGroup.Name}}</option>
-                </select>
-                <label for="paintdescSelect">Paint description:</label>
-                <textarea class="form-control" rows="1" id="paintdescSelect" readonly="true">{{displayableExteriorDescriptions[0].Name}}</textarea>
-                
-            </div>
-        </div>
-    </div>
-    <div id="interior" class="col-md-4">
-        <div class="panel panel-default">
-            <panelheader data-title="Interior"></panelheader>
-            <div class="form-group panel-body default-collapsed" id="interiorPanel">
-                <label for="material">Material:</label>
-                <select class="form-control" id="material" ng-model="selectedInteriorMaterial" ng-change="selectInteriorMats()">
-                    <option ng-repeat="iMaterial in interiorMats">{{iMaterial.Name}}</option>
-                </select>
-                <label for="intcolor">Color:</label>
-                <select class="form-control" id="intcolor" ng-disabled="interiorColorDisabled" ng-model="selectedInteriorColor" ng-change="selectInteriorColors()">
-                    <option ng-repeat="iColor in displayableInteriorColors">{{iColor.Name}}</option>
-                </select>
-
-                <label for="colordesc">Color description:</label>
-                <textarea class="form-control" rows="1" id="colordesc" readonly="true">{{displayableInteriorDescriptions[0].Name}}</textarea>
-            </div>
-        </div>
-    </div>
-</div>
-
-<button type="button" id="saveButton" class="btn btn-primary btn-md" ng-click="saveData()" data-toggle="popover" data-placement="left" data-content="Sucessefully saved">
-    Save
-    <span class="glyphicon glyphicon-floppy-save"></span>
-</button>
-<button type="button" class="btn btn-warning btn-md" ng-click="reloadRoute()">
-    Discard
-    <span class="glyphicon glyphicon-remove"></span>
-</button>

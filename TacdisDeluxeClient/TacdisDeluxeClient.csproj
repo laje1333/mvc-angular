@@ -229,6 +229,7 @@
     <Content Include="AngularTemplates\Sales\Panes\Parts.html" />
     <Content Include="AngularTemplates\Sales\NewPayer.html" />
     <Content Include="AngularTemplates\Sales\NewSalesman.html" />
+    <Content Include="AngularTemplates\shared\TFrame.html" />
     <Content Include="AngularTemplates\Vehicle\Administration\CreateInventoryRecord.html" />
     <Content Include="AngularTemplates\Vehicle\Administration\InventoryAdjustments.html" />
     <Content Include="AngularTemplates\Vehicle\Administration\VehicleValuation.html" />
@@ -343,6 +344,7 @@
     </Content>
     <Content Include="Scripts\Controllers\IndexController.js" />
     <Content Include="Scripts\Custom\accordion-menu.js" />
+    <Content Include="Scripts\Custom\three.min.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
