@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Web;
 
 namespace TacdisDeluxeAPI.Models
@@ -18,6 +19,8 @@ namespace TacdisDeluxeAPI.Models
         }
 
         [Key]
+        public int ID { get; set; }
+        public int WoHNr { get; set; }
         public int WoJNr { get; set; }
         public string Status { get; set; }
         public double TotCost { get; set; }
@@ -40,8 +43,11 @@ namespace TacdisDeluxeAPI.Models
         public string ProfCentreID { get; set; }
         public string ProfCentreName { get; set; }
 
-        ICollection<WoKitsEntity> WOJ_KitList;
-        ICollection<WoOpEntitys> WOJ_OPList;
-        ICollection<PartEntity> WOJ_PartList;
+        public ICollection<WoKitsEntity> WOJ_KitList;
+        public ICollection<WoOpEntitys> WOJ_OPList;
+        public ICollection<PartEntity> WOJ_PartList;
+        
+        [IgnoreDataMember]
+        public WorkOrderEntity WorkOrder { get; set; }
     }
 }

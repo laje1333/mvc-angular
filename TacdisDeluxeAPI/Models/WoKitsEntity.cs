@@ -10,8 +10,9 @@ namespace TacdisDeluxeAPI.Models
     [Table("WoKits")]
     public class WoKitsEntity
     {
-        public WoKitsEntity()
+        public WoKitsEntity(string wjkCode)
         {
+            WJKCode = int.Parse(wjkCode);
             WOJ_OPList = new List<WoOpEntitys>();
             WOJ_PartList = new List<PartEntity>();
         }
@@ -20,7 +21,8 @@ namespace TacdisDeluxeAPI.Models
         ICollection<PartEntity> WOJ_PartList;
 
         [Key]
-        public int KitNr { get; set; }
+        public int Id { get; set; }
+        public int WJKCode { get; set; }
         public string KitType { get; set; }
         public string KitDesc { get; set; }
         public double Quantity { get; set; }
