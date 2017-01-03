@@ -33,7 +33,7 @@
     <div class="form-group row">
         <label for="example-text-input" class="col-xs-5 col-form-label">Invoice number</label>
         <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceNumber}}" ng-model="MaintenanceInvoice.InvoiceNumber" id="invoice-number">
+            <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceNumber}}" ng-model="MaintenanceInvoice.InvoiceNumber" id="invoice-number" ng-disabled ="{true}">
         </div>
     </div>
     <div class="form-group row">
@@ -63,7 +63,7 @@
     <div class="form-group row">
         <label for="example-text-input" class="col-xs-5 col-form-label">Invoice state</label>
         <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceState}}" ng-model="MaintenanceInvoice.InvoiceState" id="invoice-state">
+            <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceState | invoicestate}}" id="invoice-state" ng-disabled="{true}">
         </div>
     </div>
 </div>
@@ -227,8 +227,9 @@
 </div>
 
     <div class="btn-group">
+        <button class=" btn btn-primary" ng-disabled="approveInvoice" ng-click="approve_invoice()">Approve invoice </button>
+        <button class=" btn btn-primary" ng-disabled="cancelDisable" ng-click="cancel_invoice()">Cancel Invoice </button>
         <button class=" btn btn-primary" ng-click="update_invoice()">Save invoice changes </button>
-        <button class=" btn btn-primary">Cancel Invoice </button>
     </div>
    
 </div>

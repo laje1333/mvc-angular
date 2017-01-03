@@ -1,11 +1,9 @@
 ﻿
 
-
-
-<div ng-show="frameIsVisible">
+<div ng-show="frameIsVisible" class="framecontainer">
     <div class="panel panel-primary resizable" id="frame">
 
-        <div class=" panel-heading" id="frameheader" ng-init="fullScreen()" style="cursor:move;">
+        <div class=" panel-heading" id="frameheader"  style="cursor:move;">
             {{title}}
             <button class="btn btn-danger btn-sm pull-right" ng-click="exitRequest()">
                 <span class="glyphicon glyphicon-remove"></span>
@@ -32,5 +30,7 @@
 
 
     </div>
-    <p class="resizer" id="resize"></p>
+    <p class="resizer" id="resize" style="cursor:ns-resize" ng-show="!frameIsMinimized"></p>
+    <p class="resizer" style="float: left; height:300px; cursor:ew-resize;" id="right-resize" ng-show="!frameIsMinimized"></p>
+    <p class="resizer" style="float: left;" id="corner-resize" ng-show="!frameIsMinimized"></p>
 </div>

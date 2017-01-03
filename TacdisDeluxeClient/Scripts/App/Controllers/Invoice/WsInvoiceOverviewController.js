@@ -43,6 +43,22 @@ tacdisDeluxeApp.filter('valuta', function () {
     };
 });
 
+tacdisDeluxeApp.filter('invoicestate', function () {
+    return function (item) {
+        switch(item) {
+            case 1:
+                return 'Preliminary';
+                
+            case 2:
+                return 'Active';
+                
+            default:
+                return 'Cancelled';
+        }
+       
+    };
+});
+
 tacdisDeluxeApp.directive('modal', function () {
     return {
         template: '<div class="modal fade">' +

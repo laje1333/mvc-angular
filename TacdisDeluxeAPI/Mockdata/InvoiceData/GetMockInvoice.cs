@@ -50,7 +50,7 @@ namespace TacdisDeluxeAPI.Mockdata.InvoiceData
             var invoice = new InvoiceEntity
             {
                 InvoiceNumber = invoiceNumber,
-                InvoiceState = InvoiceState.Cancelled,
+                InvoiceState = InvoiceState.Preliminary,
                 DueDate = DateTime.Now.AddDays(30),
                 InvoiceDate = DateTime.Now,
                 InvoiceAmount = 1000,
