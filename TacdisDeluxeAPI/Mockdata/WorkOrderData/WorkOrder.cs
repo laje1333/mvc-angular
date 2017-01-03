@@ -5,7 +5,7 @@ using System.Web;
 
 namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 {
-    public static class WorkOrderDB
+    public static class oWorkOrderDB
     {
         public static List<WorkOrder> WorkOrders = new List<WorkOrder>();
 
@@ -97,15 +97,16 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
                 }
                 return TotCost;
             }
+
             public void RegNrChanged(string regNr)
             {
                 RegNr = regNr;
                 VehDesc = GetRegNrDetails.GetVehDesc(regNr);
-                VehRegDate = GetRegNrDetails.GetVehRegDate(regNr);
+                VehRegDate = GetRegNrDetails.GetVehRegDate(regNr).ToString();
                 VehOwner = GetRegNrDetails.GetOwner(regNr);
                 VehDriver = GetRegNrDetails.GetDriver(regNr);
                 VehPhoneNr = GetRegNrDetails.GetPhoneNr(regNr);
-                VehLastVisDate = GetRegNrDetails.GetLastVisDate(regNr);
+                VehLastVisDate = GetRegNrDetails.GetLastVisDate(regNr).ToString();
                 VehLastVisMil = GetRegNrDetails.GetLastVisMilage(regNr);
             }
         }
