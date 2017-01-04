@@ -787,12 +787,14 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, 
                 var btree = new Maths.BinaryTree();
                 btree.insert(100);
                 btree.insert(90);
-                btree.insert(80);
+                btree.insert(95);
                 btree.insert(70);
-                btree.insert(60);
+                btree.insert(750);
                 btree.insert(50);
-                btree.insert(40);
+                btree.insert(150);
                 btree.insert(30);
+                btree.insert(225);
+                btree.insert(368);
                 
 
             }, function (response) {
