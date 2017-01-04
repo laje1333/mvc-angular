@@ -6,8 +6,8 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-md-2 text-left">New Sale</div>
-                        <div class="col-md-2 text-left">Salesman: {{salesman.FirstName}} {{salesman.LastName}}</div>
-                        <div class="col-md-2 text-left">Payer: {{payer.FirstName}} {{payer.LastName}}</div>
+                        <div class="col-md-2 text-left">Salesman: {{saleRec.Salesman.FirstName}} {{saleRec.Salesman.LastName}}</div>
+                        <div class="col-md-2 text-left">Payer: {{saleRec.Payers[0].FirstName}} {{saleRec.Payers[0].LastName}}</div>
                         <div class="col-md-6 text-right">Status: {{status}}</div>
                     </div>
                 </div>
@@ -44,6 +44,7 @@
                                         <th>Type:</th>
                                         <th>Info:</th>
                                         <th>ID:</th>
+                                        <th>Amount:</th>
                                         <th>Price:</th>
                                     </tr>
                                 </thead>
@@ -52,6 +53,11 @@
                                         <td>{{r.Type}} </td>
                                         <td>{{r.Name}}</td>
                                         <td>{{r.Number}}</td>
+                                        <td>
+                                            {{r.Amount}}
+                                            <a class="btn " ng-click="increaseAmount()"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                                            <a class="btn " ng-click="decreaseAmount()" ng-disabled="(r.Amount <= 1)"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                                        </td>
                                         <td>{{r.Price}}</td>
                                     </tr>
                                 </tbody>
@@ -63,7 +69,7 @@
                                 
                             </table>
                             <p></p>
-                            
+                            <a class="btn" ng-click="postSale()">Done and bubbel</a>
                         </div>
                     </div>
                     

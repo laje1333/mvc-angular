@@ -10,6 +10,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.vehNr = "";
     $scope.vehReg = "";
 
+    $scope.amount = 1;
     //Used for searching parts
     $scope.artName = "";
     $scope.artNum = "";
@@ -25,8 +26,9 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.saleRec.PartIds = [];
     $scope.saleRec.VehicleIds = [];
     $scope.saleRec.AddonIds = [];
-
-    $scope.salesman = {};
+    $scope.saleRec.Salesman = {};
+    $scope.saleRec.Payers = [];
+    $scope.saleRec.PayerIds = [];
 
     $scope.panes = [
         { title: "Vehicles", template: "AngularTemplates/Sales/Panes/Vehicles.html", active: true },
@@ -60,31 +62,37 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
                 break;
         }
 
-        $rootScope.record.push({ 'Type': 'Part', 'Name': this.r.ItemName, 'Number': this.r.ItemId, 'Price': this.r.ItemPrice });
-        $scope.calcTotal(this.r.ItemPrice);
-    };
-    $scope.onlyNumbers = /^\d+(?:\.\d+|)$/;
+        var jadenfanns = false;
 
-    $scope.changeTypeOfSearch = function () {
-        $('.searchOptions').hide();
-        $('#Search' + $scope.searchTypeOfItem).show();
+        for (var i = 0; i < $rootScope.record.length; i++) {
+            if (this.r.ItemId === $rootScope.record[i].Number) {
+                $rootScope.record[i].Amount += 1;
+                jadenfanns = true;
+            }
+        }
+        if (!jadenfanns) {
+            $rootScope.record.push({ 'Type': 'Part', 'Name': this.r.ItemName, 'Number': this.r.ItemId, 'Price': this.r.ItemPrice, 'Amount': 1 });
+        } 
+
+        
+        $scope.calcTotal(this.r.ItemPrice);
     };
 
     $scope.PostSale = function () {
         var req = {
             method: 'POST',
-            url: 'http://localhost:57661/api/sales',
+            url: 'api/invoice/CreatInvoice/CreateInvoiceFromSales',
             headers: {},
             data: {
                 Salesman: $scope.saleRec.Salesman,
                 VehicleIds: $scope.saleRec.VehicleIds,
                 PartIds: $scope.saleRec.PartIds,
-                Status: $scope.saleRec.Status,
+                Status: 1,
                 AddonIds: $scope.saleRec.AddonIds,
                 PayerIds: $scope.saleRec.PayerIds,
-                PaymentType: $scope.saleRec.PaymentType,
-                DateCreated: $scope.saleRec.DateCreated,
-                DateEdited: $scope.saleRec.DateEdited
+                PaymentType: 1,
+                DateCreated: new Date(),
+                DateEdited: new Date()
             },
         }
         $http(req).
@@ -95,6 +103,25 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
          }
          );
     }
+
+    $scope.increaseAmount = function () {
+        $scope.calcTotal(this.r.Price);
+        this.r.Amount += 1;
+
+    }
+
+    $scope.decreaseAmount = function () {
+        $rootScope.totalCost -= parseFloat(this.r.Price);
+        this.r.Amount -= 1;
+    }
+
+    $scope.onlyNumbers = /^\d+(?:\.\d+|)$/;
+
+    $scope.changeTypeOfSearch = function () {
+        $('.searchOptions').hide();
+        $('#Search' + $scope.searchTypeOfItem).show();
+    }
+
 
     $scope.GetSearchVeh = function (Data) {
         var req = {
@@ -192,8 +219,15 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
        
     }
 
+    $scope.$watch(function () { return SaleFactory.getPayer(); }, function (newValue, oldValue) {
+        if (newValue.Id !== oldValue.Id) {
+            $scope.saleRec.Payers.push(newValue);
+            $scope.saleRec.PayerIds.push(newValue.Id);
+        }
+    });
+
     $scope.$watch(function () { return SaleFactory.getSalesman(); }, function (newValue, oldValue) {
-        if (newValue !== oldValue) $scope.salesman = newValue;
+        if (newValue !== oldValue) $scope.saleRec.Salesman = newValue;
     });
 
     $scope.init();

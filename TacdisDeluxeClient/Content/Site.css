@@ -337,6 +337,14 @@ fieldset.custom-fieldset {
 ul.pagination.ng-table-pagination.ng-scope {
     margin: 0px;
 }
+#scrollable-area {
+    height: 250px;
+    overflow-y: auto;
+}
+
+.table-scroll{
+    width: 100%;
+}
 
         .resizable {position: relative; }
         .resizer { width: 10px; height: 10px; opacity: 0; position:absolute; right: 0; bottom: 0; cursor: se-resize; }
