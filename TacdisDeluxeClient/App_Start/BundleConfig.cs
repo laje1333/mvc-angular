@@ -24,6 +24,7 @@ namespace TacdisDeluxeClient
             bundles.Add(new ScriptBundle("~/bundles/custom").Include(
                         "~/Scripts/App/app.js",
                         "~/Scripts/Custom/accordion-menu.js",
+                        "~/Scripts/Custom/Maths.js",
                         "~/Scripts/angular-ui/ui-bootstrap.js",
                         "~/Scripts/angular-ui/ui-bootstrap-tpls.js"));
 
