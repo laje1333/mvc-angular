@@ -50,9 +50,17 @@ tacdisDeluxeApp.config(function ($httpProvider) {
     $httpProvider.interceptors.push('AuthInterceptorService');
 });
 
-tacdisDeluxeApp.run(['AuthService', function (authService) {
-    authService.fillAuthData();
-}]);
+tacdisDeluxeApp.run(function (AuthService, $rootScope) {
+    AuthService.fillAuthData();
+
+    $rootScope.$on('$routeChangeStart', function (event) {
+        var auth = AuthService.isAuth();
+        if (!auth.isAuth) {
+            event.preventDefault();
+            window.location = '/home';
+        }
+    });
+});
 
 
 

@@ -229,6 +229,7 @@
     <Content Include="AngularTemplates\Sales\Panes\Parts.html" />
     <Content Include="AngularTemplates\Sales\NewPayer.html" />
     <Content Include="AngularTemplates\Sales\NewSalesman.html" />
+    <Content Include="AngularTemplates\shared\TFrame.html" />
     <Content Include="AngularTemplates\Vehicle\Administration\CreateInventoryRecord.html" />
     <Content Include="AngularTemplates\Vehicle\Administration\InventoryAdjustments.html" />
     <Content Include="AngularTemplates\Vehicle\Administration\VehicleValuation.html" />
@@ -338,6 +339,7 @@
     <Content Include="Scripts\App\Directives\Vehicle\NewVehicleDirective.js" />
     <Content Include="Scripts\App\Factories\AuthInterceptorService.js" />
     <Content Include="Scripts\App\Factories\AuthService.js" />
+    <Content Include="Scripts\App\Factories\IsAuthFactory.js" />
     <Content Include="Scripts\App\Factories\SaleFactory.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1158,6 +1160,7 @@
     <Content Include="Views\Vehicle\_Menu.cshtml" />
     <Content Include="Views\Sales\_Menu.cshtml" />
     <Content Include="Scripts\ng-table.min.js" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AngularTemplates\Vehicle\Scripts\" />

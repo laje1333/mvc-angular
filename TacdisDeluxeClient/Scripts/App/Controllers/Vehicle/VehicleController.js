@@ -412,7 +412,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
 });
 
-tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
+tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgTableParams, $http) {
 
     $scope.spinner = false;
 
@@ -422,11 +422,11 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
     .then(function (response) {
         feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
         var obj = response.data;
-        $scope.records = obj;
+        $scope.records = obj.length;
         $scope.newVehicles.push(obj);
         $scope.spinner = false;
 
-        $scope.newVehicleTable = new ngTableParams({
+        $scope.newVehicleTable = new NgTableParams({
 
         },
             {
@@ -475,7 +475,7 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", ["$scope", "NgTablePa
 
     $scope.reverseSort = false;
     $scope.orderByField = "REGNR";
-}]);
+});
 
 tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http){
 
@@ -748,7 +748,7 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
                     data: $scope.mainInventoryAmounts
 
                 }, {
-                    name: 'Shop inventory',
+                    name: 'Workshop inventory',
                     data: $scope.shopInventoryAmounts
 
                 }]
@@ -766,6 +766,131 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
             });
         });
     }
+});
+
+
+tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, $http){
+    $scope.regNumber = "";
+
+    $scope.regNrSearch = function () {
+        if ($scope.regNumber.length == 6) {
+            $scope.regNumber = $scope.regNumber.toUpperCase();
+            $http.get("http://localhost:57661/api/VehicleInventory/GetSingleVehicleByRegnumber?regNumber=" + $scope.regNumber)
+            .then(function (response) {
+                feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
+                $scope.regNumber = response.data.RegNo;
+                $scope.orderNumber = response.data.ItemId;
+                var itemName = response.data.ItemName.split(" ");
+                $scope.brand = itemName[0];
+                $scope.model = itemName[1];
+                $scope.year = itemName[2];
+                $scope.itemDesc = response.data.ItemDesc;
+
+            }, function (response) {
+                feedbackPopup("Could fetch data", { level: 'warning', timeout: 2000 });
+            });
+        }
+    }
+
+    $scope.displayFurtherInformation = function (id) {
+        $("#" + id).popover({
+            title: "Specifications",
+            trigger: 'focus',
+            placement: 'right',
+            html: true,
+            content: $scope.popoverLines($scope.itemDesc)
+        });
+        $("#" + id).popover('show');
+    }
+
+    $scope.hidePopover = function () {
+        $("#info").popover('hide');
+    }
+
+    $scope.popoverLines = function (text) {
+        var temp = text.split("\n");
+        var result = "<table class='table table-hover'><thead><tr><th>Engine</th><th>Transmission</th><th>Exterior</th><th>Interior</th></tr></thead><tbody><tr>";
+
+
+
+        for (i = 0; i < temp.length; i++) {
+            result += "<td>" + temp[i] + "</td>";
+        }
+        result += "</tr></tbody></table>";
+        result += "<button type='button' class='btn btn-warning btn-md' onclick='hidePopover()'>Close</button>";
+        return result;
+    }
+
+    $scope.selectedInventory = "";
+
+    $scope.selectInventory = function (name) {
+        $scope.selectedInventory = name;
+        $scope.$apply();
+    }
+
+    $(function () {
+        Highcharts.chart('container', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: 0,
+                plotShadow: false
+            },
+            title: {
+                text: 'Inventory<br>space<br>',
+                align: 'center',
+                verticalAlign: 'middle',
+                y: 40
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    dataLabels: {
+                        enabled: true,
+                        distance: -50,
+                        style: {
+                            fontWeight: 'bold',
+                            color: 'white'
+                        }
+                    },
+                    startAngle: -90,
+                    endAngle: 90,
+                    center: ['50%', '75%']
+                },
+                series: {
+                    cursor: 'pointer',
+                    point: {
+                        events: {
+                            click: function () {
+                                
+                                $scope.selectInventory(this.name);
+                            }
+                        }
+                    }
+                },
+
+            },
+            series: [{
+                type: 'pie',
+                name: 'Inventory space',
+                innerSize: '50%',
+                
+                data: [
+                    ['Workshop inventory', 10.38],
+                    ['Main inventory', 56.33],
+                    {
+                        name: 'Proprietary or Undetectable',
+                        y: 0.2,
+                        dataLabels: {
+                            enabled: false
+                        }
+                    }
+                ]
+            }]
+        });
+    });
+
 });
 
 hidePopover = function () {

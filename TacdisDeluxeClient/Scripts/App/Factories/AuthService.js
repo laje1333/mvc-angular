@@ -10,7 +10,7 @@ tacdisDeluxeApp.factory('AuthService', ['$http', '$q', function ($http, $q) {
     };
 
     var _isAuth = function (){
-        return _authentication.isAuth;
+        return _authentication;
     };
 
     var _saveRegistration = function (registration) {
@@ -23,7 +23,7 @@ tacdisDeluxeApp.factory('AuthService', ['$http', '$q', function ($http, $q) {
 
     };
 
-    var _login = function (loginData) {
+    var _login = function (loginData , redirectTo) {
 
         var defer = $q.defer();
         var req = {
@@ -43,16 +43,21 @@ tacdisDeluxeApp.factory('AuthService', ['$http', '$q', function ($http, $q) {
                 _authentication.isAuth = true;
                 _authentication.username = loginData.username;
                 defer.resolve(response);
+                feedbackPopup('You will soon be redirected!', { level: 'success', timeout: 4000 });
+                $http.post('http://localhost:53615/home/login', { auth: response.data.access_token }).then(function (response) {
+                    window.location = redirectTo
+                })
             }, function (response) {
                 defer.reject(response);
                 _logOut();
-                
             });
-        
         return defer.promise;
+        
     };
 
     var _logOut = function () {
+
+        $http.post('http://localhost:53615/home/logout').then(function (response) {null;})
 
         window.sessionStorage.removeItem('authorizationData');
         window.sessionStorage.removeItem('signedInUser');
@@ -66,7 +71,7 @@ tacdisDeluxeApp.factory('AuthService', ['$http', '$q', function ($http, $q) {
         var authData = window.sessionStorage.getItem('authorizationData');
         if (authData) {
             _authentication.isAuth = true;
-            _authentication.userName = authData.userName;
+            _authentication.username = window.sessionStorage.getItem('signedInUser');;
         }
 
     }
