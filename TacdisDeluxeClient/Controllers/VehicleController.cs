@@ -11,12 +11,19 @@ namespace TacdisDeluxeClient.Controllers
         // GET: Vehicle
         public ActionResult Index()
         {
-            return View();
+            if ((System.Web.HttpContext.Current.Session["Authstuff"] as String) != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("index", "Home");
+            }
         }
 
         public PartialViewResult BuildVehicle()
         {
-            return PartialView("_BuildVehicle");
+                return PartialView("_BuildVehicle"); 
         }
     }
 }

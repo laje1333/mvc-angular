@@ -1,9 +1,9 @@
 ﻿'use strict';
 
-tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http, SaleFactory) {
+tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http, SaleFactory, NgTableParams) {
 
     $scope.init = function () {
-        
+
     }
     //Used for searching  vehicles
     $scope.vehName = "";
@@ -34,23 +34,23 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         { title: "Add Ons", template: "AngularTemplates/Sales/Panes/Addons.html" }];
 
 
-    $scope.active = function (index) {    
+    $scope.active = function (index) {
         return $scope.panes.filter(function (pane) {
             $rootScope.selectedTypeOfThingy = index;
             return pane.active;
         })[0];
     };
 
-    
+
     $scope.calcTotal = function (r) {
         $rootScope.totalCost += parseFloat(r);
     };
 
-    
+
     $scope.addRow = function () {
         switch ($scope.selectedTypeOfThingy) {
             case 0:
-                $scope.saleRec.VehicleIds.push(this.r.ItemId);           
+                $scope.saleRec.VehicleIds.push(this.r.ItemId);
                 break;
             case 1:
                 $scope.saleRec.PartIds.push(this.r.ItemId);
@@ -59,7 +59,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
                 $scope.saleRec.AddonIds.push(this.r.ItemId);
                 break;
         }
-        
+
         $rootScope.record.push({ 'Type': 'Part', 'Name': this.r.ItemName, 'Number': this.r.ItemId, 'Price': this.r.ItemPrice });
         $scope.calcTotal(this.r.ItemPrice);
     };
@@ -75,15 +75,17 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
             method: 'POST',
             url: 'http://localhost:57661/api/sales',
             headers: {},
-            data: { Salesman: $scope.saleRec.Salesman,
-                    VehicleIds: $scope.saleRec.VehicleIds, 
-                    PartIds: $scope.saleRec.PartIds, 
-                    Status: $scope.saleRec.Status, 
-                    AddonIds: $scope.saleRec.AddonIds, 
-                    PayerIds: $scope.saleRec.PayerIds,
-                    PaymentType: $scope.saleRec.PaymentType,
-                    DateCreated: $scope.saleRec.DateCreated,
-                    DateEdited: $scope.saleRec.DateEdited},
+            data: {
+                Salesman: $scope.saleRec.Salesman,
+                VehicleIds: $scope.saleRec.VehicleIds,
+                PartIds: $scope.saleRec.PartIds,
+                Status: $scope.saleRec.Status,
+                AddonIds: $scope.saleRec.AddonIds,
+                PayerIds: $scope.saleRec.PayerIds,
+                PaymentType: $scope.saleRec.PaymentType,
+                DateCreated: $scope.saleRec.DateCreated,
+                DateEdited: $scope.saleRec.DateEdited
+            },
         }
         $http(req).
          then(function (response) {
@@ -115,7 +117,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
          );
     }
 
-    $scope.showInfo = function(){
+    $scope.showInfo = function () {
         null;
     }
 
@@ -176,14 +178,18 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         $http(req).
          then(function (response) {
              $scope.partsRec = [];
-             for (var i = 0; i < response.data.length; i++) {
-                 $scope.partsRec.push(response.data[i]);
-             }
-                 
+             $scope.PartsTable = new NgTableParams({
+                 sorting: { ItemName: "asc" }
+             },
+             {
+                 dataset: response.data
+             });
+
          }, function (response) {
              $scope.statusCode = response.statusCode;
          }
          );
+       
     }
 
     $scope.$watch(function () { return SaleFactory.getSalesman(); }, function (newValue, oldValue) {

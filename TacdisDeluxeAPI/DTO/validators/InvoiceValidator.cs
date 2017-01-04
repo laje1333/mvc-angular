@@ -82,6 +82,14 @@ namespace TacdisDeluxeAPI.DTO.validators
                 }
             }
 
+            if (invoice.InvoiceRows.Count > 0)
+            {
+                foreach (var row in invoice.InvoiceRows)
+                {
+                    invoice.InvoiceAmount += row.InvoiceRowAmount;
+                }
+            }
+
 
             return invoice;
         }

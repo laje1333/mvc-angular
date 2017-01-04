@@ -317,6 +317,10 @@
     <Compile Include="Migrations\201701021446289_byteAvTyper.Designer.cs">
       <DependentUpon>201701021446289_byteAvTyper.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701040726471_woJob.cs" />
+    <Compile Include="Migrations\201701040726471_woJob.Designer.cs">
+      <DependentUpon>201701040726471_woJob.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -445,6 +449,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701021446289_byteAvTyper.resx">
       <DependentUpon>201701021446289_byteAvTyper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701040726471_woJob.resx">
+      <DependentUpon>201701040726471_woJob.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

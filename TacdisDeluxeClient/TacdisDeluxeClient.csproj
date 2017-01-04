@@ -329,6 +329,7 @@
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceMenuController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceMaintenanceController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceOverviewController.js" />
+    <Content Include="Scripts\App\Controllers\Layout\LayoutController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsController.js" />
     <Content Include="Scripts\App\Controllers\Parts\PartsModuleConfig.js" />
     <Content Include="Scripts\App\Controllers\Sales\PayerSalesmanController.js" />
@@ -336,6 +337,9 @@
     <Content Include="Scripts\App\Controllers\Vehicle\VehicleController.js" />
     <Content Include="Scripts\App\Controllers\WorkOrder\WorkOrderController.js" />
     <Content Include="Scripts\App\Directives\Vehicle\NewVehicleDirective.js" />
+    <Content Include="Scripts\App\Factories\AuthInterceptorService.js" />
+    <Content Include="Scripts\App\Factories\AuthService.js" />
+    <Content Include="Scripts\App\Factories\IsAuthFactory.js" />
     <Content Include="Scripts\App\Factories\SaleFactory.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -344,6 +348,7 @@
     </Content>
     <Content Include="Scripts\Controllers\IndexController.js" />
     <Content Include="Scripts\Custom\accordion-menu.js" />
+    <Content Include="Scripts\Custom\Maths.js" />
     <Content Include="Scripts\Custom\three.min.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
@@ -1159,6 +1164,7 @@
     <Content Include="Views\Vehicle\_Menu.cshtml" />
     <Content Include="Views\Sales\_Menu.cshtml" />
     <Content Include="Scripts\ng-table.min.js" />
+    <Content Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AngularTemplates\Vehicle\Scripts\" />

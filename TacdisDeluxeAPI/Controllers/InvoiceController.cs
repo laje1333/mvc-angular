@@ -83,6 +83,10 @@ namespace TacdisDeluxeAPI.Controllers
 
                     var original = db.Invoices.Single(i => i.Id == invoice.Id);
 
+                    var rows =
+                        original.InvoiceRows.Where(r => invoice.InvoiceRows.Select(x => x.Id).Contains(r.Id) == false);
+                    db.InvoiceRows.RemoveRange(rows);
+
                     db.Entry(original).CurrentValues.SetValues(invoice);
 
                     db.SaveChanges();
@@ -98,23 +102,23 @@ namespace TacdisDeluxeAPI.Controllers
 
         }
 
-        [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromSalesDto")]
+        [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromSales")]
         [System.Web.Http.HttpPost]
-        public IHttpActionResult CreateInvoice(SalesDto salesDto)
+        public IHttpActionResult CreateInvoiceFromSales(SalesDto salesDto)
         {
 
             var invoice = new InvoiceEntity();
-            
+
             try
             {
-               invoice = InvoiceValidator.CreateInvoiceEntityFromSalesDto(salesDto);
+                invoice = InvoiceValidator.CreateInvoiceEntityFromSalesDto(salesDto);
             }
             catch (Exception ex)
             {
 
                 return BadRequest("Validation fail!");
             }
-
+            
             try
             {
                 using (var db = new DBContext())
