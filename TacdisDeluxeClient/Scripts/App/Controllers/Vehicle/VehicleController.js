@@ -784,13 +784,15 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, 
                 $scope.model = itemName[1];
                 $scope.year = itemName[2];
                 $scope.itemDesc = response.data.ItemDesc;
-                var hmap = new Maths.HashMap();
-                hmap.addElement("Bananer", 5);
-                hmap.addElement("Apelsiner", 10);
-                hmap.addElement("Päron", 15);
-                var blajs = hmap.toString();
-                hmap.removeElement("Bananer");
-                hmap.addElement("Bananer", 8);
+                var btree = new Maths.BinaryTree();
+                btree.insert(100);
+                btree.insert(90);
+                btree.insert(80);
+                btree.insert(70);
+                btree.insert(60);
+                btree.insert(50);
+                btree.insert(40);
+                btree.insert(30);
                 
 
             }, function (response) {

@@ -60,17 +60,46 @@ Maths.HashMap = function () {
     }
 }
 
-Maths.LinkedList = function () {
+Maths.BinaryTree = function () {
 
-    var node = function (prev, ele, nxt) {
-        this.previous = prev;   //string key
-        this.element = ele;
-        this.next = nxt;    //string key
+    var Node = function (val, lft, rgt) {
+        this.value = val;
+        this.left = lft;
+        this.right = rgt;
     }
 
-    this.length = 0;
+    this.nodes = [];
 
-    this.addElement = function (element) {
+    this.insert = function (val) {
+        var tempNode = new Node(val , null, null);
+        var current  = new Node(null, null, null);
+        var parent   = new Node(null, null, null);
+
+        if (this.nodes.length <= 0) {
+            this.nodes.push(tempNode);
+            return;
+        } else {
+            current = tempNode;
+            parent = null;
+
+            while (true) {
+                parent = current;
+                if(val < parent.value) {
+                    current = current.left;                
+                    
+                    if(current == null) {
+                        parent.left = tempNode;
+                        return;
+                    }
+                }else {
+                    current = current.right;
+                    if(current == null) {
+                        parent.right = tempNode;
+                        return;
+                    }
+                }
+            }
+        }
 
     }
 
