@@ -4,7 +4,7 @@
             <div class="panel-heading">Vehicle Registration</div>
             <div class="form-group panel-body">
                 <label>Reg Number</label>
-                <input type="text" class="form-control" ng-model="woh_regNr" ng-change="RegNrChanged()" />
+                <input type="text" class="form-control" ng-model="woh_regNr" ng-change="RegNrChanged()" ng-init="GetRegNr()" />
                 <label>Reg Date</label>
                 <input type="text" class="form-control" ng-model="woh_regDate" />
                 <label>Vehicle Description</label>
