@@ -469,7 +469,6 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgT
             
         }
 
-        //update database aswell!
     }
 
 
@@ -791,6 +790,8 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, 
             });
         }
     }
+
+
 
     $scope.displayFurtherInformation = function (id) {
         $("#" + id).popover({
