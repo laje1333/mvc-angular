@@ -66,8 +66,37 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext c = new DBContext())
             {
-                var wohList = WohListData.GetWohList(c.WorkOrder.OrderByDescending(p => p.WoNr));
+                IOrderedQueryable<Models.WorkOrderEntity> woEntList;
+                if (search != null && search != "" && search != "undefined")
+                {
+                    woEntList = c.WorkOrder.Where(s => s.WoNr.ToString().Contains(search) || 
+                        s.RegNr.ToString().Contains(search) ||
+                        s.Status.ToString().Contains(search) ||
+                        s.VehDesc.ToString().Contains(search) ||
+                        s.CreatedDate.ToString().Contains(search) ||
+                        s.MainPayer.ToString().Contains(search) ||
+                        s.RespBy.ToString().Contains(search) ||
+                        s.TotCost.ToString().Contains(search))
+                        .OrderByDescending(p => p.WoNr);
+                }
+                else
+                {
+                    woEntList = c.WorkOrder.OrderByDescending(p => p.WoNr);
+                }
+                var wohList = WohListData.GetWohList(woEntList);
                 return wohList;
+            }
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWoh")]
+        public WorkOrderEntity GetWoh(string wohid)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = c.WorkOrder.Where(p => p.WoNr.ToString() == wohid).Single();
+
+                return woh;
             }
         }
 
@@ -97,6 +126,7 @@ namespace TacdisDeluxeAPI.Controllers
 
         // ----------WOJ------------
         [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWoJobList")]
         public string GetWoJobList(string wohid)
         {
             using (DBContext c = new DBContext())
@@ -108,6 +138,7 @@ namespace TacdisDeluxeAPI.Controllers
 
         // POST: api/WorkOrder
         [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("PostWOJ")]
         public void PostWOJ(string wohId)
         {
             using (DBContext c = new DBContext())
@@ -120,6 +151,7 @@ namespace TacdisDeluxeAPI.Controllers
 
         // ----------WJK------------
         [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWJKList")]
         public string GetWJKList(string wohId, string wojId)
         {
 
@@ -133,6 +165,7 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("AddWJK")]
         public void AddWJK(string wjkcode, string wohId, string wojId)
         {
 
@@ -147,7 +180,8 @@ namespace TacdisDeluxeAPI.Controllers
 
         // ----------WJO------------
         [System.Web.Http.HttpGet]
-        public string GetWJOList(string wjocode, string wohId, string wojId)
+        [System.Web.Http.Route("GetWJOList")]
+        public string GetWJOList(string wohId, string wojId)
         {
             using (DBContext c = new DBContext())
             {
@@ -159,6 +193,7 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("AddWJO")]
         public void AddWJO(string wjocode, string wohId, string wojId)
         {
 
@@ -173,7 +208,8 @@ namespace TacdisDeluxeAPI.Controllers
 
         // ----------WJP------------
         [System.Web.Http.HttpGet]
-        public string GetWJPList(string wjpcode, string wohId, string wojId)
+        [System.Web.Http.Route("GetWJPList")]
+        public string GetWJPList(string wohId, string wojId)
         {
             using (DBContext c = new DBContext())
             {
@@ -185,6 +221,7 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("AddWJP")]
         public void AddWJP(string wjpcode, string wohId, string wojId)
         {
 
@@ -200,8 +237,8 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
         // ---------RegNr-----------
-        [System.Web.Http.Route("GetRegNr")]
         [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetRegNr")]
         public List<string> GetRegNr(string WOHID)
         {
             using (DBContext c = new DBContext())
@@ -219,17 +256,25 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public List<string> GetRegNrInfo(string WOHID, string regnr)
+        [System.Web.Http.Route("GetRegNrInfo")]
+        public List<object> GetRegNrInfo(string WOHID, string regnr)
         {
             using (DBContext c = new DBContext())
             {
-                List<string> responseArr = new List<string>();
-
+                List<object> responseArr = new List<object>();
                 if (!ValidateRegNr(regnr))
                 {
                     regnr = "";
                 }
-                WorkOrderEntity woh = c.WorkOrder.Where(p => p.WoNr.ToString() == WOHID).Single();
+                WorkOrderEntity woh;
+                try
+                {
+                    woh = c.WorkOrder.Where(p => p.WoNr.ToString() == WOHID).Single();
+                }
+                catch (Exception)
+                {
+                    return responseArr;
+                }
                 if (woh == null)
                 {
                     return responseArr;
@@ -238,11 +283,11 @@ namespace TacdisDeluxeAPI.Controllers
                 RegNrChanged(woh, regnr.ToUpper());
 
                 responseArr.Add(woh.VehDesc);
-                responseArr.Add(woh.VehRegDate.ToString());
+                responseArr.Add(woh.VehRegDate);
                 responseArr.Add(woh.VehOwner);
                 responseArr.Add(woh.VehDriver);
                 responseArr.Add(woh.VehPhoneNr);
-                responseArr.Add(woh.VehLastVisDate.ToString());
+                responseArr.Add(woh.VehLastVisDate);
                 responseArr.Add(woh.VehLastVisMil);
 
                 c.SaveChanges();

@@ -14,24 +14,7 @@ tacdisDeluxeApp.controller("PartsController", ["$scope", "NgTableParams", "$http
         });
     });
 
-    $scope.$on('$viewContentLoaded', function () {
-        var hash = window.location.hash;
-
-        if (hash === "") {
-            console.log("hash empty...");
-            return;
-        }
-
-        hash = hash.replace('#', '');
-        hash = hash.replace('/', '');
-
-        console.log(hash);
-
-        $('.accordion-menu a[href!="#' + hash + '"]').removeClass('marked');
-        var a = $('.accordion-menu').find('a[href="#' + hash + '"]');
-        a.addClass('marked');
-        a.closest('ul').css({ 'display': 'block' });
-    });
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
 
 
     //$scope.tableParamsTwo = getNgTableParams('name', 'desc', 'name', $scope.myDataTwo);

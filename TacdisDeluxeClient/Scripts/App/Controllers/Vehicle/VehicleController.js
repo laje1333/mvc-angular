@@ -619,8 +619,9 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
                 feedbackPopup("Could not fetch data", { level: 'warning', timeout: 2000 });
             });
 
-       
     }
+
+
 
     $scope.filterInventoryItems = function () {
         for (i = 0; i < $scope.inventoryData.length; i++) {
@@ -784,23 +785,27 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, 
                 $scope.model = itemName[1];
                 $scope.year = itemName[2];
                 $scope.itemDesc = response.data.ItemDesc;
-                var btree = new Maths.BinaryTree();
-                btree.insert(100);
-                btree.insert(90);
-                btree.insert(95);
-                btree.insert(70);
-                btree.insert(750);
-                btree.insert(50);
-                btree.insert(150);
-                btree.insert(30);
-                btree.insert(225);
-                btree.insert(368);
                 
+
+                var testKey = { name: "Apa", value: 5 };
+                var testObject = { employee: "Lasse", salary: 23414 }
+
+                var testKey2 = { cool: "yes", sexy: 234234234234 };
+                var testObject2 = { djur: "elefant", kossa: 15 }
+
+                var map = new Maths.Datastructures.HashMap();
+                map.add(testKey, testObject);
+                map.add(testKey2, testObject2);
+                var x = map.get(testKey);
+                
+
 
             }, function (response) {
                 feedbackPopup("Could fetch data", { level: 'warning', timeout: 2000 });
             });
         }
+
+
     }
 
 
@@ -814,6 +819,8 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, 
             content: $scope.popoverLines($scope.itemDesc)
         });
         $("#" + id).popover('show');
+
+
     }
 
     $scope.hidePopover = function () {

@@ -7,7 +7,7 @@
                 <input type="button" class="btn btn-info" value="Create New" ng-click="WOH_AddWOJ(); GetWOJList()" />
                 <button class="btn btn-default" type="submit" ng-click="GetWOJList()"><i class="glyphicon glyphicon-search"></i></button>
             </div>
-            <table ng-table="wojTable" class="table table-striped table-hover">
+            <table ng-table="wojTable" class="table table-striped table-hover" ng-init="GetWOJList()">
                 <tr>
                     <th>Job Number</th>
                     <th>Status</th>
