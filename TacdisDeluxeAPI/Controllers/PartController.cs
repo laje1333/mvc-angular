@@ -19,13 +19,14 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext c = new DBContext())
             {
-                List<PartEntity> parts = new List<PartEntity>();
+                List<PartDto> parts = new List<PartDto>();
 
                 var ps = c.Parts;
 
                 if (ps.Any())
                 {
-                    parts = ps.ToList();
+                    var pes = ps.ToList();
+                    parts = Mapper.Map<List<PartEntity>, List<PartDto>>(pes);
                 }
 
                 return Ok(parts.ToList());
@@ -41,6 +42,26 @@ namespace TacdisDeluxeAPI.Controllers
                 try
                 {
                     part = c.Parts.Where(p => p.Id == id).Single();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+
+                return Ok(part);
+            }
+        }
+
+        public IHttpActionResult Get(string ItemId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                PartDto part = null;
+
+                try
+                {
+                    var pe = c.Parts.Where(p => p.ItemId == int.Parse(ItemId)).Single();
+                    part = Mapper.Map<PartEntity, PartDto>(pe);
                 }
                 catch (Exception ex)
                 {

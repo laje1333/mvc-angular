@@ -11,7 +11,14 @@ namespace TacdisDeluxeClient.Controllers
         // GET: Invoice
         public ActionResult Index()
         {
-            return View();
+            if ((System.Web.HttpContext.Current.Session["Authstuff"] as String) != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("index", "Home");
+            }
         }
         public PartialViewResult SearchInvoice()
         {

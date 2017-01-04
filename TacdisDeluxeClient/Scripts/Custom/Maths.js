@@ -1,77 +1,126 @@
 ﻿var Maths = {};
+Maths.Datastructures = {};
+Maths.Arrays = {};
+Maths.Objects = {};
+Maths.Random = {};
 
-Maths.BinarySearch = function(A, V) {
-    var L = 0;
-    var R = (A.length - 1);
-    while (L < R) {
-        var M = Math.floor((L + R) / 2);
-        if (A[M] < V) {
-            L = (M + 1);
-        } else if (A[M] == V) {
-            return M;
-        } else {
-            R = (M - 1);
+//Arrays
+Maths.Arrays.BinarySearch = function (A, V, Key) {
+    if (Key != null) {
+        var L = 0;
+        var R = (A.length - 1);
+        while (L <= R) {
+            var M = Math.floor((L + R) / 2);
+            if ((A[M])[Key] < V) {
+                L = (M + 1);
+            } else if ((A[M])[Key] == V) {
+                return M;
+            } else {
+                R = (M - 1);
+            }
+        }
+    } else {
+        var L = 0;
+        var R = (A.length - 1);
+        while (L <= R) {
+            var M = Math.floor((L + R) / 2);
+            if ((A[M]) < V) {
+                L = (M + 1);
+            } else if ((A[M]) == V) {
+                return M;
+            } else {
+                R = (M - 1);
+            }
         }
     }
 }
 
-Maths.HashMap = function () {
+//Datastructures
+Maths.Datastructures.HashMap = function () {
     this.map = {};
-    this.length = 0;
 
-    this.elementExists = function (key) {
-        return key in this.map;
+    this.add = function (objA, objB) {
+        objA.hashKey = new Maths.Random.String(15).hash;
+        this.map[objA.hashKey] = objB;
     }
 
-    this.getElement = function (key) {
-        if (this.elementExists(key)) {
-            return this.map[key];
-        }
+    this.get = function (obj) {
+        return this.map[obj.hashKey];
     }
 
-    this.addElement = function (key, value) {
-        if (!this.elementExists(key)) {
-            this.map[key] = value;
-            this.length += 1;
-        }
-    }
-
-    this.removeElement = function (key) {
-        if (this.elementExists(key)) {
-            delete this.map[key];
-            this.length -= 1;
-        }
-    }
-
-    this.getCollection = function () {
+    this.getEnumerable = function () {
         return this.map;
     }
+    
+}
+Maths.Datastructures.BinaryTree = function (Key) {
 
-    this.isEmpty = function () {
-        return (length <= 0);
+    var Node = function (val, lft, rgt) {
+        this.value = val[Key];
+        this.left = lft;
+        this.right = rgt;
+    }
+    this.root = null;
+
+    this.insert = function (val) {
+        var tempNode = new Node(val , null, null);
+        var current  = new Node(null, null, null);
+        var parent   = new Node(null, null, null);
+
+        if (this.root == null) {
+            this.root = tempNode;
+            return;
+        } else {
+            current = this.root;
+            parent = null;
+
+            while (true) {
+                parent = current;
+                if(val < parent.value) {
+                    current = current.left;                
+                    
+                    if(current == null) {
+                        parent.left = new Node(val, null,null);
+                        return;
+                    }
+                }else {
+                    current = current.right;
+                    if(current == null) {
+                        parent.right = new Node(val, null, null);
+                        return;
+                    }
+                }
+            }
+        }
+
     }
 
-    this.clear = function () {
-        this.map = {};
-    }
+    this.search = function (val) {
+        var currentNode = this.root;
 
-    this.getLength = function () {
-        return length;
+        while (currentNode.value != val) {
+
+            if (currentNode.value > val) {
+                currentNode = currentNode.left;
+            } else {
+                currentNode = currentNode.right;
+            }
+            if (currentNode == null) {
+                return null;
+            }
+        }
+        return currentNode;
     }
 }
 
-Maths.LinkedList = function () {
-
-    var node = function (prev, ele, nxt) {
-        this.previous = prev;   //string key
-        this.element = ele;
-        this.next = nxt;    //string key
-    }
-
-    this.length = 0;
-
-    this.addElement = function (element) {
-
-    }
-
+//Random
+Maths.Random.String = function(length){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i < length; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return {hash : text};
 }
+
+
+

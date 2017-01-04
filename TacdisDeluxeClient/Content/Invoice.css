@@ -1,0 +1,20 @@
+﻿ .InvoiceTable {
+        margin-top: 1px;
+        width: 350px;
+        float: left;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        border-radius: 25px;
+        border: 1px solid #AFAFAF;
+        padding: 10px;
+    }
+    .InvoiceTable2 {
+        margin-top: 1px;
+        width: 720px;
+        float: left;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        border-radius: 25px;
+        border: 1px solid #AFAFAF;
+        padding: 10px;
+    }

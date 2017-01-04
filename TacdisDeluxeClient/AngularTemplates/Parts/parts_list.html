@@ -5,7 +5,7 @@
         <div class="pull-right">
             <div class="input-group " style="display: inline-flex; white-space: nowrap;">
                 <a class="btn btn-default" style="border-top-right-radius: 0; border-bottom-right-radius: 0;" title="Add" data-toggle="modal" data-target="#modalEditPart"><span class="glyphicon glyphicon-plus"></span></a>
-                <input id="searchText" class="form-control" style="display:none; width:0px;" type="text" value="" placeholder="Search" />
+                <input id="searchText" ng-model="searchText" class="form-control" style="display:none; width:0px;" type="text" value="" placeholder="Search" />
                 <a id="searchButton" class="btn btn-default btn-search" style="border-top-left-radius: 0; border-bottom-left-radius: 0;" title="Search" ng-click="searchParts('Wooo!')"><span class="glyphicon glyphicon-search"></span></a>
             </div>
         </div>
@@ -28,12 +28,17 @@
             <th>Spec fsg</th>
             <th width="10"></th>
         </tr>
-        <tr ng-repeat="item in $data|orderBy:orderByField:reverseSort">
+        <tr ng-repeat="item in $data|orderBy:orderByField:reverseSort|filter:searchText">
             <td>{{item.ItemId}}</td>
             <td>{{item.ItemName}}</td>
-            <td>{{item.ItemPrice}}</td>
+            <td>{{item.ItemPrice | currency_custom : 2}}</td>
             <td>{{item.VAT}}</td>
-            <td>{{item.SpecFsg}}</td>
+            <td>
+                <span ng-switch on="item.SpecFsg">
+                    <i ng-switch-when="true" class="fa fa-check" aria-hidden="true"></i>
+                    <i ng-switch-default></i>
+                </span>
+            </td>
             <td><a class="btn" ng-click="deletePart(item)" title="Delete"><span class="glyphicon glyphicon-remove"></span></a></td>
         </tr>
     </table>
@@ -91,20 +96,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="pull-right">
-        <div class="input-group">
-            <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Hate it</button>
-            </span>
-            <input type="text" class="form-control" placeholder="Product name">
-            <span class="input-group-btn">
-                <button class="btn btn-secondary" type="button">Love it</button>
-            </span>
         </div>
     </div>
 </div>

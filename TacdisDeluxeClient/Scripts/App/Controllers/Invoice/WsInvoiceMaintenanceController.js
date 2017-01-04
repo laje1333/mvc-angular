@@ -20,7 +20,7 @@ tacdisDeluxeApp.controller("WsInvoiceMaintenanceCtrl", ["$scope", "wsInvoiceMain
     $scope.update_invoice = function () {
 
         $http({
-            url: 'http://localhost:57661/api/invoice/UpdateInvoice/Update',
+            url: 'http://localhost:57661/api/invoice/CreatInvoice/Create',//http://localhost:57661/api/invoice/UpdateInvoice/Update
             method: "POST",
             data: JSON.stringify($scope.MaintenanceInvoice),
             headers: { 'Content-Type': 'application/json' }
