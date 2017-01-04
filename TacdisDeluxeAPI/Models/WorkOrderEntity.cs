@@ -16,6 +16,15 @@ namespace TacdisDeluxeAPI.Models
             WOJ_List = new List<WoJobEntity>();
         }
 
+        public void AddNewWOJ(DBContext dbc)
+        {
+            WoJobEntity woj = new WoJobEntity();
+            woj.WoHNr = this.WoNr;
+            woj.WoJNr = WOJ_List.Count();
+            WOJ_List.Add(woj);
+            //dbc.WorkOrderJobs.Add(woj);
+        }
+
         [Key]
         public int WoNr { get; set; }
         public string Status { get; set; }

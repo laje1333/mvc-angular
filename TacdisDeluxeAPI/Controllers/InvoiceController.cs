@@ -83,6 +83,10 @@ namespace TacdisDeluxeAPI.Controllers
 
                     var original = db.Invoices.Single(i => i.Id == invoice.Id);
 
+                    var rows =
+                        original.InvoiceRows.Where(r => invoice.InvoiceRows.Select(x => x.Id).Contains(r.Id) == false);
+                    db.InvoiceRows.RemoveRange(rows);
+
                     db.Entry(original).CurrentValues.SetValues(invoice);
 
                     db.SaveChanges();

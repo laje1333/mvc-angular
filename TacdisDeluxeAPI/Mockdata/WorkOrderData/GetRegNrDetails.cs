@@ -33,25 +33,25 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             return response;
         }
         
-        public static string GetVehRegDate(string RegNr)
+        public static DateTime GetVehRegDate(string RegNr)
         {
-            string response = "";
+            DateTime response = DateTime.MinValue;
             switch (RegNr)
             {
                 case "HTP804":
-                    response = "2008-09-19";
+                    response = DateTime.Parse("2008-09-19");
                     break;
                 case "MFB412":
-                    response = "2011-12-19";
+                    response = DateTime.Parse("2011-12-19");
                     break;
                 case "GMK765":
-                    response = "2012-04-02";
+                    response = DateTime.Parse("2012-04-02");
                     break;
                 case "WRZ004":
-                    response = "2005-04-15";
+                    response = DateTime.Parse("2005-04-15");
                     break;
                 case "DSP793":
-                    response = "2010-04-23";
+                    response = DateTime.Parse("2010-04-23");
                     break;
                 default:
                     break;
@@ -118,25 +118,23 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             return response;
         }
 
-        internal static string GetLastVisDate(string RegNr)
+        internal static DateTime GetLastVisDate(string RegNr)
         {
-            string response = "";
+            DateTime response = DateTime.MinValue;
             switch (RegNr)
             {
                 case "HTP804":
-                    response = "2016-11-24";
+                    response = DateTime.Parse("2016-11-24");
                     break;
                 case "MFB412":
-                    response = "2016-11-15";
+                    response = DateTime.Parse("2016-11-15");
                     break;
                 case "GMK765":
-                    response = "2012-05-02";
+                    response = DateTime.Parse("2012-05-02");
                     break;
                 case "WRZ004":
-                    response = "";
                     break;
                 case "DSP793":
-                    response = "";
                     break;
                 default:
                     break;
