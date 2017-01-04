@@ -1,5 +1,37 @@
 ﻿var Maths = {};
 
+/*
+    Binary search:
+        Given an array A and a value V, finds the index of V.
+
+    HashMap:
+        Create new instance:
+            - var x = new Maths.HashMap();
+        <Key, Value>, where Key is of type string.
+
+        Methods:
+            -elementExists
+            -getLength
+            -clear
+            -isEmpty
+            -getCollection
+            -removeElement
+            -addElement
+            -getElement
+
+    BinaryTree:
+        Create new instance:
+            - var x = new Maths.BinaryTree();
+        The left sub-tree of a node has a value less than or equal to its parent node's key.
+        The right sub-tree of a node has a value greater than to its parent node's key.
+
+        Methods:
+            -insert
+            -search
+*/
+
+
+
 Maths.BinarySearch = function(A, V) {
     var L = 0;
     var R = (A.length - 1);
@@ -60,18 +92,66 @@ Maths.HashMap = function () {
     }
 }
 
-Maths.LinkedList = function () {
+Maths.BinaryTree = function () {
 
-    var node = function (prev, ele, nxt) {
-        this.previous = prev;   //string key
-        this.element = ele;
-        this.next = nxt;    //string key
+    var Node = function (val, lft, rgt) {
+        this.value = val;
+        this.left = lft;
+        this.right = rgt;
     }
 
-    this.length = 0;
+    this.root = null;
 
-    this.addElement = function (element) {
+    this.insert = function (val) {
+        var tempNode = new Node(val , null, null);
+        var current  = new Node(null, null, null);
+        var parent   = new Node(null, null, null);
+
+        if (this.root == null) {
+            this.root = tempNode;
+            return;
+        } else {
+            current = this.root;
+            parent = null;
+
+            while (true) {
+                parent = current;
+                if(val < parent.value) {
+                    current = current.left;                
+                    
+                    if(current == null) {
+                        parent.left = new Node(val, null,null);
+                        return;
+                    }
+                }else {
+                    current = current.right;
+                    if(current == null) {
+                        parent.right = new Node(val, null, null);
+                        return;
+                    }
+                }
+            }
+        }
 
     }
 
+    this.search = function (val) {
+        var currentNode = this.root;
+
+        while (currentNode.value != val) {
+
+            if (currentNode.value > val) {
+                currentNode = currentNode.left;
+            } else {
+                currentNode = currentNode.right;
+            }
+            if (currentNode == null) {
+                return null;
+            }
+        }
+        return currentNode;
+    }
 }
+
+
+

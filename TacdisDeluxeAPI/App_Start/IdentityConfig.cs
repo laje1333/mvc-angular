@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Microsoft.Owin.Security.Infrastructure;
 using TacdisDeluxeAPI.Providers;
 using System;
+using System.Web.Http;
 
 namespace TacdisDeluxeAPI
 {
@@ -32,7 +33,12 @@ namespace TacdisDeluxeAPI
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Login"),
+                Provider = new CookieAuthenticationProvider
+                {
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<AppUserManager, AppUser>(
+                        validateInterval: TimeSpan.FromMinutes(30),
+                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager, DefaultAuthenticationTypes.ApplicationCookie))
+                }
             });
 
             OAuthOptions = new OAuthAuthorizationServerOptions
@@ -45,7 +51,7 @@ namespace TacdisDeluxeAPI
             };
 
             // Enable the application to use bearer tokens to authenticate users
-            app.UseOAuthBearerTokens(OAuthOptions);
+            app.UseOAuthBearerTokens(OAuthOptions);  
         }
 
 

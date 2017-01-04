@@ -1,50 +1,80 @@
-﻿tacdisDeluxeApp.controller("AccountController", function ($scope, $http, $route) {
+﻿'use strict';
+tacdisDeluxeApp.controller('AccountController', function ($scope, $location, $timeout, IsAuthFactory, AuthService) {
 
+    $scope.savedSuccessfully = false;
+    $scope.message = "";
 
-    $scope.logIn = function(){
-        var req = {
-            method: 'POST',
-            url: 'http://localhost:57661/Token',
-            headers: {},
-            data: {
-                username: $scope.username,
-                password: $scope.password,
-                grant_type: 'password'
-            },
-        }
-        $http(req).
-         then(function (response) {
-             $route.reload();
-             feedbackPopup('YEY', { level: 'success', timeout: 2000 });
-             window.sessionStorage.setItem('Token', response.data.access_token);
-         }, function (response) {
-             feedbackPopup('Something went wrong', { level: 'warning', timeout: 2000 });
-             $scope.statusCode = response.statusCode;
-         });
+    $scope.registration = {
+        username: "",
+        password: "",
+        confirmPassword: ""
+    };
+
+    $scope.loginData = {
+        username: "",
+        password: ""
+    };
+
+    $scope.auth = {
+        isAuth: false,
+        username: ""
     }
 
-    $scope.register = function () {
-       
-        var req = {
-            method: 'POST',
-            url: 'http://localhost:57661/api/Account/Register',
-            headers: {},
-            data: {
-                email: $scope.usernameR,
-                password: $scope.passwordR,
-                confirmpassword: $scope.confPasswordR,
-            },
-        }
-        $http(req).
-            then(function (response) {
-                $route.reload();
-                feedbackPopup('Account created', { level: 'success', timeout: 2000 });
-                $scope.ok = "It's good";
-            }, function (response) {
-                feedbackPopup('Something went wrong', { level: 'warning', timeout: 2000 });
-                $scope.statusCode = response.statusCode;
-            });
-        
+    $scope.auth = AuthService.isAuth();
+
+    $scope.$watch('isAuth', function (newValue, oldValue) {
+        if (newValue !== oldValue) IsAuthFactory.setAuth(newValue);
+    });
+
+    $scope.message = "";
+
+    
+
+    $scope.logOut = function () {
+        AuthService.logOut();
+        $scope.isAuth = false;
+        $scope.username = ""; 
+    };
+
+    $scope.logIn = function () {
+
+        AuthService.login($scope.loginData, '/sales').then(function (response) {
+            $scope.username = response.data.username;
+            $scope.isAuth = true;
+        },
+         function (err) {
+             $scope.username = "";
+             $scope.isAuth = false;
+             $scope.message = err.error_description;
+             feedbackPopup('Wrong username or password!', { level: 'warning', timeout: 2000 });
+         });
+    };
+
+    $scope.signUp = function () {
+
+        AuthService.saveRegistration($scope.registration).then(function (response) {
+            feedbackPopup('User has been created', { level: 'success', timeout: 2000 });
+            $scope.savedSuccessfully = true;
+            startTimer();
+
+        },
+         function (response) {
+             var errors = [];
+             for (var key in response.data.modelState) {
+                 for (var i = 0; i < response.data.modelState[key].length; i++) {
+                     errors.push(response.data.modelState[key][i]);
+                 }
+             }
+             feedbackPopup('Something went terribly wrong', { level: 'warning', timeout: 2000 });
+             $scope.message = "Failed to register user due to:" + errors.join(' ');
+         });
+    };
+
+    var startTimer = function () {
+        var timer = $timeout(function () {
+            $timeout.cancel(timer);
+            $location.path('/login');
+        }, 2000);
     }
 
 });

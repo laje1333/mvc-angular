@@ -10,7 +10,19 @@ namespace TacdisDeluxeClient.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+      
+                return View();
+            
+        }
+
+        public void Logout()
+        {
+            System.Web.HttpContext.Current.Session["Authstuff"] = null;
+        }
+
+        public void Login(string auth)
+        {
+            System.Web.HttpContext.Current.Session["Authstuff"] = auth;
         }
 
     }
