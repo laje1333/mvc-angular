@@ -187,10 +187,10 @@
                 <tr ng-repeat="row in MaintenanceInvoice.InvoiceRows">
                     <td>{{row.Item}}</td>
                     <td>{{row.Description}}</td>
-                    <td>{{row.UnitCost}}</td>
+                    <td>{{row.UnitCost | valuta}}</td>
                     <td>{{row.Quantity}}</td>
                     <td>{{row.Vat}}</td>
-                    <td>{{row.InvoiceRowAmount}}</td>
+                    <td>{{row.InvoiceRowAmount | valuta}}</td>
                     <td><button class=" btn btn-primary" data-ng-click="removeRow($index, row.InvoiceRowAmount)">Delete</button></td>
                 </tr>
             </table>
