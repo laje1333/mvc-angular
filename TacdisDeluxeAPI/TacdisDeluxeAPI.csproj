@@ -313,6 +313,14 @@
     <Compile Include="Migrations\201612281027017_inventory5.Designer.cs">
       <DependentUpon>201612281027017_inventory5.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701021446289_byteAvTyper.cs" />
+    <Compile Include="Migrations\201701021446289_byteAvTyper.Designer.cs">
+      <DependentUpon>201701021446289_byteAvTyper.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701040726471_woJob.cs" />
+    <Compile Include="Migrations\201701040726471_woJob.Designer.cs">
+      <DependentUpon>201701040726471_woJob.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -342,6 +350,7 @@
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\AppUserManager.cs" />
+    <Compile Include="Models\Enums\InvoiceState.cs" />
     <Compile Include="Models\IdentityContext.cs" />
     <Compile Include="Models\InvoiceEntity.cs" />
     <Compile Include="Models\InvoiceRowEntity.cs" />
@@ -437,6 +446,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612281027017_inventory5.resx">
       <DependentUpon>201612281027017_inventory5.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021446289_byteAvTyper.resx">
+      <DependentUpon>201701021446289_byteAvTyper.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701040726471_woJob.resx">
+      <DependentUpon>201701040726471_woJob.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -33,70 +33,159 @@ tacdisDeluxeApp.directive('panelheaderwithclick', function () {
 
 tacdisDeluxeApp.directive("tframe", function () {
 
-
-
     var controller = ['$scope', function ($scope) {
+
+        var tframe, tbody, theader, southResize, southEastResize, eastResize;
+        var fullScreenSize = "1150px";
+        var offX;
+        var offY;
+        var tempX, tempY;
+        var startX, startY, startWidth, startHeight;
+        var srcId;
+
+        $scope.frameIsVisible = true;
+        $scope.frameIsMinimized = false;
 
         $scope.generateFrameId = function () {
             var text = "";
             var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
             for (var i = 0; i < 10; i++)
                 text += possible.charAt(Math.floor(Math.random() * possible.length));
-
             return text;
         }
 
-        window.onload = addListeners();
-        var offX;
-        var offY;
-
-
-
-        function addListeners() {
+        $scope.initializeElements = function () {
             $scope.frameId = $scope.generateFrameId();
             $scope.frameBodyId = $scope.generateFrameId();
-            document.getElementById("frame").id = $scope.frameId;
-            document.getElementById("framebody").id = $scope.frameBodyId;
+            $scope.frameHeaderId = $scope.generateFrameId();
+            $scope.resizeId = $scope.generateFrameId();
+            $scope.rightResizeId = $scope.generateFrameId();
+            $scope.cornerResizeId = $scope.generateFrameId();
 
-            frameTracker.push($scope.frameId);
-            selectedFrame = $scope.frameId;
-
-            document.getElementById($scope.frameId).addEventListener('mousedown', mouseDown, false);
-            window.addEventListener('mouseup', mouseUp, false);
+            tframe = document.getElementById("frame");
+            tframe.id = $scope.frameId;
+            tbody = document.getElementById("framebody");
+            tbody.id = $scope.frameBodyId;
+            theader = document.getElementById("frameheader");
+            theader.id = $scope.frameHeaderId;
+            southResize = document.getElementById("resize");
+            southResize.id = $scope.resizeId;
+            eastResize = document.getElementById("right-resize");
+            eastResize.id = $scope.rightResizeId;
+            southEastResize = document.getElementById("corner-resize");
+            southEastResize.id = $scope.cornerResizeId;
+            selectedFrame = tframe;
+            currentFrames.push(tframe);
             
         }
 
+        window.onload = addListeners();
+
+        function addListeners() {
+            $scope.initializeElements();
+            theader.addEventListener('mousedown', mouseDown, false);
+            window.addEventListener('mouseup', mouseUp, false);
+            southEastResize = document.getElementById($scope.cornerResizeId);
+            eastResize.addEventListener('mousedown', initDrag, false);
+            southResize.addEventListener('mousedown', initDrag, false);
+            southEastResize.addEventListener('mousedown', initDrag, false);
+            eastResize.style.height = tframe.offsetHeight + "px";
+            southResize.style.width = tframe.offsetWidth + "px";
+            var framecont = $('#' + $scope.resizeId).closest('.framecontainer');
+            
+            $('#' + $scope.resizeId).css({ left: framecont.position().left + "px", top: (tframe.offsetHeight + tframe.offsetTop) + "px", width: tframe.offsetWidth + "px" });
+            $('#' + $scope.rightResizeId).css({ left: (framecont.position().left + tframe.offsetWidth) + "px", top: "60px", height: tframe.offsetHeight + "px" });
+
+        }
+
+
+
         function mouseUp() {
             window.removeEventListener('mousemove', divMove, true);
+            var div = tframe;
+            if (div.offsetLeft < 0) {
+                div.style.left = "1px";
+                southResize.style.left = 1 + "px";
+                eastResize.style.left = (1 + 50 + tbody.offsetWidth + "px");
+                southEastResize.style.left = (1 + 50 + tbody.offsetWidth + "px");
+            }
+            if (div.offsetTop < 0) {
+                div.style.top = "auto";
+                southResize.style.top = (tbody.offsetHeight + 65 + tbody.offsetTop) + "px";
+                eastResize.style.top = (tbody.offsetTop + 60) + "px";
+                southEastResize.style.top = (tbody.offsetHeight + tbody.offsetTop + 65) + "px";
+            }
+            
         }
 
         function mouseDown(e) {
+            selectedFrame = tframe;
             if ($scope.frameIsMinimized == false) {
-                var div = document.getElementById($scope.frameId);
-
+                var div = tframe;
+                var header = theader;
                 offY = e.clientY - parseInt(div.offsetTop);
                 offX = e.clientX - parseInt(div.offsetLeft);
-                window.addEventListener('mousemove', divMove, true);
+                    window.addEventListener('mousemove', divMove, true);
             }
         }
+
+        
 
         function divMove(e) {
             if ($scope.frameIsMinimized == false) {
-                var div = document.getElementById($scope.frameId);
+                var div = tframe;
                 div.style.position = 'absolute';
                 div.style.top = (e.clientY - offY) + 'px';
                 div.style.left = (e.clientX - offX) + 'px';
+                tempX = (e.clientX - offX);
+                tempY = (e.clientY - offY);
+                southResize.style.width = tframe.offsetWidth + "px";
+                eastResize.style.height = (tframe.offsetHeight - 42) + "px";
+                eastResize.style.left = (tempX + 50 + tbody.offsetWidth) + "px";
+                eastResize.style.top = (tempY + 42) + "px";
+                southResize.style.left = tempX + "px";
+                southResize.style.top = (tempY + tbody.offsetHeight + 50) + "px";
+                southEastResize.style.top = (tempY + tbody.offsetHeight + 50) + "px";
+                southEastResize.style.left = (tempX + tbody.offsetWidth + 50) + "px";
             }
         }
 
+        function initDrag(e) {
+            srcId = e.srcElement.id;
+            startX = e.clientX;
+            startY = e.clientY;
+            startWidth = parseInt(document.defaultView.getComputedStyle(tframe).width, 10);
+            startHeight = parseInt(document.defaultView.getComputedStyle(tframe).height, 10);
+            document.documentElement.addEventListener('mousemove', doDrag, false);
+            document.documentElement.addEventListener('mouseup', stopDrag, false);
+        }
 
+        function doDrag(e) {
+            if (srcId == $scope.resizeId) {
+                tframe.style.height = (startHeight + e.clientY - startY) + 'px';
+            } else if (srcId == $scope.rightResizeId) {
+                tframe.style.width = (startWidth + e.clientX - startX) + 'px';
+            } else if (srcId == $scope.cornerResizeId) {
+                tframe.style.width = (startWidth + e.clientX - startX) + 'px';
+                tframe.style.height = (startHeight + e.clientY - startY) + 'px';
+            }
+            
 
+            tbody.style.width = (tframe.offsetWidth - 50) + "px";
+            tbody.style.height = (tframe.offsetHeight - 50) + "px";
+            southResize.style.width = tframe.offsetWidth + "px";
+            eastResize.style.height = (tframe.offsetHeight - 42) + "px";
+            eastResize.style.left = (tempX + 50 + tbody.offsetWidth) + "px";
+            eastResize.style.top = (tempY + 42) + "px";
+            southResize.style.left = tempX + "px";
+            southResize.style.top = (tempY + tbody.offsetHeight + 50) + "px";
+            southEastResize.style.top = (tempY + tbody.offsetHeight + 50) + "px";
+            southEastResize.style.left = (tempX + tbody.offsetWidth + 50) + "px";
+        }
 
-
-
-        $scope.frameIsVisible = true;
-        $scope.frameIsMinimized = false;
+        function stopDrag(e) {
+            document.documentElement.removeEventListener('mousemove', doDrag, false); document.documentElement.removeEventListener('mouseup', stopDrag, false);
+        }
 
         $scope.exitRequest = function () {
             $scope.frameIsVisible = false;
@@ -110,11 +199,11 @@ tacdisDeluxeApp.directive("tframe", function () {
                 minimizedSlots.splice(index, 1);
             }
 
-            document.getElementById($scope.frameId).style.position = "relative";
-            document.getElementById($scope.frameId).style.width = "1138px";
-            document.getElementById($scope.frameId).style.height = "auto";
-            document.getElementById($scope.frameId).style.top = "auto";
-            document.getElementById($scope.frameId).style.left = "auto";
+            tframe.style.position = "relative";
+            tframe.style.width = fullScreenSize;
+            tframe.style.height = "auto";
+            tframe.style.top = "auto";
+            tframe.style.left = "auto";
             $scope.showFrame();
             $scope.frameIsMinimized = false;
             
@@ -122,17 +211,17 @@ tacdisDeluxeApp.directive("tframe", function () {
 
         $scope.minimize = function () {
             if ($scope.frameIsMinimized == false) {
-                var widthOffset = 365;
+                var widthOffset = 300;
 
                 for (i = 0; i < minimizedSlots.length; i++) {
                     widthOffset += document.getElementById(minimizedSlots[i]).offsetWidth;
                 }
 
 
-                document.getElementById($scope.frameId).style.position = "fixed";
-                document.getElementById($scope.frameId).style.width = "auto";
-                document.getElementById($scope.frameId).style.top = "908px";
-                document.getElementById($scope.frameId).style.left = widthOffset + "px";
+                tframe.style.position = "fixed";
+                tframe.style.width = "auto";
+                tframe.style.top = (document.getElementById("appcontainer").clientHeight - 75) + "px";
+                tframe.style.left = widthOffset + "px";
 
                 $scope.frameIsMinimized = true;
                 $scope.hideFrame();
@@ -168,7 +257,6 @@ tacdisDeluxeApp.directive("tframe", function () {
 
 
 var minimizedSlots = [];
-var frameTracker = [];
 var selectedFrame = "";
-
+var currentFrames = [];
 

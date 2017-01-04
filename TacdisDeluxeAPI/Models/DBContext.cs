@@ -30,6 +30,7 @@ namespace TacdisDeluxeAPI.Models
         public DbSet<InvoiceEntity> Invoices { get; set; }
         public DbSet<InvoiceRowEntity> InvoiceRows { get; set; }
         public DbSet<WorkOrderEntity> WorkOrder { get; set; }
+        public DbSet<WoJobEntity> WorkOrderJobs { get; set; }
         public DbSet<WorkshopInventoryItem> WorkshopInventoryItems { get; set; }
         public DbSet<MainInventoryItem> MainInventoryItems { get; set; }
 
@@ -48,6 +49,7 @@ namespace TacdisDeluxeAPI.Models
             builder.Entity<VehicleBrandEntity>().ToTable("VehicleBrand");
             builder.Entity<VehiclePropertyEntity>().ToTable("VehicleProperty");
             builder.Entity<WorkOrderEntity>().ToTable("WorkOrder");
+            builder.Entity<WoJobEntity>().ToTable("WorkOrderJobs");
 
             builder.Entity<WorkshopInventoryItem>().ToTable("WorkshopInventoryItem");
             builder.Entity<MainInventoryItem>().ToTable("MainInventoryItem");

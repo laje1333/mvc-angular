@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TacdisDeluxeAPI.Models;
 
 namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 {
@@ -9,27 +10,27 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
     {
         private static string separator = ",";
 
-        public static string GetWohList(string search)
+        //WOH
+        internal static string GetWohList(IOrderedQueryable<Models.WorkOrderEntity> woList)
         {
-            return "{\"woh\":[" + CreateWohLines() + "]}";
+            return "{\"woh\":[" + CreateWohLines(woList) + "]}";
         }
-        
-        private static string CreateWohLines()
+
+        private static string CreateWohLines(IOrderedQueryable<Models.WorkOrderEntity> woList)
         {
             string result = "";
             List<string> listLine = new List<string>();
 
-            foreach (var WO in WorkOrderDB.WorkOrders)
+            foreach (var WO in woList)
             {
                 listLine.Add(CreateLine(WO));
             }
             result = string.Join(separator, listLine);
             return result;
         }
-
-        private static string CreateLine(WorkOrderDB.WorkOrder WO)
+        
+        private static string CreateLine(Models.WorkOrderEntity WO)
         {
-            WO.CalculateTotalCost();
             return "{\"WoNr\": \"" + WO.WoNr +
                     "\",\"RegNr\": \"" + WO.RegNr +
                     "\",\"Status\": \"" + WO.Status +
@@ -41,17 +42,17 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
                     "\"}";
         }
 
-        public static string GetWojList(string wohId)
+        //WOJ
+        public static string GetWojList(WorkOrderEntity WO)
         {
-            return "{\"woj\":[" + CreateWojLines(wohId) + "]}";
+            return "{\"woj\":[" + CreateWojLines(WO) + "]}";
         }
 
-        private static string CreateWojLines(string wohId)
+        private static string CreateWojLines(WorkOrderEntity WO)
         {
             string result = "";
             List<string> listLine = new List<string>();
-            var WojList = WorkOrderDB.GetWorkOrder(wohId).GetWoJList();
-            foreach (WoJob woj in WojList)
+            foreach (WoJobEntity woj in WO.WOJ_List)
             {
                 listLine.Add(CreateLine(woj));
             }
@@ -59,37 +60,35 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             return result;
         }
 
-        private static string CreateLine(WoJob woj)
+        private static string CreateLine(WoJobEntity woj)
         {
-            woj.CalculateTotalCost();
             return "{\"WoJNr\": \"" + woj.WoJNr +
                     "\",\"Status\": \"" + woj.Status +
                     "\",\"TotCost\": \"" + woj.TotCost +
                     "\"}";
         }
 
-        internal static string GetWjkList(string wohId, string wojId)
+        //WJK
+        internal static string GetWjkList(ICollection<WoKitsEntity> wjkList)
         {
-            return "{\"wjk\":[" + CreateWjkLines(wohId, wojId) + "]}";
+            return "{\"wjk\":[" + CreateWjkLines(wjkList) + "]}";
         }
 
-        private static string CreateWjkLines(string wohId, string wojId)
+        private static string CreateWjkLines(ICollection<WoKitsEntity> wjkList)
         {
             string result = "";
             List<string> listLine = new List<string>();
-            var WOJ_KitList = WorkOrderDB.GetWorkOrder(wohId).GetWoJList(wojId).GetWOJ_KitList();
-            foreach (var WO in WOJ_KitList)
+            foreach (var wjk in wjkList)
             {
-                listLine.Add(CreateLine(WO));
+                listLine.Add(CreateLine(wjk));
             }
             result = string.Join(separator, listLine);
             return result;
         }
 
-        private static string CreateLine(WoJobKit wjk)
+        private static string CreateLine(WoKitsEntity wjk)
         {
-            wjk.CalculateTotalCost();
-            return "{\"KitNr\": \"" + wjk.KitNr +
+            return "{\"KitNr\": \"" + wjk.WJKCode +
                     "\",\"KitType\": \"" + wjk.KitType +
                     "\",\"KitDesc\": \"" + wjk.KitDesc +
                     "\",\"Quantity\": \"" + wjk.Quantity +
@@ -97,17 +96,17 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
                     "\"}";
         }
 
-        internal static string GetWjoList(string wohId, string wojId)
+        //WJO
+        internal static string GetWjoList(ICollection<WoOpEntitys> wjoList)
         {
-            return "{\"wjo\":[" + CreateWjoLines(wohId, wojId) + "]}";
+            return "{\"wjo\":[" + CreateWjoLines(wjoList) + "]}";
         }
 
-        private static string CreateWjoLines(string wohId, string wojId)
+        private static string CreateWjoLines(ICollection<WoOpEntitys> wjoList)
         {
             string result = "";
             List<string> listLine = new List<string>();
-            var WOJ_OpList = WorkOrderDB.GetWorkOrder(wohId).GetWoJList(wojId).GetWOJ_OPList();
-            foreach (var wjo in WOJ_OpList)
+            foreach (var wjo in wjoList)
             {
                 listLine.Add(CreateLine(wjo));
             }
@@ -115,9 +114,8 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             return result;
         }
         
-        private static string CreateLine(WoJobOP wjo)
+        private static string CreateLine(WoOpEntitys wjo)
         {
-            wjo.CalculatePriceCost();
             return "{\"OPNr\": \"" + wjo.OPNr +
                     "\",\"OPDesc\": \"" + wjo.OPDesc +
                     "\",\"WorkTime\": \"" + wjo.WorkTime +
@@ -126,17 +124,17 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
                     "\"}";
         }
 
-        internal static string GetWjpList(string wohId, string wojId)
+        //WJP
+        internal static string GetWjpList(ICollection<PartEntity> wjpList)
         {
-            return "{\"wjp\":[" + CreateWjpLines(wohId, wojId) + "]}";
+            return "{\"wjp\":[" + CreateWjpLines(wjpList) + "]}";
         }
 
-        private static string CreateWjpLines(string wohId, string wojId)
+        private static string CreateWjpLines(ICollection<PartEntity> wjpList)
         {
             string result = "";
             List<string> listLine = new List<string>();
-            var WOJ_PartList = WorkOrderDB.GetWorkOrder(wohId).GetWoJList(wojId).GetWOJ_PartList();
-            foreach (var wjp in WOJ_PartList)
+            foreach (var wjp in wjpList)
             {
                 listLine.Add(CreateLine(wjp));
             }
@@ -144,14 +142,15 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             return result;
         }
 
-        private static string CreateLine(WoJobPart wjp)
+        private static string CreateLine(PartEntity wjp)
         {
-            wjp.CalculatePriceCost();
-            return "{\"PartNr\": \"" + wjp.PartNr +
-                    "\",\"PartDesc\": \"" + wjp.PartDesc +
-                    "\",\"Quantity\": \"" + wjp.Quantity +
-                    "\",\"Price\": \"" + wjp.Price +
+            return "{\"PartNr\": \"" + wjp.ItemId +
+                    "\",\"PartDesc\": \"" + wjp.ItemDesc +
+                    "\",\"Quantity\": \"" + (1).ToString() +
+                    "\",\"Price\": \"" + wjp.ItemPrice +
                     "\"}";
         }
+
+
     }
 }

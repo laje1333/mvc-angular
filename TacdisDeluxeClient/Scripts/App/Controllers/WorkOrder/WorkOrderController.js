@@ -59,31 +59,55 @@
 tacdisDeluxeApp.controller("WorkOrderHeaderController", ["$scope", "$rootScope", "NgTableParams", "$http", function ($scope, $rootScope, ngTableParams, $http) {
     $scope.currentWoh = $rootScope.currentWoh;
 
-    $scope.SearchWoH = function () {
+    $scope.GetWOHList = function () {
         $http.get("http://localhost:57661/api/workorder/GetWoHList?search=" + $scope.woh_Search)
         .then(function (response) {
             var obj = JSON.parse(response.data);
             $scope.records = obj.woh;
 
             $scope.wohTable = new ngTableParams({
-
             }, {
                 dataset: $scope.records
             });
         });
     };
 
-    $scope.WOH_AddNewWOH = function () {
-        $scope.urlString = 'http://localhost:57661/api/workorder/GetNewWO?addNew=' + "WOH" + "&wohId=" + $scope.currentWoh;
-        $http.get($scope.urlString)
-        .then(function (response) {
-            var components = response.data;
+    $scope.WOH_AddWOH = function () {
 
-            $rootScope.currentWoh = $scope.currentWoh = components + "";//[0].split(',');
-            $rootScope.woh_regNr = $scope.woh_regNr = ""
-            //$scope.GetRegNr();
+        var wohData = {
+            WoNr: 10,
+            Status: "New",
+
+            RegNr: "",
+            VehRegDate: "",
+            VehOwner: "",
+            VehDriver: "",
+            VehPhoneNr: "",
+            VehLastVisDate: "",
+            VehLastVisMil: "",
+
+            CurrentMilage: "",
+            PlannedMechID: 0,
+            PlannedMechName: "",
+
+            CreatedDate: "",
+            PlannedDate: "",
+            CheckedInDate: "",
+
+            MainPayer: "",
+            RespBy: "",
+            TotCost: 0,
+
+            WOJ_Ids: ""
+        }
+
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/workorder/PostWOH",
+            data: wohData
+        }).success(function () {
+            feedbackPopup('Successefully added new Workorder', { level: 'success', timeout: 2000 });
         });
-        $scope.SearchWoH();
     }
 
     $scope.WOH_SetCurrentWOH = function (itemWoh) {
@@ -92,7 +116,7 @@ tacdisDeluxeApp.controller("WorkOrderHeaderController", ["$scope", "$rootScope",
         .then(function (response) {
             var components = response.data;
 
-            $rootScope.currentWoh = $scope.currentWoh = components + "";//[0].split(',');
+            $rootScope.currentWoh = $scope.currentWoh = components + "";
         });
     }
 
@@ -100,24 +124,28 @@ tacdisDeluxeApp.controller("WorkOrderHeaderController", ["$scope", "$rootScope",
 }]);
 
 tacdisDeluxeApp.controller("WorkOrderJobController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
-        $scope.WOH_AddNewWOJ = function () {
-        $scope.urlString = 'http://localhost:57661/api/workorder/GetNewWO?addNew=' + "WOJ" + "&wohId=" + $scope.currentWoh;
-        $http.get($scope.urlString)
-        .then(function (response) {
-            var components = response.data;
 
-            $scope.currentWoJ = components[0] + "";//[0].split(',');
+    $scope.WOH_AddWOJ = function () {
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/workorder/PostWOJ",
+            params: { wohId: $scope.currentWoh }
+        }).success(function () {
+            feedbackPopup('Successefully added new Workorder Job', { level: 'success', timeout: 2000 });
         });
     }
 
-    $scope.SearchWoJ = function () {
-        $http.get('http://localhost:57661/api/workorder/GetWoJobList?wohid=' + $scope.currentWoh)
+    $scope.GetWOJList = function () {
+        $http({
+            method: 'GET',
+            url: "http://localhost:57661/api/workorder/GetWoJobList",
+            params: { wohId: $scope.currentWoh }
+        })
         .then(function (response) {
             var obj = JSON.parse(response.data);
             $scope.records = obj.woj;
 
             $scope.wojTable = new ngTableParams({
-
             }, {
                 dataset: $scope.records
             });
@@ -125,16 +153,29 @@ tacdisDeluxeApp.controller("WorkOrderJobController", ["$scope", "NgTableParams",
     };
 }]);
 
-
 tacdisDeluxeApp.controller("WOActiveKitsController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
-    $scope.AddNewKit = function () {
-        $http.get("http://localhost:57661/api/workorder/GetWJKList?wjkcode=" + $scope.wjkCode + '&wohId=' + $scope.currentWoh + '&wojId=' + $scope.currentWoJ)
+
+    $scope.WOH_AddWJK = function () {
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/workorder/AddWJK",
+            params: { wjkcode: $scope.wjkCode, wohId: $scope.currentWoh, wojId: $scope.currentWoJ }
+        }).success(function () {
+            feedbackPopup('Successefully added new Kit', { level: 'success', timeout: 2000 });
+        });
+    }
+
+    $scope.GetWJKList = function () {
+        $http({
+            method: 'GET',
+            url: "http://localhost:57661/api/workorder/GetWJKList",
+            params: { wohId: $scope.currentWoh, wojId: $scope.currentWoJ }
+        })
         .then(function (response) {
             var obj = JSON.parse(response.data);
             $scope.wjkRec = obj.wjk;
 
             $scope.wjkTable = new ngTableParams({
-
             }, {
                 dataset: $scope.wjkRec
             });
@@ -143,14 +184,28 @@ tacdisDeluxeApp.controller("WOActiveKitsController", ["$scope", "NgTableParams",
 }]);
 
 tacdisDeluxeApp.controller("WOActiveOpController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
-    $scope.AddNewOp = function () {
-        $http.get("http://localhost:57661/api/workorder/GetWJOList?wjocode=" + $scope.wjoCode + '&wohId=' + $scope.currentWoh + '&wojId=' + $scope.currentWoJ)
+
+    $scope.WOH_AddWJO = function () {
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/workorder/AddWJO",
+            params: { wjocode: $scope.wjoCode, wohId: $scope.currentWoh, wojId: $scope.currentWoJ }
+        }).success(function () {
+            feedbackPopup('Successefully added new Operation', { level: 'success', timeout: 2000 });
+        });
+    }
+
+    $scope.GetWJOList = function () {
+        $http({
+            method: 'GET',
+            url: "http://localhost:57661/api/workorder/GetWJOList",
+            params: { wohId: $scope.currentWoh, wojId: $scope.currentWoJ }
+        })
         .then(function (response) {
             var obj = JSON.parse(response.data);
             $scope.wjoRec = obj.wjo;
 
             $scope.wjoTable = new ngTableParams({
-
             }, {
                 dataset: $scope.wjoRec
             });
@@ -159,14 +214,28 @@ tacdisDeluxeApp.controller("WOActiveOpController", ["$scope", "NgTableParams", "
 }]);
 
 tacdisDeluxeApp.controller("WOActivePartController", ["$scope", "NgTableParams", "$http", function ($scope, ngTableParams, $http) {
-    $scope.AddNewPart = function () {
-        $http.get("http://localhost:57661/api/workorder/GetWJPList?wjpcode=" + $scope.wjpCode + '&wohId=' + $scope.currentWoh + '&wojId=' + $scope.currentWoJ)
+
+    $scope.WOH_AddWJP = function () {
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/workorder/AddWJP",
+            params: { wjpcode: $scope.wjpCode, wohId: $scope.currentWoh, wojId: $scope.currentWoJ }
+        }).success(function () {
+            feedbackPopup('Successefully added new Part', { level: 'success', timeout: 2000 });
+        });
+    }
+
+    $scope.GetWJPList = function () {
+        $http({
+            method: 'GET',
+            url: "http://localhost:57661/api/workorder/GetWJPList",
+            params: { wohId: $scope.currentWoh, wojId: $scope.currentWoJ }
+        })
         .then(function (response) {
             var obj = JSON.parse(response.data);
             $scope.wjpRec = obj.wjp;
 
             $scope.wjpTable = new ngTableParams({
-
             }, {
                 dataset: $scope.wjpRec
             });

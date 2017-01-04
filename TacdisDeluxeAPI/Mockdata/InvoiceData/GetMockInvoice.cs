@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using TacdisDeluxeAPI.Models;
+using TacdisDeluxeAPI.Models.Enums;
 
 namespace TacdisDeluxeAPI.Mockdata.InvoiceData
 {
     public class GetMockInvoice
     {
-        public static InvoiceEntity GetInvoice(int invoiceNumber, int woNumber, int customerNumber)
+        public static InvoiceEntity GetInvoice(int invoiceNumber, int woNumber)
         {
             var payer = new PayerEntity
             {
-                Country = "Sverige",
-                CustomerNumber = customerNumber,
-                FirstName = "Anders",
-                LastName = "Andersson",
-                StreeatAddress = "Gatan 2",
-                ZipCity = "666 66 Säffle"
+                Country = "Åmålandia",
+                CustomerNumber = 100000,
+                FirstName = "Kalle",
+                LastName = "H",
+                StreeatAddress = "Åmålgatan 1",
+                ZipCity = "62141 Åmål",
+                Id = 1
             };
 
             var invoiceRows = new List<InvoiceRowEntity>
@@ -35,21 +37,22 @@ namespace TacdisDeluxeAPI.Mockdata.InvoiceData
 
             var salesman = new SalesmanEntity
             {
-                Company = "Bil Ab",
+                Company = "Volvo",
                 Country = "Sverige",
-                FirstName = "Olle",
-                LastName = "Svensson",
+                FirstName = "Urban",
+                LastName = "Karlsson",
                 StreeatAddress = "gatan 1",
-                ZipCity = "666 66 Åmål",
-                EmployeeNumber = 123456
+                ZipCity = "123123 Volvoia",
+                EmployeeNumber = 0,
+                Id = 1
             };
 
             var invoice = new InvoiceEntity
             {
                 InvoiceNumber = invoiceNumber,
-                InvoiceState = "makulerad",
-                DueDate = "2016-12-29",
-                InvoiceDate = "2016-11-29",
+                InvoiceState = InvoiceState.Preliminary,
+                DueDate = DateTime.Now.AddDays(30),
+                InvoiceDate = DateTime.Now,
                 InvoiceAmount = 1000,
                 WoNumber = woNumber,
                 JobNumber = "1,2",

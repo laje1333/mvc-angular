@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using AutoMapper;
 using TacdisDeluxeAPI.Models;
+using TacdisDeluxeAPI.Models.Enums;
 
 namespace TacdisDeluxeAPI.DTO.validators
 {
@@ -37,6 +38,133 @@ namespace TacdisDeluxeAPI.DTO.validators
 
             return invoice;
         }
+        
+        public static InvoiceEntity CreateInvoiceEntityFromSalesDto(SalesDto salesDto)
+        {
+            var invoice = new InvoiceEntity
+            {
+                InvoiceNumber = GetInvoiceNumber(),
+                Salesman = salesDto.Salesman,
+                InvoiceState = InvoiceState.Preliminary,
+                InvoiceDate = salesDto.DateCreated,
+                DueDate = salesDto.DateCreated.AddDays(30),
+                DebitCredit = "Debit",
+                WoNumber = 0,
+                JobNumber = string.Empty,
+                Payer = GetPayer(salesDto.PayerIds.First()),
+                InvoiceRows = new List<InvoiceRowEntity>()
+            };
+
+            if (salesDto.PartIds != null && salesDto.PartIds.Length >0)
+            {
+                var invoiceRows = GetInvoiceRowFromParts(salesDto.PartIds);
+                foreach (var row in invoiceRows)
+                {
+                    invoice.InvoiceRows.Add(row);  
+                }
+            }
+
+            if (salesDto.VehicleIds != null && salesDto.VehicleIds.Length > 0)
+            {
+                var invoiceRows = GetInvoiceRowFromVehicle(salesDto.VehicleIds);
+                foreach (var row in invoiceRows)
+                {
+                    invoice.InvoiceRows.Add(row);
+                }
+            }
+
+            if (salesDto.AddonIds != null && salesDto.AddonIds.Length > 0)
+            {
+                var invoiceRows = GetInvoiceRowFromAddon(salesDto.AddonIds);
+                foreach (var row in invoiceRows)
+                {
+                    invoice.InvoiceRows.Add(row);
+                }
+            }
+
+            if (invoice.InvoiceRows.Count > 0)
+            {
+                foreach (var row in invoice.InvoiceRows)
+                {
+                    invoice.InvoiceAmount += row.InvoiceRowAmount;
+                }
+            }
+
+
+            return invoice;
+        }
+
+        private static List<InvoiceRowEntity> GetInvoiceRowFromParts(int[] partsIds)
+        {
+            var invoiceRows = new List<InvoiceRowEntity>();
+
+            foreach (var id in partsIds)
+            {
+                using (var db = new DBContext())
+                {
+                    var part = db.Parts.Single(p => p.Id == id);
+                    invoiceRows.Add( new InvoiceRowEntity
+                    {
+                        Id = part.Id,
+                        Item = part.ItemName,
+                        Description = part.ItemDesc,
+                        UnitCost = part.ItemPrice,
+                        Vat = part.VAT,
+                        Quantity = 1, //todo fixa kvantitet
+                        InvoiceRowAmount = part.ItemPrice //todo gånger Quantity
+                    });
+                }
+            }
+            return invoiceRows;
+        }
+
+        private static List<InvoiceRowEntity> GetInvoiceRowFromVehicle(int[] vehiclesIds)
+        {
+            var invoiceRows = new List<InvoiceRowEntity>();
+
+            foreach (var id in vehiclesIds)
+            {
+                using (var db = new DBContext())
+                {
+                    var vehicle = db.Vehicles.Single(v => v.Id == id);
+                    invoiceRows.Add(new InvoiceRowEntity
+                    {
+                        Id = vehicle.Id,
+                        Item = vehicle.ItemName,
+                        Description = vehicle.ItemDesc,
+                        UnitCost = vehicle.ItemPrice,
+                        Vat = vehicle.VAT,
+                        Quantity = 1, //todo fixa kvantitet
+                        InvoiceRowAmount = vehicle.ItemPrice //todo gånger Quantity
+                    });
+                }
+            }
+            return invoiceRows;
+        }
+
+        private static List<InvoiceRowEntity> GetInvoiceRowFromAddon(int[] addonIds)
+        {
+            var invoiceRows = new List<InvoiceRowEntity>();
+
+            foreach (var id in addonIds)
+            {
+                using (var db = new DBContext())
+                {
+                    var addon = db.Addons.Single(a => a.Id == id);
+                    invoiceRows.Add(new InvoiceRowEntity
+                    {
+                        Id = addon.Id,
+                        Item = addon.ItemName,
+                        Description = addon.ItemDesc,
+                        UnitCost = addon.ItemPrice,
+                        Vat = addon.VAT,
+                        Quantity = 1, //todo fixa kvantitet
+                        InvoiceRowAmount = addon.ItemPrice //todo gånger Quantity
+                    });
+                }
+            }
+            return invoiceRows;
+        }
 
         private static int GetInvoiceNumber()
         {
@@ -53,6 +181,15 @@ namespace TacdisDeluxeAPI.DTO.validators
             {
                 var newCustomerNumber = db.Payers.Max(c => c.CustomerNumber);
                 return ++newCustomerNumber;
+            }
+        }
+
+        private static PayerEntity GetPayer(int id)
+        {
+            using (var db = new DBContext())
+            {
+                var payer = db.Payers.Single(p => p.Id == id);
+                return payer;
             }
         }
 
