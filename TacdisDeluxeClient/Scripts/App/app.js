@@ -51,4 +51,3 @@ var tacdisDeluxeApp = angular.module('tacdisDeluxeApp', ['ngResource', 'ngRoute'
 
 
 
-

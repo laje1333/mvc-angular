@@ -36,7 +36,7 @@ tacdisDeluxeApp.directive("tframe", function () {
     var controller = ['$scope', function ($scope) {
 
         var tframe, tbody, theader, southResize, southEastResize, eastResize;
-        var fullScreenSize = "1350px";
+        var fullScreenSize = "1150px";
         var offX;
         var offY;
         var tempX, tempY;
@@ -75,8 +75,8 @@ tacdisDeluxeApp.directive("tframe", function () {
             southEastResize = document.getElementById("corner-resize");
             southEastResize.id = $scope.cornerResizeId;
             selectedFrame = tframe;
-            tframe.style.position = "relative";
             currentFrames.push(tframe);
+            
         }
 
         window.onload = addListeners();
@@ -92,10 +92,13 @@ tacdisDeluxeApp.directive("tframe", function () {
             eastResize.style.height = tframe.offsetHeight + "px";
             southResize.style.width = tframe.offsetWidth + "px";
             var framecont = $('#' + $scope.resizeId).closest('.framecontainer');
-            tframe.style.width = fullScreenSize;
+            
             $('#' + $scope.resizeId).css({ left: framecont.position().left + "px", top: (tframe.offsetHeight + tframe.offsetTop) + "px", width: tframe.offsetWidth + "px" });
-            $('#' + $scope.rightResizeId).css({ left: (framecont.position().left + tframe.offsetWidth) + "px", top: "60px", height: tframe.offsetHeight + "px" });    
+            $('#' + $scope.rightResizeId).css({ left: (framecont.position().left + tframe.offsetWidth) + "px", top: "60px", height: tframe.offsetHeight + "px" });
+
         }
+
+
 
         function mouseUp() {
             window.removeEventListener('mousemove', divMove, true);

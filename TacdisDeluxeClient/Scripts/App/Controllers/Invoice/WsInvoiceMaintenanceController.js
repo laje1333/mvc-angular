@@ -44,6 +44,11 @@ tacdisDeluxeApp.controller("WsInvoiceMaintenanceCtrl", ["$scope", "wsInvoiceMain
         $scope.approveInvoice = true;
     };
 
+    $scope.removeRow = function (idx, rowAmount) {
+        $scope.MaintenanceInvoice.InvoiceAmount -= rowAmount;
+        $scope.MaintenanceInvoice.InvoiceRows.splice(idx, 1);
+    };
+
 }]);
 
 tacdisDeluxeApp.service("wsInvoiceMaintenanceService", function () {

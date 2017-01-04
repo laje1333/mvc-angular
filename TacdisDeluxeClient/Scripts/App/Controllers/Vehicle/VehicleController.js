@@ -469,7 +469,6 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgT
             
         }
 
-        //update database aswell!
     }
 
 
@@ -785,12 +784,22 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, 
                 $scope.model = itemName[1];
                 $scope.year = itemName[2];
                 $scope.itemDesc = response.data.ItemDesc;
+                var hmap = new Maths.HashMap();
+                hmap.addElement("Bananer", 5);
+                hmap.addElement("Apelsiner", 10);
+                hmap.addElement("Päron", 15);
+                var blajs = hmap.toString();
+                hmap.removeElement("Bananer");
+                hmap.addElement("Bananer", 8);
+                
 
             }, function (response) {
                 feedbackPopup("Could fetch data", { level: 'warning', timeout: 2000 });
             });
         }
     }
+
+
 
     $scope.displayFurtherInformation = function (id) {
         $("#" + id).popover({

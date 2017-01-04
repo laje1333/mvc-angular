@@ -22,215 +22,220 @@
     }
 
 </style>
-<h3>Workshop invoice maintenance</h3>
-<div ng-controller="WsInvoiceMaintenanceCtrl" class="container" data-ng-init="page_load()">
 
-    <h4> Manage invoice {{MaintenanceInvoice.InvoiceNumber}}</h4>
-    <br />
+<tframe data-title="Workshop invoice maintenance" style="width:2600px">
+    <h3>Workshop invoice maintenance</h3>
 
-<div class="InvoiceTable">
-    <h4>General info</h4>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Invoice number</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceNumber}}" ng-model="MaintenanceInvoice.InvoiceNumber" id="invoice-number" ng-disabled ="{true}">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Due date</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.DueDate}}" ng-model="MaintenanceInvoice.DueDate" id="due-date">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Invoice date</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceDate}}" ng-model="MaintenanceInvoice.InvoiceDate" id="invoice-date">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Total amount</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? (MaintenanceInvoice.InvoiceAmount | valuta) : '' }}" ng-model="MaintenanceInvoice.InvoiceAmount" id="total-amount">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Debit/Credit</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.DebitCredit}}" ng-model="MaintenanceInvoice.DebitCredit" id="debit-credit">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Invoice state</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceState | invoicestate}}" id="invoice-state" ng-disabled="{true}">
-        </div>
-    </div>
-</div>
+    <div ng-controller="WsInvoiceMaintenanceCtrl" class="container" data-ng-init="page_load()">
 
-<div class="InvoiceTable">
-    <h4>Payer info</h4>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">First name</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.FirstName}}" ng-model="MaintenanceInvoice.Payer.FirstName" id="Payer-first">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Last name</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.LastName}}" ng-model="MaintenanceInvoice.Payer.LastName" id="Payer-last">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Customer number</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.CustomerNumber}}" ng-model="MaintenanceInvoice.Payer.CustomerNumber" id="customer-number">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Reg number</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.RegNumber}}" ng-model="MaintenanceInvoice.Payer.RegNumber" id="reg-number">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Streeat address</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.StreeatAddress}}" ng-model="MaintenanceInvoice.Payer.StreeatAddress" id="cus-address">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Zip & City</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.ZipCity}}" ng-model="MaintenanceInvoice.Payer.ZipCity" id="cus-zip-city">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Country</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.Country}}" ng-model="MaintenanceInvoice.Payer.Country" id="cus-country">
-        </div>
-    </div>
-</div>
+        <h4> Manage invoice {{MaintenanceInvoice.InvoiceNumber}}</h4>
+        <br />
 
-<div class="InvoiceTable">
-    <h4>Seller info</h4>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">First name</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.FirstName}}" ng-model="MaintenanceInvoice.Salesman.FirstName" id="seller-first">
+        <div class="InvoiceTable">
+            <h4>General info</h4>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Invoice number</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceNumber}}" ng-model="MaintenanceInvoice.InvoiceNumber" id="invoice-number" ng-disabled="{true}">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Due date</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.DueDate}}" ng-model="MaintenanceInvoice.DueDate" id="due-date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Invoice date</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceDate}}" ng-model="MaintenanceInvoice.InvoiceDate" id="invoice-date">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Total amount</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? (MaintenanceInvoice.InvoiceAmount | valuta) : '' }}" ng-model="MaintenanceInvoice.InvoiceAmount" id="total-amount">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Debit/Credit</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.DebitCredit}}" ng-model="MaintenanceInvoice.DebitCredit" id="debit-credit">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Invoice state</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceState !== undefined ? (MaintenanceInvoice.InvoiceState | invoicestate)  : '' }}" id="invoice-state" ng-disabled="{true}">
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Last name</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.LastName}}" ng-model="MaintenanceInvoice.Salesman.LastName" id="seller-last">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Wo number</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.WoNumber}}" ng-model="MaintenanceInvoice.WoNumber" id="wo-number">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Job number</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.JobNumber}}" ng-model="MaintenanceInvoice.JobNumber" id="job-number">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Company</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.Company}}" ng-model="MaintenanceInvoice.Salesman.Company" id="company">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Streeat address</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.StreeatAddress}}" ng-model="MaintenanceInvoice.Salesman.StreeatAddress" id="sel-address">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Zip & City</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.ZipCity}}" ng-model="MaintenanceInvoice.Salesman.ZipCity" id="sel-zip-city">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Country</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.Country}}" ng-model="MaintenanceInvoice.Salesman.Country" id="sel-country">
-        </div>
-    </div>
-</div>
 
-<div class="InvoiceTable2">
-  
-       
-            <h4>Invoice rows</h4> 
+        <div class="InvoiceTable">
+            <h4>Payer info</h4>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">First name</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.FirstName}}" ng-model="MaintenanceInvoice.Payer.FirstName" id="Payer-first">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Last name</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.LastName}}" ng-model="MaintenanceInvoice.Payer.LastName" id="Payer-last">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Customer number</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.CustomerNumber}}" ng-model="MaintenanceInvoice.Payer.CustomerNumber" id="customer-number">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Reg number</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.RegNumber}}" ng-model="MaintenanceInvoice.Payer.RegNumber" id="reg-number">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Streeat address</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.StreeatAddress}}" ng-model="MaintenanceInvoice.Payer.StreeatAddress" id="cus-address">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Zip & City</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.ZipCity}}" ng-model="MaintenanceInvoice.Payer.ZipCity" id="cus-zip-city">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Country</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.Country}}" ng-model="MaintenanceInvoice.Payer.Country" id="cus-country">
+                </div>
+            </div>
+        </div>
 
-    <table ng-controller="WsInvoiceMaintenanceCtrl" class="table table-striped table-hover">
-        <tr>
-            <th>Item</th>
-            <th>Description</th>
-            <th>Unit Cost</th>
-            <th>Quantity</th>
-            <th>Vat</th>
-            <th>Price</th>
-        </tr>
-        <tr ng-repeat="row in MaintenanceInvoice.InvoiceRows">
-            <td>{{row.Item}}</td>
-            <td>{{row.Description}}</td>
-            <td>{{row.UnitCost}}</td>
-            <td>{{row.Quantity}}</td>
-            <td>{{row.Vat}}</td>
-            <td>{{row.InvoiceRowAmount}}</td>
-        </tr>
-    </table>
-</div>
+        <div class="InvoiceTable">
+            <h4>Seller info</h4>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">First name</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.FirstName}}" ng-model="MaintenanceInvoice.Salesman.FirstName" id="seller-first">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Last name</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.LastName}}" ng-model="MaintenanceInvoice.Salesman.LastName" id="seller-last">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Wo number</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.WoNumber}}" ng-model="MaintenanceInvoice.WoNumber" id="wo-number">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Job number</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.JobNumber}}" ng-model="MaintenanceInvoice.JobNumber" id="job-number">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Company</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.Company}}" ng-model="MaintenanceInvoice.Salesman.Company" id="company">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Streeat address</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.StreeatAddress}}" ng-model="MaintenanceInvoice.Salesman.StreeatAddress" id="sel-address">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Zip & City</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.ZipCity}}" ng-model="MaintenanceInvoice.Salesman.ZipCity" id="sel-zip-city">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Country</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Salesman.Country}}" ng-model="MaintenanceInvoice.Salesman.Country" id="sel-country">
+                </div>
+            </div>
+        </div>
 
-<div class="InvoiceTable">
-    <h4>Payment info</h4>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Sub total</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{(MaintenanceInvoice.Vat !== undefined) || (MaintenanceInvoice.InvoiceAmount !== undefined) ? ((MaintenanceInvoice.InvoiceAmount - MaintenanceInvoice.Vat)  | valuta): ''}}" id="sub-total">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Vat</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.Vat !== undefined ? (MaintenanceInvoice.Vat | valuta): ''}}" ng-model="MaintenanceInvoice.Vat" id="vat-total">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Total</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? (MaintenanceInvoice.InvoiceAmount | valuta) : ''}}" ng-model="MaintenanceInvoice.InvoiceAmount" id="example-text-input">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Amount Paid</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.AmountPaid !== undefined ? (MaintenanceInvoice.AmountPaid | valuta): ''}}" ng-model="MaintenanceInvoice.AmountPaid" id="paid">
-        </div>
-    </div>
-    <div class="form-group row">
-        <label for="example-text-input" class="col-xs-5 col-form-label">Balance Due</label>
-        <div class="col-xs-7">
-            <input class="form-control" type="text" value="{{MaintenanceInvoice.AmountPaid !== undefined ? (MaintenanceInvoice.InvoiceAmount - MaintenanceInvoice.AmountPaid | valuta): ''}}" id="balance-due">
-        </div>
-    </div>
-   
-</div>
+        <div class="InvoiceTable2">
 
-    <div class="btn-group">
-        <button class=" btn btn-primary" ng-disabled="approveInvoice" ng-click="approve_invoice()">Approve invoice </button>
-        <button class=" btn btn-primary" ng-disabled="cancelDisable" ng-click="cancel_invoice()">Cancel Invoice </button>
-        <button class=" btn btn-primary" ng-click="update_invoice()">Save invoice changes </button>
-    </div>
-   
-</div>
 
+            <h4>Invoice rows</h4>
+
+            <table ng-controller="WsInvoiceMaintenanceCtrl" class="table table-striped table-hover">
+                <tr>
+                    <th>Item</th>
+                    <th>Description</th>
+                    <th>Unit Cost</th>
+                    <th>Quantity</th>
+                    <th>Vat</th>
+                    <th>Price</th>
+                    <th>Delete row</th>
+                </tr>
+                <tr ng-repeat="row in MaintenanceInvoice.InvoiceRows">
+                    <td>{{row.Item}}</td>
+                    <td>{{row.Description}}</td>
+                    <td>{{row.UnitCost}}</td>
+                    <td>{{row.Quantity}}</td>
+                    <td>{{row.Vat}}</td>
+                    <td>{{row.InvoiceRowAmount}}</td>
+                    <td><button class=" btn btn-primary" data-ng-click="removeRow($index, row.InvoiceRowAmount)">Delete</button></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="InvoiceTable">
+            <h4>Payment info</h4>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Sub total</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{(MaintenanceInvoice.Vat !== undefined) || (MaintenanceInvoice.InvoiceAmount !== undefined) ? ((MaintenanceInvoice.InvoiceAmount - (MaintenanceInvoice.InvoiceAmount * (MaintenanceInvoice.Vat / 100 )))  | valuta): ''}}" id="sub-total">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Vat</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Vat !== undefined ? (MaintenanceInvoice.InvoiceAmount * (MaintenanceInvoice.Vat / 100 ) | valuta) : 0 }}" id="vat-total">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Total</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? (MaintenanceInvoice.InvoiceAmount | valuta) : ''}}" ng-model="MaintenanceInvoice.InvoiceAmount" id="example-text-input">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Amount Paid</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.AmountPaid !== undefined ? (MaintenanceInvoice.AmountPaid | valuta): ''}}" ng-model="MaintenanceInvoice.AmountPaid" id="paid">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="example-text-input" class="col-xs-5 col-form-label">Balance Due</label>
+                <div class="col-xs-7">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.AmountPaid !== undefined ? (MaintenanceInvoice.InvoiceAmount - MaintenanceInvoice.AmountPaid | valuta): ''}}" id="balance-due">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="btn-group">
+            <button class=" btn btn-primary" ng-disabled="approveInvoice" ng-click="approve_invoice()">Approve invoice </button>
+            <button class=" btn btn-primary" ng-disabled="cancelDisable" ng-click="cancel_invoice()">Cancel Invoice </button>
+            <button class=" btn btn-primary" ng-click="update_invoice()">Save invoice changes </button>
+        </div>
+
+    </div>
+</tframe>
