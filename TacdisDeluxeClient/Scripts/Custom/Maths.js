@@ -1,105 +1,65 @@
 ﻿var Maths = {};
+Maths.Datastructures = {};
+Maths.Arrays = {};
+Maths.Objects = {};
+Maths.Random = {};
 
-/*
-    Binary search:
-        Given an array A and a value V, finds the index of V.
-
-    HashMap:
-        Create new instance:
-            - var x = new Maths.HashMap();
-        <Key, Value>, where Key is of type string.
-
-        Methods:
-            -elementExists
-            -getLength
-            -clear
-            -isEmpty
-            -getCollection
-            -removeElement
-            -addElement
-            -getElement
-
-    BinaryTree:
-        Create new instance:
-            - var x = new Maths.BinaryTree();
-        The left sub-tree of a node has a value less than or equal to its parent node's key.
-        The right sub-tree of a node has a value greater than to its parent node's key.
-
-        Methods:
-            -insert
-            -search
-*/
-
-
-
-Maths.BinarySearch = function(A, V) {
-    var L = 0;
-    var R = (A.length - 1);
-    while (L < R) {
-        var M = Math.floor((L + R) / 2);
-        if (A[M] < V) {
-            L = (M + 1);
-        } else if (A[M] == V) {
-            return M;
-        } else {
-            R = (M - 1);
+//Arrays
+Maths.Arrays.BinarySearch = function (A, V, Key) {
+    if (Key != null) {
+        var L = 0;
+        var R = (A.length - 1);
+        while (L <= R) {
+            var M = Math.floor((L + R) / 2);
+            if ((A[M])[Key] < V) {
+                L = (M + 1);
+            } else if ((A[M])[Key] == V) {
+                return M;
+            } else {
+                R = (M - 1);
+            }
+        }
+    } else {
+        var L = 0;
+        var R = (A.length - 1);
+        while (L <= R) {
+            var M = Math.floor((L + R) / 2);
+            if ((A[M]) < V) {
+                L = (M + 1);
+            } else if ((A[M]) == V) {
+                return M;
+            } else {
+                R = (M - 1);
+            }
         }
     }
 }
 
-Maths.HashMap = function () {
+//Datastructures
+Maths.Datastructures.HashMap = function () {
     this.map = {};
-    this.length = 0;
 
-    this.elementExists = function (key) {
-        return key in this.map;
+    this.add = function (objA, objB) {
+        objA.hashKey = new Maths.Random.String(15).hash;
+        this.map[objA.hashKey] = objB;
     }
 
-    this.getElement = function (key) {
-        if (this.elementExists(key)) {
-            return this.map[key];
-        }
+    this.get = function (obj) {
+        return this.map[obj.hashKey];
     }
 
-    this.addElement = function (key, value) {
-        if (!this.elementExists(key)) {
-            this.map[key] = value;
-            this.length += 1;
-        }
-    }
-
-    this.removeElement = function (key) {
-        if (this.elementExists(key)) {
-            delete this.map[key];
-            this.length -= 1;
-        }
-    }
-
-    this.getCollection = function () {
+    this.getEnumerable = function () {
         return this.map;
     }
-
-    this.isEmpty = function () {
-        return (length <= 0);
-    }
-
-    this.clear = function () {
-        this.map = {};
-    }
-
-    this.getLength = function () {
-        return length;
-    }
+    
 }
-
-Maths.BinaryTree = function () {
+Maths.Datastructures.BinaryTree = function (Key) {
 
     var Node = function (val, lft, rgt) {
-        this.value = val;
+        this.value = val[Key];
         this.left = lft;
         this.right = rgt;
     }
-
     this.root = null;
 
     this.insert = function (val) {
@@ -151,6 +111,15 @@ Maths.BinaryTree = function () {
         }
         return currentNode;
     }
+}
+
+//Random
+Maths.Random.String = function(length){
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (var i = 0; i < length; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return {hash : text};
 }
 
 
