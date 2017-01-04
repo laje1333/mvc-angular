@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tacdus Deluce</title>
+    <script src="https://use.fontawesome.com/2389a26a6e.js"></script>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/custom")
+
+    <script src="~/Scripts/App/Factories/AuthService.js"></script>
+    <script src="~/Scripts/App/Factories/AuthInterceptorService.js"></script>
+    <script src="~/Scripts/App/Controllers/Layout/LayoutController.js"></script>
+    <script src="~/Scripts/App/Factories/IsAuthFactory.js"></script>
+
+</head>
+<body ng-app="tacdisDeluxeApp" ng-controller="LayoutController">
+    <script>
+
+        //  .alert-success, .alert-info, .alert-warning or .alert-danger
+        window.feedbackPopup = function (msg, options) {
+            var level = (options === undefined || options.level === undefined) ? 'success' : options.level.toLowerCase();
+            var timeout = (options === undefined || options.timeout === undefined) ? 2000 : options.timeout;
+            var glyph = 'ok';
+
+
+            switch (level.toLowerCase()) {
+                case 'info':
+                    level = 'Info'
+                    glyph = 'info-sign';
+                    break;
+                case 'warning':
+                case 'danger':
+                    level = 'Danger'
+                    glyph = 'fire';
+                    break;
+                default:
+                    level = 'Success';
+                    glyph = 'ok';
+                    break;
+            }
+
+
+            var msgBox = $('#__ajaxFeedbackMessage');
+
+            msgBox.removeClass('alert-info').removeClass('alert-success').removeClass('alert-danger');
+            msgBox.find('.message-level').removeClass('glyphicon-info-sign').removeClass('glyphicon-fire').removeClass('glyphicon-ok');
+
+            msgBox.addClass('alert-' + level.toLowerCase());
+            msgBox.find('.message-level').addClass('glyphicon-' + glyph);
+            msgBox.find('.message-text').html(msg);
+            msgBox.show('fast');
+            setTimeout(function () { $('#__ajaxFeedbackMessage').fadeOut(500); }, timeout);
+        }
+    </script>
+
+    <div id="__ajaxFeedbackMessage" class="alert alert-dismissable">
+        <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <span class="message-level glyphicon"></span> <span class="message-text"></span>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

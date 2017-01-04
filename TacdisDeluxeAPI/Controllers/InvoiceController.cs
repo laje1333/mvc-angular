@@ -21,17 +21,17 @@ namespace TacdisDeluxeAPI.Controllers
     public class InvoiceController : ApiController
     {
         // GET api/invoice/GetInvoice/123423
+        [System.Web.Http.Route("api/invoice/GetInvoice")]
         [System.Web.Http.HttpGet]
         public List<InvoiceDto> GetInvoice(string query)
         {
-           
             var invoices = new List<InvoiceEntity>();
 
             try
             {
                 using (var db = new DBContext())
                 {
-                   invoices = db.Invoices.Include(p => p.Payer).Include(s => s.Salesman).Include(r => r.InvoiceRows).Where(i => i.InvoiceNumber.ToString().Contains(query)).ToList();
+                    invoices = db.Invoices.Include(p => p.Payer).Include(s => s.Salesman).Include(r => r.InvoiceRows).Where(i => i.InvoiceNumber.ToString().Contains(query) || i.RegNumber.ToString().Contains(query)).ToList();
                 }
             }
             catch (Exception ex)
@@ -45,7 +45,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 result.Add(Mapper.Map<InvoiceEntity, InvoiceDto>(invoice));
             }
-            
+
             return result;
         }
 
@@ -78,19 +78,24 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 using (var db = new DBContext())
                 {
-                    db.Payers.Attach(invoice.Payer);
-                    db.Salesmen.Attach(invoice.Salesman);
+                    var originalSalesman = db.Salesmen.Single(i => i.Id == invoice.Salesman.Id);
+                    var originalPayer = db.Payers.Single(i => i.Id == invoice.Payer.Id);
+                    var originalInvoice = db.Invoices.Single(i => i.Id == invoice.Id);
+                    var rows = originalInvoice.InvoiceRows.Where(r => invoice.InvoiceRows.Select(x => x.Id).
+                        Contains(r.Id) == false).ToList();
 
-                    var original = db.Invoices.Single(i => i.Id == invoice.Id);
+                    if (!InvoiceValidator.IsEqual(originalSalesman, invoice.Salesman))
+                        db.Entry(originalSalesman).CurrentValues.SetValues(invoice.Salesman);
 
-                    var rows =
-                        original.InvoiceRows.Where(r => invoice.InvoiceRows.Select(x => x.Id).Contains(r.Id) == false);
-                    db.InvoiceRows.RemoveRange(rows);
+                    if (!InvoiceValidator.IsEqual(originalPayer, invoice.Payer))
+                        db.Entry(originalPayer).CurrentValues.SetValues(invoice.Payer);
 
-                    db.Entry(original).CurrentValues.SetValues(invoice);
+                    if (rows.Any())
+                        db.InvoiceRows.RemoveRange(rows);
+
+                    db.Entry(originalInvoice).CurrentValues.SetValues(invoice);
 
                     db.SaveChanges();
-
                 }
             }
             catch (Exception ex)
@@ -116,9 +121,9 @@ namespace TacdisDeluxeAPI.Controllers
             catch (Exception ex)
             {
 
-                return BadRequest("Validation fail!");
+                return BadRequest("CreateInvoiceFromSales faild!");
             }
-            
+
             try
             {
                 using (var db = new DBContext())
@@ -138,6 +143,39 @@ namespace TacdisDeluxeAPI.Controllers
             return Ok();
         }
 
+        [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder")]
+        [System.Web.Http.HttpPost]
+        public IHttpActionResult CreateInvoiceFromWorkOrder(WorkOrderDto workOrderDto)
+        {
+            var invoice = new InvoiceEntity();
+
+            try
+            {
+                invoice = InvoiceValidator.CreateInvoiceEntityFromWorkOrderDto(workOrderDto);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest("CreateInvoiceFromSales faild!");
+            }
+
+            try
+            {
+                using (var db = new DBContext())
+                {
+                    db.Payers.Attach(invoice.Payer);
+                    db.Salesmen.Attach(invoice.Salesman);
+
+                    db.Invoices.Add(invoice);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            return Ok();
+        }
 
         //// POST api/invoice
         //public void Post([FromBody]string value)

@@ -1,44 +1,55 @@
 ﻿@{
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
     ViewBag.Title = "Home Page";
 }
 <script src="~/Scripts/App/Controllers/Account/AccountController.js"></script>
-
+<script src="~/Scripts/App/Factories/AuthService.js"></script>
+<script src="~/Scripts/App/Factories/AuthInterceptorService.js"></script>
 
 <div class="col-md-4 col-md-offset-4">
     <div ng-controller="AccountController" class="panel panel-primary" style="margin-top:300px">
-        <div class=" panel-heading">Log in</div>
+
+        <div ng-switch on="auth.isAuth" class=" panel-heading">
+            <div ng-switch-when="true">
+                Sign out
+            </div>
+            <div ng-switch-default>
+                Log In
+            </div>
+        </div>
+        
         <div class="form-group panel-body">
 
-            <form name="uName" ng-class="{'has-error': uName.usName.$invalid, 'has-success': uName.usName.$valid}" class="col-md-6 col-md-offset-3" style="margin-top:5px">
+            <form name="uName" ng-cloak ng-show="!(auth.isAuth)" ng-class="{'has-error': uName.usName.$invalid, 'has-success': uName.usName.$valid}" class="col-md-6 col-md-offset-3" style="margin-top:5px">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                    <input class="form-control" type="text" name="usName" ng-model="username" placeholder="User name" required />
+                    <input class="form-control" type="text" name="usName" ng-model="loginData.username" placeholder="Username" required />
                 </div>
             </form>
-            <form name="psWord" ng-class="{'has-error': psWord.pWord.$invalid , 'has-success': psWord.pWord.$valid}" class="col-md-6 col-md-offset-3" style="margin-top:5px">
+            <form name="psWord" ng-cloak ng-show="!(auth.isAuth)" ng-class="{'has-error': psWord.pWord.$invalid , 'has-success': psWord.pWord.$valid}" class="col-md-6 col-md-offset-3" style="margin-top:5px">
                 <div class="input-group">
                     <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    <input class="form-control" type="password" name="pWord" ng-model="password" placeholder="Password" required />
+                    <input class="form-control" type="password" name="pWord" ng-model="loginData.password" placeholder="Password" required />
                 </div>
             </form>
 
-            <form name="dbase" class="col-md-6 col-md-offset-3" style="margin-top:5px">
+            <form name="dbase" ng-cloak ng-show="!(auth.isAuth)" class="col-md-6 col-md-offset-3" style="margin-top:5px">
                 <select name="dbSel" id="db" class="form-control selectpicker">
                     <option value="" selected disabled>Database</option>
                     <option>04-U</option>
 
                 </select>
-                <button ng-click="logIn()" style="margin-top:5px" type="button" class="btn btn-primary col-md-4 col-md-offset-2"
+                <button ng-click="logIn()" ng-cloak ng-show="!(auth.isAuth)" style="margin-top:5px" type="button" class="btn btn-primary col-md-4 col-md-offset-2"
                         ng-disabled="uName.usName.$invalid ||
                                      psWord.pWord.$invalid">
 
                     Log in
                 </button>
 
-
                 <button class="btn btn-primary col-md-4" style="margin-top:5px; margin-left: 4px" title="Add" data-toggle="modal" data-target="#modalDialogRegister">Register</button>
             </form>
-
+            <h5 ng-show="auth.isAuth" style="margin-top:5px; float:left">Hello {{auth.username}}</h5>
+            <button class="btn btn-primary col-md-4 col-md-offset-2" style="margin-top:5px; float: right" type="button" ng-click="logOut()" ng-cloak ng-show="auth.isAuth"><span style="margin-right: 5px" class="glyphicon glyphicon-log-in"></span>Log out</button>
 
 
         </div>
@@ -61,7 +72,7 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" ng-click="register()">Create Account</button>
+                        <button type="button" class="glyphicon glyphicon-log-in" ng-click=" register()">Create Account</button>
                     </div>
                 </div>
             </div>

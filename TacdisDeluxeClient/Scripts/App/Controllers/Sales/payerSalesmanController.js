@@ -12,7 +12,7 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
         var req = {
             method: 'POST',
             url: 'http://localhost:57661/api/payer',
-            headers: {Authorization: 'bearer ' + window.sessionStorage.getItem('Token')},
+            headers: { Authorization: 'bearer ' + window.sessionStorage.getItem('Token') },
             data: {
                 FirstName: $scope.firstName,
                 LastName: $scope.lastName,
@@ -97,7 +97,7 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
             url: 'http://localhost:57661/api/salesman',
             params: { empNr: parseInt($scope.empNr) }
         }
-        
+
         $http(req).
          then(function (response) {
              document.getElementById('searchIcon').className = 'glyphicon glyphicon-ok-sign';

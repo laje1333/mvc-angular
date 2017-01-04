@@ -14,13 +14,13 @@ namespace TacdisDeluxeAPI.DTO.validators
         {
             invoice.InvoiceNumber = invoice.InvoiceNumber ?? GetInvoiceNumber();
 
-            if (invoice.Payer != null && invoice.Payer.CustomerNumber != null)
-                invoice.Payer = GetCustomer(invoice.Payer);
+            //if (invoice.Payer != null && invoice.Payer.Id != null)
+            //    invoice.Payer = GetCustomer(invoice.Payer);
 
-            if (invoice.Payer != null)
-                invoice.Payer.CustomerNumber = invoice.Payer.CustomerNumber ?? GetCustomerNumber();
+            //if (invoice.Payer != null)
+            //    invoice.Payer.CustomerNumber = invoice.Payer.CustomerNumber ?? GetCustomerNumber();
 
-            invoice.Salesman = GetSalesman(invoice.Salesman);
+            //invoice.Salesman = GetSalesman(invoice.Salesman);
 
             invoice.Vat = invoice.Vat ?? 0;
             invoice.InvoiceAmount = invoice.InvoiceAmount ?? 0;
@@ -38,7 +38,7 @@ namespace TacdisDeluxeAPI.DTO.validators
 
             return invoice;
         }
-        
+
         public static InvoiceEntity CreateInvoiceEntityFromSalesDto(SalesDto salesDto)
         {
             var invoice = new InvoiceEntity
@@ -55,17 +55,19 @@ namespace TacdisDeluxeAPI.DTO.validators
                 InvoiceRows = new List<InvoiceRowEntity>()
             };
 
-            if (salesDto.PartIds != null && salesDto.PartIds.Length >0)
+            if (salesDto.PartIds != null && salesDto.PartIds.Length > 0)
             {
                 var invoiceRows = GetInvoiceRowFromParts(salesDto.PartIds);
                 foreach (var row in invoiceRows)
                 {
-                    invoice.InvoiceRows.Add(row);  
+                    invoice.InvoiceRows.Add(row);
                 }
             }
 
             if (salesDto.VehicleIds != null && salesDto.VehicleIds.Length > 0)
             {
+                invoice.RegNumber = GetRegNumber(salesDto.VehicleIds.FirstOrDefault());
+
                 var invoiceRows = GetInvoiceRowFromVehicle(salesDto.VehicleIds);
                 foreach (var row in invoiceRows)
                 {
@@ -94,6 +96,25 @@ namespace TacdisDeluxeAPI.DTO.validators
             return invoice;
         }
 
+        public static InvoiceEntity CreateInvoiceEntityFromWorkOrderDto(WorkOrderDto workOrderDto)
+        {
+            var invoice = new InvoiceEntity
+            {
+                InvoiceNumber = GetInvoiceNumber(),
+                //Salesman = workOrderDto.Salesman,
+                InvoiceState = InvoiceState.Preliminary,
+                InvoiceDate = workOrderDto.CreatedDate,
+                DueDate = workOrderDto.CreatedDate.AddDays(30),
+                DebitCredit = "Debit",
+                WoNumber = workOrderDto.WoNr,
+                JobNumber = string.Join(", ", workOrderDto.WOJ_Ids),
+                //Payer = GetPayer(workOrderDto.PayerIds.First()),
+                InvoiceRows = new List<InvoiceRowEntity>()
+            };
+
+            return invoice;
+        }
+
         private static List<InvoiceRowEntity> GetInvoiceRowFromParts(int[] partsIds)
         {
             var invoiceRows = new List<InvoiceRowEntity>();
@@ -103,7 +124,7 @@ namespace TacdisDeluxeAPI.DTO.validators
                 using (var db = new DBContext())
                 {
                     var part = db.Parts.Single(p => p.Id == id);
-                    invoiceRows.Add( new InvoiceRowEntity
+                    invoiceRows.Add(new InvoiceRowEntity
                     {
                         Id = part.Id,
                         Item = part.ItemName,
@@ -165,6 +186,17 @@ namespace TacdisDeluxeAPI.DTO.validators
             }
             return invoiceRows;
         }
+        private static string GetRegNumber(int id)
+        {
+            string regNumber;
+            using (var db = new DBContext())
+            {
+                var vehicle = db.Vehicles.Single(v => v.Id == id);
+                regNumber = vehicle.RegNo;
+            }
+
+            return regNumber;
+        }
 
         private static int GetInvoiceNumber()
         {
@@ -197,7 +229,7 @@ namespace TacdisDeluxeAPI.DTO.validators
         {
             using (var db = new DBContext())
             {
-                var customer = db.Payers.Single(p => p.CustomerNumber == payer.CustomerNumber);
+                var customer = db.Payers.Single(p => p.Id == payer.Id);
                 return customer != null ? Mapper.Map<PayerEntity, PayerDto>(customer) : payer;
             }
         }
@@ -209,6 +241,29 @@ namespace TacdisDeluxeAPI.DTO.validators
                 var employ = db.Salesmen.Single(s => s.EmployeeNumber == salesman.EmployeeNumber);
                 return employ != null ? Mapper.Map<SalesmanEntity, SalesmanDto>(employ) : salesman;
             }
+        }
+
+        public static bool IsEqual(PayerEntity x, PayerEntity y)
+        {
+            return (x.Id == y.Id &&
+                x.FirstName == y.FirstName &&
+                x.LastName == y.LastName &&
+                x.CustomerNumber == y.CustomerNumber &&
+                x.StreeatAddress == y.StreeatAddress &&
+                x.ZipCity == y.ZipCity &&
+                x.Country == y.Country);
+        }
+
+        public static bool IsEqual(SalesmanEntity x, SalesmanEntity y)
+        {
+            return (x.Id == y.Id &&
+                x.FirstName == y.FirstName &&
+                x.LastName == y.LastName &&
+                x.EmployeeNumber == y.EmployeeNumber &&
+                x.StreeatAddress == y.StreeatAddress &&
+                x.ZipCity == y.ZipCity &&
+                x.Country == y.Country &&
+                x.Company == y.Company);
         }
     }
 }

@@ -13,6 +13,7 @@ using System.Data.Entity;
 
 namespace TacdisDeluxeAPI.Controllers
 {
+    [Authorize]
     public class SalesController : ApiController
     {
         public IHttpActionResult Get()

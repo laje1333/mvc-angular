@@ -14,6 +14,8 @@ tacdisDeluxeApp.controller("PartsController", ["$scope", "NgTableParams", "$http
         });
     });
 
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
+
 
     //$scope.tableParamsTwo = getNgTableParams('name', 'desc', 'name', $scope.myDataTwo);
 
@@ -57,18 +59,8 @@ tacdisDeluxeApp.controller("PartsController", ["$scope", "NgTableParams", "$http
         var searchText = searchButton.prev();
         //searchText.animate({ width: 'toggle' }, 150).focus();
         var animating = false;
-        searchText.show();
-        searchText.animate({ width: 200 }, { duration: 150, queue: 'daShit' }).focus();
-        searchText.blur(function () {
-                $(this).dequeue('daShit').animate({ width: 0 }, 150, 'linear', function () {
-                    $(this).hide();
-                });
-            });
-            //.show()
-            //.focus()
-            //.blur(function () {
-            //    $(this).hide();
-            //});
+        searchText.show().animate({ width: 200 }, { duration: 150, queue: false }).focus();
+        searchText.blur(function () { $(this).animate({ width: 0 }, { duration: 150, queue: false, complete: function(){ $(this).hide().val(""); } }); }); // Fetast enradare vinner :-)
     }
 
     $scope.deletePart = function (item) {
@@ -135,6 +127,8 @@ tacdisDeluxeApp.controller("PartsController", ["$scope", "NgTableParams", "$http
     };
 }],
 
+
+
 function ($scope, $http) {
     
     $scope.showezMoi = function () {
@@ -164,5 +158,15 @@ function ($scope, $http) {
         });
     };
 });
+
+tacdisDeluxeApp.filter('currency_custom', function () {
+    return function (item, decimals) {
+        return item.toFixed(decimals) + " kr";
+    };
+});
+
+
+tacdisDeluxeApp.directive
+
 
 

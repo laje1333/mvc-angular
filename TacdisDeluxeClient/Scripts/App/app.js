@@ -2,8 +2,6 @@
 
 var tacdisDeluxeApp = angular.module('tacdisDeluxeApp', ['ngResource', 'ngRoute', 'ngTable', 'ui.bootstrap'], function ($httpProvider) {
 
-
-
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 
     /**
@@ -48,6 +46,20 @@ var tacdisDeluxeApp = angular.module('tacdisDeluxeApp', ['ngResource', 'ngRoute'
     }];
 });
 
+tacdisDeluxeApp.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('AuthInterceptorService');
+});
 
+tacdisDeluxeApp.run(function (AuthService, $rootScope) {
+    AuthService.fillAuthData();
+
+    $rootScope.$on('$routeChangeStart', function (event) {
+        var auth = AuthService.isAuth();
+        if (!auth.isAuth) {
+            event.preventDefault();
+            window.location = '/home';
+        }
+    });
+});
 
 
