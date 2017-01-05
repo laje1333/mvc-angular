@@ -8,7 +8,7 @@ using System.Web;
 
 namespace TacdisDeluxeAPI.Models
 {
-    [Table("WoJobs")]
+    [Table("WorkOrderJobs")]
     public class WoJobEntity
     {
         public WoJobEntity()
@@ -20,7 +20,6 @@ namespace TacdisDeluxeAPI.Models
 
         [Key]
         public int ID { get; set; }
-        public int WoHNr { get; set; }
         public int WoJNr { get; set; }
         public string Status { get; set; }
         public double TotCost { get; set; }
