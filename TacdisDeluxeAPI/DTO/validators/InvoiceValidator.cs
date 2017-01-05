@@ -123,7 +123,7 @@ namespace TacdisDeluxeAPI.DTO.validators
             {
                 using (var db = new DBContext())
                 {
-                    var part = db.Parts.Single(p => p.Id == IA.Id);
+                    var part = db.Parts.Single(p => p.ItemId == IA.Id);
                     invoiceRows.Add(new InvoiceRowEntity
                     {
                         Id = part.Id,

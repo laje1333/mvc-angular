@@ -57,7 +57,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
             case 1:
                 var x = Maths.Arrays.BinarySearch($rootScope.saleRec.PartIds, this.r.ItemId, 'Id');
                 if (x == null) {
-                    $rootScope.saleRec.PartIds.push({ Id: this.r.ItemId, Amount: this.r.Amount });
+                    $rootScope.saleRec.PartIds.push({ Id: this.r.ItemId, Amount: 1});
                 }
                 break;
             case 2:
@@ -97,8 +97,8 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
                 AddonIds: $rootScope.saleRec.AddonIds,
                 PayerIds: $rootScope.saleRec.PayerIds,
                 PaymentType: 1,
-                DateCreated: new Date(),
-                DateEdited: new Date()
+                DateCreated: new Date().toLocaleString(),
+                DateEdited: new Date().toLocaleString()
             },
         }
         $http(req).
