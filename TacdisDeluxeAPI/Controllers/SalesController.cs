@@ -62,10 +62,10 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 using (DBContext db = new DBContext())
                 {
-                    List<PartEntity> parts = db.Parts.Where(x => request.PartIds.Contains(x.Id)).ToList();
-                    enti.Parts = parts;
-                    db.Sales.Add(enti);
-                    db.SaveChanges();
+                    //List<PartEntity> parts = db.Parts.Where(x => request.PartIds.Id.Contains(x.Id)).ToList();
+                    //enti.Parts = parts;
+                    //db.Sales.Add(enti);
+                    //db.SaveChanges();
                 }
             }
             catch (Exception ex)
