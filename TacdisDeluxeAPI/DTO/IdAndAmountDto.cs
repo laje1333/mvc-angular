@@ -7,7 +7,7 @@ namespace TacdisDeluxeAPI.Models
 {
     public class IdAndAmountDto
     {
-        int Id { get; set; }
-        int Amount { get; set; }
+        public int Id { get; set; }
+        public int Amount { get; set; }
     }
 }

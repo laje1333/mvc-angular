@@ -23,7 +23,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
 
     //SaleRec holds the sale items
     $scope.saleRec = {};
-    $scope.saleRec.PartIds = [];
+    $scope.saleRec.PartIds = {};
     $scope.saleRec.VehicleIds = [];
     $scope.saleRec.AddonIds = [];
     $scope.saleRec.Salesman = {};
@@ -55,7 +55,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
                 $scope.saleRec.VehicleIds.push(this.r.ItemId);
                 break;
             case 1:
-                $scope.saleRec.PartIds.push(this.r.ItemId);
+                $scope.saleRec.PartIds.push({Id: this.r.ItemId, Amount: this.r.Amount});
                 break;
             case 2:
                 $scope.saleRec.AddonIds.push(this.r.ItemId);
