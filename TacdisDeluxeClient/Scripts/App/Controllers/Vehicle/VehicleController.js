@@ -787,7 +787,7 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
                 $scope.year = itemName[2];
                 $scope.itemDesc = response.data.ItemDesc;
                 
-                var t = 'name';
+                var t = 'value';
                 var binaryHeap = new Maths.Datastructures.BinaryHeap(t);
                 
                 var testObj = function (n, v) {

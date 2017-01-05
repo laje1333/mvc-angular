@@ -122,23 +122,17 @@ Maths.Datastructures.BinaryHeap = function (Key) {
     var Node = function (obj, par) {
         this.object = obj;
         if (Key != null) {
-            
             var tempArr = Key.split(".");
             var result = obj[tempArr[0]];
             for (i = 1; i < tempArr.length; i++) {
                 result = result[tempArr[i]];
-                
             }
             this.compare = result;
         } else {
             this.compare = this.object;
         }
-        
         this.parent = par;
-
     }
-
-
 
     this.insert = function (object) {
         var heapSize = this.heap.length;
@@ -148,14 +142,11 @@ Maths.Datastructures.BinaryHeap = function (Key) {
             var indexAfterInsert = heapSize + 1;
             var parentIndex = Math.floor((indexAfterInsert - 1) / 2);
             this.heap.push(new Node(object, this.heap[parentIndex]));
-            
         }
         if (heapSize > 0) {
             this.siftUpType();   
         }
     }
-
-
 
     this.siftUpType = function () {
         var currentIndex = this.heap.length-1;
@@ -182,9 +173,7 @@ Maths.Datastructures.BinaryHeap = function (Key) {
         var leaf = this.heap.pop();
         var result = this.heap[0];
         this.heap[0] = leaf;
-
         var currentIndex = 0;
-
         while (true) {
             if (this.heap[2 * currentIndex + 1] != null || this.heap[2 * currentIndex + 2] != null) {
                 var leftVal = null;
@@ -195,7 +184,6 @@ Maths.Datastructures.BinaryHeap = function (Key) {
                 if (this.heap.length > 2 * currentIndex + 2) {
                     rightVal = this.heap[2 * currentIndex + 2].compare;
                 }
-                
                 
                 var swapWithLeaf;
                 if (leftVal > rightVal && leaf.compare < leftVal && leftVal != null) {
@@ -211,11 +199,11 @@ Maths.Datastructures.BinaryHeap = function (Key) {
                     this.heap[2 * currentIndex + 2] = tempLeaf;
                     currentIndex = 2 * currentIndex + 2;
                 } else {
-                    return result;
+                    return result.object;
                 }
                 
             } else {
-                return result;
+                return result.object;
             }
         }
     }
