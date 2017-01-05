@@ -147,7 +147,7 @@ namespace TacdisDeluxeAPI.DTO.validators
             {
                 using (var db = new DBContext())
                 {
-                    var vehicle = db.Vehicles.Single(v => v.Id == id);
+                    var vehicle = db.Vehicles.Single(v => v.ItemId == id);
                     invoiceRows.Add(new InvoiceRowEntity
                     {
                         Id = vehicle.Id,
@@ -171,7 +171,7 @@ namespace TacdisDeluxeAPI.DTO.validators
             {
                 using (var db = new DBContext())
                 {
-                    var addon = db.Addons.Single(a => a.Id == id);
+                    var addon = db.Addons.Single(a => a.ItemId == id);
                     invoiceRows.Add(new InvoiceRowEntity
                     {
                         Id = addon.Id,
