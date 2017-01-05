@@ -321,6 +321,10 @@
     <Compile Include="Migrations\201701040726471_woJob.Designer.cs">
       <DependentUpon>201701040726471_woJob.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701050809355_woJobComponents.cs" />
+    <Compile Include="Migrations\201701050809355_woJobComponents.Designer.cs">
+      <DependentUpon>201701050809355_woJobComponents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -360,6 +364,7 @@
     <Compile Include="Models\Maps\PartMap.cs" />
     <Compile Include="Models\Maps\SaleMap.cs" />
     <Compile Include="Models\Maps\VehicleModelMap.cs" />
+    <Compile Include="Models\Maps\WorkOrderKitMap.cs" />
     <Compile Include="Models\Maps\WorkOrderMap.cs" />
     <Compile Include="Models\TestDataInitializer.cs" />
     <Compile Include="Models\VehicleBrandEntity.cs" />
@@ -379,6 +384,7 @@
     <Compile Include="Models\WoKitsEntity.cs" />
     <Compile Include="Models\WoOpEntitys.cs" />
     <Compile Include="Models\WorkOrderEntity.cs" />
+    <Compile Include="Models\Maps\WorkOrderJobMap.cs" />
     <Compile Include="Models\WorkshopInventory.cs" />
     <Compile Include="Models\WorkshopInventoryItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -453,6 +459,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701040726471_woJob.resx">
       <DependentUpon>201701040726471_woJob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701050809355_woJobComponents.resx">
+      <DependentUpon>201701050809355_woJobComponents.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
