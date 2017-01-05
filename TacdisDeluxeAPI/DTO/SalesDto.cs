@@ -13,7 +13,7 @@ namespace TacdisDeluxeAPI.DTO
 
         public SalesmanEntity Salesman { get; set; }
         public int[] VehicleIds { get; set; }
-        public int[] PartIds { get; set; }
+        public ICollection<IdAndAmountDto> PartIds { get; set; }
         public SalesStatus Status { get; set; }
         public int[] AddonIds { get; set; }
         public int[] PayerIds { get; set; }

@@ -22,13 +22,13 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $rootScope.totalCost = 0;
 
     //SaleRec holds the sale items
-    $scope.saleRec = {};
-    $scope.saleRec.PartIds = [];
-    $scope.saleRec.VehicleIds = [];
-    $scope.saleRec.AddonIds = [];
-    $scope.saleRec.Salesman = {};
-    $scope.saleRec.Payers = [];
-    $scope.saleRec.PayerIds = [];
+    $rootScope.saleRec = {};
+    $rootScope.saleRec.PartIds = [];
+    $rootScope.saleRec.VehicleIds = [];
+    $rootScope.saleRec.AddonIds = [];
+    $rootScope.saleRec.Salesman = {};
+    $rootScope.saleRec.Payers = [];
+    $rootScope.saleRec.PayerIds = [];
 
     $scope.panes = [
         { title: "Vehicles", template: "AngularTemplates/Sales/Panes/Vehicles.html", active: true },
@@ -52,13 +52,16 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.addRow = function () {
         switch ($scope.selectedTypeOfThingy) {
             case 0:
-                $scope.saleRec.VehicleIds.push(this.r.ItemId);
+                $rootScope.saleRec.VehicleIds.push(this.r.ItemId);
                 break;
             case 1:
-                $scope.saleRec.PartIds.push(this.r.ItemId);
+                var x = Maths.Arrays.BinarySearch($rootScope.saleRec.PartIds, this.r.ItemId, 'Id');
+                if (x == null) {
+                    $rootScope.saleRec.PartIds.push({ Id: this.r.ItemId, Amount: 1});
+                }
                 break;
             case 2:
-                $scope.saleRec.AddonIds.push(this.r.ItemId);
+                $rootScope.saleRec.AddonIds.push(this.r.ItemId);
                 break;
         }
 
@@ -66,7 +69,10 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
 
         for (var i = 0; i < $rootScope.record.length; i++) {
             if (this.r.ItemId === $rootScope.record[i].Number) {
-                $rootScope.record[i].Amount += 1;
+                $rootScope.record[i].Amount += 1;         
+                if (x != null) {
+                    $rootScope.saleRec.PartIds[x].Amount = this.r.Amount;
+                }
                 jadenfanns = true;
             }
         }
@@ -81,18 +87,18 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.PostSale = function () {
         var req = {
             method: 'POST',
-            url: 'api/invoice/CreatInvoice/CreateInvoiceFromSales',
+            url: 'http://localhost:57661/api/invoice/CreatInvoice/CreateInvoiceFromSales',
             headers: {},
             data: {
-                Salesman: $scope.saleRec.Salesman,
-                VehicleIds: $scope.saleRec.VehicleIds,
-                PartIds: $scope.saleRec.PartIds,
+                Salesman: $rootScope.saleRec.Salesman,
+                VehicleIds: $rootScope.saleRec.VehicleIds,
+                PartIds: $rootScope.saleRec.PartIds,
                 Status: 1,
-                AddonIds: $scope.saleRec.AddonIds,
-                PayerIds: $scope.saleRec.PayerIds,
+                AddonIds: $rootScope.saleRec.AddonIds,
+                PayerIds: $rootScope.saleRec.PayerIds,
                 PaymentType: 1,
-                DateCreated: new Date(),
-                DateEdited: new Date()
+                DateCreated: new Date().toLocaleString(),
+                DateEdited: new Date().toLocaleString()
             },
         }
         $http(req).
@@ -107,12 +113,20 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.increaseAmount = function () {
         $scope.calcTotal(this.r.Price);
         this.r.Amount += 1;
+        var x = Maths.Arrays.BinarySearch($rootScope.saleRec.PartIds, this.r.Number, 'Id');
+        if (x != null) {
+            $rootScope.saleRec.PartIds[x].Amount = this.r.Amount;
+        }
 
     }
 
     $scope.decreaseAmount = function () {
         $rootScope.totalCost -= parseFloat(this.r.Price);
         this.r.Amount -= 1;
+        var x = Maths.Arrays.BinarySearch($rootScope.saleRec.PartIds, this.r.ItemId, 'Id');
+        if (x != null) {
+            $rootScope.saleRec.PartIds[x].Amount = this.r.Amount;
+        }
     }
 
     $scope.onlyNumbers = /^\d+(?:\.\d+|)$/;
@@ -221,13 +235,13 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
 
     $scope.$watch(function () { return SaleFactory.getPayer(); }, function (newValue, oldValue) {
         if (newValue.Id !== oldValue.Id) {
-            $scope.saleRec.Payers.push(newValue);
-            $scope.saleRec.PayerIds.push(newValue.Id);
+            $rootScope.saleRec.Payers.push(newValue);
+            $rootScope.saleRec.PayerIds.push(newValue.Id);
         }
     });
 
     $scope.$watch(function () { return SaleFactory.getSalesman(); }, function (newValue, oldValue) {
-        if (newValue !== oldValue) $scope.saleRec.Salesman = newValue;
+        if (newValue !== oldValue) $rootScope.saleRec.Salesman = newValue;
     });
 
     $scope.init();

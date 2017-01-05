@@ -20,7 +20,6 @@ namespace TacdisDeluxeAPI.Controllers
 {
     public class InvoiceController : ApiController
     {
-        // GET api/invoice/GetInvoice/123423
         [System.Web.Http.Route("api/invoice/GetInvoice")]
         [System.Web.Http.HttpGet]
         public List<InvoiceDto> GetInvoice(string query)
@@ -70,7 +69,6 @@ namespace TacdisDeluxeAPI.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest("Invoice mapping error!");
             }
 
@@ -111,7 +109,6 @@ namespace TacdisDeluxeAPI.Controllers
         [System.Web.Http.HttpPost]
         public IHttpActionResult CreateInvoiceFromSales(SalesDto salesDto)
         {
-
             var invoice = new InvoiceEntity();
 
             try
@@ -120,7 +117,6 @@ namespace TacdisDeluxeAPI.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest("CreateInvoiceFromSales faild!");
             }
 
@@ -140,7 +136,7 @@ namespace TacdisDeluxeAPI.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok();
+            return Ok(invoice.InvoiceNumber);
         }
 
         [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder")]
@@ -155,7 +151,6 @@ namespace TacdisDeluxeAPI.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest("CreateInvoiceFromSales faild!");
             }
 
@@ -174,26 +169,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            return Ok();
+            return Ok(invoice.InvoiceNumber);
         }
-
-        //// POST api/invoice
-        //public void Post([FromBody]string value)
-        //{
-        //    var mockInvoice = GetMockInvoice.GetInvoice(1, 1, 12);
-
-        //    var dto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
-
-        //}
-
-        //// PUT api/invoice/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/invoice/5
-        //public void Delete(int id)
-        //{
-        //}
     }
 }
