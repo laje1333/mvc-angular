@@ -31,6 +31,8 @@ namespace TacdisDeluxeAPI.Models
         public DbSet<InvoiceRowEntity> InvoiceRows { get; set; }
         public DbSet<WorkOrderEntity> WorkOrder { get; set; }
         public DbSet<WoJobEntity> WorkOrderJobs { get; set; }
+        public DbSet<WoKitsEntity> WorkOrderKits { get; set; }
+        public DbSet<WoOpEntitys> WorkOrderOperations { get; set; }
         public DbSet<WorkshopInventoryItem> WorkshopInventoryItems { get; set; }
         public DbSet<MainInventoryItem> MainInventoryItems { get; set; }
 
@@ -50,6 +52,8 @@ namespace TacdisDeluxeAPI.Models
             builder.Entity<VehiclePropertyEntity>().ToTable("VehicleProperty");
             builder.Entity<WorkOrderEntity>().ToTable("WorkOrder");
             builder.Entity<WoJobEntity>().ToTable("WorkOrderJobs");
+            builder.Entity<WoKitsEntity>().ToTable("WorkOrderKits");
+            builder.Entity<WoOpEntitys>().ToTable("WorkOrderOperations");
 
             builder.Entity<WorkshopInventoryItem>().ToTable("WorkshopInventoryItem");
             builder.Entity<MainInventoryItem>().ToTable("MainInventoryItem");
@@ -58,6 +62,8 @@ namespace TacdisDeluxeAPI.Models
             builder.Configurations.Add(new SaleMap());
             builder.Configurations.Add(new VehicleModelMap());
             builder.Configurations.Add(new InvoiceMap());
+            builder.Configurations.Add(new WorkOrderKitMap());
+            builder.Configurations.Add(new WorkOrderJobMap());
             builder.Configurations.Add(new WorkOrderMap());
 
 

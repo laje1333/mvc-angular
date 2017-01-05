@@ -55,7 +55,7 @@ namespace TacdisDeluxeAPI.DTO.validators
                 InvoiceRows = new List<InvoiceRowEntity>()
             };
 
-            if (salesDto.PartIds != null && salesDto.PartIds.Length > 0)
+            if (salesDto.PartIds != null && salesDto.PartIds.Count > 0)
             {
                 var invoiceRows = GetInvoiceRowFromParts(salesDto.PartIds);
                 foreach (var row in invoiceRows)
@@ -115,15 +115,15 @@ namespace TacdisDeluxeAPI.DTO.validators
             return invoice;
         }
 
-        private static List<InvoiceRowEntity> GetInvoiceRowFromParts(int[] partsIds)
+        private static List<InvoiceRowEntity> GetInvoiceRowFromParts(IEnumerable<IdAndAmountDto> partsIds)
         {
             var invoiceRows = new List<InvoiceRowEntity>();
 
-            foreach (var id in partsIds)
+            foreach (var IA in partsIds)
             {
                 using (var db = new DBContext())
                 {
-                    var part = db.Parts.Single(p => p.Id == id);
+                    var part = db.Parts.Single(p => p.ItemId == IA.Id);
                     invoiceRows.Add(new InvoiceRowEntity
                     {
                         Id = part.Id,
@@ -131,8 +131,8 @@ namespace TacdisDeluxeAPI.DTO.validators
                         Description = part.ItemDesc,
                         UnitCost = part.ItemPrice,
                         Vat = part.VAT,
-                        Quantity = 1, //todo fixa kvantitet
-                        InvoiceRowAmount = part.ItemPrice //todo gånger Quantity
+                        Quantity = IA.Amount,
+                        InvoiceRowAmount = part.ItemPrice * IA.Amount
                     });
                 }
             }
@@ -147,7 +147,7 @@ namespace TacdisDeluxeAPI.DTO.validators
             {
                 using (var db = new DBContext())
                 {
-                    var vehicle = db.Vehicles.Single(v => v.Id == id);
+                    var vehicle = db.Vehicles.Single(v => v.ItemId == id);
                     invoiceRows.Add(new InvoiceRowEntity
                     {
                         Id = vehicle.Id,
@@ -171,7 +171,7 @@ namespace TacdisDeluxeAPI.DTO.validators
             {
                 using (var db = new DBContext())
                 {
-                    var addon = db.Addons.Single(a => a.Id == id);
+                    var addon = db.Addons.Single(a => a.ItemId == id);
                     invoiceRows.Add(new InvoiceRowEntity
                     {
                         Id = addon.Id,

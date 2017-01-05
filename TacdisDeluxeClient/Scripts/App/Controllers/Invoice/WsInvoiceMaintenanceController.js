@@ -1,5 +1,6 @@
 ﻿
 tacdisDeluxeApp.controller("WsInvoiceMaintenanceCtrl", ["$scope", "wsInvoiceMaintenanceService", "$http", "$rootScope", function ($scope, wsInvoiceMaintenanceService, $http, $rootScope) {
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
     //$rootScope.MaintenanceInvoice = [];
     $scope.cancelDisable = false;
     $scope.approveInvoice = true;
@@ -20,7 +21,7 @@ tacdisDeluxeApp.controller("WsInvoiceMaintenanceCtrl", ["$scope", "wsInvoiceMain
     $scope.update_invoice = function () {
 
         $http({
-            url: 'http://localhost:57661/api/invoice/CreatInvoice/Create',//http://localhost:57661/api/invoice/UpdateInvoice/Update
+            url: 'http://localhost:57661/api/invoice/UpdateInvoice/Update',
             method: "POST",
             data: JSON.stringify($scope.MaintenanceInvoice),
             headers: { 'Content-Type': 'application/json' }

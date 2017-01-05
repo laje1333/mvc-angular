@@ -1,5 +1,4 @@
 ﻿tacdisDeluxeApp.controller("WorkOrderController", function ($scope, $http, $rootScope) {
-    ﻿⁠⁠⁠⁠$scope.$on('$viewContentLoaded', hotlinkToMenu);﻿⁠⁠⁠⁠
     $scope.WOH_GetCurrentWOH = function () {
         $scope.urlString = 'http://localhost:57661/api/workorder/GetCurrentWO?getCurrent=' + "WOH";
         $http.get($scope.urlString)
@@ -71,7 +70,6 @@
 });
 
 tacdisDeluxeApp.controller("WorkOrderHeaderController", ["$scope", "$rootScope", "NgTableParams", "$http", function ($scope, $rootScope, ngTableParams, $http) {
-    ﻿⁠⁠⁠⁠$scope.$on('$viewContentLoaded', hotlinkToMenu);﻿⁠⁠⁠⁠
     $scope.GetWOHList = function () {
         $http.get("http://localhost:57661/api/workorder/GetWoHList?search=" + $scope.woh_Search)
         .then(function (response) {
@@ -137,7 +135,6 @@ tacdisDeluxeApp.controller("WorkOrderHeaderController", ["$scope", "$rootScope",
 }]);
 
 tacdisDeluxeApp.controller("WorkOrderJobController", ["$scope", "$rootScope", "NgTableParams", "$http", function ($scope, $rootScope, ngTableParams, $http) {
-    ﻿⁠⁠⁠⁠$scope.$on('$viewContentLoaded', hotlinkToMenu);﻿⁠⁠⁠⁠
     $scope.WOH_AddWOJ = function () {
         $http({
             method: 'POST',
@@ -167,7 +164,6 @@ tacdisDeluxeApp.controller("WorkOrderJobController", ["$scope", "$rootScope", "N
 }]);
 
 tacdisDeluxeApp.controller("WOActiveKitsController", ["$scope", "$rootScope", "NgTableParams", "$http", function ($scope, $rootScope, ngTableParams, $http) {
-    ﻿⁠⁠⁠⁠$scope.$on('$viewContentLoaded', hotlinkToMenu);﻿⁠⁠⁠⁠
     $scope.WOH_AddWJK = function () {
         $http({
             method: 'POST',
@@ -197,7 +193,6 @@ tacdisDeluxeApp.controller("WOActiveKitsController", ["$scope", "$rootScope", "N
 }]);
 
 tacdisDeluxeApp.controller("WOActiveOpController", ["$scope", "$rootScope", "NgTableParams", "$http", function ($scope, $rootScope, ngTableParams, $http) {
-    ﻿⁠⁠⁠⁠$scope.$on('$viewContentLoaded', hotlinkToMenu);﻿⁠⁠⁠⁠
     $scope.WOH_AddWJO = function () {
         $http({
             method: 'POST',
@@ -227,7 +222,6 @@ tacdisDeluxeApp.controller("WOActiveOpController", ["$scope", "$rootScope", "NgT
 }]);
 
 tacdisDeluxeApp.controller("WOActivePartController", ["$scope", "$rootScope", "NgTableParams", "$http", function ($scope, $rootScope, ngTableParams, $http) {
-    ﻿⁠⁠⁠⁠$scope.$on('$viewContentLoaded', hotlinkToMenu);﻿⁠⁠⁠⁠
     $scope.WOH_AddWJP = function () {
         $http({
             method: 'POST',

@@ -1,105 +1,107 @@
-﻿<div ng-controller="SalesController">
+﻿<tframe data-title="New sale" style="width:2600px">
+    <div ng-controller="SalesController">
 
-    <div id="first_row" class="row">
-        <div id="model" class="col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-md-2 text-left">New Sale</div>
-                        <div class="col-md-2 text-left">Salesman: {{saleRec.Salesman.FirstName}} {{saleRec.Salesman.LastName}}</div>
-                        <div class="col-md-2 text-left">Payer: {{saleRec.Payers[0].FirstName}} {{saleRec.Payers[0].LastName}}</div>
-                        <div class="col-md-6 text-right">Status: {{status}}</div>
-                    </div>
-                </div>
-                <div class="form-group panel-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <form>
-                                <div class="input-group">
-                                    <div class="input-group-btn" ng-controller="PayerSalesmanController">
-                                        <input type="text" class="form-control" placeholder="Employee Number" ng-model="empNr" ng-change="checkIfEmpty(empNr, 'searchButton', 'searchIcon')">
-                                        <button id="searchButton" class="btn btn-default" type="submit" ng-click="GetSalesmanById()">
-                                            <i id="searchIcon" class="glyphicon glyphicon-search"></i>
-                                            <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                            <form>
-                                <div class="input-group">
-                                    <div class="input-group-btn" ng-controller="PayerSalesmanController">
-                                        <input type="text" class="form-control" placeholder="Payer number" ng-model="CustNr">
-                                        <button id="searchButtonP" class="btn btn-default" type="submit" ng-click="GetPayerById()">
-                                            <i id="searchIconP" class="glyphicon glyphicon-search"></i>
-                                            <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col-md-6">
-                            <table id="salesValues" class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Type:</th>
-                                        <th>Info:</th>
-                                        <th>ID:</th>
-                                        <th>Amount:</th>
-                                        <th>Price:</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="r in record">
-                                        <td>{{r.Type}} </td>
-                                        <td>{{r.Name}}</td>
-                                        <td>{{r.Number}}</td>
-                                        <td>
-                                            {{r.Amount}}
-                                            <a class="btn " ng-click="increaseAmount()"><span class="glyphicon glyphicon-chevron-up"></span></a>
-                                            <a class="btn " ng-click="decreaseAmount()" ng-disabled="(r.Amount <= 1)"><span class="glyphicon glyphicon-chevron-down"></span></a>
-                                        </td>
-                                        <td>{{r.Price}}</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td>Total Cost: {{totalCost}}</td>
-                                    </tr>
-                                </tfoot>
-                                
-                            </table>
-                            <p></p>
-                            <a class="btn" ng-click="postSale()">Done and bubbel</a>
+        <div id="first_row" class="row">
+            <div id="model" class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-md-2 text-left">New Sale</div>
+                            <div class="col-md-2 text-left">Salesman: {{saleRec.Salesman.FirstName}} {{saleRec.Salesman.LastName}}</div>
+                            <div class="col-md-2 text-left">Payer: {{saleRec.Payers[0].FirstName}} {{saleRec.Payers[0].LastName}}</div>
+                            <div class="col-md-6 text-right">Status: {{status}}</div>
                         </div>
                     </div>
-                    
-                </div> 
-            </div>
-        </div>
-    </div>
-    <uib-tabset active="pane.active">
-        <uib-tab ng-repeat="pane in panes track by $index" heading="{{pane.title}}" select="active($index)">
-            <div ng-include="pane.template"></div>
-        </uib-tab>
-    </uib-tabset>
+                    <div class="form-group panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form>
+                                    <div class="input-group">
+                                        <div class="input-group-btn" ng-controller="PayerSalesmanController">
+                                            <input type="text" class="form-control" placeholder="Employee Number" ng-model="empNr" ng-change="checkIfEmpty(empNr, 'searchButton', 'searchIcon')">
+                                            <button id="searchButton" class="btn btn-default" type="submit" ng-click="GetSalesmanById()">
+                                                <i id="searchIcon" class="glyphicon glyphicon-search"></i>
+                                                <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <form>
+                                    <div class="input-group">
+                                        <div class="input-group-btn" ng-controller="PayerSalesmanController">
+                                            <input type="text" class="form-control" placeholder="Payer number" ng-model="CustNr">
+                                            <button id="searchButtonP" class="btn btn-default" type="submit" ng-click="GetPayerById()">
+                                                <i id="searchIconP" class="glyphicon glyphicon-search"></i>
+                                                <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                                <table id="salesValues" class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Type:</th>
+                                            <th>Info:</th>
+                                            <th>ID:</th>
+                                            <th>Amount:</th>
+                                            <th>Price:</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="r in record">
+                                            <td>{{r.Type}} </td>
+                                            <td>{{r.Name}}</td>
+                                            <td>{{r.Number}}</td>
+                                            <td>
+                                                {{r.Amount}}
+                                                <a class="btn " ng-click="increaseAmount()"><span class="glyphicon glyphicon-chevron-up"></span></a>
+                                                <a class="btn " ng-click="decreaseAmount()" ng-disabled="(r.Amount <= 1)"><span class="glyphicon glyphicon-chevron-down"></span></a>
+                                            </td>
+                                            <td>{{r.Price}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>Total Cost: {{totalCost}}</td>
+                                        </tr>
+                                    </tfoot>
 
-    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="modalDialogLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h4 class="modal-title" id="modalDialogLabel">Modal title</h4>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </table>
+                                <p></p>
+                                <a class="btn" ng-click="PostSale()">Done and bubbel</a>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
+        <uib-tabset active="pane.active">
+            <uib-tab ng-repeat="pane in panes track by $index" heading="{{pane.title}}" select="active($index)">
+                <div ng-include="pane.template"></div>
+            </uib-tab>
+        </uib-tabset>
+
+        <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="modalDialogLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="modalDialogLabel">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</tframe>
