@@ -351,6 +351,7 @@
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\AppUserManager.cs" />
     <Compile Include="Models\Enums\InvoiceState.cs" />
+    <Compile Include="DTO\IdAndAmountDto.cs" />
     <Compile Include="Models\IdentityContext.cs" />
     <Compile Include="Models\InvoiceEntity.cs" />
     <Compile Include="Models\InvoiceRowEntity.cs" />
