@@ -42,9 +42,9 @@ namespace TacdisDeluxeAPI.Models
         public string ProfCentreID { get; set; }
         public string ProfCentreName { get; set; }
 
-        public ICollection<WoKitsEntity> WOJ_KitList;
-        public ICollection<WoOpEntitys> WOJ_OPList;
-        public ICollection<PartEntity> WOJ_PartList;
+        public virtual ICollection<WoKitsEntity> WOJ_KitList { get; set; }
+        public virtual ICollection<WoOpEntitys> WOJ_OPList { get; set; }
+        public virtual ICollection<PartEntity> WOJ_PartList { get; set; }
         
         [IgnoreDataMember]
         public WorkOrderEntity WorkOrder { get; set; }

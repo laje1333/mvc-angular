@@ -10,13 +10,13 @@ namespace TacdisDeluxeAPI.Models
     {
         public WorkOrderKitMap()
         {
-            //HasMany<WoOpEntitys>(s => s.WOJ_OPList)
-            //    .WithRequired(s => s.WoKits)
-            //    .Map(m => m.MapKey("WorkOrderKitId"));
+            HasMany<WoOpEntitys>(s => s.WOJ_OPList)
+                .WithOptional(s => s.WoKits)
+                .Map(m => m.MapKey("WoKits_Id"));
 
-            //HasMany<PartEntity>(s => s.WOJ_PartList)
-            //    .WithRequired(s => s.WoKits)
-            //    .Map(m => m.MapKey("WorkOrderKitId"));
+            HasMany<PartEntity>(s => s.WOJ_PartList)
+                .WithOptional(s => s.WoKits)
+                .Map(m => m.MapKey("WoKits_Id"));
         }
     }
 }

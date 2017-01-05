@@ -29,6 +29,7 @@ namespace TacdisDeluxeAPI.Models
         public DateTime VehLastVisDate { get; set; }
         public string VehLastVisMil { get; set; }
 
+        public bool isCheckedIn { get; set; }
         public double CurrentMilage { get; set; }
         public int PlannedMechID { get; set; }
         public string PlannedMechName { get; set; }
@@ -41,6 +42,7 @@ namespace TacdisDeluxeAPI.Models
         public string RespBy { get; set; }
         public double TotCost { get; set; }
 
-        public ICollection<WoJobEntity> WOJ_List;
+        public virtual ICollection<WoJobEntity> WOJ_List { get; set; }
+
     }
 }

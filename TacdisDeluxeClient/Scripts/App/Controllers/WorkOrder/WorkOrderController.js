@@ -1,25 +1,4 @@
 ﻿tacdisDeluxeApp.controller("WorkOrderController", function ($scope, $http, $rootScope) {
-    $scope.WOH_GetCurrentWOH = function () {
-        $scope.urlString = 'http://localhost:57661/api/workorder/GetCurrentWO?getCurrent=' + "WOH";
-        $http.get($scope.urlString)
-        .then(function (response) {
-            var components = response.data;
-
-            $rootScope.currentWoh = components + "";//[0].split(',');
-        });
-    }
-    $scope.WOH_GetCurrentWOH();
-
-    $scope.WOH_GetCurrentWOJ = function () {
-        $scope.urlString = 'http://localhost:57661/api/workorder/GetCurrentWO?getCurrent=' + "WOJ";
-        $http.get($scope.urlString)
-        .then(function (response) {
-            var components = response.data;
-
-            $rootScope.currentWoJ = components[0] + "";//[0].split(',');
-        });
-    }
-    $scope.WOH_GetCurrentWOJ();
 
     $scope.GetStatus = function () {
         $http({
@@ -29,11 +8,31 @@
         .then(function (response) {
             $scope.woh_Status = response.data.Status;
             $scope.woh_PlannedDate = response.data.PlannedDate;
-            //$scope.woh_IsCheckedIn = response.data.             ;
+            $scope.woh_IsCheckedIn = response.data.IsCheckedIn;
             $scope.woh_CheckedInDate = response.data.CheckedInDate;
             $scope.woh_CurrentMilage = response.data.CurrentMilage;
             $scope.woh_PlannedMechID = response.data.PlannedMechID;
             $scope.woh_PlannedMechName = response.data.PlannedMechName;
+        });
+    }
+
+    $scope.SaveStatusData = function () {
+        $scope.currentWoh = $rootScope.currentWoh;
+        var statusData = {
+            wohId: $scope.currentWoh,
+            plannedDate: $scope.woh_PlannedDate,
+            isCheckedIn: $scope.woh_IsCheckedIn,
+            checkedInDate: $scope.woh_CheckedInDate,
+            currentMilage: $scope.woh_CurrentMilage,
+            plannedMechID: $scope.woh_PlannedMechID
+        }
+
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/workorder/PostStatusData",
+            data: statusData
+        }).success(function () {
+            feedbackPopup('Successefully saved', { level: 'success', timeout: 2000 });
         });
     }
 
@@ -51,7 +50,7 @@
 
     $scope.RegNrChanged = function () {
         $rootScope.woh_regNr = $scope.woh_regNr;
-        $scope.WOH_GetCurrentWOH();
+        //$scope.WOH_GetCurrentWOH();
         $scope.urlString = 'http://localhost:57661/api/workorder/GetRegNrInfo?WOHID=' + $rootScope.currentWoh + '&regnr=' + $scope.woh_regNr;
 
         $http.get($scope.urlString)
@@ -122,13 +121,7 @@ tacdisDeluxeApp.controller("WorkOrderHeaderController", ["$scope", "$rootScope",
     }
 
     $scope.WOH_SetCurrentWOH = function (itemWoh) {
-        $scope.urlString = 'http://localhost:57661/api/workorder/SetCurrentWO?setCurrent=' + "WOH" + "&itemId=" + itemWoh;
-        $http.get($scope.urlString)
-        .then(function (response) {
-            var components = response.data;
-
-            $rootScope.currentWoh = components + "";
-        });
+        $rootScope.currentWoh = itemWoh;
     }
 
 
