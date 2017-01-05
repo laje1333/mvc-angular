@@ -55,7 +55,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
                 $scope.saleRec.VehicleIds.push(this.r.ItemId);
                 break;
             case 1:
-                $scope.saleRec.PartIds.push(this.r.ItemId);
+                $scope.saleRec.PartIds.push({ id: this.r.ItemId, amount: bös);
                 break;
             case 2:
                 $scope.saleRec.AddonIds.push(this.r.ItemId);
