@@ -55,7 +55,7 @@ namespace TacdisDeluxeAPI.DTO.validators
                 InvoiceRows = new List<InvoiceRowEntity>()
             };
 
-            if (salesDto.PartIds != null && salesDto.PartIds.Length > 0)
+            if (salesDto.PartIds != null && salesDto.PartIds.Count > 0)
             {
                 var invoiceRows = GetInvoiceRowFromParts(salesDto.PartIds);
                 foreach (var row in invoiceRows)
@@ -115,15 +115,15 @@ namespace TacdisDeluxeAPI.DTO.validators
             return invoice;
         }
 
-        private static List<InvoiceRowEntity> GetInvoiceRowFromParts(int[] partsIds)
+        private static List<InvoiceRowEntity> GetInvoiceRowFromParts(IEnumerable<IdAndAmountDto> partsIds)
         {
             var invoiceRows = new List<InvoiceRowEntity>();
 
-            foreach (var id in partsIds)
+            foreach (var iA in partsIds)
             {
                 using (var db = new DBContext())
                 {
-                    var part = db.Parts.Single(p => p.Id == id);
+                    var part = db.Parts.Where(p => p.Id == iA.Id);
                     invoiceRows.Add(new InvoiceRowEntity
                     {
                         Id = part.Id,
