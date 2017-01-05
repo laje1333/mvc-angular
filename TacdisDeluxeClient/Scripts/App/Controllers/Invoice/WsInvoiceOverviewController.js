@@ -2,7 +2,8 @@
 
 
 tacdisDeluxeApp.controller("WsInvoiceOverviewCtrl", ["$scope", "NgTableParams", "$http", "wsInvoiceMaintenanceService", "$filter", function ($scope, ngTableParams, $http, wsInvoiceMaintenanceService, $filter) {
-    
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
+
     $scope.spinner = false;
     $scope.showModal = false;
     $scope.invoceviewed = "";

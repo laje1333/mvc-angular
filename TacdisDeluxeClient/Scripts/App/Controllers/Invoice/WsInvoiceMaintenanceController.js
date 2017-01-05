@@ -1,5 +1,6 @@
 ﻿
 tacdisDeluxeApp.controller("WsInvoiceMaintenanceCtrl", ["$scope", "wsInvoiceMaintenanceService", "$http", "$rootScope", function ($scope, wsInvoiceMaintenanceService, $http, $rootScope) {
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
     //$rootScope.MaintenanceInvoice = [];
     $scope.cancelDisable = false;
     $scope.approveInvoice = true;
