@@ -58,6 +58,7 @@ namespace TacdisDeluxeAPI.Models
             builder.Entity<WorkshopInventoryItem>().ToTable("WorkshopInventoryItem");
             builder.Entity<MainInventoryItem>().ToTable("MainInventoryItem");
 
+            builder.Configurations.Add(new SalesmanMap());
             builder.Configurations.Add(new PartMap());
             builder.Configurations.Add(new SaleMap());
             builder.Configurations.Add(new VehicleModelMap());

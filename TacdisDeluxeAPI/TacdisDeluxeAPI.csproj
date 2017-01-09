@@ -334,6 +334,14 @@
     <Compile Include="Migrations\201701051247069_woMap2.Designer.cs">
       <DependentUpon>201701051247069_woMap2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701091212306_MapSales.cs" />
+    <Compile Include="Migrations\201701091212306_MapSales.Designer.cs">
+      <DependentUpon>201701091212306_MapSales.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701091222267_MapAgain.cs" />
+    <Compile Include="Migrations\201701091222267_MapAgain.Designer.cs">
+      <DependentUpon>201701091222267_MapAgain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -372,6 +380,7 @@
     <Compile Include="Models\Maps\InvoiceMap.cs" />
     <Compile Include="Models\Maps\PartMap.cs" />
     <Compile Include="Models\Maps\SaleMap.cs" />
+    <Compile Include="Models\Maps\SalesmanMap.cs" />
     <Compile Include="Models\Maps\VehicleModelMap.cs" />
     <Compile Include="Models\Maps\WorkOrderKitMap.cs" />
     <Compile Include="Models\Maps\WorkOrderMap.cs" />
@@ -477,6 +486,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701051247069_woMap2.resx">
       <DependentUpon>201701051247069_woMap2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701091212306_MapSales.resx">
+      <DependentUpon>201701091212306_MapSales.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701091222267_MapAgain.resx">
+      <DependentUpon>201701091222267_MapAgain.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

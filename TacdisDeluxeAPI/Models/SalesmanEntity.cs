@@ -11,9 +11,14 @@ namespace TacdisDeluxeAPI.Models
     [Table("Salesman")]
     public class SalesmanEntity
     {
+        public SalesmanEntity()
+        {
+            Sales = new List<SaleEntity>();
+        }
+
         [Key]
         public int Id { get; set; }
-        [Index(IsUnique = true)]
+
         public int EmployeeNumber { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -21,5 +26,6 @@ namespace TacdisDeluxeAPI.Models
         public string StreeatAddress { get; set; }
         public string ZipCity { get; set; }
         public string Country { get; set; }
+        public ICollection<SaleEntity> Sales { get; set; }
     }
 }

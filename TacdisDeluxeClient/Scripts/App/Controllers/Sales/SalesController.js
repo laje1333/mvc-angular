@@ -2,6 +2,8 @@
 
 tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http, SaleFactory, NgTableParams) {
 
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
+
     $scope.init = function () {
 
     }
@@ -48,6 +50,8 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         $rootScope.totalCost += parseFloat(r);
     };
 
+    
+
 
     $scope.addRow = function () {
 
@@ -92,7 +96,60 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         
     };
 
-    $scope.PostSale = function () {
+    $scope.getSales = function () {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/Sales/AllSales',
+            headers: {},
+        }
+        $http(req).
+         then(function (response) {
+             $scope.allSales = response.data;
+         }, function (response) {
+             feedbackPopup('Something went wrong!', { level: 'warning', timeout: 4000 });
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
+
+    $scope.PostOrUpdateSale = function () {
+        var url = 'http://localhost:57661/api/Sales'
+        var type = 'POST';
+        if ($rootScope.saleRec.Id == null) {
+            url += '/NewSale';
+        } else {
+            type = 'PUT';
+            url += '/UpdateSale';
+        }
+        var req = {
+            method: type,
+            url: url,
+            headers: {},
+            data: {
+                Id: $rootScope.saleRec.Id,
+                Salesman: $rootScope.saleRec.Salesman,
+                VehicleIds: $rootScope.saleRec.VehicleIds,
+                PartIds: $rootScope.saleRec.PartIds,
+                Status: 1,
+                AddonIds: $rootScope.saleRec.AddonIds,
+                PayerIds: $rootScope.saleRec.PayerIds,
+                PaymentType: 1,
+                DateCreated: new Date().toLocaleString(),
+                DateEdited: new Date().toLocaleString()
+            },
+        }
+        $http(req).
+         then(function (response) {
+             feedbackPopup('Sale has been saved!', { level: 'success', timeout: 4000 });
+             $rootScope.saleRec.Id = response.data;
+         }, function (response) {
+             feedbackPopup('Something went wrong!', { level: 'warning', timeout: 4000 });
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
+
+     $scope.PostSale = function () {
         var req = {
             method: 'POST',
             url: 'http://localhost:57661/api/invoice/CreatInvoice/CreateInvoiceFromSales',
@@ -111,8 +168,10 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         }
         $http(req).
          then(function (response) {
+             feedbackPopup('Invoice has been created!', { level: 'success', timeout: 4000 });
              $scope.ok = "It's good";
          }, function (response) {
+             feedbackPopup('All data needed was not provided!', { level: 'warning', timeout: 4000 });
              $scope.statusCode = response.statusCode;
          }
          );
@@ -243,8 +302,8 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
 
     $scope.$watch(function () { return SaleFactory.getPayer(); }, function (newValue, oldValue) {
         if (newValue.Id !== oldValue.Id) {
-            $rootScope.saleRec.Payers.push(newValue);
-            $rootScope.saleRec.PayerIds.push(newValue.Id);
+            $rootScope.saleRec.Payers = newValue;
+            $rootScope.saleRec.PayerIds = newValue.Id;
         }
     });
 

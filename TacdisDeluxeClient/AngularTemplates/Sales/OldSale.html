@@ -1,46 +1,36 @@
-﻿<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-            </div>
-            <div class="modal-body">
-                <p>Some text in the modal.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div ng-controller="SalesController">
+﻿<div ng-controller="SalesController" ng-init="getSales()">
 
     <div id="first_row" class="row">
-        <div id="model" class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">Sales Info</div>
-                <div class="form-group panel-body">
-                    <form novalidate class="simple-form">
-                        <div class="form-group">
-                            <label for="salesman">Salesman:</label>
-                            <input type="text" class="form-control" id="salesmanId">
-                        </div>
-                        <div class="form-group">
-                            <label for="stuff">Stuff:</label>
-                            <input type="text" class="form-control" id="stuff" value="{{stuff}}">
-                        </div>
+        <div class="col-md-12">
+            <table id="salesValues" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Type:</th>
+                        <th>Info:</th>
+                        <th>ID:</th>
+                        <th>Amount:</th>
+                        <th>Price:</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="r in allSales">
+                        <td>{{r.Type}} </td>
+                        <td>{{r.Name}}</td>
+                        <td>{{r.Number}}</td>
+                        <td>
+                            <a class="btn "><span class="glyphicon glyphicon-edit"></span></a>
+                        </td>
+                        <td>{{r.Price}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Total Cost: {{totalCost}}</td>
+                    </tr>
+                </tfoot>
 
-                    </form>
-                </div>
-            </div>
+            </table>
         </div>
     </div>
 </div>
+
