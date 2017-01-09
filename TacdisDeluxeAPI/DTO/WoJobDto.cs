@@ -6,6 +6,12 @@ using TacdisDeluxeAPI.Models;
 
 namespace TacdisDeluxeAPI.DTO
 {
+    public class WoJobDtoExtended : WoJobDto
+    {
+        public string wohid { get; set; }
+        public string wojid { get; set; }
+    }
+
     public class WoJobDto
     {
         public WoJobDto()
@@ -14,28 +20,28 @@ namespace TacdisDeluxeAPI.DTO
 
         public WoJobDto(WoJobEntity wojEnt)
         {
-            ID              = wojEnt.ID;
-            WoJNr           = wojEnt.WoJNr;
-            Status          = wojEnt.Status;
-            TotCost         = wojEnt.TotCost;
-            JobDoneDate     = wojEnt.JobDoneDate;
+            ID = wojEnt.ID;
+            WoJNr = wojEnt.WoJNr;
+            Status = wojEnt.Status;
+            TotCost = wojEnt.TotCost;
+            JobDoneDate = wojEnt.JobDoneDate;
 
-            PayerCustNr     = wojEnt.PayerCustNr;
-            Alias           = wojEnt.Alias;
-            AddressType     = wojEnt.AddressType;
-            AddressFull     = wojEnt.AddressFull;
-            PayerName            = wojEnt.PayerName;
-            FirstName       = wojEnt.FirstName;
-            Contact         = wojEnt.Contact;
-            PaymentMethod   = wojEnt.PaymentMethod;
+            PayerCustNr = wojEnt.PayerCustNr;
+            Alias = wojEnt.Alias;
+            AddressType = wojEnt.AddressType;
+            AddressFull = wojEnt.AddressFull;
+            PayerName = wojEnt.PayerName;
+            FirstName = wojEnt.FirstName;
+            Contact = wojEnt.Contact;
+            PaymentMethod = wojEnt.PaymentMethod;
 
-            FixedPrice      = wojEnt.FixedPrice;
-            VatPerc         = wojEnt.VatPerc;
+            FixedPrice = wojEnt.FixedPrice;
+            VatPerc = wojEnt.VatPerc;
 
-            RefNo           = wojEnt.RefNo;
-            RefNoExtra      = wojEnt.RefNoExtra;
-            ProfCentreID    = wojEnt.ProfCentreID;
-            ProfCentreName  = wojEnt.ProfCentreName;
+            RefNo = wojEnt.RefNo;
+            RefNoExtra = wojEnt.RefNoExtra;
+            ProfCentreID = wojEnt.ProfCentreID;
+            ProfCentreName = wojEnt.ProfCentreName;
         }
 
         public int ID { get; set; }

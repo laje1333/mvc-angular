@@ -216,7 +216,7 @@ namespace TacdisDeluxeAPI.Controllers
         }
         
         [System.Web.Http.HttpGet]
-        [System.Web.Http.Route("GetWoh")]
+        [System.Web.Http.Route("GetWoJ")]
         public WoJobDto GetWoJ(string wohid, string wojid)
         {
             using (DBContext c = new DBContext())
@@ -230,11 +230,11 @@ namespace TacdisDeluxeAPI.Controllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("PostWoJData")]
-        public void PostWoJData(string wohid, string wojid, WoJobDto statusData)
+        public void PostWoJData(WoJobDtoExtended statusData)
         {
             using (DBContext c = new DBContext())
             {
-                var woj = GetWoj(wohid, wojid, c);
+                var woj = GetWoj(statusData.wohid, statusData.wojid, c);
 
                 woj.Status = statusData.Status;
                 woj.JobDoneDate = statusData.JobDoneDate;
@@ -267,30 +267,26 @@ namespace TacdisDeluxeAPI.Controllers
 
         // ----------WJK------------
         [System.Web.Http.HttpGet]
-        //[System.Web.Http.Route("GetWJKList")]
-        public string GetWJKList(WoJItemDto wojData)
+        [System.Web.Http.Route("GetWJKList")]
+        public string GetWJKList(string wohId, string wojId)
         {
-            //if (wojData == null)
-            //{
-            return "{\"wjk\":[{\"KitNr\": \"wjk.WJKCode\",\"KitType\": \"wjk.KitType\",\"KitDesc\": \"wjk.KitDesc\",\"Quantity\": \"wjk.Quantity\",\"Price\": \"wjk.TotCost\"}]}";
-            //}
-            //using (DBContext c = new DBContext())
-            //{
-            //    var wjkList = GetWoj(wojData.wohId, wojData.wojId, c).WOJ_KitList;
+            using (DBContext c = new DBContext())
+            {
+                var wjkList = GetWoj(wohId, wojId, c).WOJ_KitList;
 
-            //    return WohListData.GetWjkList(wjkList);
-            //}
+                return WohListData.GetWjkList(wjkList);
+            }
         }
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("AddWJK")]
-        public void AddWJK(WoJItemDto wojData)
+        public void AddWJK(string wohId, string wojId, string wjkCode)
         {
 
             using (DBContext c = new DBContext())
             {
-                var wjkList = GetWoj(wojData.wohId, wojData.wojId, c).WOJ_KitList;
-                wjkList.Add(new WoKitsEntity(wojData.wjkCode));
+                var wjkList = GetWoj(wohId, wojId, c).WOJ_KitList;
+                wjkList.Add(new WoKitsEntity(wjkCode));
                 c.SaveChanges();
             }
         }
@@ -298,11 +294,11 @@ namespace TacdisDeluxeAPI.Controllers
         // ----------WJO------------
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetWJOList")]
-        public string GetWJOList(WoJItemDto wojData)
+        public string GetWJOList(string wohId, string wojId)
         {
             using (DBContext c = new DBContext())
             {
-                var wjoList = GetWoj(wojData.wohId, wojData.wojId, c).WOJ_OPList;
+                var wjoList = GetWoj(wohId, wojId, c).WOJ_OPList;
 
                 return WohListData.GetWjoList(wjoList);
             }
@@ -310,13 +306,13 @@ namespace TacdisDeluxeAPI.Controllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("AddWJO")]
-        public void AddWJO(WoJItemDto wojData)
+        public void AddWJO(string wohId, string wojId, string wjoCode)
         {
 
             using (DBContext c = new DBContext())
             {
-                var wjoList = GetWoj(wojData.wohId, wojData.wojId, c).WOJ_OPList;
-                wjoList.Add(new WoOpEntitys(wojData.wjoCode));
+                var wjoList = GetWoj(wohId, wojId, c).WOJ_OPList;
+                wjoList.Add(new WoOpEntitys(wjoCode));
                 c.SaveChanges();
             }
         }
@@ -324,11 +320,11 @@ namespace TacdisDeluxeAPI.Controllers
         // ----------WJP------------
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetWJPList")]
-        public string GetWJPList(WoJItemDto wojData)
+        public string GetWJPList(string wohId, string wojId)
         {
             using (DBContext c = new DBContext())
             {
-                var wjpList = GetWoj(wojData.wohId, wojData.wojId, c).WOJ_PartList;
+                var wjpList = GetWoj(wohId, wojId, c).WOJ_PartList;
 
                 return WohListData.GetWjpList(wjpList);
             }
@@ -336,13 +332,13 @@ namespace TacdisDeluxeAPI.Controllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("AddWJP")]
-        public void AddWJP(WoJItemDto wojData)
+        public void AddWJP(string wohId, string wojId, string wjpCode)
         {
 
             using (DBContext c = new DBContext())
             {
-                PartEntity part = c.Parts.Where(p => p.ItemId.ToString() == wojData.wjpCode).Single();
-                ICollection<PartEntity> wjpList = GetWoj(wojData.wohId, wojData.wojId, c).WOJ_PartList;
+                PartEntity part = c.Parts.Where(p => p.ItemId.ToString() == wjpCode).Single();
+                ICollection<PartEntity> wjpList = GetWoj(wohId, wojId, c).WOJ_PartList;
 
                 wjpList.Add(part);
                 c.SaveChanges();
