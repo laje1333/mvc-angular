@@ -19,6 +19,43 @@ label {
     font-weight: normal;
 }
 
+.border-for-content{
+    width: auto;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    border-radius: 25px;
+    margin-top: 10px;
+    border: 1px solid #AFAFAF;
+    padding: 10px;
+}
+
+.border-under-header{
+    width: auto;
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border: 1px solid #AFAFAF;
+    padding: 10px;
+}
+
+.border-for-header{
+    margin-top: 1px;
+    width: auto;
+    margin-right: 20px;
+    margin-left: 20px;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 2px solid #AFAFAF;
+    padding: 10px;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -278,7 +315,7 @@ table.table tr:last-child td:last-child {
 }
 
 .row{
-    margin-bottom: 8px;
+    margin-bottom: 0px;
 }
 
 fieldset.custom-fieldset {
@@ -370,3 +407,12 @@ ul.pagination.ng-table-pagination.ng-scope {
 }*/
 
 
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Chrome/Safari/Opera */
+     -khtml-user-select: none; /* Konqueror */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  not supported by any browser */
+}

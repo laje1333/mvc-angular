@@ -1,38 +1,40 @@
 ﻿
 <div ng-controller="SalesController">
     <div>
-        <div id="model" class="col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-6 text-left">Select Parts to sell</div>
+        <div class="col-md-12" style="margin-left: 0px; margin-right: 0px;">
+
+            <br />
+            <div class="row">
+                <div class="col-xs-6 text-left"><b>Select Parts to sell</b></div>
+            </div>
+
+            <div class="control-group panel-body">
+                <form class="form-horizontal" name="partForm">
+                    <div class="form-group">
+                        <input class="form-control" type="text" ng-model="artNum" placeholder="Article Number" style="margin-right:0px; float:left" />
+                        <button style="margin-left:0px" class="btn btn-primary" type="button" ng-disabled="!(artNum || artName)" ng-click="GetSearchParts()"><i class=" glyphicon glyphicon-search"></i></button>
                     </div>
-                </div>
-                <div class="control-group panel-body">
-                    <form class="form-horizontal" name="partForm">              
-                        <div class="form-group">
-                            <label for="ArtNum">Article Number:</label>
-                            <input class="form-control" type="text" ng-model="artNum" />
-                        </div>
-                        <div class="form-group">
-                            <label for="ArtName">Article Name:</label>
-                            <input class="form-control" type="text" ng-model="artName" />
-                        </div>
-                        <button class="btn btn-group" ng-click="GetSearchParts()" ng-disabled="!(artNum || artName)">Search</button>
-                        <div id="scrollable-area" fixed-table-headers="scrollable-area" ng-table="PartsTable">
-                            <table ng-show="$data.length" class="table table-hover table-scroll">
-                                <tr ng-repeat="r in $data">
-                                    <td data-title="'ItemId'" sortable="'ItemId'">{{r.ItemId}} </td>
-                                    <td data-title="'ItemName'" sortable="'ItemName'">{{r.ItemName}}</td>
-                                    <td data-title="'ItemPrice'" sortable="'ItemPrice'">{{r.ItemPrice}}</td>
-                                    <td><a class="btn " title="Add" ng-click="addRow()"><span class="glyphicon glyphicon-plus"></span></a></td>
-                                </tr>
-                            </table>
-                        </div>
-                        
-                    </form>
-                </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" ng-model="artName" placeholder="Article Name" style="margin-right:0px; float:left" />
+                        <button style="margin-left:0px" class="btn btn-primary" type="button" ng-disabled="!(artNum || artName)" ng-click="GetSearchParts()"><i class=" glyphicon glyphicon-search"></i></button>
+                    </div>
+
+
+                    <!--<button class="btn btn-group" ng-click="GetSearchParts()" ><i class="glyphicon glyphicon-search"></i>Search</button>-->
+                    
+                    <table ng-show="$data.length" class="table table-hover" ng-table="PartsTable">
+                        <tr ng-repeat="r in $data">
+                            <td data-title="'ItemId'" sortable="'ItemId'">{{r.ItemId}} </td>
+                            <td data-title="'ItemName'" sortable="'ItemName'">{{r.ItemName}}</td>
+                            <td data-title="'ItemPrice'" sortable="'ItemPrice'">{{r.ItemPrice}}</td>
+                            <td><a class="btn " title="Add" ng-click="addRow()"><span class="glyphicon glyphicon-plus"></span></a></td>
+                        </tr>
+                    </table>
+                    
+
+                </form>
             </div>
         </div>
     </div>
 </div>
+

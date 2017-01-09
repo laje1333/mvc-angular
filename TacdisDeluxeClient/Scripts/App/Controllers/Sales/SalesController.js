@@ -2,6 +2,8 @@
 
 tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http, SaleFactory, NgTableParams) {
 
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
+
     $scope.init = function () {
 
     }
@@ -48,43 +50,106 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         $rootScope.totalCost += parseFloat(r);
     };
 
+    
+
 
     $scope.addRow = function () {
+
+        var Exists = false;
+
         switch ($scope.selectedTypeOfThingy) {
             case 0:
-                $rootScope.saleRec.VehicleIds.push(this.r.ItemId);
+                for (var i = 0; i < $rootScope.record.length; i++) {
+                    if (this.r.ItemId === $rootScope.record[i].Number) {
+                        Exists = true;
+                    } 
+                }
+                if (!Exists) {
+                    $rootScope.saleRec.VehicleIds.push(this.r.ItemId);
+                    $rootScope.record.push({ 'Type': 'Vehicle', 'Name': this.r.ItemName, 'Number': this.r.ItemId, 'Price': this.r.ItemPrice, 'Amount': 1 });
+                    $scope.calcTotal(this.r.ItemPrice);
+                }
                 break;
             case 1:
                 var x = Maths.Arrays.BinarySearch($rootScope.saleRec.PartIds, this.r.ItemId, 'Id');
                 if (x == null) {
+                    $rootScope.record.push({ 'Type': 'Part', 'Name': this.r.ItemName, 'Number': this.r.ItemId, 'Price': this.r.ItemPrice, 'Amount': 1 });
                     $rootScope.saleRec.PartIds.push({ Id: this.r.ItemId, Amount: 1});
+                } else {
+                    for (var i = 0; i < $rootScope.record.length; i++) {
+                        if (this.r.ItemId === $rootScope.record[i].Number) {
+                            $rootScope.record[i].Amount += 1;
+                            $rootScope.saleRec.PartIds[x].Amount += 1;
+                        }
+                    }
                 }
+                $scope.calcTotal(this.r.ItemPrice);
                 break;
             case 2:
                 $rootScope.saleRec.AddonIds.push(this.r.ItemId);
+                $scope.calcTotal(this.r.ItemPrice);
                 break;
         }
 
-        var jadenfanns = false;
-
-        for (var i = 0; i < $rootScope.record.length; i++) {
-            if (this.r.ItemId === $rootScope.record[i].Number) {
-                $rootScope.record[i].Amount += 1;         
-                if (x != null) {
-                    $rootScope.saleRec.PartIds[x].Amount = this.r.Amount;
-                }
-                jadenfanns = true;
-            }
-        }
-        if (!jadenfanns) {
-            $rootScope.record.push({ 'Type': 'Part', 'Name': this.r.ItemName, 'Number': this.r.ItemId, 'Price': this.r.ItemPrice, 'Amount': 1 });
-        } 
-
         
-        $scope.calcTotal(this.r.ItemPrice);
+        
+        
     };
 
-    $scope.PostSale = function () {
+    $scope.getSales = function () {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/Sales/AllSales',
+            headers: {},
+        }
+        $http(req).
+         then(function (response) {
+             $scope.allSales = response.data;
+         }, function (response) {
+             feedbackPopup('Something went wrong!', { level: 'warning', timeout: 4000 });
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
+
+    $scope.PostOrUpdateSale = function () {
+        var url = 'http://localhost:57661/api/Sales'
+        var type = 'POST';
+        if ($rootScope.saleRec.Id == null) {
+            url += '/NewSale';
+        } else {
+            type = 'PUT';
+            url += '/UpdateSale';
+        }
+        var req = {
+            method: type,
+            url: url,
+            headers: {},
+            data: {
+                Id: $rootScope.saleRec.Id,
+                Salesman: $rootScope.saleRec.Salesman,
+                VehicleIds: $rootScope.saleRec.VehicleIds,
+                PartIds: $rootScope.saleRec.PartIds,
+                Status: 1,
+                AddonIds: $rootScope.saleRec.AddonIds,
+                PayerIds: $rootScope.saleRec.PayerIds,
+                PaymentType: 1,
+                DateCreated: new Date().toLocaleString(),
+                DateEdited: new Date().toLocaleString()
+            },
+        }
+        $http(req).
+         then(function (response) {
+             feedbackPopup('Sale has been saved!', { level: 'success', timeout: 4000 });
+             $rootScope.saleRec.Id = response.data;
+         }, function (response) {
+             feedbackPopup('Something went wrong!', { level: 'warning', timeout: 4000 });
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
+
+     $scope.PostSale = function () {
         var req = {
             method: 'POST',
             url: 'http://localhost:57661/api/invoice/CreatInvoice/CreateInvoiceFromSales',
@@ -103,8 +168,10 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         }
         $http(req).
          then(function (response) {
+             feedbackPopup('Invoice has been created!', { level: 'success', timeout: 4000 });
              $scope.ok = "It's good";
          }, function (response) {
+             feedbackPopup('All data needed was not provided!', { level: 'warning', timeout: 4000 });
              $scope.statusCode = response.statusCode;
          }
          );
@@ -235,8 +302,8 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
 
     $scope.$watch(function () { return SaleFactory.getPayer(); }, function (newValue, oldValue) {
         if (newValue.Id !== oldValue.Id) {
-            $rootScope.saleRec.Payers.push(newValue);
-            $rootScope.saleRec.PayerIds.push(newValue.Id);
+            $rootScope.saleRec.Payers = newValue;
+            $rootScope.saleRec.PayerIds = newValue.Id;
         }
     });
 
