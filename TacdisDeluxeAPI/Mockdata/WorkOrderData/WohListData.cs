@@ -31,6 +31,7 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
         
         private static string CreateLine(Models.WorkOrderEntity WO)
         {
+            WO.UpdateTotCost();
             return "{\"WoNr\": \"" + WO.WoNr +
                     "\",\"RegNr\": \"" + WO.RegNr +
                     "\",\"Status\": \"" + WO.Status +
@@ -62,6 +63,7 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 
         private static string CreateLine(WoJobEntity woj)
         {
+            woj.UpdateTotCost();
             return "{\"WoJNr\": \"" + woj.WoJNr +
                     "\",\"Status\": \"" + woj.Status +
                     "\",\"TotCost\": \"" + woj.TotCost +
@@ -88,6 +90,7 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 
         private static string CreateLine(WoKitsEntity wjk)
         {
+            wjk.UpdateTotCost();
             return "{\"KitNr\": \"" + wjk.WJKCode +
                     "\",\"KitType\": \"" + wjk.KitType +
                     "\",\"KitDesc\": \"" + wjk.KitDesc +

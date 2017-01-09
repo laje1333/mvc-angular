@@ -11,11 +11,30 @@ namespace TacdisDeluxeAPI.Models
     [Table("WorkOrderKits")]
     public class WoKitsEntity
     {
+        public WoKitsEntity()
+        {
+            WOJ_OPList = new List<WoOpEntitys>();
+            WOJ_PartList = new List<PartEntity>();
+        }
+
         public WoKitsEntity(string wjkCode)
         {
             WJKCode = int.Parse(wjkCode);
             WOJ_OPList = new List<WoOpEntitys>();
             WOJ_PartList = new List<PartEntity>();
+        }
+
+        public void UpdateTotCost()
+        {
+            TotCost = 0;
+            foreach (var item in WOJ_PartList)
+            {
+                TotCost += item.ItemPrice;
+            }
+            foreach (var item in WOJ_OPList)
+            {
+                TotCost += item.Price;
+            }
         }
 
         public virtual ICollection<WoOpEntitys> WOJ_OPList { get; set; }
@@ -28,7 +47,7 @@ namespace TacdisDeluxeAPI.Models
         public string KitDesc { get; set; }
         public double Quantity { get; set; }
         public double TotCost { get; set; }
-        
+
         [IgnoreDataMember]
         public WoJobEntity WoJob { get; set; }
     }

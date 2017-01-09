@@ -11,6 +11,11 @@ namespace TacdisDeluxeAPI.Models
     [Table("WorkOrderOperations")]
     public class WoOpEntitys
     {
+        public WoOpEntitys()
+        {
+
+        }
+
         public WoOpEntitys(string wjocode)
         {
             OPNr = int.Parse(wjocode);
