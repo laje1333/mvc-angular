@@ -36,12 +36,13 @@ tacdisDeluxeApp.directive("tframe", function () {
     var controller = ['$scope', function ($scope) {
 
         var tframe, tbody, theader, southResize, southEastResize, eastResize;
-        var fullScreenSize = "1150px";
+        var fullScreenSize = "auto";
         var offX;
         var offY;
         var tempX, tempY;
         var startX, startY, startWidth, startHeight;
         var srcId;
+        var offsetTop;
 
         $scope.frameIsVisible = true;
         $scope.frameIsMinimized = false;
@@ -103,6 +104,25 @@ tacdisDeluxeApp.directive("tframe", function () {
             mouseDown({ clientY: 200, clientX: 200 });
             divMove({ clientY: 201, clientX: 200 });
             mouseUp();
+            initDrag({ clientY: 201, clientX: 200, currentTarget: { id: $scope.resizeId } });
+            doDrag({ clientY: 201, clientX: 200 });
+            stopDrag();
+            refreshComponents();
+            offsetTop = tframe.style.top;
+        }
+
+
+        function refreshComponents() {
+            tbody.style.width = (tframe.offsetWidth - 2) + "px";
+            tbody.style.height = (tframe.offsetHeight - 50) + "px";
+            southResize.style.width = tframe.offsetWidth + "px";
+            eastResize.style.height = (tframe.offsetHeight - 42) + "px";
+            eastResize.style.left = (tframe.style.left + 2 + tbody.offsetWidth) + "px";
+            eastResize.style.top = (tframe.style.top + 42) + "px";
+            southResize.style.left = tframe.style.left + "px";
+            southResize.style.top = (tframe.style.top + tbody.offsetHeight + 50) + "px";
+            southEastResize.style.top = (tframe.style.top + tbody.offsetHeight + 50) + "px";
+            southEastResize.style.left = (tframe.style.left + tbody.offsetWidth + 2) + "px";
         }
 
 
@@ -113,14 +133,14 @@ tacdisDeluxeApp.directive("tframe", function () {
             if (div.offsetLeft < 0) {
                 div.style.left = "1px";
                 southResize.style.left = 1 + "px";
-                eastResize.style.left = (1 + 50 + tbody.offsetWidth + "px");
-                southEastResize.style.left = (1 + 50 + tbody.offsetWidth + "px");
+                eastResize.style.left = (1 + tbody.offsetWidth + "px");
+                southEastResize.style.left = (1 + tbody.offsetWidth + "px");
             }
             if (div.offsetTop < 0) {
                 div.style.top = "auto";
-                southResize.style.top = (tbody.offsetHeight + 65 + tbody.offsetTop) + "px";
-                eastResize.style.top = (tbody.offsetTop + 60) + "px";
-                southEastResize.style.top = (tbody.offsetHeight + tbody.offsetTop + 65) + "px";
+                southResize.style.top = (tbody.offsetHeight + 55 + tbody.offsetTop) + "px";
+                eastResize.style.top = (tbody.offsetTop + 55) + "px";
+                southEastResize.style.top = (tbody.offsetHeight + tbody.offsetTop + 55) + "px";
             }
             
         }
@@ -145,13 +165,13 @@ tacdisDeluxeApp.directive("tframe", function () {
                 tempX = (e.clientX - offX);
                 tempY = (e.clientY - offY);
                 southResize.style.width = tframe.offsetWidth + "px";
-                eastResize.style.height = (tframe.offsetHeight - 42) + "px";
-                eastResize.style.left = (tempX + 50 + tbody.offsetWidth) + "px";
-                eastResize.style.top = (tempY + 42) + "px";
+                eastResize.style.height = (tframe.offsetHeight - theader.offsetHeight) + "px";
+                eastResize.style.left = (tempX + tframe.offsetWidth) + "px";
+                eastResize.style.top = (tempY + theader.offsetHeight) + "px";
                 southResize.style.left = tempX + "px";
-                southResize.style.top = (tempY + tbody.offsetHeight + 50) + "px";
-                southEastResize.style.top = (tempY + tbody.offsetHeight + 50) + "px";
-                southEastResize.style.left = (tempX + tbody.offsetWidth + 50) + "px";
+                southResize.style.top = (tempY + tframe.offsetHeight) + "px";
+                southEastResize.style.top = (tempY + tframe.offsetHeight) + "px";
+                southEastResize.style.left = (tempX + tframe.offsetWidth) + "px";
             }
         }
 
@@ -177,19 +197,20 @@ tacdisDeluxeApp.directive("tframe", function () {
             
 
             tbody.style.width = (tframe.offsetWidth-2) + "px";
-            tbody.style.height = (tframe.offsetHeight - 50) + "px";
+            tbody.style.height = (tframe.offsetHeight - theader.offsetHeight) + "px";
             southResize.style.width = tframe.offsetWidth + "px";
-            eastResize.style.height = (tframe.offsetHeight - 42) + "px";
+            eastResize.style.height = (tframe.offsetHeight - theader.offsetHeight) + "px";
             eastResize.style.left = (tempX + 2 + tbody.offsetWidth) + "px";
-            eastResize.style.top = (tempY + 42) + "px";
+            eastResize.style.top = (tempY + theader.offsetHeight) + "px";
             southResize.style.left = tempX + "px";
-            southResize.style.top = (tempY + tbody.offsetHeight + 50) + "px";
-            southEastResize.style.top = (tempY + tbody.offsetHeight + 50) + "px";
-            southEastResize.style.left = (tempX + tbody.offsetWidth + 2) + "px";
+            southResize.style.top = (tempY + tframe.offsetHeight) + "px";
+            southEastResize.style.top = (tempY + tframe.offsetHeight) + "px";
+            southEastResize.style.left = (tempX + tframe.offsetWidth + 2) + "px";
         }
 
         function stopDrag(e) {
             document.documentElement.removeEventListener('mousemove', doDrag, false); document.documentElement.removeEventListener('mouseup', stopDrag, false);
+
         }
 
         $scope.exitRequest = function () {
@@ -211,6 +232,15 @@ tacdisDeluxeApp.directive("tframe", function () {
             tframe.style.left = "auto";
             $scope.showFrame();
             $scope.frameIsMinimized = false;
+            southResize.style.top = tframe.style.height;
+            southResize.style.left = tframe.offsetLeft + "px";
+            southResize.style.width = tframe.offsetWidth + "px";
+            eastResize.style.top = (tframe.offsetTop + theader.offsetHeight) + "px";
+            eastResize.style.left = (tframe.offsetLeft + tframe.offsetWidth) + "px";
+            southEastResize.style.top = (tframe.style.height);
+            southEastResize.style.left = (tframe.offsetLeft + tframe.offsetWidth) + "px";
+            tbody.style.width = (tframe.offsetWidth - 2) + "px";
+            tbody.style.height = (tframe.offsetHeight - 50) + "px";
             
         }
 
