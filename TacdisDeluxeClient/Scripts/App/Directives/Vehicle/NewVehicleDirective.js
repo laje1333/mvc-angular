@@ -91,7 +91,7 @@ tacdisDeluxeApp.directive("tframe", function () {
             southEastResize.addEventListener('mousedown', initDrag, false);
             eastResize.style.height = tframe.offsetHeight + "px";
             southResize.style.width = tframe.offsetWidth + "px";
-            
+       
             
             southResize.style.left = tframe.style.position.left + "px";
             southResize.style.top = (tframe.offsetHeight + tframe.offsetTop) + "px";
@@ -100,7 +100,9 @@ tacdisDeluxeApp.directive("tframe", function () {
             eastResize.style.top = "60px";
             eastResize.style.height = tframe.offsetHeight + "px"
             tframe.style.width = tbody.offsetWidth + "px";
-
+            mouseDown({ clientY: 200, clientX: 200 });
+            divMove({ clientY: 201, clientX: 200 });
+            mouseUp();
         }
 
 
@@ -174,16 +176,16 @@ tacdisDeluxeApp.directive("tframe", function () {
             }
             
 
-            tbody.style.width = (tframe.offsetWidth - 50) + "px";
+            tbody.style.width = (tframe.offsetWidth-2) + "px";
             tbody.style.height = (tframe.offsetHeight - 50) + "px";
             southResize.style.width = tframe.offsetWidth + "px";
             eastResize.style.height = (tframe.offsetHeight - 42) + "px";
-            eastResize.style.left = (tempX + 50 + tbody.offsetWidth) + "px";
+            eastResize.style.left = (tempX + 2 + tbody.offsetWidth) + "px";
             eastResize.style.top = (tempY + 42) + "px";
             southResize.style.left = tempX + "px";
             southResize.style.top = (tempY + tbody.offsetHeight + 50) + "px";
             southEastResize.style.top = (tempY + tbody.offsetHeight + 50) + "px";
-            southEastResize.style.left = (tempX + tbody.offsetWidth + 50) + "px";
+            southEastResize.style.left = (tempX + tbody.offsetWidth + 2) + "px";
         }
 
         function stopDrag(e) {
