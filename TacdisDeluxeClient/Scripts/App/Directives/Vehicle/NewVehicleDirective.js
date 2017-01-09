@@ -99,10 +99,7 @@ tacdisDeluxeApp.directive("tframe", function () {
             eastResize.style.left = (tframe.style.position.left + tframe.offsetWidth) + "px";
             eastResize.style.top = "60px";
             eastResize.style.height = tframe.offsetHeight + "px"
-            initDrag({ clientY: 200, clientX: 200, currentTarget: { id: southResize.id } });
-            doDrag({ clientY: 201, clientX: 201, currentTarget: { id: southResize.id } });
-            stopDrag();
-            tframe.style.width = fullScreenSize;
+
         }
 
 
@@ -265,4 +262,7 @@ tacdisDeluxeApp.directive("tframe", function () {
 var minimizedSlots = [];
 var selectedFrame = "";
 var currentFrames = [];
+
+
+
 
