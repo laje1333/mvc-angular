@@ -10,9 +10,9 @@ namespace TacdisDeluxeAPI.Models.Maps
     {
         public WorkOrderMap()
         {
-            //HasMany<WoJobEntity>(s => s.WOJ_List)
-            //    .WithRequired(s => s.WorkOrder)
-            //    .Map(m => m.MapKey("WorkOrderId"));
+            HasMany<WoJobEntity>(s => s.WOJ_List)
+                .WithRequired(s => s.WorkOrder)
+                .Map(m => m.MapKey("WorkOrder_WoNr"));
         }
     }
 }

@@ -275,6 +275,7 @@
     <Compile Include="Controllers\WorkOrderController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
+    <Compile Include="DTO\WoStatusDto.cs" />
     <Compile Include="DTO\InventoryDto.cs" />
     <Compile Include="DTO\InventoryTableData.cs" />
     <Compile Include="DTO\InvoiceDto.cs" />
@@ -324,6 +325,14 @@
     <Compile Include="Migrations\201701050809355_woJobComponents.cs" />
     <Compile Include="Migrations\201701050809355_woJobComponents.Designer.cs">
       <DependentUpon>201701050809355_woJobComponents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701051243182_woMap.cs" />
+    <Compile Include="Migrations\201701051243182_woMap.Designer.cs">
+      <DependentUpon>201701051243182_woMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701051247069_woMap2.cs" />
+    <Compile Include="Migrations\201701051247069_woMap2.Designer.cs">
+      <DependentUpon>201701051247069_woMap2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
@@ -462,6 +471,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701050809355_woJobComponents.resx">
       <DependentUpon>201701050809355_woJobComponents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701051243182_woMap.resx">
+      <DependentUpon>201701051243182_woMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701051247069_woMap2.resx">
+      <DependentUpon>201701051247069_woMap2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

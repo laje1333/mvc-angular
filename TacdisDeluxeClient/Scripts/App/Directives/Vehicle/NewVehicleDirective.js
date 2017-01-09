@@ -91,10 +91,15 @@ tacdisDeluxeApp.directive("tframe", function () {
             southEastResize.addEventListener('mousedown', initDrag, false);
             eastResize.style.height = tframe.offsetHeight + "px";
             southResize.style.width = tframe.offsetWidth + "px";
-            var framecont = $('#' + $scope.resizeId).closest('.framecontainer');
             
-            $('#' + $scope.resizeId).css({ left: framecont.position().left + "px", top: (tframe.offsetHeight + tframe.offsetTop) + "px", width: tframe.offsetWidth + "px" });
-            $('#' + $scope.rightResizeId).css({ left: (framecont.position().left + tframe.offsetWidth) + "px", top: "60px", height: tframe.offsetHeight + "px" });
+            
+            southResize.style.left = tframe.style.position.left + "px";
+            southResize.style.top = (tframe.offsetHeight + tframe.offsetTop) + "px";
+            southResize.style.width = tframe.offsetWidth + "px";
+            eastResize.style.left = (tframe.style.position.left + tframe.offsetWidth) + "px";
+            eastResize.style.top = "60px";
+            eastResize.style.height = tframe.offsetHeight + "px"
+            tframe.style.width = tbody.offsetWidth + "px";
 
         }
 
@@ -121,10 +126,9 @@ tacdisDeluxeApp.directive("tframe", function () {
         function mouseDown(e) {
             selectedFrame = tframe;
             if ($scope.frameIsMinimized == false) {
-                var div = tframe;
                 var header = theader;
-                offY = e.clientY - parseInt(div.offsetTop);
-                offX = e.clientX - parseInt(div.offsetLeft);
+                offY = e.clientY - parseInt(tframe.offsetTop);
+                offX = e.clientX - parseInt(tframe.offsetLeft);
                     window.addEventListener('mousemove', divMove, true);
             }
         }
@@ -133,10 +137,9 @@ tacdisDeluxeApp.directive("tframe", function () {
 
         function divMove(e) {
             if ($scope.frameIsMinimized == false) {
-                var div = tframe;
-                div.style.position = 'absolute';
-                div.style.top = (e.clientY - offY) + 'px';
-                div.style.left = (e.clientX - offX) + 'px';
+                tframe.style.position = 'absolute';
+                tframe.style.top = (e.clientY - offY) + 'px';
+                tframe.style.left = (e.clientX - offX) + 'px';
                 tempX = (e.clientX - offX);
                 tempY = (e.clientY - offY);
                 southResize.style.width = tframe.offsetWidth + "px";
@@ -151,7 +154,7 @@ tacdisDeluxeApp.directive("tframe", function () {
         }
 
         function initDrag(e) {
-            srcId = e.srcElement.id;
+            srcId = e.currentTarget.id;
             startX = e.clientX;
             startY = e.clientY;
             startWidth = parseInt(document.defaultView.getComputedStyle(tframe).width, 10);
@@ -220,6 +223,7 @@ tacdisDeluxeApp.directive("tframe", function () {
 
                 tframe.style.position = "fixed";
                 tframe.style.width = "auto";
+                tframe.style.height = "auto";
                 tframe.style.top = (document.getElementById("appcontainer").clientHeight - 75) + "px";
                 tframe.style.left = widthOffset + "px";
 
@@ -259,4 +263,7 @@ tacdisDeluxeApp.directive("tframe", function () {
 var minimizedSlots = [];
 var selectedFrame = "";
 var currentFrames = [];
+
+
+
 

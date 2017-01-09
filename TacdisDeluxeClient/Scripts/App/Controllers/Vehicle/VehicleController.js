@@ -2,7 +2,7 @@
 
 
 tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route) {
-
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
 
     //Get
     $scope.spinner = false;
@@ -413,7 +413,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 });
 
 tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgTableParams, $http) {
-
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
     $scope.spinner = false;
 
     $scope.getNewVehicles = function () {
@@ -477,7 +477,7 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgT
 });
 
 tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http){
-
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
     $scope.regNumber = "";
 
     $scope.regNrSearch = function () {
@@ -769,7 +769,8 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
 });
 
 
-tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, $http){
+tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope, $http) {
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
     $scope.regNumber = "";
 
     $scope.regNrSearch = function () {
@@ -786,19 +787,6 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, 
                 $scope.year = itemName[2];
                 $scope.itemDesc = response.data.ItemDesc;
                 
-
-                var testKey = { name: "Apa", value: 5 };
-                var testObject = { employee: "Lasse", salary: 23414 }
-
-                var testKey2 = { cool: "yes", sexy: 234234234234 };
-                var testObject2 = { djur: "elefant", kossa: 15 }
-
-                var map = new Maths.Datastructures.HashMap();
-                map.add(testKey, testObject);
-                map.add(testKey2, testObject2);
-                var x = map.get(testKey);
-                
-
 
             }, function (response) {
                 feedbackPopup("Could fetch data", { level: 'warning', timeout: 2000 });
