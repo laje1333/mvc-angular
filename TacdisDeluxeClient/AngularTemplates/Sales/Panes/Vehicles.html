@@ -1,93 +1,91 @@
 ﻿<div ng-controller="SalesController">
     <div>
-        <div id="model" class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-6 text-left">Select Vehicles to sell</div>
-                    </div>
-                </div>
-                <div class="control-group panel-body">
-                    <form class="form-horizontal" name="partForm">
-                        <div class="form-group">
-                            <label for="ArtNum">Registration number:</label>
-                            <input class="form-control" type="text" ng-model="vehReg" />
-                        </div>
-                        <div class="form-group">
-                            <label for="ArtName">Vehicle number:</label>
-                            <input class="form-control" type="text" ng-model="vehNr" />
-                        </div>
-                        <div class="form-group">
-                            <label for="ArtName">Vehicle name:</label>
-                            <input class="form-control" type="text" ng-model="vehName" />
-                        </div>
-                        <button class="btn btn-group" ng-click="GetSearchVeh()" ng-disabled="!(vehReg || vehNr || vehName)">Search</button>
-                        <div>
-                            <table ng-table="vehTable" class="table table-striped">
-                                <tr>
-                                    <th>Regnr:</th>
-                                    <th>Number:</th>
-                                    <th>Name:</th>
-                                    <th>Info:</th>
-                                    <th>Add:</th>
-                                </tr>
-                                <tr ng-repeat="r in vehRec">
-                                    <td>{{r.RegNo}} </td>
-                                    <td>{{r.ItemId}}</td>
-                                    <td>{{r.ItemName}}</td>
-                                    <td><a class="btn " data-toggle="modal" data-target="#modalShowInfo" ng-click="showInfo(this.r)"><span class="glyphicon glyphicon-info-sign"></span></a></td>
-                                    <td><a class="btn " ng-click="addRow()"><span class="glyphicon glyphicon-plus"></span></a></td>
-                                </tr>
-                            </table>
-                        </div>
-
-                    </form>
-                </div>
+        <div class="col-md-12">
+            <br />
+            <div class="row">
+                <div class="col-xs-6 text-left"><b>Select Vehicles to sell</b></div>
             </div>
         </div>
-    </div>
+        <div class="control-group panel-body">
+            <form class="form-horizontal" name="partForm">
+                <div class="form-group">
+                    <label for="ArtNum">Registration number:</label>
+                    <input class="form-control" type="text" ng-model="vehReg" />
+                </div>
+                <div class="form-group">
+                    <label for="ArtName">Vehicle number:</label>
+                    <input class="form-control" type="text" ng-model="vehNr" />
+                </div>
+                <div class="form-group">
+                    <label for="ArtName">Vehicle name:</label>
+                    <input class="form-control" type="text" ng-model="vehName" />
+                </div>
+                <button class="btn btn-group" ng-click="GetSearchVeh()" ng-disabled="!(vehReg || vehNr || vehName)">Search</button>
+                <div>
+                    <table ng-table="vehTable" class="table table-striped">
+                        <tr>
+                            <th>Regnr:</th>
+                            <th>Number:</th>
+                            <th>Name:</th>
+                            <th>Info:</th>
+                            <th>Add:</th>
+                        </tr>
+                        <tr ng-repeat="r in vehRec">
+                            <td>{{r.RegNo}} </td>
+                            <td>{{r.ItemId}}</td>
+                            <td>{{r.ItemName}}</td>
+                            <td><a class="btn " data-toggle="modal" data-target="#modalShowInfo" ng-click="showInfo(this.r)"><span class="glyphicon glyphicon-info-sign"></span></a></td>
+                            <td><a class="btn " ng-click="addRow()"><span class="glyphicon glyphicon-plus"></span></a></td>
+                        </tr>
+                    </table>
+                </div>
 
-    <div class="modal fade" id="modalShowInfo" tabindex="-1" role="dialog" aria-labelledby="modalEditPartLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="modalEditPartLabel">Part</h4>
-                </div>
-                <div class="modal-body">
-                        <div class="form-group row">
-                            <h5 class="col-md-4">Reg number:</h5>
-                            <label for="RegNo" class="col-md-8 col-form-label">{{vehInfo.RegNo}}</label>
-                        </div>
-                        <div class="form-group row">
-                            <h5 class="col-md-4">Description: </h5>
-                            <label for="ItemDesc" class="col-md-8 col-form-label">{{vehInfo.ItemDesc}}</label>
-                        </div>
-                        <div class="form-group row">
-                            <h5 class="col-md-4">Id: </h5>
-                            <label for="ItemId" class="col-md-8 col-form-label">{{vehInfo.ItemId}}</label>
-                        </div>
-                        <div class="form-group row">
-                            <h5 class="col-md-4">Name: </h5>
-                            <label for="ItemName" class="col-md-8 col-form-label">{{vehInfo.ItemName}}</label>
-                        </div>
-                        <div class="form-check row">
-                            <h5 class="col-md-4">Price: </h5>
-                            <label for="ItemPrice" class="col-md-8 col-form-label">{{vehInfo.ItemPrice}}</label>
-                        </div>
-                        <div class="form-check row">
-                            <h5 class="col-md-4">VAT: </h5>
-                            <label for="VAT" class="col-md-8 col-form-label">{{vehInfo.VAT}}</label>
-                        </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="" role="group" aria-label="First group">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" ng-click="savePart()">Save</button>
-                    </div>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
-
 </div>
+
+
+<div class="modal fade" id="modalShowInfo" tabindex="-1" role="dialog" aria-labelledby="modalEditPartLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="modalEditPartLabel">Part</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group row">
+                    <h5 class="col-md-4">Reg number:</h5>
+                    <label for="RegNo" class="col-md-8 col-form-label">{{vehInfo.RegNo}}</label>
+                </div>
+                <div class="form-group row">
+                    <h5 class="col-md-4">Description: </h5>
+                    <label for="ItemDesc" class="col-md-8 col-form-label">{{vehInfo.ItemDesc}}</label>
+                </div>
+                <div class="form-group row">
+                    <h5 class="col-md-4">Id: </h5>
+                    <label for="ItemId" class="col-md-8 col-form-label">{{vehInfo.ItemId}}</label>
+                </div>
+                <div class="form-group row">
+                    <h5 class="col-md-4">Name: </h5>
+                    <label for="ItemName" class="col-md-8 col-form-label">{{vehInfo.ItemName}}</label>
+                </div>
+                <div class="form-check row">
+                    <h5 class="col-md-4">Price: </h5>
+                    <label for="ItemPrice" class="col-md-8 col-form-label">{{vehInfo.ItemPrice}}</label>
+                </div>
+                <div class="form-check row">
+                    <h5 class="col-md-4">VAT: </h5>
+                    <label for="VAT" class="col-md-8 col-form-label">{{vehInfo.VAT}}</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="" role="group" aria-label="First group">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" ng-click="savePart()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
