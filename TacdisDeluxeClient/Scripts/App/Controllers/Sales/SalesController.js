@@ -50,38 +50,46 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
 
 
     $scope.addRow = function () {
+
+        var Exists = false;
+
         switch ($scope.selectedTypeOfThingy) {
             case 0:
-                $rootScope.saleRec.VehicleIds.push(this.r.ItemId);
+                for (var i = 0; i < $rootScope.record.length; i++) {
+                    if (this.r.ItemId === $rootScope.record[i].Number) {
+                        Exists = true;
+                    } 
+                }
+                if (!Exists) {
+                    $rootScope.saleRec.VehicleIds.push(this.r.ItemId);
+                    $rootScope.record.push({ 'Type': 'Vehicle', 'Name': this.r.ItemName, 'Number': this.r.ItemId, 'Price': this.r.ItemPrice, 'Amount': 1 });
+                    $scope.calcTotal(this.r.ItemPrice);
+                }
                 break;
             case 1:
                 var x = Maths.Arrays.BinarySearch($rootScope.saleRec.PartIds, this.r.ItemId, 'Id');
                 if (x == null) {
+                    $rootScope.record.push({ 'Type': 'Part', 'Name': this.r.ItemName, 'Number': this.r.ItemId, 'Price': this.r.ItemPrice, 'Amount': 1 });
                     $rootScope.saleRec.PartIds.push({ Id: this.r.ItemId, Amount: 1});
+                } else {
+                    for (var i = 0; i < $rootScope.record.length; i++) {
+                        if (this.r.ItemId === $rootScope.record[i].Number) {
+                            $rootScope.record[i].Amount += 1;
+                            $rootScope.saleRec.PartIds[x].Amount += 1;
+                        }
+                    }
                 }
+                $scope.calcTotal(this.r.ItemPrice);
                 break;
             case 2:
                 $rootScope.saleRec.AddonIds.push(this.r.ItemId);
+                $scope.calcTotal(this.r.ItemPrice);
                 break;
         }
 
-        var jadenfanns = false;
-
-        for (var i = 0; i < $rootScope.record.length; i++) {
-            if (this.r.ItemId === $rootScope.record[i].Number) {
-                $rootScope.record[i].Amount += 1;         
-                if (x != null) {
-                    $rootScope.saleRec.PartIds[x].Amount = this.r.Amount;
-                }
-                jadenfanns = true;
-            }
-        }
-        if (!jadenfanns) {
-            $rootScope.record.push({ 'Type': 'Part', 'Name': this.r.ItemName, 'Number': this.r.ItemId, 'Price': this.r.ItemPrice, 'Amount': 1 });
-        } 
-
         
-        $scope.calcTotal(this.r.ItemPrice);
+        
+        
     };
 
     $scope.PostSale = function () {
