@@ -71,7 +71,7 @@
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">Reg number</label>
                 <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Payer.RegNumber}}" ng-model="MaintenanceInvoice.Payer.RegNumber" id="reg-number">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.RegNumber}}" ng-model="MaintenanceInvoice.RegNumber" id="reg-number">
                 </div>
             </div>
             <div class="form-group row">
@@ -177,13 +177,13 @@
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">Sub total</label>
                 <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{(MaintenanceInvoice.Vat !== undefined) || (MaintenanceInvoice.InvoiceAmount !== undefined) ? ((MaintenanceInvoice.InvoiceAmount - (MaintenanceInvoice.InvoiceAmount * (MaintenanceInvoice.Vat / 100 )))  | valuta): ''}}" id="sub-total">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? ((MaintenanceInvoice.InvoiceAmount * 0.75)  | valuta): ''}}" id="sub-total">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">Vat</label>
                 <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Vat !== undefined ? (MaintenanceInvoice.InvoiceAmount * (MaintenanceInvoice.Vat / 100 ) | valuta) : '' }}" id="vat-total">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Vat !== undefined ? (MaintenanceInvoice.InvoiceAmount * 0.25 | valuta) : '' }}" id="vat-total">
                 </div>
             </div>
             <div class="form-group row">
