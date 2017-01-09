@@ -148,6 +148,14 @@ Maths.Datastructures.BinaryHeap = function (Key) {
         }
     }
 
+    this.getCollection = function () {
+        return this.heap;
+    }
+
+    this.count = function () {
+        return this.heap.length;
+    }
+
     this.siftUpType = function () {
         var currentIndex = this.heap.length-1;
         var parentIndex = Math.floor((currentIndex - 1) / 2);
