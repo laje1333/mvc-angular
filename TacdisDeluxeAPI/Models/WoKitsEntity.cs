@@ -17,9 +17,9 @@ namespace TacdisDeluxeAPI.Models
             WOJ_OPList = new List<WoOpEntitys>();
             WOJ_PartList = new List<PartEntity>();
         }
-        
-        public ICollection<WoOpEntitys> WOJ_OPList;
-        public ICollection<PartEntity> WOJ_PartList;
+
+        public virtual ICollection<WoOpEntitys> WOJ_OPList { get; set; }
+        public virtual ICollection<PartEntity> WOJ_PartList { get; set; }
 
         [Key]
         public int Id { get; set; }
