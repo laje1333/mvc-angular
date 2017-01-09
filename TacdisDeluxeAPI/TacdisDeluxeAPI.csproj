@@ -374,6 +374,7 @@
     <Compile Include="Models\Maps\InvoiceMap.cs" />
     <Compile Include="Models\Maps\PartMap.cs" />
     <Compile Include="Models\Maps\SaleMap.cs" />
+    <Compile Include="Models\Maps\SalesmanMap.cs" />
     <Compile Include="Models\Maps\VehicleModelMap.cs" />
     <Compile Include="Models\Maps\WorkOrderKitMap.cs" />
     <Compile Include="Models\Maps\WorkOrderMap.cs" />
