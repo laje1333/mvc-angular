@@ -191,7 +191,7 @@ namespace TacdisDeluxeAPI.DTO.validators
             string regNumber;
             using (var db = new DBContext())
             {
-                var vehicle = db.Vehicles.Single(v => v.Id == id);
+                var vehicle = db.Vehicles.Single(v => v.ItemId == id);
                 regNumber = vehicle.RegNo;
             }
 
