@@ -91,7 +91,7 @@ tacdisDeluxeApp.directive("tframe", function () {
             southEastResize.addEventListener('mousedown', initDrag, false);
             eastResize.style.height = tframe.offsetHeight + "px";
             southResize.style.width = tframe.offsetWidth + "px";
-       
+            
             
             southResize.style.left = tframe.style.position.left + "px";
             southResize.style.top = (tframe.offsetHeight + tframe.offsetTop) + "px";
@@ -99,6 +99,7 @@ tacdisDeluxeApp.directive("tframe", function () {
             eastResize.style.left = (tframe.style.position.left + tframe.offsetWidth) + "px";
             eastResize.style.top = "60px";
             eastResize.style.height = tframe.offsetHeight + "px"
+            tframe.style.width = tbody.offsetWidth + "px";
 
         }
 
