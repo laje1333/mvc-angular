@@ -15,6 +15,15 @@ namespace TacdisDeluxeAPI.Models
         {
             WOJ_List = new List<WoJobEntity>();
         }
+        public void UpdateTotCost()
+        {
+            TotCost = 0;
+            foreach (var item in WOJ_List)
+            {
+                item.UpdateTotCost();
+                TotCost += item.TotCost;
+            }
+        }
 
         [Key]
         public int WoNr { get; set; }

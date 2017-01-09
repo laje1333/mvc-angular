@@ -18,6 +18,24 @@ namespace TacdisDeluxeAPI.Models
             WOJ_PartList = new List<PartEntity>();
         }
 
+        public void UpdateTotCost()
+        {
+            TotCost = 0;
+            foreach (var item in WOJ_PartList)
+            {
+                TotCost += item.ItemPrice;
+            }
+            foreach (var item in WOJ_OPList)
+            {
+                TotCost += item.Price;
+            }
+            foreach (var item in WOJ_KitList)
+            {
+                item.UpdateTotCost();
+                TotCost += item.TotCost;
+            }
+        }
+
         [Key]
         public int ID { get; set; }
         public int WoJNr { get; set; }
@@ -29,7 +47,7 @@ namespace TacdisDeluxeAPI.Models
         public string Alias { get; set; }
         public string AddressType { get; set; }
         public string AddressFull { get; set; }
-        public string Name { get; set; }
+        public string PayerName { get; set; }
         public string FirstName { get; set; }
         public string Contact { get; set; }
         public string PaymentMethod { get; set; }

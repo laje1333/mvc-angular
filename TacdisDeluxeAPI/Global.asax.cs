@@ -20,6 +20,10 @@ namespace TacdisDeluxeAPI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             AutomapperConfig.RegisterMappings();
+            HttpConfiguration config = GlobalConfiguration.Configuration;
+            config.Formatters.JsonFormatter
+                        .SerializerSettings
+                        .ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
 
         protected void Application_BeginRequest()
