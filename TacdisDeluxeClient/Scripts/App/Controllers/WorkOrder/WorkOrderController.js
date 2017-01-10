@@ -351,7 +351,8 @@ tacdisDeluxeApp.controller("WOActivePartController", ["$scope", "$rootScope", "N
             params: {
                 wohId: $scope.currentWoh,
                 wojId: $scope.currentWoJ,
-                wjpCode: $scope.wjpCode
+                wjpCode: $scope.wjpCode,
+                quantity: $scope.quantity
             }
         }).success(function () {
             feedbackPopup('Successefully added new Part', { level: 'success', timeout: 2000 });

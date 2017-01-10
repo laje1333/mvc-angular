@@ -387,7 +387,7 @@ namespace TacdisDeluxeAPI.Controllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("AddWJP")]
-        public void AddWJP(string wohId, string wojId, string wjpCode)
+        public void AddWJP(string wohId, string wojId, string wjpCode, string quantity)
         {
 
             using (DBContext c = new DBContext())
