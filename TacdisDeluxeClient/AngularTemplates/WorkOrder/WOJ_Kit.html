@@ -23,8 +23,8 @@
                         <td>{{item.KitDesc}}</td>
                         <td>{{item.Quantity}}</td>
                         <td>{{item.Price}}</td>
-                        <td><input type="button" class="btn btn-info" value="Details" ng-click="WOH_Kit_ViewDetails(item)" /></td>
-                        <td><input type="button" class="btn btn-info" value="Remove" ng-click="WOJ_Kit_Remove(item)" /></td>
+                        <td><input type="button" class="btn btn-info" value="Details" ng-click="WOJ_ViewWJKDetails(item.KitId)" /></td>
+                        <td><input type="button" class="btn btn-info" value="Remove" ng-click="WOJ_RemoveWJK(item.KitId)" /></td>
                     </tr>
                 </table>
             </div>

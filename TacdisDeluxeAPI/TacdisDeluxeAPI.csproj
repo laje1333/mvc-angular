@@ -340,6 +340,10 @@
     <Compile Include="Migrations\201701091243390_wojStuff.Designer.cs">
       <DependentUpon>201701091243390_wojStuff.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701100911315_WoPartHandling.cs" />
+    <Compile Include="Migrations\201701100911315_WoPartHandling.Designer.cs">
+      <DependentUpon>201701100911315_WoPartHandling.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -487,6 +491,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701091243390_wojStuff.resx">
       <DependentUpon>201701091243390_wojStuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701100911315_WoPartHandling.resx">
+      <DependentUpon>201701100911315_WoPartHandling.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

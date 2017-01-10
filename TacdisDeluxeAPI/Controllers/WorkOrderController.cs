@@ -18,6 +18,7 @@ namespace TacdisDeluxeAPI.Controllers
     {
         // ----------WOH------------
         [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWoHList")]
         public string GetWoHList(string search)
         {
             using (DBContext c = new DBContext())
@@ -72,6 +73,7 @@ namespace TacdisDeluxeAPI.Controllers
 
         // POST: api/WorkOrder
         [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("PostWOH")]
         public void PostWOH(WorkOrderDto wohData)
         {
             WorkOrderEntity wohEnt = new WorkOrderEntity();
@@ -217,7 +219,21 @@ namespace TacdisDeluxeAPI.Controllers
             using (DBContext c = new DBContext())
             {
                 var woh = GetWoh(wohId, c);
-                woh.WOJ_List.Add(new WoJobEntity());
+                var woj = new WoJobEntity();
+                woj.WoJNr = woh.WOJ_List.OrderByDescending(p => p.WoJNr).FirstOrDefault().WoJNr + 1;
+                woh.WOJ_List.Add(woj);
+                c.SaveChanges();
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("RemoveWOJ")]
+        public void RemoveWOJ(string wohId, string wojId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woj = GetWoJ(wohId, wojId, c);
+                c.WorkOrderJobs.Remove(woj);
                 c.SaveChanges();
             }
         }
@@ -228,7 +244,7 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext c = new DBContext())
             {
-                var woj = GetWoj(wohid, wojid, c);
+                var woj = GetWoJ(wohid, wojid, c);
                 WoJobDto woDto = new WoJobDto(woj);
 
                 return woDto;
@@ -241,7 +257,7 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext c = new DBContext())
             {
-                var woj = GetWoj(statusData.wohid, statusData.wojid, c);
+                var woj = GetWoJ(statusData.wohid, statusData.wojid, c);
 
                 woj.Status = statusData.Status;
                 woj.JobDoneDate = statusData.JobDoneDate;
@@ -267,7 +283,7 @@ namespace TacdisDeluxeAPI.Controllers
             }
         }
 
-        private WoJobEntity GetWoj(string wohid, string wojid, DBContext c)
+        private WoJobEntity GetWoJ(string wohid, string wojid, DBContext c)
         {
             try
             {                
@@ -286,7 +302,7 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext c = new DBContext())
             {
-                var wjkList = GetWoj(wohId, wojId, c).WOJ_KitList;
+                var wjkList = GetWoJ(wohId, wojId, c).WOJ_KitList;
 
                 return WohListData.GetWjkList(wjkList);
             }
@@ -299,12 +315,24 @@ namespace TacdisDeluxeAPI.Controllers
 
             using (DBContext c = new DBContext())
             {
-                var wjkList = GetWoj(wohId, wojId, c).WOJ_KitList;
+                var wjkList = GetWoJ(wohId, wojId, c).WOJ_KitList;
                 wjkList.Add(new WoKitsEntity(wjkCode));
                 c.SaveChanges();
             }
         }
 
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("RemoveWJK")]
+        public void RemoveWJK(string wohId, string wojId, string wjkId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woj = GetWoJ(wohId, wojId, c);
+                var item = woj.WOJ_KitList.Where(p => p.Id.ToString() == wjkId).Single();
+                c.WorkOrderKits.Remove(item);
+                c.SaveChanges();
+            }
+        }
         // ----------WJO------------
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetWJOList")]
@@ -312,7 +340,7 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext c = new DBContext())
             {
-                var wjoList = GetWoj(wohId, wojId, c).WOJ_OPList;
+                var wjoList = GetWoJ(wohId, wojId, c).WOJ_OPList;
 
                 return WohListData.GetWjoList(wjoList);
             }
@@ -325,8 +353,21 @@ namespace TacdisDeluxeAPI.Controllers
 
             using (DBContext c = new DBContext())
             {
-                var wjoList = GetWoj(wohId, wojId, c).WOJ_OPList;
+                var wjoList = GetWoJ(wohId, wojId, c).WOJ_OPList;
                 wjoList.Add(new WoOpEntitys(wjoCode));
+                c.SaveChanges();
+            }
+        }
+        
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("RemoveWJO")]
+        public void RemoveWJO(string wohId, string wojId, string wjoId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woj = GetWoJ(wohId, wojId, c);
+                var item = woj.WOJ_OPList.Where(p => p.Id.ToString() == wjoId).Single();
+                c.WorkOrderOperations.Remove(item);
                 c.SaveChanges();
             }
         }
@@ -338,7 +379,7 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext c = new DBContext())
             {
-                var wjpList = GetWoj(wohId, wojId, c).WOJ_PartList;
+                var wjpList = GetWoJ(wohId, wojId, c).WOJ_PartList;
 
                 return WohListData.GetWjpList(wjpList);
             }
@@ -352,13 +393,25 @@ namespace TacdisDeluxeAPI.Controllers
             using (DBContext c = new DBContext())
             {
                 PartEntity part = c.Parts.Where(p => p.ItemId.ToString() == wjpCode).Single();
-                ICollection<PartEntity> wjpList = GetWoj(wohId, wojId, c).WOJ_PartList;
+                ICollection<PartEntity> wjpList = GetWoJ(wohId, wojId, c).WOJ_PartList;
 
                 wjpList.Add(part);
                 c.SaveChanges();
             }
         }
 
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("RemoveWJP")]
+        public void RemoveWJP(string wohId, string wojId, string wjpId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woj = GetWoJ(wohId, wojId, c);
+                var item = woj.WOJ_PartList.Where(p => p.Id.ToString() == wjpId).Single();
+                c.Parts.Remove(item);
+                c.SaveChanges();
+            }
+        }
 
         // ---------Ignore----------
         [System.Web.Http.HttpGet]
