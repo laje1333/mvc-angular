@@ -136,6 +136,27 @@
             $scope.woh_lastVisMileage = components[6].split(',');
         });
     }
+
+
+    $scope.WOH_Picklist = function (itemWoj) {
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/workorder/Picklist",
+            params: { wohId: $rootScope.currentWoh }
+        }).success(function () {
+            feedbackPopup('Parts available in storage', { level: 'success', timeout: 2000 });
+        });
+    }
+
+    $scope.WOH_Finalize = function (itemWoj) {
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/workorder/Finalize",
+            params: { wohId: $rootScope.currentWoh }
+        }).success(function () {
+            feedbackPopup('Successefully created a Workorder invoice', { level: 'success', timeout: 2000 });
+        });
+    }
 });
 
 tacdisDeluxeApp.controller("WorkOrderHeaderController", ["$scope", "$rootScope", "NgTableParams", "$http", function ($scope, $rootScope, ngTableParams, $http) {
