@@ -28,31 +28,26 @@ namespace TacdisDeluxeAPI.Controllers
 
         }
 
-        [Route("api/sales/SearchSales")]
+        [Route("api/sales/GetSaleById")]
         [HttpGet]
-        public IHttpActionResult SearchSales(Dictionary<string, string> searchPar)
+        public IHttpActionResult GetSaleById(string id)
         {
-            using (DBContext db = new DBContext())
-            {
-                List<SaleEntity> allMatchingSales = new List<SaleEntity>();
-                IQueryable<SaleEntity> allSalesStuff = db.Sales.Include("Salesman");
-                foreach(KeyValuePair<string, string> a in searchPar)
+            try {
+                using (DBContext db = new DBContext())
                 {
-                    switch(a.Key){
-                        case "SalesmanId":
-                            allMatchingSales.AddRange(db.Sales.Include("Salesman").Where(x => x.Salesman.Id == Convert.ToInt32(a.Value)).ToList());
-                            break;
-                        case "SaleId":
-                            allMatchingSales.AddRange(db.Sales.Include("Salesman").Where(x => x.Id == Convert.ToInt32(a.Value)).ToList());
-                            break;
-                        case "Status":
-                            //todo
-                            break;
-                    }
-                    
+                    var sale = db.Sales.Include(x => x.Parts).Include(y => y.Salesman).Include(w => w.Vehicles)
+                        .Where(z => z.Id.ToString() == id)
+                        .Select(x => new { PartId = x.Parts.Select(y => y.ItemId), VehId = x.Vehicles.Select(y => y.ItemId) })
+                        .FirstOrDefault();
+
+                    return Ok(sale);
                 }
-                return Ok(allMatchingSales);
             }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
 
         }
 
@@ -128,7 +123,7 @@ namespace TacdisDeluxeAPI.Controllers
         }
 
         [Route("api/sales/UpdateSale")]
-        [HttpPut]
+        [HttpPatch]
         public IHttpActionResult UpdateSale([FromBody]SalesDto request)
         {
 

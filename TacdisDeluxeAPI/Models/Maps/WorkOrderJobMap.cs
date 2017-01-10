@@ -19,8 +19,13 @@ namespace TacdisDeluxeAPI.Models
                 .Map(m => m.MapKey("WoJob_ID"));
 
             HasMany<PartEntity>(s => s.WOJ_PartList)
-                .WithOptional(s => s.WoJob)
-                .Map(m => m.MapKey("WoJob_ID"));
+                .WithMany(s => s.WoJob)
+                .Map(m =>
+                {
+                    m.ToTable("WoJob_Parts");
+                    m.MapLeftKey("WoJob_ID");
+                    m.MapRightKey("PartId");
+                });
         }
     }
 }
