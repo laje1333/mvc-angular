@@ -5,6 +5,7 @@
                 <div class="panel-heading">Packages</div>
                 <div class="form-group panel-body">
                     <input type="text" class="form-control" placeholder="Part Number" ng-model="wjpCode" />
+                    <input type="text" class="form-control" placeholder="Quantity" ng-model="quantity" />
                     <input type="button" class="btn btn-info" value="Add" ng-click="WOH_AddWJP(); GetWJPList()">
                 </div>
                 <table ng-table="wjpTable" class="table table-striped table-hover" ng-init="GetWJPList()">

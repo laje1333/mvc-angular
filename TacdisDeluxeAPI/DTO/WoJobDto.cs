@@ -69,6 +69,6 @@ namespace TacdisDeluxeAPI.DTO
 
         public int[] WOJ_KitList_Ids { get; set; }
         public int[] WOJ_OPList_Ids { get; set; }
-        public int[] WOJ_PartList_Ids { get; set; }
+        public ICollection<IdAndAmountDto> WOJ_PartList_Ids { get; set; }
     }
 }

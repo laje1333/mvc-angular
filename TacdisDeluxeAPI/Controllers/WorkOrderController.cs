@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -52,7 +53,7 @@ namespace TacdisDeluxeAPI.Controllers
             using (DBContext c = new DBContext())
             {
                 var woh = GetWoh(wohid, c);
-                WorkOrderDto woDto = new WorkOrderDto(woh);
+                WorkOrderDto woDto = Mapper.Map<WorkOrderEntity, WorkOrderDto>(woh);   //new WorkOrderDto(woh);
 
                 return woDto;
             }
@@ -200,6 +201,57 @@ namespace TacdisDeluxeAPI.Controllers
             }
         }
 
+        // --------Finalize---------
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("Picklist")]
+        public void Picklist(string wohId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = GetWoh(wohId, c);
+                woh.UpdateTotCost();
+                var partList = new List<PartEntity>();
+                foreach (var woj in woh.WOJ_List)
+                {
+                    foreach (var part in woj.WOJ_PartList)
+                    {
+                        partList.Add(part);
+                    }
+
+                    foreach (var kit in woj.WOJ_KitList)
+                    {
+                        foreach (var part in kit.WOJ_PartList)
+                        {
+                            partList.Add(part);
+                        }
+                    }
+                }
+
+                foreach (var part in partList)
+                {
+                    //check if parts is available in storage
+                }
+
+                c.SaveChanges();
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("Finalize")]
+        public void Finalize(string wohId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = GetWoh(wohId, c);
+                woh.UpdateTotCost();
+
+                //Send info to invoices
+
+                c.SaveChanges();
+            }
+        }
+
         // ----------WOJ------------
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetWoJobList")]
@@ -245,7 +297,7 @@ namespace TacdisDeluxeAPI.Controllers
             using (DBContext c = new DBContext())
             {
                 var woj = GetWoJ(wohid, wojid, c);
-                WoJobDto woDto = new WoJobDto(woj);
+                WoJobDto woDto = Mapper.Map<WoJobEntity, WoJobDto>(woj);
 
                 return woDto;
             }
@@ -387,7 +439,7 @@ namespace TacdisDeluxeAPI.Controllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("AddWJP")]
-        public void AddWJP(string wohId, string wojId, string wjpCode)
+        public void AddWJP(string wohId, string wojId, string wjpCode, string quantity)
         {
 
             using (DBContext c = new DBContext())
