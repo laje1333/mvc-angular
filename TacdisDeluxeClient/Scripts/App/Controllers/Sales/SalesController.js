@@ -112,20 +112,55 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
          );
     }
 
+    $scope.editSale = function (sale) {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/Sales/GetSaleById',
+            headers: {},
+            params: {
+                id: sale.Id
+            },
+        }
+        $http(req).
+         then(function (response) {
+             $rootScope.saleRec = [];
+             feedbackPopup('You got the sale!', { level: 'success', timeout: 4000 });
+             for (var i = 0; i < response.data.Parts.length; i++) {
+                 $rootScope.saleRec.PartIds.push({ Id: response.data.Parts[i].ItemId, Amount: 1});
+             }
+             for (var i = 0; i < response.data.Vehicles.length; i++) {
+                 $rootScope.saleRec.VehicleIds.push(response.data.Vehicles[i].ItemId);
+             }
+             for (var i = 0; i < response.data.Addons.length; i++) {
+                 $rootScope.saleRec.AddonIds.push(response.data.Addons[i].ItemId);
+             }
+             $rootScope.saleRec.Salesman = response.data.Salesman;
+             $rootScope.saleRec.Status = response.data.Status;
+             $rootScope.saleRec.PayerIds = response.data.Payers[0];
+
+         }, function (response) {
+             feedbackPopup('Something went wrong!', { level: 'warning', timeout: 4000 });
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
+
     $scope.PostOrUpdateSale = function () {
         var url = 'http://localhost:57661/api/Sales'
         var type = 'POST';
+        $rootScope.saleRec.Id = 5;
         if ($rootScope.saleRec.Id == null) {
             url += '/NewSale';
         } else {
             type = 'PUT';
+            
             url += '/UpdateSale';
         }
         var req = {
             method: type,
             url: url,
             headers: {},
-            data: {
+            params: {
                 Id: $rootScope.saleRec.Id,
                 Salesman: $rootScope.saleRec.Salesman,
                 VehicleIds: $rootScope.saleRec.VehicleIds,
@@ -203,6 +238,21 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         $('#Search' + $scope.searchTypeOfItem).show();
     }
 
+    $scope.removeItem = function () {
+        var x = Maths.Arrays.BinarySearch($rootScope.record, this.r.Number, 'Number');
+        switch (this.r.Type){
+            case 'Part':
+                var y = Maths.Arrays.BinarySearch($rootScope.saleRec.PartIds, this.r.Number, 'Id');
+                $rootScope.saleRec.PartIds.splice(y, 1);
+                break;
+            case 'Vehicle':
+                var y = Maths.Arrays.BinarySearch($rootScope.saleRec.VehicleIds, this.r.Number, 'Id');
+                $rootScope.saleRec.VehicleIds.splice(y, 1);
+                break;
+        }
+        $rootScope.totalCost -= parseFloat(this.r.Price * this.r.Amount)
+        $rootScope.record.splice(x, 1);
+    }
 
     $scope.GetSearchVeh = function (Data) {
         var req = {

@@ -46,6 +46,7 @@
                             <th>ID:</th>
                             <th>Amount:</th>
                             <th>Price:</th>
+                            <th>Delete:</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -61,6 +62,7 @@
                                 </form>
                             </td>
                             <td>{{r.Price}}</td>
+                            <td><a class="btn " ng-click="removeItem()"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
                     </tbody>
                     <tfoot>

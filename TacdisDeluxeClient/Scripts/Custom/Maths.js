@@ -53,6 +53,10 @@ Maths.Datastructures.HashMap = function () {
     this.getEnumerable = function () {
         return this.map;
     }
+
+    this.clear = function () {
+        this.map = {};
+    }
     
 }
 Maths.Datastructures.BinaryTree = function (Key) {
@@ -144,7 +148,7 @@ Maths.Datastructures.BinaryHeap = function (Key) {
             this.heap.push(new Node(object, this.heap[parentIndex]));
         }
         if (heapSize > 0) {
-            this.siftUpType();   
+            this.siftUp();
         }
     }
 
@@ -156,7 +160,7 @@ Maths.Datastructures.BinaryHeap = function (Key) {
         return this.heap.length;
     }
 
-    this.siftUpType = function () {
+    this.siftUp = function () {
         var currentIndex = this.heap.length-1;
         var parentIndex = Math.floor((currentIndex - 1) / 2);
 
@@ -192,7 +196,6 @@ Maths.Datastructures.BinaryHeap = function (Key) {
                 if (this.heap.length > 2 * currentIndex + 2) {
                     rightVal = this.heap[2 * currentIndex + 2].compare;
                 }
-                
                 var swapWithLeaf;
                 if (leftVal > rightVal && leaf.compare < leftVal && leftVal != null) {
                     swapWithLeaf = this.heap[2 * currentIndex + 1];
@@ -209,7 +212,6 @@ Maths.Datastructures.BinaryHeap = function (Key) {
                 } else {
                     return result.object;
                 }
-                
             } else {
                 return result.object;
             }
@@ -225,6 +227,4 @@ Maths.Random.String = function(length){
         text += possible.charAt(Math.floor(Math.random() * possible.length));
     return {hash : text};
 }
-
-
 
