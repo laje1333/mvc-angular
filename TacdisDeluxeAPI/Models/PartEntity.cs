@@ -29,7 +29,7 @@ namespace TacdisDeluxeAPI.Models
 
         [IgnoreDataMember]
         public ICollection<SaleEntity> Sales { get; set; }
-        public WoJobEntity WoJob { get; set; }
-        public WoKitsEntity WoKits { get; set; }
+        public ICollection<WoJobEntity> WoJob { get; set; }
+        public ICollection<WoKitsEntity> WoKits { get; set; }
     }
 }

@@ -42,7 +42,6 @@ tacdisDeluxeApp.directive("tframe", function () {
         var tempX, tempY;
         var startX, startY, startWidth, startHeight;
         var srcId;
-        var offsetTop;
         var tframeContentHolderId;
 
         $scope.frameIsVisible = true;
@@ -77,10 +76,8 @@ tacdisDeluxeApp.directive("tframe", function () {
             eastResize.id = $scope.rightResizeId;
             southEastResize = document.getElementById("corner-resize");
             southEastResize.id = $scope.cornerResizeId;
-
             selectedFrame = tframe;
             currentFrames.push(tframe);
-            
         }
 
         window.onload = addListeners();
@@ -89,7 +86,6 @@ tacdisDeluxeApp.directive("tframe", function () {
             $scope.initializeElements();
             theader.addEventListener('mousedown', mouseDown, false);
             theader.addEventListener('mouseup', mouseUp, false);
-            southEastResize = document.getElementById($scope.cornerResizeId);
             eastResize.addEventListener('mousedown', initDrag, false);
             southResize.addEventListener('mousedown', initDrag, false);
             southEastResize.addEventListener('mousedown', initDrag, false);
@@ -103,7 +99,7 @@ tacdisDeluxeApp.directive("tframe", function () {
             eastResize.style.left = (tframe.style.position.left + tframe.offsetWidth) + "px";
             eastResize.style.top = "60px";
             eastResize.style.height = tframe.offsetHeight + "px"
-            tframe.style.width = tbody.offsetWidth + "px";
+
             mouseDown({ clientY: 200, clientX: 200 });
             divMove({ clientY: 201, clientX: 200 });
             mouseUp();
@@ -111,7 +107,9 @@ tacdisDeluxeApp.directive("tframe", function () {
             doDrag({ clientY: 201, clientX: 200 });
             stopDrag();
             refreshComponents();
-            offsetTop = tframe.style.top;
+            tbody.style.height = "600px";
+            tbody.style.width = "1200px";
+            tframe.style.height = "auto";
         }
 
 
@@ -147,13 +145,12 @@ tacdisDeluxeApp.directive("tframe", function () {
                 }
                 if (parentTframe != null && parentTframe != "") {
                     if (div.offsetLeft + div.offsetWidth > document.getElementById(parentTframe).offsetWidth) {
-                        div.style.left = (document.getElementById(parentTframe).offsetWidth - div.offsetWidth) + "px";
+                        div.style.left = (document.getElementById(parentTframe).offsetWidth - div.offsetWidth-2) + "px";
                     }
                     if (div.offsetTop + div.offsetHeight > document.getElementById(parentTframe).offsetHeight) {
-                        div.style.top = (document.getElementById(parentTframe).offsetHeight - div.offsetHeight) + "px";
+                        div.style.top = (document.getElementById(parentTframe).offsetHeight - div.offsetHeight+38) + "px";
                     }
                 }
-            
         }
 
 
@@ -167,8 +164,6 @@ tacdisDeluxeApp.directive("tframe", function () {
                     window.addEventListener('mousemove', divMove, true);
             }
         }
-
-        
 
         function divMove(e) {
             if ($scope.frameIsMinimized == false) {
@@ -261,22 +256,16 @@ tacdisDeluxeApp.directive("tframe", function () {
         $scope.minimize = function () {
             if ($scope.frameIsMinimized == false) {
                 var widthOffset = 300;
-
                 for (i = 0; i < minimizedSlots.length; i++) {
                     widthOffset += document.getElementById(minimizedSlots[i]).offsetWidth;
                 }
-
-
                 tframe.style.position = "fixed";
                 tframe.style.width = "auto";
                 tframe.style.height = "auto";
                 tframe.style.top = (document.getElementById("appcontainer").clientHeight - 75) + "px";
                 tframe.style.left = widthOffset + "px";
-
                 $scope.frameIsMinimized = true;
                 $scope.hideFrame();
-
-
                 minimizedSlots.push($scope.frameId);
             }
         }

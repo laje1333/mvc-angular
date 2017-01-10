@@ -14,11 +14,11 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="r in allSales">
-                        <td>{{r.Type}} </td>
+                        <td>{{r.Id}} </td>
                         <td>{{r.Name}}</td>
                         <td>{{r.Number}}</td>
                         <td>
-                            <a class="btn "><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn " ng-click="editSale(this.r)" href="Sales#/newSale"><span class="glyphicon glyphicon-edit"></span></a>
                         </td>
                         <td>{{r.Price}}</td>
                     </tr>
