@@ -43,6 +43,7 @@ tacdisDeluxeApp.directive("tframe", function () {
         var startX, startY, startWidth, startHeight;
         var srcId;
         var offsetTop;
+        var tframeContentHolderId;
 
         $scope.frameIsVisible = true;
         $scope.frameIsMinimized = false;
@@ -62,7 +63,8 @@ tacdisDeluxeApp.directive("tframe", function () {
             $scope.resizeId = $scope.generateFrameId();
             $scope.rightResizeId = $scope.generateFrameId();
             $scope.cornerResizeId = $scope.generateFrameId();
-
+            tframeContentHolderId = $scope.generateFrameId();
+            document.getElementById("tframecontentholder").id = tframeContentHolderId;
             tframe = document.getElementById("frame");
             tframe.id = $scope.frameId;
             tbody = document.getElementById("framebody");
@@ -75,6 +77,7 @@ tacdisDeluxeApp.directive("tframe", function () {
             eastResize.id = $scope.rightResizeId;
             southEastResize = document.getElementById("corner-resize");
             southEastResize.id = $scope.cornerResizeId;
+
             selectedFrame = tframe;
             currentFrames.push(tframe);
             
@@ -85,7 +88,7 @@ tacdisDeluxeApp.directive("tframe", function () {
         function addListeners() {
             $scope.initializeElements();
             theader.addEventListener('mousedown', mouseDown, false);
-            window.addEventListener('mouseup', mouseUp, false);
+            theader.addEventListener('mouseup', mouseUp, false);
             southEastResize = document.getElementById($scope.cornerResizeId);
             eastResize.addEventListener('mousedown', initDrag, false);
             southResize.addEventListener('mousedown', initDrag, false);
@@ -93,7 +96,7 @@ tacdisDeluxeApp.directive("tframe", function () {
             eastResize.style.height = tframe.offsetHeight + "px";
             southResize.style.width = tframe.offsetWidth + "px";
        
-            
+
             southResize.style.left = tframe.style.position.left + "px";
             southResize.style.top = (tframe.offsetHeight + tframe.offsetTop) + "px";
             southResize.style.width = tframe.offsetWidth + "px";
@@ -128,25 +131,35 @@ tacdisDeluxeApp.directive("tframe", function () {
 
 
         function mouseUp() {
-            window.removeEventListener('mousemove', divMove, true);
-            var div = tframe;
-            if (div.offsetLeft < 0) {
-                div.style.left = "1px";
-                southResize.style.left = 1 + "px";
-                eastResize.style.left = (1 + tbody.offsetWidth + "px");
-                southEastResize.style.left = (1 + tbody.offsetWidth + "px");
-            }
-            if (div.offsetTop < 0) {
-                div.style.top = "auto";
-                southResize.style.top = (tbody.offsetHeight + 55 + tbody.offsetTop) + "px";
-                eastResize.style.top = (tbody.offsetTop + 55) + "px";
-                southEastResize.style.top = (tbody.offsetHeight + tbody.offsetTop + 55) + "px";
-            }
+                window.removeEventListener('mousemove', divMove, true);
+                var div = tframe;
+                if (div.offsetLeft < 0) {
+                    div.style.left = "1px";
+                    southResize.style.left = 1 + "px";
+                    eastResize.style.left = (1 + tbody.offsetWidth + "px");
+                    southEastResize.style.left = (1 + tbody.offsetWidth + "px");
+                }
+                if (div.offsetTop < 0) {
+                    div.style.top = "auto";
+                    southResize.style.top = (tbody.offsetHeight + 55 + tbody.offsetTop) + "px";
+                    eastResize.style.top = (tbody.offsetTop + 55) + "px";
+                    southEastResize.style.top = (tbody.offsetHeight + tbody.offsetTop + 55) + "px";
+                }
+                if (parentTframe != null && parentTframe != "") {
+                    if (div.offsetLeft + div.offsetWidth > document.getElementById(parentTframe).offsetWidth) {
+                        div.style.left = (document.getElementById(parentTframe).offsetWidth - div.offsetWidth) + "px";
+                    }
+                    if (div.offsetTop + div.offsetHeight > document.getElementById(parentTframe).offsetHeight) {
+                        div.style.top = (document.getElementById(parentTframe).offsetHeight - div.offsetHeight) + "px";
+                    }
+                }
             
         }
 
+
         function mouseDown(e) {
             selectedFrame = tframe;
+            parentTframe = document.getElementById(tframeContentHolderId).parentElement.id;
             if ($scope.frameIsMinimized == false) {
                 var header = theader;
                 offY = e.clientY - parseInt(tframe.offsetTop);
@@ -172,6 +185,7 @@ tacdisDeluxeApp.directive("tframe", function () {
                 southResize.style.top = (tempY + tframe.offsetHeight) + "px";
                 southEastResize.style.top = (tempY + tframe.offsetHeight) + "px";
                 southEastResize.style.left = (tempX + tframe.offsetWidth) + "px";
+                
             }
         }
 
@@ -285,7 +299,8 @@ tacdisDeluxeApp.directive("tframe", function () {
         replace: true,
         transclude: true,
         scope: {
-            title: '@title'
+            title: '@title',
+
         },
         controller: controller
     };
@@ -295,7 +310,7 @@ tacdisDeluxeApp.directive("tframe", function () {
 var minimizedSlots = [];
 var selectedFrame = "";
 var currentFrames = [];
-
+var parentTframe = null;
 
 
 

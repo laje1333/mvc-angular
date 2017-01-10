@@ -91,7 +91,8 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
         private static string CreateLine(WoKitsEntity wjk)
         {
             wjk.UpdateTotCost();
-            return "{\"KitNr\": \"" + wjk.WJKCode +
+            return "{\"KitId\": \"" + wjk.Id +
+                    "\",\"KitNr\": \"" + wjk.WJKCode +
                     "\",\"KitType\": \"" + wjk.KitType +
                     "\",\"KitDesc\": \"" + wjk.KitDesc +
                     "\",\"Quantity\": \"" + wjk.Quantity +
@@ -119,7 +120,8 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
         
         private static string CreateLine(WoOpEntitys wjo)
         {
-            return "{\"OPNr\": \"" + wjo.OPNr +
+            return "{\"OPId\": \"" + wjo.Id +
+                    "\",\"OPNr\": \"" + wjo.OPNr +
                     "\",\"OPDesc\": \"" + wjo.OPDesc +
                     "\",\"WorkTime\": \"" + wjo.WorkTime +
                     "\",\"Quantity\": \"" + wjo.Quantity +
@@ -147,7 +149,8 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 
         private static string CreateLine(PartEntity wjp)
         {
-            return "{\"PartNr\": \"" + wjp.ItemId +
+            return "{\"PartId\": \"" + wjp.Id +
+                    "\",\"PartNr\": \"" + wjp.ItemId +
                     "\",\"PartDesc\": \"" + wjp.ItemDesc +
                     "\",\"Quantity\": \"" + (1).ToString() +
                     "\",\"Price\": \"" + wjp.ItemPrice +
