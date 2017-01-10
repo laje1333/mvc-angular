@@ -86,6 +86,8 @@ namespace TacdisDeluxeAPI.DTO.validators
 
             if (invoice.InvoiceRows.Count > 0)
             {
+                invoice.Vat = invoice.InvoiceRows.FirstOrDefault().Vat;
+
                 foreach (var row in invoice.InvoiceRows)
                 {
                     invoice.InvoiceAmount += row.InvoiceRowAmount;
@@ -96,7 +98,7 @@ namespace TacdisDeluxeAPI.DTO.validators
             return invoice;
         }
 
-        public static InvoiceEntity CreateInvoiceEntityFromWorkOrderDto(WorkOrderDto workOrderDto)
+        public static InvoiceEntity CreateInvoiceEntityFromWorkOrderDto(WorkOrderEntity workOrderDto)
         {
             var invoice = new InvoiceEntity
             {
@@ -107,7 +109,7 @@ namespace TacdisDeluxeAPI.DTO.validators
                 DueDate = workOrderDto.CreatedDate.AddDays(30),
                 DebitCredit = "Debit",
                 WoNumber = workOrderDto.WoNr,
-                JobNumber = string.Join(", ", workOrderDto.WOJ_Ids),
+                //JobNumber = string.Join(", ", workOrderDto.WOJ_Ids),
                 //Payer = GetPayer(workOrderDto.PayerIds.First()),
                 InvoiceRows = new List<InvoiceRowEntity>()
             };

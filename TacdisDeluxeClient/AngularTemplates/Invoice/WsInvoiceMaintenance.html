@@ -1,54 +1,55 @@
 ﻿
 
-<tframe data-title="Workshop invoice maintenance" style="width:1200px">
+<tframe data-title="Workshop invoice maintenance" style="width: 1200px; height: 880px;">
 
     <div ng-controller="WsInvoiceMaintenanceCtrl" class="container" data-ng-init="page_load()">
-    <h3>Workshop invoice maintenance</h3>
+        <h3>Workshop invoice maintenance</h3>
 
         <h4> Manage invoice {{MaintenanceInvoice.InvoiceNumber}}</h4>
         <br />
 
-        <div class="InvoiceTable">
-            <h4>General info</h4>
-            <div class="form-group row">
-                <label for="example-text-input" class="col-xs-5 col-form-label">Invoice number</label>
-                <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceNumber}}" ng-model="MaintenanceInvoice.InvoiceNumber" id="invoice-number" ng-disabled="{true}">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="example-text-input" class="col-xs-5 col-form-label">Due date</label>
-                <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.DueDate}}" ng-model="MaintenanceInvoice.DueDate" id="due-date">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="example-text-input" class="col-xs-5 col-form-label">Invoice date</label>
-                <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceDate}}" ng-model="MaintenanceInvoice.InvoiceDate" id="invoice-date">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="example-text-input" class="col-xs-5 col-form-label">Total amount</label>
-                <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? (MaintenanceInvoice.InvoiceAmount | valuta) : '' }}" ng-model="MaintenanceInvoice.InvoiceAmount" id="total-amount">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="example-text-input" class="col-xs-5 col-form-label">Debit/Credit</label>
-                <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.DebitCredit}}" ng-model="MaintenanceInvoice.DebitCredit" id="debit-credit">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="example-text-input" class="col-xs-5 col-form-label">Invoice state</label>
-                <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceState !== undefined ? (MaintenanceInvoice.InvoiceState | invoicestate)  : '' }}" id="invoice-state" ng-disabled="{true}">
-                </div>
+    <div class="InvoiceTable" style="height: 333px;">
+        <h4>General info</h4>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-xs-5 col-form-label">Invoice number</label>
+            <div class="col-xs-7">
+                <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceNumber}}" ng-model="MaintenanceInvoice.InvoiceNumber" id="invoice-number" ng-disabled="{true}">
             </div>
         </div>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-xs-5 col-form-label">Due date</label>
+            <div class="col-xs-7">
+                <input class="form-control" type="text" value="{{MaintenanceInvoice.DueDate}}" ng-model="MaintenanceInvoice.DueDate" id="due-date">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-xs-5 col-form-label">Invoice date</label>
+            <div class="col-xs-7">
+                <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceDate}}" ng-model="MaintenanceInvoice.InvoiceDate" id="invoice-date">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-xs-5 col-form-label">Total amount</label>
+            <div class="col-xs-7">
+                <input class="form-control Input-cur1" type="text" ng-model="MaintenanceInvoice.InvoiceAmount" id="total-amount">
+                <input class="form-control Input-cur2" type="text" ng-value="MaintenanceInvoice.InvoiceAmount !== undefined ? 'Kr' :''">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-xs-5 col-form-label">Debit/Credit</label>
+            <div class="col-xs-7">
+                <input class="form-control" type="text" value="{{MaintenanceInvoice.DebitCredit}}" ng-model="MaintenanceInvoice.DebitCredit" id="debit-credit">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="example-text-input" class="col-xs-5 col-form-label">Invoice state</label>
+            <div class="col-xs-7">
+                <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceState !== undefined ? (MaintenanceInvoice.InvoiceState | invoicestate)  : '' }}" id="invoice-state" ng-disabled="{true}">
+            </div>
+        </div>
+    </div>
 
-        <div class="InvoiceTable">
+        <div class="InvoiceTable" style="height: 333px;">
             <h4>Payer info</h4>
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">First name</label>
@@ -165,11 +166,17 @@
                     <td>{{row.Description}}</td>
                     <td>{{row.UnitCost | valuta}}</td>
                     <td>{{row.Quantity}}</td>
-                    <td>{{row.Vat}}</td>
+                    <td>{{row.InvoiceRowAmount * row.Vat | valuta}}</td>
                     <td>{{row.InvoiceRowAmount | valuta}}</td>
                     <td><button class=" btn btn-primary" data-ng-click="removeRow($index, row.InvoiceRowAmount)">Delete</button></td>
                 </tr>
             </table>
+        </div>
+
+        <div class="btn-group Invoice-btn-group">
+            <button class=" btn btn-primary" ng-disabled="approveInvoice" ng-click="approve_invoice()">Approve invoice </button>
+            <button class=" btn btn-primary" ng-disabled="cancelDisable" ng-click="cancel_invoice()">Cancel Invoice </button>
+            <button class=" btn btn-primary" ng-click="update_invoice()">Save invoice changes </button>
         </div>
 
         <div class="InvoiceTable">
@@ -177,19 +184,20 @@
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">Sub total</label>
                 <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? ((MaintenanceInvoice.InvoiceAmount * 0.75)  | valuta): ''}}" id="sub-total">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? ((MaintenanceInvoice.InvoiceAmount * (1 - MaintenanceInvoice.Vat))  | valuta): ''}}" id="sub-total">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">Vat</label>
                 <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Vat !== undefined ? (MaintenanceInvoice.InvoiceAmount * 0.25 | valuta) : '' }}" id="vat-total">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Vat !== undefined ? (MaintenanceInvoice.InvoiceAmount * MaintenanceInvoice.Vat | valuta) : '' }}" id="vat-total">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">Total</label>
                 <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? (MaintenanceInvoice.InvoiceAmount | valuta) : ''}}" ng-model="MaintenanceInvoice.InvoiceAmount" id="example-text-input">
+                    <input class="form-control Input-cur1" type="text" ng-model="MaintenanceInvoice.InvoiceAmount" id="total">
+                    <input class="form-control Input-cur2" type="text" ng-value="MaintenanceInvoice.InvoiceAmount !== undefined ? 'Kr' :''">
                 </div>
             </div>
             <div class="form-group row">
@@ -204,14 +212,6 @@
                     <input class="form-control" type="text" value="{{MaintenanceInvoice.AmountPaid !== undefined ? (MaintenanceInvoice.InvoiceAmount - MaintenanceInvoice.AmountPaid | valuta): ''}}" id="balance-due">
                 </div>
             </div>
-
         </div>
-
-        <div class="btn-group">
-            <button class=" btn btn-primary" ng-disabled="approveInvoice" ng-click="approve_invoice()">Approve invoice </button>
-            <button class=" btn btn-primary" ng-disabled="cancelDisable" ng-click="cancel_invoice()">Cancel Invoice </button>
-            <button class=" btn btn-primary" ng-click="update_invoice()">Save invoice changes </button>
-        </div>
-
     </div>
 </tframe>

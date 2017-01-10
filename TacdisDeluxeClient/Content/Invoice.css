@@ -4,17 +4,40 @@
         float: left;
         margin-right: 20px;
         margin-bottom: 20px;
-        border-radius: 25px;
+        border-radius: 15px;
         border: 1px solid #AFAFAF;
         padding: 10px;
     }
     .InvoiceTable2 {
         margin-top: 1px;
-        width: 720px;
+        width: 1090px;
         float: left;
         margin-right: 20px;
         margin-bottom: 20px;
-        border-radius: 25px;
+        border-radius: 15px;
         border: 1px solid #AFAFAF;
         padding: 10px;
+    }
+
+    .Invoice-btn-group {
+        margin-top: 200px;
+        margin-left: 320px;
+    }
+
+    .Input-cur1 {
+        max-width: 73px;
+        float: left;
+        border-width: 1px 0 1px 1px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        padding-right: 0px;
+    }
+
+     .Input-cur2 {
+        max-width: 105px;
+        border-width: 1px 1px 1px 0;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+         padding-left: 0px;
+        
     }
