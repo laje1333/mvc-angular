@@ -59,8 +59,15 @@ namespace TacdisDeluxeAPI.Controllers
 
         private WorkOrderEntity GetWoh(string wohid, DBContext dbc)
         {
-            var woh = dbc.WorkOrder.Where(p => p.WoNr.ToString() == wohid).Single();
-            return woh;
+            try
+            {
+                var woh = dbc.WorkOrder.Where(p => p.WoNr.ToString() == wohid).Single();
+                return woh;
+            }
+            catch (Exception)
+            {
+                return new WorkOrderEntity();
+            }
         }
 
         // POST: api/WorkOrder
@@ -214,7 +221,7 @@ namespace TacdisDeluxeAPI.Controllers
                 c.SaveChanges();
             }
         }
-        
+
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetWoJ")]
         public WoJobDto GetWoJ(string wohid, string wojid)
@@ -262,7 +269,14 @@ namespace TacdisDeluxeAPI.Controllers
 
         private WoJobEntity GetWoj(string wohid, string wojid, DBContext c)
         {
-            return GetWoh(wohid, c).WOJ_List.Where(p => p.WoJNr.ToString() == wojid).Single();
+            try
+            {                
+                return GetWoh(wohid, c).WOJ_List.Where(p => p.WoJNr.ToString() == wojid).Single();
+            }
+            catch (Exception)
+            {
+                return new WoJobEntity();
+            }
         }
 
         // ----------WJK------------

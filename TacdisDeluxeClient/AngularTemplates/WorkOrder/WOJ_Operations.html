@@ -1,28 +1,30 @@
-﻿<div ng-controller="WOActiveOpController">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">Packages</div>
-            <div class="form-group panel-body">
-                <input type="text" class="form-control" placeholder="Operation Number" ng-model="wjoCode" />
-                <input type="button" class="btn btn-info" value="Add" ng-click="WOH_AddWJO(); GetWJOList()">
+﻿<tframe data-title="Select Workorder Operations">
+    <div ng-controller="WOActiveOpController" class="panel panel-primary">
+        <div class="col-md-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">Packages</div>
+                <div class="form-group panel-body">
+                    <input type="text" class="form-control" placeholder="Operation Number" ng-model="wjoCode" />
+                    <input type="button" class="btn btn-info" value="Add" ng-click="WOH_AddWJO(); GetWJOList()">
+                </div>
+                <table ng-table="wjoTable" class="table table-striped table-hover" ng-init="GetWJOList()">
+                    <tr>
+                        <th>Operation Number</th>
+                        <th>Operation Description</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Details</th>
+                    </tr>
+                    <tr ng-repeat="item in $data">
+                        <td>{{item.OPNr}}</td>
+                        <td>{{item.OpDesc}}</td>
+                        <td>{{item.Quantity}}</td>
+                        <td>{{item.Price}}</td>
+                        <td><input type="button" class="btn btn-info" value="Details" ng-click="WOJ_Op_ViewDetails(item)" /></td>
+                        <td><input type="button" class="btn btn-info" value="Remove" ng-click="WOJ_Op_Remove(item)" /></td>
+                    </tr>
+                </table>
             </div>
-            <table ng-table="wjoTable" class="table table-striped table-hover" ng-init="GetWJOList()">
-                <tr>
-                    <th>Operation Number</th>
-                    <th>Operation Description</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Details</th>
-                </tr>
-                <tr ng-repeat="item in $data">
-                    <td>{{item.OPNr}}</td>
-                    <td>{{item.OpDesc}}</td>
-                    <td>{{item.Quantity}}</td>
-                    <td>{{item.Price}}</td>
-                    <td><input type="button" class="btn btn-info" value="Details" ng-click="WOJ_Op_ViewDetails(item)" /></td>
-                    <td><input type="button" class="btn btn-info" value="Remove" ng-click="WOJ_Op_Remove(item)" /></td>
-                </tr>
-            </table>
         </div>
     </div>
-</div>
+</tframe>
