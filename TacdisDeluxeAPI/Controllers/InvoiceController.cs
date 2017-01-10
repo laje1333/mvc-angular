@@ -147,7 +147,7 @@ namespace TacdisDeluxeAPI.Controllers
 
             try
             {
-                invoice = InvoiceValidator.CreateInvoiceEntityFromWorkOrderDto(workOrderDto);
+                //invoice = InvoiceValidator.CreateInvoiceEntityFromWorkOrderDto(workOrderDto);
             }
             catch (Exception ex)
             {

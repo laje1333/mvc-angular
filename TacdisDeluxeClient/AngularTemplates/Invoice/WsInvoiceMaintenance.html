@@ -1,6 +1,6 @@
 ﻿
 
-<tframe data-title="Workshop invoice maintenance" style="width:1200px">
+<tframe data-title="Workshop invoice maintenance" style="width: 1200px; height: 880px;">
 
     <div ng-controller="WsInvoiceMaintenanceCtrl" class="container" data-ng-init="page_load()">
     <h3>Workshop invoice maintenance</h3>
@@ -31,7 +31,11 @@
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">Total amount</label>
                 <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? (MaintenanceInvoice.InvoiceAmount | valuta) : '' }}" ng-model="MaintenanceInvoice.InvoiceAmount" id="total-amount">
+                    
+                    <input class="form-control Input-cur1"  type="text" ng-model="MaintenanceInvoice.InvoiceAmount" id="total-amount">
+                    <input class="form-control Input-cur2"  type="text" value="Kr">
+
+                     
                 </div>
             </div>
             <div class="form-group row">
@@ -146,50 +150,57 @@
             </div>
         </div>
 
-        <div class="InvoiceTable2">
+    <div class="InvoiceTable2">
 
-            <h4>Invoice rows</h4>
+        <h4>Invoice rows</h4>
 
-            <table ng-controller="WsInvoiceMaintenanceCtrl" class="table table-striped table-hover">
-                <tr>
-                    <th>Item</th>
-                    <th>Description</th>
-                    <th>Unit Cost</th>
-                    <th>Quantity</th>
-                    <th>Vat</th>
-                    <th>Price</th>
-                    <th>Delete row</th>
-                </tr>
-                <tr ng-repeat="row in MaintenanceInvoice.InvoiceRows">
-                    <td>{{row.Item}}</td>
-                    <td>{{row.Description}}</td>
-                    <td>{{row.UnitCost | valuta}}</td>
-                    <td>{{row.Quantity}}</td>
-                    <td>{{row.Vat}}</td>
-                    <td>{{row.InvoiceRowAmount | valuta}}</td>
-                    <td><button class=" btn btn-primary" data-ng-click="removeRow($index, row.InvoiceRowAmount)">Delete</button></td>
-                </tr>
-            </table>
-        </div>
+        <table ng-controller="WsInvoiceMaintenanceCtrl" class="table table-striped table-hover">
+            <tr>
+                <th>Item</th>
+                <th>Description</th>
+                <th>Unit Cost</th>
+                <th>Quantity</th>
+                <th>Vat</th>
+                <th>Price</th>
+                <th>Delete row</th>
+            </tr>
+            <tr ng-repeat="row in MaintenanceInvoice.InvoiceRows">
+                <td>{{row.Item}}</td>
+                <td>{{row.Description}}</td>
+                <td>{{row.UnitCost | valuta}}</td>
+                <td>{{row.Quantity}}</td>
+                <td>{{row.InvoiceRowAmount * row.Vat | valuta}}</td>
+                <td>{{row.InvoiceRowAmount | valuta}}</td>
+                <td><button class=" btn btn-primary" data-ng-click="removeRow($index, row.InvoiceRowAmount)">Delete</button></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="btn-group Invoice-btn-group">
+        <button class=" btn btn-primary" ng-disabled="approveInvoice" ng-click="approve_invoice()">Approve invoice </button>
+        <button class=" btn btn-primary" ng-disabled="cancelDisable" ng-click="cancel_invoice()">Cancel Invoice </button>
+        <button class=" btn btn-primary" ng-click="update_invoice()">Save invoice changes </button>
+    </div>
 
         <div class="InvoiceTable">
             <h4>Payment info</h4>
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">Sub total</label>
                 <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? ((MaintenanceInvoice.InvoiceAmount * 0.75)  | valuta): ''}}" id="sub-total">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? ((MaintenanceInvoice.InvoiceAmount * (1 - MaintenanceInvoice.Vat))  | valuta): ''}}" id="sub-total">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">Vat</label>
                 <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Vat !== undefined ? (MaintenanceInvoice.InvoiceAmount * 0.25 | valuta) : '' }}" id="vat-total">
+                    <input class="form-control" type="text" value="{{MaintenanceInvoice.Vat !== undefined ? (MaintenanceInvoice.InvoiceAmount * MaintenanceInvoice.Vat | valuta) : '' }}" id="vat-total">
                 </div>
             </div>
             <div class="form-group row">
                 <label for="example-text-input" class="col-xs-5 col-form-label">Total</label>
                 <div class="col-xs-7">
-                    <input class="form-control" type="text" value="{{MaintenanceInvoice.InvoiceAmount !== undefined ? (MaintenanceInvoice.InvoiceAmount | valuta) : ''}}" ng-model="MaintenanceInvoice.InvoiceAmount" id="example-text-input">
+                    <input class="form-control Input-cur1" type="text" ng-model="MaintenanceInvoice.InvoiceAmount" id="total">
+                    <input class="form-control Input-cur2" type="text" value="Kr">
                 </div>
             </div>
             <div class="form-group row">
@@ -207,11 +218,7 @@
 
         </div>
 
-        <div class="btn-group">
-            <button class=" btn btn-primary" ng-disabled="approveInvoice" ng-click="approve_invoice()">Approve invoice </button>
-            <button class=" btn btn-primary" ng-disabled="cancelDisable" ng-click="cancel_invoice()">Cancel Invoice </button>
-            <button class=" btn btn-primary" ng-click="update_invoice()">Save invoice changes </button>
-        </div>
+       
 
     </div>
 </tframe>
