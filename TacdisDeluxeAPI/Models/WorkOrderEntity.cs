@@ -47,8 +47,8 @@ namespace TacdisDeluxeAPI.Models
         public DateTime PlannedDate { get; set; }
         public DateTime CheckedInDate { get; set; }
 
-        public string MainPayer { get; set; }
-        public string RespBy { get; set; }
+        public virtual PayerEntity MainPayer { get; set; }
+        public virtual SalesmanEntity RespBy { get; set; }
         public double TotCost { get; set; }
 
         public virtual ICollection<WoJobEntity> WOJ_List { get; set; }

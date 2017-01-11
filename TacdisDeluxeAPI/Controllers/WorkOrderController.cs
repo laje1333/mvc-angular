@@ -196,6 +196,11 @@ namespace TacdisDeluxeAPI.Controllers
                 woh.CheckedInDate = statusData.checkedInDate;
                 woh.CurrentMilage = statusData.currentMilage;
                 woh.PlannedMechID = statusData.plannedMechID;
+                woh.RespBy = Mapper.Map<SalesmanDto, SalesmanEntity>(statusData.salesman);
+                woh.MainPayer = Mapper.Map<PayerDto, PayerEntity>(statusData.payer);
+                
+                c.Payers.Attach(woh.MainPayer);
+                c.Salesmen.Attach(woh.RespBy);
 
                 c.SaveChanges();
             }

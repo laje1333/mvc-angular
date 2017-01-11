@@ -16,6 +16,13 @@
         });
     }
 
+    $scope.checkIfEmpty = function (str, btnId, iconId) {
+        if (str.length == 0) {
+            document.getElementById(iconId).className = 'glyphicon glyphicon-search';
+            document.getElementById(btnId).className = 'btn btn-default';
+        }
+    }
+
     $scope.SaveStatusData = function () {
         $scope.currentWoh = $rootScope.currentWoh;
         var statusData = {
@@ -24,7 +31,9 @@
             isCheckedIn: $scope.woh_IsCheckedIn,
             checkedInDate: $scope.woh_CheckedInDate,
             currentMilage: $scope.woh_CurrentMilage,
-            plannedMechID: $scope.woh_PlannedMechID
+            plannedMechID: $scope.woh_PlannedMechID,
+            salesman: $scope.salesman,
+            payer: $scope.payer
         }
 
         $http({
@@ -34,6 +43,51 @@
         }).success(function () {
             feedbackPopup('Successefully saved', { level: 'success', timeout: 2000 });
         });
+    }
+
+    $scope.GetSalesmanById = function () {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/salesman',
+            params: { empNr: parseInt($scope.empNr) }
+        }
+
+        $http(req).
+         then(function (response) {
+             document.getElementById('searchIcon').className = 'glyphicon glyphicon-ok-sign';
+             document.getElementById('searchButton').className = 'btn btn-success';
+             feedbackPopup('Salesman found', { level: 'success', timeout: 2000 });
+             $scope.salesman = response.data;
+         }, function (response) {
+             document.getElementById('searchIcon').className = 'glyphicon glyphicon-search';
+             document.getElementById('searchButton').className = 'btn btn-default';
+             feedbackPopup('No salesman found', { level: 'warning', timeout: 2000 });
+             $scope.salesman = {};
+             $scope.statusCode = response.statusCode;
+         });
+    }
+
+    $scope.GetPayerById = function () {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/payer',
+            params: { CustNr: parseInt($scope.CustNr) }
+        }
+
+        $http(req).
+         then(function (response) {
+             window.sessionStorage.getItem('Token');
+             document.getElementById('searchIconP').className = 'glyphicon glyphicon-ok-sign';
+             document.getElementById('searchButtonP').className = 'btn btn-success';
+             feedbackPopup('Payer found', { level: 'success', timeout: 2000 });
+             $scope.payer = response.data;
+         }, function (response) {
+             document.getElementById('searchIconP').className = 'glyphicon glyphicon-search';
+             document.getElementById('searchButtonP').className = 'btn btn-default';
+             feedbackPopup('No payer found', { level: 'warning', timeout: 2000 });
+             $scope.payer = {};
+             $scope.statusCode = response.statusCode;
+         });
     }
 
     $scope.GetManageWoj = function () {

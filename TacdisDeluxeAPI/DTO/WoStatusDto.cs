@@ -14,5 +14,7 @@ namespace TacdisDeluxeAPI.DTO
         public DateTime checkedInDate { get; set; }
         public int currentMilage { get; set; }
         public int plannedMechID { get; set; }
+        public SalesmanDto salesman { get; set; }
+        public PayerDto payer { get; set; }
     }
 }

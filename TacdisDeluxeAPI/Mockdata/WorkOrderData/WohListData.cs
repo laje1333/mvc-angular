@@ -34,13 +34,24 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
         private static string CreateLine(Models.WorkOrderEntity WO)
         {
             WO.UpdateTotCost();
+            string custNr = "", empNr = "";
+            if (WO.MainPayer != null)
+            {
+                custNr = WO.MainPayer.CustomerNumber.ToString();
+            }
+
+            if (WO.RespBy != null)
+            {
+                empNr = WO.RespBy.EmployeeNumber.ToString();
+            }
+
             return "{\"WoNr\": \"" + WO.WoNr +
                     "\",\"RegNr\": \"" + WO.RegNr +
                     "\",\"Status\": \"" + WO.Status +
                     "\",\"VehDesc\": \"" + WO.VehDesc +
                     "\",\"CreatedDate\": \"" + WO.CreatedDate +
-                    "\",\"MainPayer\":\"" + WO.MainPayer +
-                    "\",\"RespBy\": \"" + WO.RespBy +
+                    "\",\"MainPayer\":\"" + custNr +
+                    "\",\"RespBy\": \"" + empNr +
                     "\",\"TotCost\": \"" + WO.TotCost +
                     "\"}";
         }

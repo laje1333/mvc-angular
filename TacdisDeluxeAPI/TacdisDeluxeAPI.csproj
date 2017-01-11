@@ -352,6 +352,10 @@
     <Compile Include="Migrations\201701110947249_updateAmountToDouble.Designer.cs">
       <DependentUpon>201701110947249_updateAmountToDouble.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701111419464_WoPayer.cs" />
+    <Compile Include="Migrations\201701111419464_WoPayer.Designer.cs">
+      <DependentUpon>201701111419464_WoPayer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -511,6 +515,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701110947249_updateAmountToDouble.resx">
       <DependentUpon>201701110947249_updateAmountToDouble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701111419464_WoPayer.resx">
+      <DependentUpon>201701111419464_WoPayer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
