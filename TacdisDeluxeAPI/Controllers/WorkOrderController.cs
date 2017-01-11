@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -16,63 +17,64 @@ namespace TacdisDeluxeAPI.Controllers
     [System.Web.Http.RoutePrefix("api/workorder")]
     public class WorkOrderController : ApiController
     {
-        static string CurrentWOHID;
-        static string CurrentWOJID;
-
-
-        [System.Web.Http.HttpGet]
-        public List<string> GetCurrentWO(string getCurrent)
-        {
-            List<string> responseArr = new List<string>();
-            switch (getCurrent)
-            {
-                case "WOH":
-                    responseArr.Add(CurrentWOHID);
-                    break;
-                case "WOJ":
-                    responseArr.Add(CurrentWOJID);
-                    break;
-                default:
-                    break;
-            }
-
-            return responseArr;
-        }
-
-        [System.Web.Http.HttpGet]
-        public List<string> SetCurrentWO(string setCurrent, string itemId)
-        {
-            List<string> responseArr = new List<string>();
-            switch (setCurrent)
-            {
-                case "WOH":
-                    CurrentWOHID = itemId;
-                    responseArr.Add(CurrentWOHID);
-                    break;
-                case "WOJ":
-                    CurrentWOJID = itemId;
-                    responseArr.Add(CurrentWOJID);
-                    break;
-                default:
-                    break;
-            }
-
-            return responseArr;
-        }
-
         // ----------WOH------------
         [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWoHList")]
         public string GetWoHList(string search)
         {
             using (DBContext c = new DBContext())
             {
-                var wohList = WohListData.GetWohList(c.WorkOrder.OrderByDescending(p => p.WoNr));
+                IOrderedQueryable<Models.WorkOrderEntity> woEntList;
+                if (search != null && search != "" && search != "undefined")
+                {
+                    woEntList = c.WorkOrder.Where(s => s.WoNr.ToString().Contains(search) ||
+                        s.RegNr.ToString().Contains(search) ||
+                        s.Status.ToString().Contains(search) ||
+                        s.VehDesc.ToString().Contains(search) ||
+                        s.CreatedDate.ToString().Contains(search) ||
+                        s.MainPayer.ToString().Contains(search) ||
+                        s.RespBy.ToString().Contains(search) ||
+                        s.TotCost.ToString().Contains(search))
+                        .OrderByDescending(p => p.WoNr);
+                }
+                else
+                {
+                    woEntList = c.WorkOrder.OrderByDescending(p => p.WoNr);
+                }
+                var wohList = WohListData.GetWohList(woEntList);
                 return wohList;
+            }
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWoh")]
+        public WorkOrderDto GetWoh(string wohid)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = GetWoh(wohid, c);
+                WorkOrderDto woDto = Mapper.Map<WorkOrderEntity, WorkOrderDto>(woh);   //new WorkOrderDto(woh);
+
+                return woDto;
+            }
+        }
+
+        private WorkOrderEntity GetWoh(string wohid, DBContext dbc)
+        {
+            try
+            {
+                var woh = dbc.WorkOrder.Where(p => p.WoNr.ToString() == wohid).Single();
+                return woh;
+            }
+            catch (Exception)
+            {
+                return new WorkOrderEntity();
             }
         }
 
         // POST: api/WorkOrder
         [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("PostWOH")]
         public void PostWOH(WorkOrderDto wohData)
         {
             WorkOrderEntity wohEnt = new WorkOrderEntity();
@@ -95,113 +97,9 @@ namespace TacdisDeluxeAPI.Controllers
             }
         }
 
-        // ----------WOJ------------
-        [System.Web.Http.HttpGet]
-        public string GetWoJobList(string wohid)
-        {
-            using (DBContext c = new DBContext())
-            {
-                var wohList = WohListData.GetWojList(c.WorkOrder.Where(p => p.WoNr.ToString() == wohid).Single());
-                return wohList;
-            }
-        }
-
-        // POST: api/WorkOrder
-        [System.Web.Http.HttpPost]
-        public void PostWOJ(string wohId)
-        {
-            using (DBContext c = new DBContext())
-            {
-                var woh = c.WorkOrder.Where(p => p.WoNr.ToString() == wohId).Single();
-                woh.WOJ_List.Add(new WoJobEntity());
-                c.SaveChanges();
-            }
-        }
-
-        // ----------WJK------------
-        [System.Web.Http.HttpGet]
-        public string GetWJKList(string wohId, string wojId)
-        {
-
-            using (DBContext c = new DBContext())
-            {
-                var wjkList = c.WorkOrder.Where(p => p.WoNr.ToString() == wohId).Single()
-                    .WOJ_List.Where(p => p.WoJNr.ToString() == wojId).Single().WOJ_KitList;
-
-                return WohListData.GetWjkList(wjkList);
-            }
-        }
-
-        [System.Web.Http.HttpPost]
-        public void AddWJK(string wjkcode, string wohId, string wojId)
-        {
-
-            using (DBContext c = new DBContext())
-            {
-                var wjkList = c.WorkOrder.Where(p => p.WoNr.ToString() == wohId).Single()
-                    .WOJ_List.Where(p => p.WoJNr.ToString() == wojId).Single().WOJ_KitList;
-                wjkList.Add(new WoKitsEntity(wjkcode));
-                c.SaveChanges();
-            }
-        }
-
-        // ----------WJO------------
-        [System.Web.Http.HttpGet]
-        public string GetWJOList(string wjocode, string wohId, string wojId)
-        {
-            using (DBContext c = new DBContext())
-            {
-                var wjoList = c.WorkOrder.Where(p => p.WoNr.ToString() == wohId).Single()
-                    .WOJ_List.Where(p => p.WoJNr.ToString() == wojId).Single().WOJ_OPList;
-
-                return WohListData.GetWjoList(wjoList);
-            }
-        }
-
-        [System.Web.Http.HttpPost]
-        public void AddWJO(string wjocode, string wohId, string wojId)
-        {
-
-            using (DBContext c = new DBContext())
-            {
-                var wjoList = c.WorkOrder.Where(p => p.WoNr.ToString() == wohId).Single()
-                    .WOJ_List.Where(p => p.WoJNr.ToString() == wojId).Single().WOJ_OPList;
-                wjoList.Add(new WoOpEntitys(wjocode));
-                c.SaveChanges();
-            }
-        }
-
-        // ----------WJP------------
-        [System.Web.Http.HttpGet]
-        public string GetWJPList(string wjpcode, string wohId, string wojId)
-        {
-            using (DBContext c = new DBContext())
-            {
-                var wjpList = c.WorkOrder.Where(p => p.WoNr.ToString() == wohId).Single()
-                    .WOJ_List.Where(p => p.WoJNr.ToString() == wojId).Single().WOJ_PartList;
-
-                return WohListData.GetWjpList(wjpList);
-            }
-        }
-
-        [System.Web.Http.HttpPost]
-        public void AddWJP(string wjpcode, string wohId, string wojId)
-        {
-
-            using (DBContext c = new DBContext())
-            {
-                PartEntity part = c.Parts.Where(p => p.ItemId.ToString() == wjpcode).Single();
-                ICollection<PartEntity> wjpList = c.WorkOrder.Where(p => p.WoNr.ToString() == wohId).Single()
-                    .WOJ_List.Where(p => p.WoJNr.ToString() == wojId).Single().WOJ_PartList;
-
-                wjpList.Add(part);
-                c.SaveChanges();
-            }
-        }
-
         // ---------RegNr-----------
-        [System.Web.Http.Route("GetRegNr")]
         [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetRegNr")]
         public List<string> GetRegNr(string WOHID)
         {
             using (DBContext c = new DBContext())
@@ -212,24 +110,32 @@ namespace TacdisDeluxeAPI.Controllers
                     responseArr.Add("");
                     return responseArr;
                 }
-                var WOH = c.WorkOrder.Where(p => p.WoNr.ToString() == WOHID).Single();
+                var WOH = GetWoh(WOHID, c);
                 responseArr.Add(WOH.RegNr);
                 return responseArr;
             }
         }
 
         [System.Web.Http.HttpGet]
-        public List<string> GetRegNrInfo(string WOHID, string regnr)
+        [System.Web.Http.Route("GetRegNrInfo")]
+        public List<object> GetRegNrInfo(string WOHID, string regnr)
         {
             using (DBContext c = new DBContext())
             {
-                List<string> responseArr = new List<string>();
-
+                List<object> responseArr = new List<object>();
                 if (!ValidateRegNr(regnr))
                 {
                     regnr = "";
                 }
-                WorkOrderEntity woh = c.WorkOrder.Where(p => p.WoNr.ToString() == WOHID).Single();
+                WorkOrderEntity woh;
+                try
+                {
+                    woh = GetWoh(WOHID, c);
+                }
+                catch (Exception)
+                {
+                    return responseArr;
+                }
                 if (woh == null)
                 {
                     return responseArr;
@@ -238,11 +144,11 @@ namespace TacdisDeluxeAPI.Controllers
                 RegNrChanged(woh, regnr.ToUpper());
 
                 responseArr.Add(woh.VehDesc);
-                responseArr.Add(woh.VehRegDate.ToString());
+                responseArr.Add(woh.VehRegDate);
                 responseArr.Add(woh.VehOwner);
                 responseArr.Add(woh.VehDriver);
                 responseArr.Add(woh.VehPhoneNr);
-                responseArr.Add(woh.VehLastVisDate.ToString());
+                responseArr.Add(woh.VehLastVisDate);
                 responseArr.Add(woh.VehLastVisMil);
 
                 c.SaveChanges();
@@ -277,6 +183,289 @@ namespace TacdisDeluxeAPI.Controllers
             return true;
         }
 
+        // ---------Status----------
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("PostStatusData")]
+        public void PostStatusData(WoStatusDto statusData)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = GetWoh(statusData.wohId, c);
+                woh.PlannedDate = statusData.plannedDate;
+                woh.isCheckedIn = statusData.isCheckedIn;
+                woh.CheckedInDate = statusData.checkedInDate;
+                woh.CurrentMilage = statusData.currentMilage;
+                woh.PlannedMechID = statusData.plannedMechID;
+
+                c.SaveChanges();
+            }
+        }
+
+        // --------Finalize---------
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("Picklist")]
+        public void Picklist(string wohId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = GetWoh(wohId, c);
+                woh.UpdateTotCost();
+                var partList = new List<PartEntity>();
+                foreach (var woj in woh.WOJ_List)
+                {
+                    foreach (var part in woj.WOJ_PartList)
+                    {
+                        partList.Add(part);
+                    }
+
+                    foreach (var kit in woj.WOJ_KitList)
+                    {
+                        foreach (var part in kit.WOJ_PartList)
+                        {
+                            partList.Add(part);
+                        }
+                    }
+                }
+
+                foreach (var part in partList)
+                {
+                    //check if parts is available in storage
+                }
+
+                c.SaveChanges();
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("Finalize")]
+        public void Finalize(string wohId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = GetWoh(wohId, c);
+                woh.UpdateTotCost();
+
+                //Send info to invoices
+
+                c.SaveChanges();
+            }
+        }
+
+        // ----------WOJ------------
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWoJobList")]
+        public string GetWoJobList(string wohid)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var wohList = WohListData.GetWojList(GetWoh(wohid, c));
+                return wohList;
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("PostWOJ")]
+        public void PostWOJ(string wohId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = GetWoh(wohId, c);
+                var woj = new WoJobEntity();
+                woj.WoJNr = woh.WOJ_List.OrderByDescending(p => p.WoJNr).FirstOrDefault().WoJNr + 1;
+                woh.WOJ_List.Add(woj);
+                c.SaveChanges();
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("RemoveWOJ")]
+        public void RemoveWOJ(string wohId, string wojId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woj = GetWoJ(wohId, wojId, c);
+                c.WorkOrderJobs.Remove(woj);
+                c.SaveChanges();
+            }
+        }
+
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWoJ")]
+        public WoJobDto GetWoJ(string wohid, string wojid)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woj = GetWoJ(wohid, wojid, c);
+                WoJobDto woDto = Mapper.Map<WoJobEntity, WoJobDto>(woj);
+
+                return woDto;
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("PostWoJData")]
+        public void PostWoJData(WoJobDtoExtended statusData)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woj = GetWoJ(statusData.wohid, statusData.wojid, c);
+
+                woj.Status = statusData.Status;
+                woj.JobDoneDate = statusData.JobDoneDate;
+
+                woj.PayerCustNr = statusData.PayerCustNr;
+                woj.Alias = statusData.Alias;
+                woj.AddressType = statusData.AddressType;
+                woj.AddressFull = statusData.AddressFull;
+                woj.PayerName = statusData.PayerName;
+                woj.FirstName = statusData.FirstName;
+                woj.Contact = statusData.Contact;
+                woj.PaymentMethod = statusData.PaymentMethod;
+
+                woj.FixedPrice = statusData.FixedPrice;
+                woj.VatPerc = statusData.VatPerc;
+
+                woj.RefNo = statusData.RefNo;
+                woj.RefNoExtra = statusData.RefNoExtra;
+                woj.ProfCentreID = statusData.ProfCentreID;
+                woj.ProfCentreName = statusData.ProfCentreName;
+
+                c.SaveChanges();
+            }
+        }
+
+        private WoJobEntity GetWoJ(string wohid, string wojid, DBContext c)
+        {
+            try
+            {                
+                return GetWoh(wohid, c).WOJ_List.Where(p => p.WoJNr.ToString() == wojid).Single();
+            }
+            catch (Exception)
+            {
+                return new WoJobEntity();
+            }
+        }
+
+        // ----------WJK------------
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWJKList")]
+        public string GetWJKList(string wohId, string wojId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var wjkList = GetWoJ(wohId, wojId, c).WOJ_KitList;
+
+                return WohListData.GetWjkList(wjkList);
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("AddWJK")]
+        public void AddWJK(string wohId, string wojId, string wjkCode)
+        {
+
+            using (DBContext c = new DBContext())
+            {
+                var wjkList = GetWoJ(wohId, wojId, c).WOJ_KitList;
+                wjkList.Add(new WoKitsEntity(wjkCode));
+                c.SaveChanges();
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("RemoveWJK")]
+        public void RemoveWJK(string wohId, string wojId, string wjkId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woj = GetWoJ(wohId, wojId, c);
+                var item = woj.WOJ_KitList.Where(p => p.Id.ToString() == wjkId).Single();
+                c.WorkOrderKits.Remove(item);
+                c.SaveChanges();
+            }
+        }
+        // ----------WJO------------
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWJOList")]
+        public string GetWJOList(string wohId, string wojId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var wjoList = GetWoJ(wohId, wojId, c).WOJ_OPList;
+
+                return WohListData.GetWjoList(wjoList);
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("AddWJO")]
+        public void AddWJO(string wohId, string wojId, string wjoCode)
+        {
+
+            using (DBContext c = new DBContext())
+            {
+                var wjoList = GetWoJ(wohId, wojId, c).WOJ_OPList;
+                wjoList.Add(new WoOpEntitys(wjoCode));
+                c.SaveChanges();
+            }
+        }
+        
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("RemoveWJO")]
+        public void RemoveWJO(string wohId, string wojId, string wjoId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woj = GetWoJ(wohId, wojId, c);
+                var item = woj.WOJ_OPList.Where(p => p.Id.ToString() == wjoId).Single();
+                c.WorkOrderOperations.Remove(item);
+                c.SaveChanges();
+            }
+        }
+
+        // ----------WJP------------
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("GetWJPList")]
+        public string GetWJPList(string wohId, string wojId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var wjpList = GetWoJ(wohId, wojId, c).WOJ_PartList;
+
+                return WohListData.GetWjpList(wjpList);
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("AddWJP")]
+        public void AddWJP(string wohId, string wojId, string wjpCode, string quantity)
+        {
+
+            using (DBContext c = new DBContext())
+            {
+                PartEntity part = c.Parts.Where(p => p.ItemId.ToString() == wjpCode).Single();
+                ICollection<PartEntity> wjpList = GetWoJ(wohId, wojId, c).WOJ_PartList;
+
+                wjpList.Add(part);
+                c.SaveChanges();
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("RemoveWJP")]
+        public void RemoveWJP(string wohId, string wojId, string wjpId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woj = GetWoJ(wohId, wojId, c);
+                var item = woj.WOJ_PartList.Where(p => p.Id.ToString() == wjpId).Single();
+                c.Parts.Remove(item);
+                c.SaveChanges();
+            }
+        }
+
+        // ---------Ignore----------
         [System.Web.Http.HttpGet]
         public string Get(string stuff)
         {

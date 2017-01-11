@@ -20,7 +20,6 @@ namespace TacdisDeluxeAPI.Controllers
 {
     public class InvoiceController : ApiController
     {
-        // GET api/invoice/GetInvoice/123423
         [System.Web.Http.Route("api/invoice/GetInvoice")]
         [System.Web.Http.HttpGet]
         public List<InvoiceDto> GetInvoice(string query)
@@ -70,7 +69,6 @@ namespace TacdisDeluxeAPI.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest("Invoice mapping error!");
             }
 
@@ -81,7 +79,7 @@ namespace TacdisDeluxeAPI.Controllers
                     var originalSalesman = db.Salesmen.Single(i => i.Id == invoice.Salesman.Id);
                     var originalPayer = db.Payers.Single(i => i.Id == invoice.Payer.Id);
                     var originalInvoice = db.Invoices.Single(i => i.Id == invoice.Id);
-                    var rows = originalInvoice.InvoiceRows.Where(r => invoice.InvoiceRows.Select(x => x.Id).
+                    var rowsToDelete = originalInvoice.InvoiceRows.Where(r => invoice.InvoiceRows.Select(x => x.Id).
                         Contains(r.Id) == false).ToList();
 
                     if (!InvoiceValidator.IsEqual(originalSalesman, invoice.Salesman))
@@ -90,8 +88,8 @@ namespace TacdisDeluxeAPI.Controllers
                     if (!InvoiceValidator.IsEqual(originalPayer, invoice.Payer))
                         db.Entry(originalPayer).CurrentValues.SetValues(invoice.Payer);
 
-                    if (rows.Any())
-                        db.InvoiceRows.RemoveRange(rows);
+                    if (rowsToDelete.Any())
+                        db.InvoiceRows.RemoveRange(rowsToDelete);
 
                     db.Entry(originalInvoice).CurrentValues.SetValues(invoice);
 
@@ -111,7 +109,6 @@ namespace TacdisDeluxeAPI.Controllers
         [System.Web.Http.HttpPost]
         public IHttpActionResult CreateInvoiceFromSales(SalesDto salesDto)
         {
-
             var invoice = new InvoiceEntity();
 
             try
@@ -120,7 +117,6 @@ namespace TacdisDeluxeAPI.Controllers
             }
             catch (Exception ex)
             {
-
                 return BadRequest("CreateInvoiceFromSales faild!");
             }
 
@@ -140,7 +136,7 @@ namespace TacdisDeluxeAPI.Controllers
                 return BadRequest(ex.Message);
             }
 
-            return Ok();
+            return Ok(invoice.InvoiceNumber);
         }
 
         [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder")]
@@ -151,11 +147,10 @@ namespace TacdisDeluxeAPI.Controllers
 
             try
             {
-                invoice = InvoiceValidator.CreateInvoiceEntityFromWorkOrderDto(workOrderDto);
+                //invoice = InvoiceValidator.CreateInvoiceEntityFromWorkOrderDto(workOrderDto);
             }
             catch (Exception ex)
             {
-
                 return BadRequest("CreateInvoiceFromSales faild!");
             }
 
@@ -174,26 +169,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 return BadRequest(ex.Message);
             }
-            return Ok();
+            return Ok(invoice.InvoiceNumber);
         }
-
-        //// POST api/invoice
-        //public void Post([FromBody]string value)
-        //{
-        //    var mockInvoice = GetMockInvoice.GetInvoice(1, 1, 12);
-
-        //    var dto = Mapper.Map<InvoiceEntity, InvoiceDto>(mockInvoice);
-
-        //}
-
-        //// PUT api/invoice/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
-
-        //// DELETE api/invoice/5
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

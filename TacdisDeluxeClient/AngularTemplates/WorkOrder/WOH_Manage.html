@@ -1,32 +1,44 @@
-﻿<div ng-controller="WorkOrderController">
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">Date Status</div>
-            <div class="form-group panel-body">
-                <label>Status</label>
-                <input type="text" class="form-control" />
-                <label>Date Planned</label>
-                <input type="date" />
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" value="" />
-                        Date Checked In
-                    </label>
+﻿<tframe data-title="Manage Workorder plan">
+    <div ng-controller="WorkOrderController">
+        <div class="row">
+            <div class="col-md-4" ng-init="GetStatus()">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Date Status</div>
+                    <div class="form-group panel-body">
+                        <label>Status</label>
+                        <input type="text" class="form-control" ng-model="woh_Status" />
+                        <label>Date Planned</label>
+                        <input type="text" class="form-control" ng-model="woh_PlannedDate" />
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" ng-model="woh_IsCheckedIn" />
+                                Date Checked In
+                            </label>
+                        </div>
+                        <input type="text" class="form-control" ng-model="woh_CheckedInDate" />
+                    </div>
                 </div>
-                <input type="date" />
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Mechanic Status</div>
+                    <div class="form-group panel-body">
+                        <label>Current Milage</label>
+                        <input type="text" class="form-control" ng-model="woh_CurrentMilage" />
+                        <label>Planned Machanic</label>
+                        <input type="text" class="form-control" ng-model="woh_PlannedMechID" />
+                        <input type="text" class="form-control" ng-model="woh_PlannedMechName" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="panel-footer">
+                <button type="button" id="saveButton" class="btn btn-primary btn-sm" ng-click="SaveStatusData()" data-toggle="popover" data-placement="left" data-content="Successfully saved">
+                    Save
+                    <span class="glyphicon glyphicon-save"></span>
+                </button>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">Mechanic Status</div>
-            <div class="form-group panel-body">
-                <label>Current Milage</label>
-                <input type="text" class="form-control" />
-                <label>Planned Machanic</label>
-                <input type="text" class="form-control" />
-                <input type="text" class="form-control" />
-            </div>
-        </div>
-    </div>
-</div>
+</tframe>

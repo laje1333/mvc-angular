@@ -275,6 +275,9 @@
     <Compile Include="Controllers\WorkOrderController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
+    <Compile Include="DTO\WoJItemDto.cs" />
+    <Compile Include="DTO\WoJobDto.cs" />
+    <Compile Include="DTO\WoStatusDto.cs" />
     <Compile Include="DTO\InventoryDto.cs" />
     <Compile Include="DTO\InventoryTableData.cs" />
     <Compile Include="DTO\InvoiceDto.cs" />
@@ -321,6 +324,26 @@
     <Compile Include="Migrations\201701040726471_woJob.Designer.cs">
       <DependentUpon>201701040726471_woJob.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701050809355_woJobComponents.cs" />
+    <Compile Include="Migrations\201701050809355_woJobComponents.Designer.cs">
+      <DependentUpon>201701050809355_woJobComponents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701051243182_woMap.cs" />
+    <Compile Include="Migrations\201701051243182_woMap.Designer.cs">
+      <DependentUpon>201701051243182_woMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701051247069_woMap2.cs" />
+    <Compile Include="Migrations\201701051247069_woMap2.Designer.cs">
+      <DependentUpon>201701051247069_woMap2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701091243390_wojStuff.cs" />
+    <Compile Include="Migrations\201701091243390_wojStuff.Designer.cs">
+      <DependentUpon>201701091243390_wojStuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701100911315_WoPartHandling.cs" />
+    <Compile Include="Migrations\201701100911315_WoPartHandling.Designer.cs">
+      <DependentUpon>201701100911315_WoPartHandling.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -351,6 +374,7 @@
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\AppUserManager.cs" />
     <Compile Include="Models\Enums\InvoiceState.cs" />
+    <Compile Include="DTO\IdAndAmountDto.cs" />
     <Compile Include="Models\IdentityContext.cs" />
     <Compile Include="Models\InvoiceEntity.cs" />
     <Compile Include="Models\InvoiceRowEntity.cs" />
@@ -358,7 +382,9 @@
     <Compile Include="Models\Maps\InvoiceMap.cs" />
     <Compile Include="Models\Maps\PartMap.cs" />
     <Compile Include="Models\Maps\SaleMap.cs" />
+    <Compile Include="Models\Maps\SalesmanMap.cs" />
     <Compile Include="Models\Maps\VehicleModelMap.cs" />
+    <Compile Include="Models\Maps\WorkOrderKitMap.cs" />
     <Compile Include="Models\Maps\WorkOrderMap.cs" />
     <Compile Include="Models\TestDataInitializer.cs" />
     <Compile Include="Models\VehicleBrandEntity.cs" />
@@ -378,6 +404,7 @@
     <Compile Include="Models\WoKitsEntity.cs" />
     <Compile Include="Models\WoOpEntitys.cs" />
     <Compile Include="Models\WorkOrderEntity.cs" />
+    <Compile Include="Models\Maps\WorkOrderJobMap.cs" />
     <Compile Include="Models\WorkshopInventory.cs" />
     <Compile Include="Models\WorkshopInventoryItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -452,6 +479,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701040726471_woJob.resx">
       <DependentUpon>201701040726471_woJob.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701050809355_woJobComponents.resx">
+      <DependentUpon>201701050809355_woJobComponents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701051243182_woMap.resx">
+      <DependentUpon>201701051243182_woMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701051247069_woMap2.resx">
+      <DependentUpon>201701051247069_woMap2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701091243390_wojStuff.resx">
+      <DependentUpon>201701091243390_wojStuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701100911315_WoPartHandling.resx">
+      <DependentUpon>201701100911315_WoPartHandling.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

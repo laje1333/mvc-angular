@@ -2,7 +2,7 @@
 
 
 tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route) {
-
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
 
     //Get
     $scope.spinner = false;
@@ -413,7 +413,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 });
 
 tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgTableParams, $http) {
-
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
     $scope.spinner = false;
 
     $scope.getNewVehicles = function () {
@@ -477,7 +477,7 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgT
 });
 
 tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http){
-
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
     $scope.regNumber = "";
 
     $scope.regNrSearch = function () {
@@ -619,8 +619,9 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
                 feedbackPopup("Could not fetch data", { level: 'warning', timeout: 2000 });
             });
 
-       
     }
+
+
 
     $scope.filterInventoryItems = function () {
         for (i = 0; i < $scope.inventoryData.length; i++) {
@@ -768,7 +769,8 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
 });
 
 
-tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, $http){
+tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope, $http) {
+    $scope.$on('$viewContentLoaded', hotlinkToMenu);
     $scope.regNumber = "";
 
     $scope.regNrSearch = function () {
@@ -784,23 +786,14 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, 
                 $scope.model = itemName[1];
                 $scope.year = itemName[2];
                 $scope.itemDesc = response.data.ItemDesc;
-                var btree = new Maths.BinaryTree();
-                btree.insert(100);
-                btree.insert(90);
-                btree.insert(95);
-                btree.insert(70);
-                btree.insert(750);
-                btree.insert(50);
-                btree.insert(150);
-                btree.insert(30);
-                btree.insert(225);
-                btree.insert(368);
                 
 
             }, function (response) {
                 feedbackPopup("Could fetch data", { level: 'warning', timeout: 2000 });
             });
         }
+
+
     }
 
 
@@ -814,6 +807,8 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function($scope, 
             content: $scope.popoverLines($scope.itemDesc)
         });
         $("#" + id).popover('show');
+
+
     }
 
     $scope.hidePopover = function () {

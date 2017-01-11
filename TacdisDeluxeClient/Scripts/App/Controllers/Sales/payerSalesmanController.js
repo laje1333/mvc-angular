@@ -116,6 +116,9 @@ tacdisDeluxeApp.controller("PayerSalesmanController", function ($scope, $rootSco
     $scope.$watch('salesman', function (newValue, oldValue) {
         if (newValue !== oldValue) SaleFactory.setSalesman(newValue);
     });
+    $scope.$watch('payer', function (newValue, oldValue) {
+        if (newValue !== oldValue) SaleFactory.setPayer(newValue);
+    });
 
     $scope.GetSalesmen = function () {
         var req = {

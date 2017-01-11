@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Tacdis Deluxe 5.0</title>
     <script src="https://use.fontawesome.com/2389a26a6e.js"></script>
+   
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -13,12 +14,14 @@
     @Scripts.Render("~/bundles/bootstrap")
     <script src="~/Scripts/ng-table.min.js"></script>
     @Scripts.Render("~/bundles/custom")
-    
+
+
     <script src="~/Scripts/App/Factories/AuthService.js"></script>
     <script src="~/Scripts/App/Factories/AuthInterceptorService.js"></script>
     <script src="~/Scripts/App/Controllers/Layout/LayoutController.js"></script>
     <script src="~/Scripts/App/Factories/IsAuthFactory.js"></script>
     <script src="~/Scripts/global.js"></script>
+    <script src="~/Scripts/App/Directives/Vehicle/NewVehicleDirective.js"></script>
     <link href="~/Content/Custom.css" rel="stylesheet"/>
 
     @{ 
@@ -31,7 +34,7 @@
     }
 
 </head>
-<body ng-app="tacdisDeluxeApp" ng-controller="LayoutController" ng-init="checkUser()">
+<body ng-app="tacdisDeluxeApp" ng-controller="LayoutController" ng-init="checkUser()" id="appcontainer">
     <div id="__ajaxFeedbackMessage" class="alert alert-dismissable">
         <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <span class="message-level glyphicon"></span> <span class="message-text"></span>

@@ -31,6 +31,7 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
         
         private static string CreateLine(Models.WorkOrderEntity WO)
         {
+            WO.UpdateTotCost();
             return "{\"WoNr\": \"" + WO.WoNr +
                     "\",\"RegNr\": \"" + WO.RegNr +
                     "\",\"Status\": \"" + WO.Status +
@@ -62,6 +63,7 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 
         private static string CreateLine(WoJobEntity woj)
         {
+            woj.UpdateTotCost();
             return "{\"WoJNr\": \"" + woj.WoJNr +
                     "\",\"Status\": \"" + woj.Status +
                     "\",\"TotCost\": \"" + woj.TotCost +
@@ -88,7 +90,9 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 
         private static string CreateLine(WoKitsEntity wjk)
         {
-            return "{\"KitNr\": \"" + wjk.WJKCode +
+            wjk.UpdateTotCost();
+            return "{\"KitId\": \"" + wjk.Id +
+                    "\",\"KitNr\": \"" + wjk.WJKCode +
                     "\",\"KitType\": \"" + wjk.KitType +
                     "\",\"KitDesc\": \"" + wjk.KitDesc +
                     "\",\"Quantity\": \"" + wjk.Quantity +
@@ -116,7 +120,8 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
         
         private static string CreateLine(WoOpEntitys wjo)
         {
-            return "{\"OPNr\": \"" + wjo.OPNr +
+            return "{\"OPId\": \"" + wjo.Id +
+                    "\",\"OPNr\": \"" + wjo.OPNr +
                     "\",\"OPDesc\": \"" + wjo.OPDesc +
                     "\",\"WorkTime\": \"" + wjo.WorkTime +
                     "\",\"Quantity\": \"" + wjo.Quantity +
@@ -144,7 +149,8 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 
         private static string CreateLine(PartEntity wjp)
         {
-            return "{\"PartNr\": \"" + wjp.ItemId +
+            return "{\"PartId\": \"" + wjp.Id +
+                    "\",\"PartNr\": \"" + wjp.ItemId +
                     "\",\"PartDesc\": \"" + wjp.ItemDesc +
                     "\",\"Quantity\": \"" + (1).ToString() +
                     "\",\"Price\": \"" + wjp.ItemPrice +

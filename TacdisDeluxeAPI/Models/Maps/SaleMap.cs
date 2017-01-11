@@ -10,7 +10,8 @@ namespace TacdisDeluxeAPI.Models.Maps
     public class SaleMap : EntityTypeConfiguration<SaleEntity>
     {
         public SaleMap()
-        {
+        {             
+
             HasMany<VehicleEntity>(s => s.Vehicles)
                 .WithMany(s => s.Sales)
                 .Map(m =>
@@ -46,6 +47,7 @@ namespace TacdisDeluxeAPI.Models.Maps
                     m.MapLeftKey("SaleId");
                     m.MapRightKey("PayerId");
                 });
+            
         }
     }
 }
