@@ -15,6 +15,7 @@ namespace TacdisDeluxeAPI.Models
         {
             WOJ_OPList = new List<WoOpEntitys>();
             WOJ_PartList = new List<PartEntity>();
+            WOJ_PartList_Ids = new List<IdAndAmountEntity>();
         }
 
         public WoKitsEntity(string wjkCode)
@@ -29,7 +30,7 @@ namespace TacdisDeluxeAPI.Models
             TotCost = 0;
             foreach (var item in WOJ_PartList)
             {
-                TotCost += item.ItemPrice;
+                TotCost += item.ItemPrice; //* WOJ_PartList_Ids.Where(p => p.Id == item.Id).FirstOrDefault().Amount;
             }
             foreach (var item in WOJ_OPList)
             {
@@ -39,6 +40,7 @@ namespace TacdisDeluxeAPI.Models
 
         public virtual ICollection<WoOpEntitys> WOJ_OPList { get; set; }
         public virtual ICollection<PartEntity> WOJ_PartList { get; set; }
+        public virtual ICollection<IdAndAmountEntity> WOJ_PartList_Ids { get; set; }
 
         [Key]
         public int Id { get; set; }

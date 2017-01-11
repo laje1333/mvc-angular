@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Models;
 
 namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
@@ -28,7 +30,7 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             result = string.Join(separator, listLine);
             return result;
         }
-        
+
         private static string CreateLine(Models.WorkOrderEntity WO)
         {
             WO.UpdateTotCost();
@@ -117,7 +119,7 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             result = string.Join(separator, listLine);
             return result;
         }
-        
+
         private static string CreateLine(WoOpEntitys wjo)
         {
             return "{\"OPId\": \"" + wjo.Id +
@@ -130,30 +132,34 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
         }
 
         //WJP
-        internal static string GetWjpList(ICollection<PartEntity> wjpList)
+        internal static string GetWjpList(WoJobEntity woj)
         {
-            return "{\"wjp\":[" + CreateWjpLines(wjpList) + "]}";
+            return "{\"wjp\":[" + CreateWjpLines(woj) + "]}";
         }
 
-        private static string CreateWjpLines(ICollection<PartEntity> wjpList)
+        private static string CreateWjpLines(WoJobEntity woj)
         {
             string result = "";
             List<string> listLine = new List<string>();
-            foreach (var wjp in wjpList)
+            //var wojDto = Mapper.Map<WoJobEntity, WoJobDto>(new WoJobEntity());
+
+            foreach (var wjp in woj.WOJ_PartList)
             {
-                listLine.Add(CreateLine(wjp));
+                double amount = woj.WOJ_PartList_Ids.Where(p => p.Id == wjp.Id).FirstOrDefault().Amount;
+
+                listLine.Add(CreateLine(wjp, amount));
             }
             result = string.Join(separator, listLine);
             return result;
         }
 
-        private static string CreateLine(PartEntity wjp)
+        private static string CreateLine(PartEntity wjp, double amount)
         {
             return "{\"PartId\": \"" + wjp.Id +
                     "\",\"PartNr\": \"" + wjp.ItemId +
                     "\",\"PartDesc\": \"" + wjp.ItemDesc +
-                    "\",\"Quantity\": \"" + (1).ToString() +
-                    "\",\"Price\": \"" + wjp.ItemPrice +
+                    "\",\"Quantity\": \"" + amount +
+                    "\",\"Price\": \"" + wjp.ItemPrice * amount +
                     "\"}";
         }
 
