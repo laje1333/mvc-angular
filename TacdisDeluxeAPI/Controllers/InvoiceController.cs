@@ -79,7 +79,7 @@ namespace TacdisDeluxeAPI.Controllers
                     var originalSalesman = db.Salesmen.Single(i => i.Id == invoice.Salesman.Id);
                     var originalPayer = db.Payers.Single(i => i.Id == invoice.Payer.Id);
                     var originalInvoice = db.Invoices.Single(i => i.Id == invoice.Id);
-                    var rows = originalInvoice.InvoiceRows.Where(r => invoice.InvoiceRows.Select(x => x.Id).
+                    var rowsToDelete = originalInvoice.InvoiceRows.Where(r => invoice.InvoiceRows.Select(x => x.Id).
                         Contains(r.Id) == false).ToList();
 
                     if (!InvoiceValidator.IsEqual(originalSalesman, invoice.Salesman))
@@ -88,8 +88,8 @@ namespace TacdisDeluxeAPI.Controllers
                     if (!InvoiceValidator.IsEqual(originalPayer, invoice.Payer))
                         db.Entry(originalPayer).CurrentValues.SetValues(invoice.Payer);
 
-                    if (rows.Any())
-                        db.InvoiceRows.RemoveRange(rows);
+                    if (rowsToDelete.Any())
+                        db.InvoiceRows.RemoveRange(rowsToDelete);
 
                     db.Entry(originalInvoice).CurrentValues.SetValues(invoice);
 

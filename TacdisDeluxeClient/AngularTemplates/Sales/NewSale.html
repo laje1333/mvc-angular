@@ -73,7 +73,7 @@
 
                 </table>
                 <p></p>
-                <a class="btn btn-success" ng-disabled="!saleRec.Salesman.FirstName && !saleRec.Payers.FirstName" ng-click="PostOrUpdateSale()">Save</a>
+                <a class="btn btn-success" ng-disabled="(!saleRec.Salesman.FirstName || !saleRec.Payers.FirstName || !(record.length > 0))" ng-click="PostOrUpdateSale()">Save</a>
                 <a class="btn btn-warning" ng-disabled="allOk" ng-click="PostSale()">Done and bubbel</a>
             </div>
         </div>

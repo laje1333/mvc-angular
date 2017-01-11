@@ -60,7 +60,13 @@ tacdisDeluxeApp.controller("PartsController", ["$scope", "NgTableParams", "$http
         //searchText.animate({ width: 'toggle' }, 150).focus();
         var animating = false;
         searchText.show().animate({ width: 200 }, { duration: 150, queue: false }).focus();
-        searchText.blur(function () { $(this).animate({ width: 0 }, { duration: 150, queue: false, complete: function(){ $(this).hide().val(""); } }); }); // Fetast enradare vinner :-)
+        searchText.blur(function () {
+            $(this).animate({ width: 0 }, {
+                duration: 150, queue: false, complete: function () {
+                    $(this).hide().val("");
+                }
+            });
+        });
     }
 
     $scope.deletePart = function (item) {
