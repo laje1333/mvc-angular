@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using AutoMapper;
+using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Models;
 using TacdisDeluxeAPI.Models.Enums;
 
-namespace TacdisDeluxeAPI.DTO.validators
+namespace TacdisDeluxeAPI.Helpers.Invoice
 {
-    public class InvoiceValidator
+    public class InvoiceHelper
     {
         public static InvoiceDto ValidateAndUpdateInvoiceDto(InvoiceDto invoice)
         {
@@ -188,6 +187,7 @@ namespace TacdisDeluxeAPI.DTO.validators
             }
             return invoiceRows;
         }
+
         private static string GetRegNumber(int id)
         {
             string regNumber;
