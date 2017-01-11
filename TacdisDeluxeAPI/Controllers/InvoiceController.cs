@@ -50,7 +50,7 @@ namespace TacdisDeluxeAPI.Controllers
                 result.Add(Mapper.Map<InvoiceEntity, InvoiceDto>(invoice));
             }
 
-            return result.OrderBy(r => r.InvoiceNumber).ToList();
+            return result.OrderByDescending(r => r.InvoiceNumber).ToList();
         }
 
         [System.Web.Http.Route("api/invoice/UpdateInvoice/Update")]
@@ -153,17 +153,24 @@ namespace TacdisDeluxeAPI.Controllers
 
         [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder")]
         [System.Web.Http.HttpPost]
-        public IHttpActionResult CreateInvoiceFromWorkOrder(WorkOrderDto workOrderDto)
+        public IHttpActionResult CreateInvoiceFromWorkOrder(string workOrderId)
         {
             var invoice = new InvoiceEntity();
 
+            var woh = new WorkOrderEntity();
+
+            using (var db = new DBContext())
+            {
+                 woh = db.WorkOrder.SingleOrDefault(p => p.WoNr.ToString() == workOrderId);
+            }
+
             try
             {
-                //invoice = InvoiceHelper.CreateInvoiceEntityFromWorkOrderDto(workOrderDto);
+                invoice = InvoiceHelper.CreateInvoiceEntityFromWorkOrder(woh);
             }
             catch (Exception ex)
             {
-                return BadRequest("CreateInvoiceFromSales faild!");
+                return BadRequest("CreateInvoiceFromWorkOrder faild!");
             }
 
             try

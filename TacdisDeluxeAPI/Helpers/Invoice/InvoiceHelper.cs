@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using TacdisDeluxeAPI.DTO;
@@ -50,7 +51,7 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
                 DebitCredit = "Debit",
                 WoNumber = 0,
                 JobNumber = string.Empty,
-                Payer = GetPayer(salesDto.PayerIds.First()),
+                Payer = GetPayer(salesDto.PayerIds.First().ToString()),
                 InvoiceRows = new List<InvoiceRowEntity>()
             };
 
@@ -97,26 +98,60 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
             return invoice;
         }
 
-        public static InvoiceEntity CreateInvoiceEntityFromWorkOrderDto(WorkOrderEntity workOrderDto)
+        public static InvoiceEntity CreateInvoiceEntityFromWorkOrder(WorkOrderEntity workOrder)
         {
             var invoice = new InvoiceEntity
             {
                 InvoiceNumber = GetInvoiceNumber(),
-                //Salesman = workOrderDto.Salesman,
+                Salesman = workOrder.RespBy,
                 InvoiceState = InvoiceState.Preliminary,
-                InvoiceDate = workOrderDto.CreatedDate,
-                DueDate = workOrderDto.CreatedDate.AddDays(30),
+                InvoiceDate = workOrder.CreatedDate,
+                DueDate = workOrder.CreatedDate.AddDays(30),
                 DebitCredit = "Debit",
-                WoNumber = workOrderDto.WoNr,
-                //JobNumber = string.Join(", ", workOrderDto.WOJ_Ids),
-                //Payer = GetPayer(workOrderDto.PayerIds.First()),
-                InvoiceRows = new List<InvoiceRowEntity>()
+                WoNumber = workOrder.WoNr,
+                JobNumber = GetJobNumber(workOrder.WOJ_List),
+                Payer = workOrder.MainPayer,
+                InvoiceRows = new List<InvoiceRowEntity>(),
+                RegNumber = workOrder.RegNr
             };
+
+            if (workOrder.WOJ_List.Any())
+            {
+                foreach (var job in workOrder.WOJ_List)
+                {
+                    if (job.WOJ_PartList_Ids.Any())
+                    {
+                        ICollection<IdAndAmountDto> partsIds = null;
+
+                        foreach (var Ia in job.WOJ_PartList_Ids)
+                        {
+                            partsIds.Add(Mapper.Map<IdAndAmountEntity, IdAndAmountDto>(Ia));
+                        }
+
+                        var rows = GetInvoiceRowFromParts(partsIds);
+
+                        foreach (var row in rows)
+                        {
+                            invoice.InvoiceRows.Add(row);
+                        }
+                    } 
+                }
+            }
+
+            if (invoice.InvoiceRows.Count > 0)
+            {
+                invoice.Vat = invoice.InvoiceRows.FirstOrDefault().Vat;
+
+                foreach (var row in invoice.InvoiceRows)
+                {
+                    invoice.InvoiceAmount += row.InvoiceRowAmount;
+                }
+            }
 
             return invoice;
         }
 
-        private static List<InvoiceRowEntity> GetInvoiceRowFromParts(IEnumerable<IdAndAmountDto> partsIds)
+        private static List<InvoiceRowEntity> GetInvoiceRowFromParts(ICollection<IdAndAmountDto> partsIds)
         {
             var invoiceRows = new List<InvoiceRowEntity>();
 
@@ -218,11 +253,11 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
             }
         }
 
-        private static PayerEntity GetPayer(int id)
+        private static PayerEntity GetPayer(string id)
         {
             using (var db = new DBContext())
             {
-                var payer = db.Payers.Single(p => p.Id == id);
+                var payer = db.Payers.Single(p => p.Id == int.Parse(id));
                 return payer;
             }
         }
@@ -243,6 +278,17 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
                 var employ = db.Salesmen.Single(s => s.EmployeeNumber == salesman.EmployeeNumber);
                 return employ != null ? Mapper.Map<SalesmanEntity, SalesmanDto>(employ) : salesman;
             }
+        }
+
+        private static string GetJobNumber(ICollection<WoJobEntity> WOJ_List)
+        {
+            if (WOJ_List.Any())
+            {
+                var jobs = WOJ_List.Select(job => job.WoJNr).ToList();
+                return string.Join(", ", jobs.ToArray()); 
+            }
+            
+            return string.Empty;
         }
 
         public static bool IsEqual(PayerEntity x, PayerEntity y)
