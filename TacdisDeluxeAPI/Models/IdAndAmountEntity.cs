@@ -14,7 +14,7 @@ namespace TacdisDeluxeAPI.Models
         public IdAndAmountEntity()
         { }
 
-        public IdAndAmountEntity(int id, int amount)
+        public IdAndAmountEntity(int id, double amount)
         {
             Id = id;
             Amount = amount;

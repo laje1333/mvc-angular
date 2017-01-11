@@ -448,16 +448,29 @@ namespace TacdisDeluxeAPI.Controllers
         [System.Web.Http.Route("AddWJP")]
         public void AddWJP(string wohId, string wojId, string wjpCode, string quantity)
         {
-
             using (DBContext c = new DBContext())
             {
                 PartEntity part = c.Parts.Where(p => p.ItemId.ToString() == wjpCode).Single();
                 var woj = GetWoJ(wohId, wojId, c);
                 woj.WOJ_PartList.Add(part);
 
-                //var wojDto = Mapper.Map<WoJobEntity, WoJobDto>(woj);
-
-                woj.WOJ_PartList_Ids.Add(new IdAndAmountEntity(part.Id, int.Parse(quantity)));
+                IdAndAmountEntity exist = null;
+                foreach (var item in woj.WOJ_PartList_Ids)
+                {
+                    if (item.Id == part.Id)
+                    {
+                        exist = item;
+                        break;
+                    }
+                }
+                if (exist == null)
+                {
+                    woj.WOJ_PartList_Ids.Add(new IdAndAmountEntity(part.Id, double.Parse(quantity)));
+                }
+                else
+                {
+                    exist.Amount += double.Parse(quantity);
+                }
 
                 c.SaveChanges();
             }

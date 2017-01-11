@@ -208,6 +208,7 @@ tacdisDeluxeApp.controller("WorkOrderHeaderController", ["$scope", "$rootScope",
             data: wohData
         }).success(function () {
             feedbackPopup('Successefully added new Workorder', { level: 'success', timeout: 2000 });
+            $scope.GetWOHList();
         });
     }
 
@@ -226,6 +227,7 @@ tacdisDeluxeApp.controller("WorkOrderJobController", ["$scope", "$rootScope", "N
             params: { wohId: $rootScope.currentWoh }
         }).success(function () {
             feedbackPopup('Successefully added new Workorder Job', { level: 'success', timeout: 2000 });
+            $scope.GetWOJList();
         });
     }
     
@@ -240,6 +242,7 @@ tacdisDeluxeApp.controller("WorkOrderJobController", ["$scope", "$rootScope", "N
             params: { wohId: $rootScope.currentWoh, wojId: itemWoj }
         }).success(function () {
             feedbackPopup('Successefully removed Workorder Job', { level: 'success', timeout: 2000 });
+            $scope.GetWOJList();
         });
     }
 
@@ -276,6 +279,7 @@ tacdisDeluxeApp.controller("WOActiveKitsController", ["$scope", "$rootScope", "N
             }
         }).success(function () {
             feedbackPopup('Successefully added new Kit', { level: 'success', timeout: 2000 });
+            $scope.GetWJKList();
         });
     }
 
@@ -308,6 +312,7 @@ tacdisDeluxeApp.controller("WOActiveKitsController", ["$scope", "$rootScope", "N
             params: { wohId: $rootScope.currentWoh, wojId: $rootScope.currentWoJ, wjkId: wjkId }
         }).success(function () {
             feedbackPopup('Successefully removed Workorder Job Kit', { level: 'success', timeout: 2000 });
+            $scope.GetWJKList();
         });
     }
 }]);
@@ -326,6 +331,7 @@ tacdisDeluxeApp.controller("WOActiveOpController", ["$scope", "$rootScope", "NgT
             }
         }).success(function () {
             feedbackPopup('Successefully added new Operation', { level: 'success', timeout: 2000 });
+            $scope.GetWJOList();
         });
     }
 
@@ -358,6 +364,7 @@ tacdisDeluxeApp.controller("WOActiveOpController", ["$scope", "$rootScope", "NgT
             params: { wohId: $rootScope.currentWoh, wojId: $rootScope.currentWoJ, wjoId: wjoId }
         }).success(function () {
             feedbackPopup('Successefully removed Workorder Job Operation', { level: 'success', timeout: 2000 });
+            $scope.GetWJOList();
         });
     }
 }]);
@@ -377,6 +384,7 @@ tacdisDeluxeApp.controller("WOActivePartController", ["$scope", "$rootScope", "N
             }
         }).success(function () {
             feedbackPopup('Successefully added new Part', { level: 'success', timeout: 2000 });
+            $scope.GetWJPList();
         });
     }
 
@@ -409,6 +417,7 @@ tacdisDeluxeApp.controller("WOActivePartController", ["$scope", "$rootScope", "N
             params: { wohId: $rootScope.currentWoh, wojId: $rootScope.currentWoJ, wjpId: wjpId }
         }).success(function () {
             feedbackPopup('Successefully removed Workorder Job Part', { level: 'success', timeout: 2000 });
+            $scope.GetWJPList();
         });
     }
 }]);
