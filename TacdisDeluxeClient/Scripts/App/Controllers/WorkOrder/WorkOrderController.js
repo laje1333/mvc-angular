@@ -154,7 +154,7 @@
         $http({
             method: 'POST',
             url: "http://localhost:57661/api/workorder/PostWoJData",
-            data: statusData 
+            data: statusData
         }).success(function () {
             feedbackPopup('Successefully saved', { level: 'success', timeout: 2000 });
         });
@@ -205,11 +205,17 @@
     $scope.WOH_Finalize = function (itemWoj) {
         $http({
             method: 'POST',
-            url: "http://localhost:57661/api/workorder/Finalize",
+            url: 'http://localhost:57661/api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder',
             params: { wohId: $rootScope.currentWoh }
-        }).success(function () {
-            feedbackPopup('Successefully created a Workorder invoice', { level: 'success', timeout: 2000 });
-        });
+        }).
+         then(function (response) {
+             feedbackPopup('Invoice has been created!', { level: 'success', timeout: 4000 });
+             $scope.ok = "It's good";
+         }, function (response) {
+             feedbackPopup('All data needed was not provided!', { level: 'warning', timeout: 4000 });
+             $scope.statusCode = response.statusCode;
+         }
+         );
     }
 });
 
@@ -284,7 +290,7 @@ tacdisDeluxeApp.controller("WorkOrderJobController", ["$scope", "$rootScope", "N
             $scope.GetWOJList();
         });
     }
-    
+
     $scope.WOJ_Select = function (itemWoj) {
         $rootScope.currentWoJ = itemWoj;
     }
