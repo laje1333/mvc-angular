@@ -10,6 +10,7 @@ namespace TacdisDeluxeAPI.Models
     {
         public WorkOrderJobMap()
         {
+
             HasMany<WoKitsEntity>(s => s.WOJ_KitList)
                 .WithRequired(s => s.WoJob)
                 .Map(m => m.MapKey("WoJob_ID"));
@@ -26,6 +27,10 @@ namespace TacdisDeluxeAPI.Models
                     m.MapLeftKey("WoJob_ID");
                     m.MapRightKey("PartId");
                 });
+
+            HasMany<IdAndAmountEntity>(s => s.WOJ_PartList_Ids)
+                .WithOptional(s => s.WoJob)
+                .Map(m => m.MapKey("WoJob_ID"));
         }
     }
 }

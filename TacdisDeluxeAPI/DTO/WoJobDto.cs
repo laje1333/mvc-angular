@@ -16,6 +16,7 @@ namespace TacdisDeluxeAPI.DTO
     {
         public WoJobDto()
         {
+
         }
 
         public WoJobDto(WoJobEntity wojEnt)
@@ -69,6 +70,6 @@ namespace TacdisDeluxeAPI.DTO
 
         public int[] WOJ_KitList_Ids { get; set; }
         public int[] WOJ_OPList_Ids { get; set; }
-        public ICollection<IdAndAmountDto> WOJ_PartList_Ids { get; set; }
+        public ICollection<IdAndAmountEntity> WOJ_PartList_Ids { get; set; }
     }
 }

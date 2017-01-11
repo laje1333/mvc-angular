@@ -18,6 +18,7 @@ namespace TacdisDeluxeAPI.Models
         {
         }
 
+        public DbSet<IdAndAmountEntity> IdAmounts { get; set; }
         public DbSet<PartEntity> Parts { get; set; }
         public DbSet<PayerEntity> Payers { get; set; }
         public DbSet<SaleEntity> Sales { get; set; }
@@ -55,6 +56,7 @@ namespace TacdisDeluxeAPI.Models
             builder.Entity<WoKitsEntity>().ToTable("WorkOrderKits");
             builder.Entity<WoOpEntitys>().ToTable("WorkOrderOperations");
 
+            builder.Entity<IdAndAmountEntity>().ToTable("IdAndAmount");
             builder.Entity<WorkshopInventoryItem>().ToTable("WorkshopInventoryItem");
             builder.Entity<MainInventoryItem>().ToTable("MainInventoryItem");
 

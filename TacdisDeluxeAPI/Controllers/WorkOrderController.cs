@@ -272,7 +272,14 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 var woh = GetWoh(wohId, c);
                 var woj = new WoJobEntity();
-                woj.WoJNr = woh.WOJ_List.OrderByDescending(p => p.WoJNr).FirstOrDefault().WoJNr + 1;
+                if (woh.WOJ_List.Count > 0)
+                {
+                    woj.WoJNr = woh.WOJ_List.OrderByDescending(p => p.WoJNr).FirstOrDefault().WoJNr + 1;
+                }
+                else
+                {
+                    woj.WoJNr = 0;
+                }
                 woh.WOJ_List.Add(woj);
                 c.SaveChanges();
             }
@@ -431,9 +438,9 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext c = new DBContext())
             {
-                var wjpList = GetWoJ(wohId, wojId, c).WOJ_PartList;
+                var woj = GetWoJ(wohId, wojId, c);
 
-                return WohListData.GetWjpList(wjpList);
+                return WohListData.GetWjpList(woj);
             }
         }
 
@@ -445,9 +452,13 @@ namespace TacdisDeluxeAPI.Controllers
             using (DBContext c = new DBContext())
             {
                 PartEntity part = c.Parts.Where(p => p.ItemId.ToString() == wjpCode).Single();
-                ICollection<PartEntity> wjpList = GetWoJ(wohId, wojId, c).WOJ_PartList;
+                var woj = GetWoJ(wohId, wojId, c);
+                woj.WOJ_PartList.Add(part);
 
-                wjpList.Add(part);
+                //var wojDto = Mapper.Map<WoJobEntity, WoJobDto>(woj);
+
+                woj.WOJ_PartList_Ids.Add(new IdAndAmountEntity(part.Id, int.Parse(quantity)));
+
                 c.SaveChanges();
             }
         }
@@ -460,7 +471,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 var woj = GetWoJ(wohId, wojId, c);
                 var item = woj.WOJ_PartList.Where(p => p.Id.ToString() == wjpId).Single();
-                c.Parts.Remove(item);
+                woj.WOJ_PartList.Remove(item);
                 c.SaveChanges();
             }
         }

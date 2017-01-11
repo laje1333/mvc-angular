@@ -8,18 +8,26 @@ using System.Web;
 
 namespace TacdisDeluxeAPI.Models
 {
-    public class IdAndAmountDto
+    [Table("IdAndAmount")]
+    public class IdAndAmountEntity
     {
-        public IdAndAmountDto()
+        public IdAndAmountEntity()
         { }
 
-        public IdAndAmountDto(int id, int amount)
+        public IdAndAmountEntity(int id, int amount)
         {
             Id = id;
             Amount = amount;
         }
-        
+
+        [Key]
+        public int TableID { get; set; }
+
         public int Id { get; set; }
-        public int Amount { get; set; }
+        public double Amount { get; set; }
+
+
+        [IgnoreDataMember]
+        public WoJobEntity WoJob { get; set; }
     }
 }

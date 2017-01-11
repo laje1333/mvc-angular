@@ -16,21 +16,28 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     //Used for searching parts
     $scope.artName = "";
     $scope.artNum = "";
-
+    
     //Record that holds SaleItems
-    $rootScope.record = [];
-
+    if ($rootScope.record == null) {
+        $rootScope.totalCost = 0;
+        $rootScope.record = [];
+    }
+    
+    var test = $rootScope.record.length;
     //TotalCost of the sale
-    $rootScope.totalCost = 0;
+    
 
     //SaleRec holds the sale items
-    $rootScope.saleRec = {};
-    $rootScope.saleRec.PartIds = [];
-    $rootScope.saleRec.VehicleIds = [];
-    $rootScope.saleRec.AddonIds = [];
-    $rootScope.saleRec.Salesman = {};
-    $rootScope.saleRec.Payers = [];
-    $rootScope.saleRec.PayerIds = [];
+    if ($rootScope.saleRec == null) {
+        $rootScope.saleRec = {};
+        $rootScope.saleRec.PartIds = [];
+        $rootScope.saleRec.VehicleIds = [];
+        $rootScope.saleRec.AddonIds = [];
+        $rootScope.saleRec.Salesman = {};
+        $rootScope.saleRec.Payers = [];
+        $rootScope.saleRec.PayerIds = [];
+    }
+    
 
     $scope.panes = [
         { title: "Vehicles", template: "AngularTemplates/Sales/Panes/Vehicles.html", active: true },
@@ -123,23 +130,57 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         }
         $http(req).
          then(function (response) {
-             $rootScope.saleRec = [];
+             $rootScope.saleRec = {};
+             $rootScope.saleRec.PartIds = [];
+             $rootScope.saleRec.VehicleIds = [];
+             $rootScope.saleRec.AddonIds = [];
+             $rootScope.saleRec.Salesman = {};
+             $rootScope.saleRec.Payers = [];
+             $rootScope.saleRec.PayerIds = [];
+             $rootScope.record = [];
+             $rootScope.totalCost = 0;
              feedbackPopup('You got the sale!', { level: 'success', timeout: 4000 });
              for (var i = 0; i < response.data.Parts.length; i++) {
-                 $rootScope.saleRec.PartIds.push({ Id: response.data.Parts[i].ItemId, Amount: 1});
+                 $rootScope.saleRec.PartIds.push({ Id: response.data.Parts[i].ItemId, Amount: 1 });
+                 $rootScope.record.push({ 'Type': 'Part', 'Name': response.data.Parts[i].ItemName, 'Number': response.data.Parts[i].ItemId, 'Price': response.data.Parts[i].ItemPrice, 'Amount': 1 });
+                 $rootScope.totalCost += response.data.Parts[i].ItemPrice;
              }
-             for (var i = 0; i < response.data.Vehicles.length; i++) {
-                 $rootScope.saleRec.VehicleIds.push(response.data.Vehicles[i].ItemId);
+             for (var i = 0; i < response.data.Veh.length; i++) {
+                 $rootScope.saleRec.VehicleIds.push(response.data.Veh[i].ItemId);
+                 $rootScope.record.push({ 'Type': 'Vehicle', 'Name': response.data.Veh[i].ItemName, 'Number': response.data.Veh[i].ItemId, 'Price': response.data.Veh[i].ItemPrice, 'Amount': 1 });
+                 $rootScope.totalCost += response.data.Veh[i].ItemPrice;
              }
              for (var i = 0; i < response.data.Addons.length; i++) {
                  $rootScope.saleRec.AddonIds.push(response.data.Addons[i].ItemId);
              }
              $rootScope.saleRec.Salesman = response.data.Salesman;
              $rootScope.saleRec.Status = response.data.Status;
-             $rootScope.saleRec.PayerIds = response.data.Payers[0];
+             $rootScope.saleRec.PayerIds = response.data.Payers[0].Id;
+             $rootScope.saleRec.Payers = response.data.Payers[0];
+             $rootScope.saleRec.Id = response.data.Id;
+             window.location = 'sales#/newSale';
 
          }, function (response) {
-             feedbackPopup('Something went wrong!', { level: 'warning', timeout: 4000 });
+             feedbackPopup(response.data.Message, { level: 'warning', timeout: 4000 });
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
+
+    $scope.DeleteSale = function (id) {
+        var req = {
+            method: 'Delete',
+            url: 'http://localhost:57661/api/Sales/DeleteSale',
+            headers: {},
+            params: {id: parseInt(id)}
+        }
+        $http(req).
+         then(function (response) {
+             var x = Maths.Arrays.BinarySearch($scope.allSales, id, 'Id');
+             $scope.allSales.splice(x, 1);
+             feedbackPopup('Sale deleted!', { level: 'success', timeout: 4000 });
+         }, function (response) {
+             feedbackPopup(response.data.Message, { level: 'warning', timeout: 4000 });
              $scope.statusCode = response.statusCode;
          }
          );
@@ -148,19 +189,17 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.PostOrUpdateSale = function () {
         var url = 'http://localhost:57661/api/Sales'
         var type = 'POST';
-        $rootScope.saleRec.Id = 5;
+
         if ($rootScope.saleRec.Id == null) {
             url += '/NewSale';
         } else {
-            type = 'PUT';
-            
+            type = 'PATCH';
             url += '/UpdateSale';
         }
         var req = {
             method: type,
             url: url,
-            headers: {},
-            params: {
+            data: {
                 Id: $rootScope.saleRec.Id,
                 Salesman: $rootScope.saleRec.Salesman,
                 VehicleIds: $rootScope.saleRec.VehicleIds,
@@ -178,7 +217,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
              feedbackPopup('Sale has been saved!', { level: 'success', timeout: 4000 });
              $rootScope.saleRec.Id = response.data;
          }, function (response) {
-             feedbackPopup('Something went wrong!', { level: 'warning', timeout: 4000 });
+             feedbackPopup(response.data.Message, { level: 'warning', timeout: 4000 });
              $scope.statusCode = response.statusCode;
          }
          );
