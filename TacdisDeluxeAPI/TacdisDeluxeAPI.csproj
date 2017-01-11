@@ -348,6 +348,10 @@
     <Compile Include="Migrations\201701110718066_IdAndAmountTable.Designer.cs">
       <DependentUpon>201701110718066_IdAndAmountTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701110947249_updateAmountToDouble.cs" />
+    <Compile Include="Migrations\201701110947249_updateAmountToDouble.Designer.cs">
+      <DependentUpon>201701110947249_updateAmountToDouble.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
     <Compile Include="Mockdata\VehicleData\Brand.cs" />
@@ -379,7 +383,9 @@
     <Compile Include="Models\AppUserManager.cs" />
     <Compile Include="Models\Enums\InvoiceState.cs" />
     <Compile Include="DTO\IdAndAmountDto.cs" />
-    <Compile Include="Models\IdAndAmountEntity.cs" />
+    <Compile Include="Models\IdAndAmountEntity.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Models\IdentityContext.cs" />
     <Compile Include="Models\InvoiceEntity.cs" />
     <Compile Include="Models\InvoiceRowEntity.cs" />
@@ -502,6 +508,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701110718066_IdAndAmountTable.resx">
       <DependentUpon>201701110718066_IdAndAmountTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701110947249_updateAmountToDouble.resx">
+      <DependentUpon>201701110947249_updateAmountToDouble.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

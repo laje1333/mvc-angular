@@ -15,7 +15,7 @@ namespace TacdisDeluxeAPI.Models
         {
             WOJ_OPList = new List<WoOpEntitys>();
             WOJ_PartList = new List<PartEntity>();
-            WOJ_PartList_Ids = new List<IdAndAmountEntity>();
+            //WOJ_PartList_Ids = new List<IdAndAmountEntity>();
         }
 
         public WoKitsEntity(string wjkCode)
@@ -40,7 +40,7 @@ namespace TacdisDeluxeAPI.Models
 
         public virtual ICollection<WoOpEntitys> WOJ_OPList { get; set; }
         public virtual ICollection<PartEntity> WOJ_PartList { get; set; }
-        public virtual ICollection<IdAndAmountEntity> WOJ_PartList_Ids { get; set; }
+        //public virtual ICollection<IdAndAmountEntity> WOJ_PartList_Ids { get; set; }
 
         [Key]
         public int Id { get; set; }
