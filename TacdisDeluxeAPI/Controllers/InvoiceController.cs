@@ -32,7 +32,7 @@ namespace TacdisDeluxeAPI.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
             var result = invoices.Select(Mapper.Map<InvoiceEntity, InvoiceDto>).OrderByDescending(r => r.InvoiceNumber).ToList();
@@ -48,7 +48,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 invoiceDto = InvoiceHelper.ValidateAndUpdateInvoiceDto(invoiceDto);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("Validation fail!");
             }
@@ -59,7 +59,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 invoice = Mapper.Map<InvoiceDto, InvoiceEntity>(invoiceDto);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("Invoice mapping error!");
             }
@@ -115,7 +115,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 invoice = InvoiceHelper.CreateInvoiceEntityFromSalesDto(salesDto);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("CreateInvoiceFromSales faild!");
             }
@@ -159,7 +159,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 invoice = InvoiceHelper.CreateInvoiceEntityFromWorkOrder(woh);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("CreateInvoiceFromWorkOrder faild!");
             }
