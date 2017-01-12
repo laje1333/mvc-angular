@@ -121,12 +121,7 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
                 {
                     if (job.WOJ_PartList_Ids.Any())
                     {
-                        ICollection<IdAndAmountDto> partsIds = null;
-
-                        foreach (var Ia in job.WOJ_PartList_Ids)
-                        {
-                            partsIds.Add(Mapper.Map<IdAndAmountEntity, IdAndAmountDto>(Ia));
-                        }
+                        List<IdAndAmountDto> partsIds = job.WOJ_PartList_Ids.Select(Mapper.Map<IdAndAmountEntity, IdAndAmountDto>).ToList();
 
                         var rows = GetInvoiceRowFromParts(partsIds);
 
@@ -134,7 +129,7 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
                         {
                             invoice.InvoiceRows.Add(row);
                         }
-                    } 
+                    }
                 }
             }
 
@@ -167,7 +162,7 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
                         Description = part.ItemDesc,
                         UnitCost = part.ItemPrice,
                         Vat = part.VAT,
-                        Quantity = IA.Amount,
+                        Quantity = (int)IA.Amount,
                         InvoiceRowAmount = part.ItemPrice * IA.Amount
                     });
                 }
@@ -243,16 +238,7 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
                 return ++newInvoiceNumber;
             }
         }
-
-        private static int GetCustomerNumber()
-        {
-            using (var db = new DBContext())
-            {
-                var newCustomerNumber = db.Payers.Max(c => c.CustomerNumber);
-                return ++newCustomerNumber;
-            }
-        }
-
+        
         private static PayerEntity GetPayer(string id)
         {
             using (var db = new DBContext())
@@ -262,32 +248,14 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
             }
         }
 
-        private static PayerDto GetCustomer(PayerDto payer)
-        {
-            using (var db = new DBContext())
-            {
-                var customer = db.Payers.Single(p => p.Id == payer.Id);
-                return customer != null ? Mapper.Map<PayerEntity, PayerDto>(customer) : payer;
-            }
-        }
-
-        private static SalesmanDto GetSalesman(SalesmanDto salesman)
-        {
-            using (var db = new DBContext())
-            {
-                var employ = db.Salesmen.Single(s => s.EmployeeNumber == salesman.EmployeeNumber);
-                return employ != null ? Mapper.Map<SalesmanEntity, SalesmanDto>(employ) : salesman;
-            }
-        }
-
         private static string GetJobNumber(ICollection<WoJobEntity> WOJ_List)
         {
             if (WOJ_List.Any())
             {
                 var jobs = WOJ_List.Select(job => job.WoJNr).ToList();
-                return string.Join(", ", jobs.ToArray()); 
+                return string.Join(", ", jobs.ToArray());
             }
-            
+
             return string.Empty;
         }
 

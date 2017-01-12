@@ -1,14 +1,17 @@
 ﻿<!--<tframe data-title="New sale" style="width:2600px">-->
 <tframe data-title="Workshop invoice maintenance">
-    <div ng-controller="SalesController">
+    <div ng-controller="SalesController" style="width:1110px">
 
         <div id="first_row" class="row border-for-header">
             <div id="model" class="col-md-12">
-                <div class="row">
+                <div class="row" style="height:20px">
                     <div class="col-md-2 text-left" style="border-right: 1px solid #AFAFAF"><b>New sale</b></div>
-                    <div class="col-md-2 text-left" style="border-right: 1px solid #AFAFAF">Salesman: {{saleRec.Salesman.FirstName}} {{saleRec.Salesman.LastName}}</div>
-                    <div class="col-md-2 text-left" style="border-right: 1px solid #AFAFAF">Payer: {{saleRec.Payers.FirstName}} {{saleRec.Payers.LastName}}</div>
-                    <div class="col-md-6 text-left">Id: {{saleRec.Id}}</div>
+                    <div class="col-md-2 text-left" style="border-right: 1px solid #AFAFAF" data-toggle="tooltip" title="{{saleRec.Salesman.LastName}} {{saleRec.Salesman.FirstName}}">Salesman: {{salesmanName}}</div>
+                    <div class="col-md-2 text-left" style="border-right: 1px solid #AFAFAF" title="{{saleRec.Payers.LastName}} {{saleRec.Payers.FirstName}}">Payer: {{payerName}}</div>
+                    <div class="col-md-2 text-left" style="border-right: 1px solid #AFAFAF">Id: {{saleRec.Id}}</div>
+                    <div class="col-md-4 text-right">
+                        <a class="btn " title="New" ng-click="clearSale()" ng-show="saleRec.Id">New Sale <span class="glyphicon glyphicon-edit"></span></a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http, SaleFactory, NgTableParams) {
+tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http, SaleFactory, NgTableParams, $location) {
 
     $scope.$on('$viewContentLoaded', hotlinkToMenu);
 
@@ -16,21 +16,24 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     //Used for searching parts
     $scope.artName = "";
     $scope.artNum = "";
+    
+    $scope.clearSale = function () {
+        $rootScope.totalCost = 0;
+        $rootScope.record = [];
+        $rootScope.saleRec = {};
+        $rootScope.saleRec.PartIds = [];
+        $rootScope.saleRec.VehicleIds = [];
+        $rootScope.saleRec.AddonIds = [];
+        $rootScope.saleRec.Salesman = {};
+        $rootScope.saleRec.Payers = [];
+        $rootScope.saleRec.PayerIds = [];
+        $rootScope.totalCost = 0;
+    }
 
-    //Record that holds SaleItems
-    $rootScope.record = [];
 
-    //TotalCost of the sale
-    $rootScope.totalCost = 0;
-
-    //SaleRec holds the sale items
-    $rootScope.saleRec = {};
-    $rootScope.saleRec.PartIds = [];
-    $rootScope.saleRec.VehicleIds = [];
-    $rootScope.saleRec.AddonIds = [];
-    $rootScope.saleRec.Salesman = {};
-    $rootScope.saleRec.Payers = [];
-    $rootScope.saleRec.PayerIds = [];
+    if ($rootScope.record == null || $rootScope.saleRec == null) {
+        $scope.clearSale();
+    }
 
     $scope.panes = [
         { title: "Vehicles", template: "AngularTemplates/Sales/Panes/Vehicles.html", active: true },
@@ -123,23 +126,52 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         }
         $http(req).
          then(function (response) {
-             $rootScope.saleRec = [];
-             feedbackPopup('You got the sale!', { level: 'success', timeout: 4000 });
+
+             $scope.clearSale();
+             
              for (var i = 0; i < response.data.Parts.length; i++) {
-                 $rootScope.saleRec.PartIds.push({ Id: response.data.Parts[i].ItemId, Amount: 1});
+                 $rootScope.saleRec.PartIds.push({ Id: response.data.Parts[i].ItemId, Amount: 1 });
+                 $rootScope.record.push({ 'Type': 'Part', 'Name': response.data.Parts[i].ItemName, 'Number': response.data.Parts[i].ItemId, 'Price': response.data.Parts[i].ItemPrice, 'Amount': 1 });
+                 $rootScope.totalCost += response.data.Parts[i].ItemPrice;
              }
-             for (var i = 0; i < response.data.Vehicles.length; i++) {
-                 $rootScope.saleRec.VehicleIds.push(response.data.Vehicles[i].ItemId);
+             for (var i = 0; i < response.data.Veh.length; i++) {
+                 $rootScope.saleRec.VehicleIds.push(response.data.Veh[i].ItemId);
+                 $rootScope.record.push({ 'Type': 'Vehicle', 'Name': response.data.Veh[i].ItemName, 'Number': response.data.Veh[i].ItemId, 'Price': response.data.Veh[i].ItemPrice, 'Amount': 1 });
+                 $rootScope.totalCost += response.data.Veh[i].ItemPrice;
              }
              for (var i = 0; i < response.data.Addons.length; i++) {
                  $rootScope.saleRec.AddonIds.push(response.data.Addons[i].ItemId);
              }
+
              $rootScope.saleRec.Salesman = response.data.Salesman;
              $rootScope.saleRec.Status = response.data.Status;
-             $rootScope.saleRec.PayerIds = response.data.Payers[0];
+             $rootScope.saleRec.PayerIds = response.data.Payers[0].Id;
+             $rootScope.saleRec.Payers = response.data.Payers[0];
+             $rootScope.saleRec.Id = response.data.Id;
+             feedbackPopup('You got the sale!', { level: 'success', timeout: 4000 });
+             $location.url('/newSale');
 
          }, function (response) {
-             feedbackPopup('Something went wrong!', { level: 'warning', timeout: 4000 });
+             feedbackPopup(response.data.Message, { level: 'warning', timeout: 4000 });
+             $scope.statusCode = response.statusCode;
+         }
+         );
+    }
+
+    $scope.DeleteSale = function (id) {
+        var req = {
+            method: 'Delete',
+            url: 'http://localhost:57661/api/Sales/DeleteSale',
+            headers: {},
+            params: {id: parseInt(id)}
+        }
+        $http(req).
+         then(function (response) {
+             var x = Maths.Arrays.BinarySearch($scope.allSales, id, 'Id');
+             $scope.allSales.splice(x, 1);
+             feedbackPopup('Sale deleted!', { level: 'success', timeout: 4000 });
+         }, function (response) {
+             feedbackPopup(response.data.Message, { level: 'warning', timeout: 4000 });
              $scope.statusCode = response.statusCode;
          }
          );
@@ -148,19 +180,17 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.PostOrUpdateSale = function () {
         var url = 'http://localhost:57661/api/Sales'
         var type = 'POST';
-        $rootScope.saleRec.Id = 5;
+
         if ($rootScope.saleRec.Id == null) {
             url += '/NewSale';
         } else {
-            type = 'PUT';
-            
+            type = 'PATCH';
             url += '/UpdateSale';
         }
         var req = {
             method: type,
             url: url,
-            headers: {},
-            params: {
+            data: {
                 Id: $rootScope.saleRec.Id,
                 Salesman: $rootScope.saleRec.Salesman,
                 VehicleIds: $rootScope.saleRec.VehicleIds,
@@ -178,7 +208,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
              feedbackPopup('Sale has been saved!', { level: 'success', timeout: 4000 });
              $rootScope.saleRec.Id = response.data;
          }, function (response) {
-             feedbackPopup('Something went wrong!', { level: 'warning', timeout: 4000 });
+             feedbackPopup(response.data.Message, { level: 'warning', timeout: 4000 });
              $scope.statusCode = response.statusCode;
          }
          );
@@ -187,7 +217,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
      $scope.PostSale = function () {
         var req = {
             method: 'POST',
-            url: 'http://localhost:57661/api/invoice/CreatInvoice/CreateInvoiceFromSales',
+            url: 'http://localhost:57661/api/invoice/CreateInvoice/CreateInvoiceFromSales',
             headers: {},
             data: {
                 Salesman: $rootScope.saleRec.Salesman,
@@ -354,11 +384,24 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         if (newValue.Id !== oldValue.Id) {
             $rootScope.saleRec.Payers = newValue;
             $rootScope.saleRec.PayerIds = newValue.Id;
+            if (($rootScope.saleRec.Payers.FirstName.length + $rootScope.saleRec.Payers.LastName.length) > 10) {
+                $scope.payerName = (($rootScope.saleRec.Payers.LastName + ' ' + $rootScope.saleRec.Payers.FirstName).slice(0, 10)) + '...';
+            } else {
+                $scope.payerName = $rootScope.saleRec.Payers.LastName + ' ' + $rootScope.saleRec.Payers.FirstName;
+            }
         }
     });
 
     $scope.$watch(function () { return SaleFactory.getSalesman(); }, function (newValue, oldValue) {
-        if (newValue !== oldValue) $rootScope.saleRec.Salesman = newValue;
+        if (newValue !== oldValue) {
+            $rootScope.saleRec.Salesman = newValue;
+            if (($rootScope.saleRec.Salesman.FirstName.length + $rootScope.saleRec.Salesman.LastName.length) > 10)
+            {
+                $scope.salesmanName = (($rootScope.saleRec.Salesman.LastName + ' ' + $rootScope.saleRec.Salesman.FirstName).slice(0, 10)) + '...';
+            } else {
+                $scope.salesmanName = $rootScope.saleRec.Salesman.LastName + ' ' + $rootScope.saleRec.Salesman.FirstName;
+            }
+        }
     });
 
     $scope.init();
@@ -368,23 +411,18 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider
         .when('/newSale', {
-            templateUrl: '/AngularTemplates/Sales/NewSale.html',
-            controller: 'SalesController'
+            templateUrl: '/AngularTemplates/Sales/NewSale.html'
         })
         .when('/oldSale', {
-            templateUrl: '/AngularTemplates/Sales/OldSale.html',
-            controller: 'SalesController'
+            templateUrl: '/AngularTemplates/Sales/OldSale.html'
         })
         .when('/newSalesman', {
-            templateUrl: '/AngularTemplates/Sales/NewSalesman.html',
-            controller: 'PayerSalesmanController'
+            templateUrl: '/AngularTemplates/Sales/NewSalesman.html'
         })
         .when('/newPayer', {
-            templateUrl: '/AngularTemplates/Sales/NewPayer.html',
-            controller: 'PayerSalesmanController'
+            templateUrl: '/AngularTemplates/Sales/NewPayer.html'
         })
         .when('/oldSalesmen', {
-            templateUrl: '/AngularTemplates/Sales/OldSalesmen.html',
-            controller: 'PayerSalesmanController'
+            templateUrl: '/AngularTemplates/Sales/OldSalesmen.html'
         });
 });

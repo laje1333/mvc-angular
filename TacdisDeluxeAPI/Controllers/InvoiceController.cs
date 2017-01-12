@@ -1,27 +1,19 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Helpers;
 using System.Web.Http;
-using System.Web.Http.Results;
-using System.Web.Mvc;
 using TacdisDeluxeAPI.DTO;
-using TacdisDeluxeAPI.Mockdata.InvoiceData;
 using TacdisDeluxeAPI.Models;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using TacdisDeluxeAPI.Helpers.Invoice;
 
 namespace TacdisDeluxeAPI.Controllers
 {
     public class InvoiceController : ApiController
     {
-        [System.Web.Http.Route("api/invoice/GetInvoice")]
-        [System.Web.Http.HttpGet]
+        [Route("api/invoice/GetInvoice")]
+        [HttpGet]
         public List<InvoiceDto> GetInvoice(string query)
         {
             var invoices = new List<InvoiceEntity>();
@@ -40,28 +32,23 @@ namespace TacdisDeluxeAPI.Controllers
             }
             catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
 
-            var result = new List<InvoiceDto>();
+            var result = invoices.Select(Mapper.Map<InvoiceEntity, InvoiceDto>).OrderByDescending(r => r.InvoiceNumber).ToList();
 
-            foreach (var invoice in invoices)
-            {
-                result.Add(Mapper.Map<InvoiceEntity, InvoiceDto>(invoice));
-            }
-
-            return result.OrderByDescending(r => r.InvoiceNumber).ToList();
+            return result;
         }
 
-        [System.Web.Http.Route("api/invoice/UpdateInvoice/Update")]
-        [System.Web.Http.HttpPost]
+        [Route("api/invoice/UpdateInvoice/Update")]
+        [HttpPost]
         public IHttpActionResult UpdateInvoice(InvoiceDto invoiceDto)
         {
             try
             {
                 invoiceDto = InvoiceHelper.ValidateAndUpdateInvoiceDto(invoiceDto);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("Validation fail!");
             }
@@ -72,7 +59,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 invoice = Mapper.Map<InvoiceDto, InvoiceEntity>(invoiceDto);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("Invoice mapping error!");
             }
@@ -118,8 +105,8 @@ namespace TacdisDeluxeAPI.Controllers
 
         }
 
-        [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromSales")]
-        [System.Web.Http.HttpPost]
+        [Route("api/invoice/CreateInvoice/CreateInvoiceFromSales")]
+        [HttpPost]
         public IHttpActionResult CreateInvoiceFromSales(SalesDto salesDto)
         {
             InvoiceEntity invoice;
@@ -128,7 +115,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 invoice = InvoiceHelper.CreateInvoiceEntityFromSalesDto(salesDto);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("CreateInvoiceFromSales faild!");
             }
@@ -151,8 +138,8 @@ namespace TacdisDeluxeAPI.Controllers
             return Ok(invoice.InvoiceNumber);
         }
 
-        [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder")]
-        [System.Web.Http.HttpPost]
+        [Route("api/invoice/CreateInvoice/CreateInvoiceFromWorkOrder")]
+        [HttpPost]
         public IHttpActionResult CreateInvoiceFromWorkOrder(string workOrderId)
         {
             var invoice = new InvoiceEntity();
@@ -161,14 +148,18 @@ namespace TacdisDeluxeAPI.Controllers
 
             using (var db = new DBContext())
             {
-                 woh = db.WorkOrder.SingleOrDefault(p => p.WoNr.ToString() == workOrderId);
+                woh = db.WorkOrder
+                    .Include(p => p.MainPayer)
+                    .Include(s => s.RespBy)
+                    .Include(w => w.WOJ_List.Select(i => i.WOJ_PartList_Ids))
+                    .SingleOrDefault(p => p.WoNr.ToString() == workOrderId);
             }
 
             try
             {
                 invoice = InvoiceHelper.CreateInvoiceEntityFromWorkOrder(woh);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest("CreateInvoiceFromWorkOrder faild!");
             }
