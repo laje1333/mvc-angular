@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http, SaleFactory, NgTableParams) {
+tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $http, SaleFactory, NgTableParams, $location) {
 
     $scope.$on('$viewContentLoaded', hotlinkToMenu);
 
@@ -17,18 +17,9 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
     $scope.artName = "";
     $scope.artNum = "";
     
-    //Record that holds SaleItems
-    if ($rootScope.record == null) {
+    $scope.clearSale = function () {
         $rootScope.totalCost = 0;
         $rootScope.record = [];
-    }
-    
-    var test = $rootScope.record.length;
-    //TotalCost of the sale
-    
-
-    //SaleRec holds the sale items
-    if ($rootScope.saleRec == null) {
         $rootScope.saleRec = {};
         $rootScope.saleRec.PartIds = [];
         $rootScope.saleRec.VehicleIds = [];
@@ -36,8 +27,13 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         $rootScope.saleRec.Salesman = {};
         $rootScope.saleRec.Payers = [];
         $rootScope.saleRec.PayerIds = [];
+        $rootScope.totalCost = 0;
     }
-    
+
+
+    if ($rootScope.record == null || $rootScope.saleRec == null) {
+        $scope.clearSale();
+    }
 
     $scope.panes = [
         { title: "Vehicles", template: "AngularTemplates/Sales/Panes/Vehicles.html", active: true },
@@ -130,16 +126,9 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         }
         $http(req).
          then(function (response) {
-             $rootScope.saleRec = {};
-             $rootScope.saleRec.PartIds = [];
-             $rootScope.saleRec.VehicleIds = [];
-             $rootScope.saleRec.AddonIds = [];
-             $rootScope.saleRec.Salesman = {};
-             $rootScope.saleRec.Payers = [];
-             $rootScope.saleRec.PayerIds = [];
-             $rootScope.record = [];
-             $rootScope.totalCost = 0;
-             feedbackPopup('You got the sale!', { level: 'success', timeout: 4000 });
+
+             $scope.clearSale();
+             
              for (var i = 0; i < response.data.Parts.length; i++) {
                  $rootScope.saleRec.PartIds.push({ Id: response.data.Parts[i].ItemId, Amount: 1 });
                  $rootScope.record.push({ 'Type': 'Part', 'Name': response.data.Parts[i].ItemName, 'Number': response.data.Parts[i].ItemId, 'Price': response.data.Parts[i].ItemPrice, 'Amount': 1 });
@@ -153,12 +142,14 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
              for (var i = 0; i < response.data.Addons.length; i++) {
                  $rootScope.saleRec.AddonIds.push(response.data.Addons[i].ItemId);
              }
+
              $rootScope.saleRec.Salesman = response.data.Salesman;
              $rootScope.saleRec.Status = response.data.Status;
              $rootScope.saleRec.PayerIds = response.data.Payers[0].Id;
              $rootScope.saleRec.Payers = response.data.Payers[0];
              $rootScope.saleRec.Id = response.data.Id;
-             window.location = 'sales#/newSale';
+             feedbackPopup('You got the sale!', { level: 'success', timeout: 4000 });
+             $location.url('/newSale');
 
          }, function (response) {
              feedbackPopup(response.data.Message, { level: 'warning', timeout: 4000 });
@@ -393,11 +384,24 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         if (newValue.Id !== oldValue.Id) {
             $rootScope.saleRec.Payers = newValue;
             $rootScope.saleRec.PayerIds = newValue.Id;
+            if (($rootScope.saleRec.Payers.FirstName.length + $rootScope.saleRec.Payers.LastName.length) > 10) {
+                $scope.payerName = (($rootScope.saleRec.Payers.LastName + ' ' + $rootScope.saleRec.Payers.FirstName).slice(0, 10)) + '...';
+            } else {
+                $scope.payerName = $rootScope.saleRec.Payers.LastName + ' ' + $rootScope.saleRec.Payers.FirstName;
+            }
         }
     });
 
     $scope.$watch(function () { return SaleFactory.getSalesman(); }, function (newValue, oldValue) {
-        if (newValue !== oldValue) $rootScope.saleRec.Salesman = newValue;
+        if (newValue !== oldValue) {
+            $rootScope.saleRec.Salesman = newValue;
+            if (($rootScope.saleRec.Salesman.FirstName.length + $rootScope.saleRec.Salesman.LastName.length) > 10)
+            {
+                $scope.salesmanName = (($rootScope.saleRec.Salesman.LastName + ' ' + $rootScope.saleRec.Salesman.FirstName).slice(0, 10)) + '...';
+            } else {
+                $scope.salesmanName = $rootScope.saleRec.Salesman.LastName + ' ' + $rootScope.saleRec.Salesman.FirstName;
+            }
+        }
     });
 
     $scope.init();
@@ -407,23 +411,18 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
 tacdisDeluxeApp.config(function ($routeProvider) {
     $routeProvider
         .when('/newSale', {
-            templateUrl: '/AngularTemplates/Sales/NewSale.html',
-            controller: 'SalesController'
+            templateUrl: '/AngularTemplates/Sales/NewSale.html'
         })
         .when('/oldSale', {
-            templateUrl: '/AngularTemplates/Sales/OldSale.html',
-            controller: 'SalesController'
+            templateUrl: '/AngularTemplates/Sales/OldSale.html'
         })
         .when('/newSalesman', {
-            templateUrl: '/AngularTemplates/Sales/NewSalesman.html',
-            controller: 'PayerSalesmanController'
+            templateUrl: '/AngularTemplates/Sales/NewSalesman.html'
         })
         .when('/newPayer', {
-            templateUrl: '/AngularTemplates/Sales/NewPayer.html',
-            controller: 'PayerSalesmanController'
+            templateUrl: '/AngularTemplates/Sales/NewPayer.html'
         })
         .when('/oldSalesmen', {
-            templateUrl: '/AngularTemplates/Sales/OldSalesmen.html',
-            controller: 'PayerSalesmanController'
+            templateUrl: '/AngularTemplates/Sales/OldSalesmen.html'
         });
 });

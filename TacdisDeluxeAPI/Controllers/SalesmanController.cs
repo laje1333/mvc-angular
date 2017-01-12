@@ -74,6 +74,15 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 using (DBContext db = new DBContext())
                 {
+                    SalesmanEntity s = db.Salesmen.OrderByDescending(x => x.Id).FirstOrDefault();
+                    if (s != null)
+                    {
+                        enti.EmployeeNumber = s.EmployeeNumber + 1;
+                    }
+                    else
+                    {
+                        enti.EmployeeNumber = 1;
+                    }
                     //validate and stuff before adding the new salesman
                     db.Salesmen.Add(enti);
                     db.SaveChanges();
