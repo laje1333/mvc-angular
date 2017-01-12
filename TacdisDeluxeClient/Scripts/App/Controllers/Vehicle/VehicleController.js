@@ -786,7 +786,39 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
                 $scope.model = itemName[1];
                 $scope.year = itemName[2];
                 $scope.itemDesc = response.data.ItemDesc;
+
+
+
+                var testElement = new Element("button", document.getElementById("testContainer"));
+                testElement.addClass("btn", "btn-primary", "btn-sm");
+                //var employee = function (amount) {
+                //    this.salary = amount;
+                //    this.incrementSalary = function(x) {
+                //        this.salary += x;
+                //    }
+
+
+                   
+                //}
+
+                //var Staffan = new employee(100000);
+                //var HansBertilKrister = new employee(0);
+
+                //addActionEvent(Staffan, new ActionEvent("employeeAction", function () {
+                //    Staffan.incrementSalary(5000)
+                //}));
+
+                //addActionEvent(HansBertilKrister, new ActionEvent("employeeAction", function () {
+                //    HansBertilKrister.incrementSalary(-15000);
+                //}));
+
+
+
+                //var result = InvokeActionBroadcast("employeeAction");
+                //var x = Staffan.salary;
                 
+                
+
 
             }, function (response) {
                 feedbackPopup("Could fetch data", { level: 'warning', timeout: 2000 });
