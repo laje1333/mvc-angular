@@ -275,6 +275,7 @@
     <Compile Include="Controllers\WorkOrderController.cs" />
     <Compile Include="Controllers\SalesController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
+    <Compile Include="DTO\VehicleServiceDto.cs" />
     <Compile Include="DTO\WoJItemDto.cs" />
     <Compile Include="DTO\WoJobDto.cs" />
     <Compile Include="DTO\WoStatusDto.cs" />
@@ -355,6 +356,10 @@
     <Compile Include="Migrations\201701111419464_WoPayer.cs" />
     <Compile Include="Migrations\201701111419464_WoPayer.Designer.cs">
       <DependentUpon>201701111419464_WoPayer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701121243080_AddVehOwner.cs" />
+    <Compile Include="Migrations\201701121243080_AddVehOwner.Designer.cs">
+      <DependentUpon>201701121243080_AddVehOwner.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Mockdata\InvoiceData\GetMockInvoice.cs" />
@@ -518,6 +523,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201701111419464_WoPayer.resx">
       <DependentUpon>201701111419464_WoPayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701121243080_AddVehOwner.resx">
+      <DependentUpon>201701121243080_AddVehOwner.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

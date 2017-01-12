@@ -28,6 +28,8 @@ namespace TacdisDeluxeAPI.Models
 
         public string Country { get; set; }
 
+        public string PhoneNr { get; set; }
+
         public ICollection<SaleEntity> Sales { get; internal set; }
 
     }
