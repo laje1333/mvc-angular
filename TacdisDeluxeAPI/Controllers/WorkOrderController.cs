@@ -242,21 +242,6 @@ namespace TacdisDeluxeAPI.Controllers
             }
         }
 
-        [System.Web.Http.HttpPost]
-        [System.Web.Http.Route("Finalize")]
-        public void Finalize(string wohId)
-        {
-            using (DBContext c = new DBContext())
-            {
-                var woh = GetWoh(wohId, c);
-                woh.UpdateTotCost();
-
-                //Send info to invoices
-
-                c.SaveChanges();
-            }
-        }
-
         // ----------WOJ------------
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetWoJobList")]

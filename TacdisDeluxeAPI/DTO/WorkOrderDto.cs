@@ -32,6 +32,9 @@ namespace TacdisDeluxeAPI.DTO
         public DateTime PlannedDate { get; set; }
         public DateTime CheckedInDate { get; set; }
 
+        public PayerEntity MainPayer { get; set; }
+        public SalesmanEntity RespBy { get; set; }
+
         public double TotCost { get; set; }
 
         public int[] WOJ_Ids { get; set; }
