@@ -5,29 +5,27 @@
             <table id="salesValues" class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Type:</th>
-                        <th>Info:</th>
-                        <th>ID:</th>
-                        <th>Amount:</th>
-                        <th>Price:</th>
+                        <th>Id:</th>
+                        <th>Salesman:</th>
+                        <th>Payer:</th>
+                        <th>Edit:</th>
+                        <th>Delete:</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="r in allSales">
                         <td>{{r.Id}} </td>
-                        <td>{{r.Name}}</td>
-                        <td>{{r.Number}}</td>
+                        <td>{{r.Salesman.LastName}} {{r.Salesman.FirstName}}</td>
+                        <td>{{r.Payers[0].LastName}} {{r.Payers[0].FirstName}}</td>
                         <td>
-                            <a class="btn " ng-click="editSale(this.r)" href="Sales#/newSale"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn " ng-click="editSale(this.r)"><span class="glyphicon glyphicon-edit"></span></a>
+                        </td>
+                        <td>
+                            <a class="btn " ng-click="DeleteSale(this.r.Id)"><span class="glyphicon glyphicon-remove"></span></a>
                         </td>
                         <td>{{r.Price}}</td>
                     </tr>
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="2">Total Cost: {{totalCost}}</td>
-                    </tr>
-                </tfoot>
 
             </table>
         </div>

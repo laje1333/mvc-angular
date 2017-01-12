@@ -13,6 +13,8 @@ namespace TacdisDeluxeAPI.Models.Maps
             HasMany<WoJobEntity>(s => s.WOJ_List)
                 .WithRequired(s => s.WorkOrder)
                 .Map(m => m.MapKey("WorkOrder_WoNr"));
+            HasOptional<PayerEntity>(s => s.MainPayer);
+            HasOptional<SalesmanEntity>(s => s.RespBy);
         }
     }
 }

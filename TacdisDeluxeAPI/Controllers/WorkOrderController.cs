@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -52,7 +53,7 @@ namespace TacdisDeluxeAPI.Controllers
             using (DBContext c = new DBContext())
             {
                 var woh = GetWoh(wohid, c);
-                WorkOrderDto woDto = new WorkOrderDto(woh);
+                WorkOrderDto woDto = Mapper.Map<WorkOrderEntity, WorkOrderDto>(woh);   //new WorkOrderDto(woh);
 
                 return woDto;
             }
@@ -195,6 +196,62 @@ namespace TacdisDeluxeAPI.Controllers
                 woh.CheckedInDate = statusData.checkedInDate;
                 woh.CurrentMilage = statusData.currentMilage;
                 woh.PlannedMechID = statusData.plannedMechID;
+                woh.RespBy = Mapper.Map<SalesmanDto, SalesmanEntity>(statusData.salesman);
+                woh.MainPayer = Mapper.Map<PayerDto, PayerEntity>(statusData.payer);
+                
+                c.Payers.Attach(woh.MainPayer);
+                c.Salesmen.Attach(woh.RespBy);
+
+                c.SaveChanges();
+            }
+        }
+
+        // --------Finalize---------
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("Picklist")]
+        public void Picklist(string wohId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = GetWoh(wohId, c);
+                woh.UpdateTotCost();
+                var partList = new List<PartEntity>();
+                foreach (var woj in woh.WOJ_List)
+                {
+                    foreach (var part in woj.WOJ_PartList)
+                    {
+                        partList.Add(part);
+                    }
+
+                    foreach (var kit in woj.WOJ_KitList)
+                    {
+                        foreach (var part in kit.WOJ_PartList)
+                        {
+                            partList.Add(part);
+                        }
+                    }
+                }
+
+                foreach (var part in partList)
+                {
+                    //check if parts is available in storage
+                }
+
+                c.SaveChanges();
+            }
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("Finalize")]
+        public void Finalize(string wohId)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = GetWoh(wohId, c);
+                woh.UpdateTotCost();
+
+                //Send info to invoices
 
                 c.SaveChanges();
             }
@@ -220,7 +277,14 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 var woh = GetWoh(wohId, c);
                 var woj = new WoJobEntity();
-                woj.WoJNr = woh.WOJ_List.OrderByDescending(p => p.WoJNr).FirstOrDefault().WoJNr + 1;
+                if (woh.WOJ_List.Count > 0)
+                {
+                    woj.WoJNr = woh.WOJ_List.OrderByDescending(p => p.WoJNr).FirstOrDefault().WoJNr + 1;
+                }
+                else
+                {
+                    woj.WoJNr = 0;
+                }
                 woh.WOJ_List.Add(woj);
                 c.SaveChanges();
             }
@@ -245,7 +309,7 @@ namespace TacdisDeluxeAPI.Controllers
             using (DBContext c = new DBContext())
             {
                 var woj = GetWoJ(wohid, wojid, c);
-                WoJobDto woDto = new WoJobDto(woj);
+                WoJobDto woDto = Mapper.Map<WoJobEntity, WoJobDto>(woj);
 
                 return woDto;
             }
@@ -379,23 +443,40 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (DBContext c = new DBContext())
             {
-                var wjpList = GetWoJ(wohId, wojId, c).WOJ_PartList;
+                var woj = GetWoJ(wohId, wojId, c);
 
-                return WohListData.GetWjpList(wjpList);
+                return WohListData.GetWjpList(woj);
             }
         }
 
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("AddWJP")]
-        public void AddWJP(string wohId, string wojId, string wjpCode)
+        public void AddWJP(string wohId, string wojId, string wjpCode, string quantity)
         {
-
             using (DBContext c = new DBContext())
             {
                 PartEntity part = c.Parts.Where(p => p.ItemId.ToString() == wjpCode).Single();
-                ICollection<PartEntity> wjpList = GetWoJ(wohId, wojId, c).WOJ_PartList;
+                var woj = GetWoJ(wohId, wojId, c);
+                woj.WOJ_PartList.Add(part);
 
-                wjpList.Add(part);
+                IdAndAmountEntity exist = null;
+                foreach (var item in woj.WOJ_PartList_Ids)
+                {
+                    if (item.Id == part.Id)
+                    {
+                        exist = item;
+                        break;
+                    }
+                }
+                if (exist == null)
+                {
+                    woj.WOJ_PartList_Ids.Add(new IdAndAmountEntity(part.Id, double.Parse(quantity)));
+                }
+                else
+                {
+                    exist.Amount += double.Parse(quantity);
+                }
+
                 c.SaveChanges();
             }
         }
@@ -408,7 +489,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 var woj = GetWoJ(wohId, wojId, c);
                 var item = woj.WOJ_PartList.Where(p => p.Id.ToString() == wjpId).Single();
-                c.Parts.Remove(item);
+                woj.WOJ_PartList.Remove(item);
                 c.SaveChanges();
             }
         }

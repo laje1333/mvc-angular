@@ -1,6 +1,33 @@
 ﻿<tframe data-title="Manage Workorder plan">
     <div ng-controller="WorkOrderController">
         <div class="row">
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Invoice information</div>
+                    <form>
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <input type="text" class="form-control" placeholder="Employee Number" ng-model="empNr" ng-change="checkIfEmpty(empNr, 'searchButton', 'searchIcon')">
+                                <button id="searchButton" class="btn btn-default" type="submit" ng-click="GetSalesmanById()">
+                                    <i id="searchIcon" class="glyphicon glyphicon-search"></i>
+                                    <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <form>
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <input type="text" class="form-control" placeholder="Payer number" ng-model="CustNr">
+                                <button id="searchButtonP" class="btn btn-default" type="submit" ng-click="GetPayerById()">
+                                    <i id="searchIconP" class="glyphicon glyphicon-search"></i>
+                                    <i class="fa fa-spinner fa-pulse  fa-fw" ng-show="spinner" style="color: blue"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
             <div class="col-md-4" ng-init="GetStatus()">
                 <div class="panel panel-default">
                     <div class="panel-heading">Date Status</div>

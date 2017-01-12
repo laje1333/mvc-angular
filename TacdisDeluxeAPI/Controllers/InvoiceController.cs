@@ -12,9 +12,9 @@ using System.Web.Mvc;
 using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Mockdata.InvoiceData;
 using TacdisDeluxeAPI.Models;
-using TacdisDeluxeAPI.DTO.validators;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using TacdisDeluxeAPI.Helpers.Invoice;
 
 namespace TacdisDeluxeAPI.Controllers
 {
@@ -30,7 +30,12 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 using (var db = new DBContext())
                 {
-                    invoices = db.Invoices.Include(p => p.Payer).Include(s => s.Salesman).Include(r => r.InvoiceRows).Where(i => i.InvoiceNumber.ToString().Contains(query) || i.RegNumber.ToString().Contains(query)).ToList();
+                    invoices = db.Invoices
+                        .Include(p => p.Payer)
+                        .Include(s => s.Salesman)
+                        .Include(r => r.InvoiceRows)
+                        .Where(i => i.InvoiceNumber.ToString().Contains(query) || i.RegNumber.ToString().Contains(query))
+                        .ToList();
                 }
             }
             catch (Exception ex)
@@ -45,7 +50,7 @@ namespace TacdisDeluxeAPI.Controllers
                 result.Add(Mapper.Map<InvoiceEntity, InvoiceDto>(invoice));
             }
 
-            return result;
+            return result.OrderByDescending(r => r.InvoiceNumber).ToList();
         }
 
         [System.Web.Http.Route("api/invoice/UpdateInvoice/Update")]
@@ -54,15 +59,15 @@ namespace TacdisDeluxeAPI.Controllers
         {
             try
             {
-                invoiceDto = InvoiceValidator.ValidateAndUpdateInvoiceDto(invoiceDto);
+                invoiceDto = InvoiceHelper.ValidateAndUpdateInvoiceDto(invoiceDto);
             }
             catch (Exception ex)
             {
-
                 return BadRequest("Validation fail!");
             }
 
             InvoiceEntity invoice;
+
             try
             {
                 invoice = Mapper.Map<InvoiceDto, InvoiceEntity>(invoiceDto);
@@ -76,24 +81,32 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 using (var db = new DBContext())
                 {
-                    var originalSalesman = db.Salesmen.Single(i => i.Id == invoice.Salesman.Id);
-                    var originalPayer = db.Payers.Single(i => i.Id == invoice.Payer.Id);
-                    var originalInvoice = db.Invoices.Single(i => i.Id == invoice.Id);
-                    var rows = originalInvoice.InvoiceRows.Where(r => invoice.InvoiceRows.Select(x => x.Id).
-                        Contains(r.Id) == false).ToList();
+                    var originalSalesman = db.Salesmen.SingleOrDefault(s => s.Id == invoice.Salesman.Id);
 
-                    if (!InvoiceValidator.IsEqual(originalSalesman, invoice.Salesman))
-                        db.Entry(originalSalesman).CurrentValues.SetValues(invoice.Salesman);
+                    var originalPayer = db.Payers.SingleOrDefault(p => p.Id == invoice.Payer.Id);
 
-                    if (!InvoiceValidator.IsEqual(originalPayer, invoice.Payer))
-                        db.Entry(originalPayer).CurrentValues.SetValues(invoice.Payer);
+                    var originalInvoice = db.Invoices.SingleOrDefault(i => i.Id == invoice.Id);
 
-                    if (rows.Any())
-                        db.InvoiceRows.RemoveRange(rows);
+                    if (originalInvoice != null)
+                    {
+                        var rowsToDelete = originalInvoice.InvoiceRows
+                            .Where(ir => invoice.InvoiceRows.Select(oir => oir.Id)
+                                .Contains(ir.Id) == false).ToList();
 
-                    db.Entry(originalInvoice).CurrentValues.SetValues(invoice);
+                        if (!InvoiceHelper.IsEqual(originalSalesman, invoice.Salesman))
+                            db.Entry(originalSalesman).CurrentValues.SetValues(invoice.Salesman);
 
-                    db.SaveChanges();
+                        if (!InvoiceHelper.IsEqual(originalPayer, invoice.Payer))
+                            db.Entry(originalPayer).CurrentValues.SetValues(invoice.Payer);
+
+                        if (rowsToDelete.Any())
+                            db.InvoiceRows.RemoveRange(rowsToDelete);
+
+                        db.Entry(originalInvoice).CurrentValues.SetValues(invoice);
+                        db.SaveChanges();
+                    }
+                    else
+                        return BadRequest("Invoice not found!");
                 }
             }
             catch (Exception ex)
@@ -109,11 +122,11 @@ namespace TacdisDeluxeAPI.Controllers
         [System.Web.Http.HttpPost]
         public IHttpActionResult CreateInvoiceFromSales(SalesDto salesDto)
         {
-            var invoice = new InvoiceEntity();
+            InvoiceEntity invoice;
 
             try
             {
-                invoice = InvoiceValidator.CreateInvoiceEntityFromSalesDto(salesDto);
+                invoice = InvoiceHelper.CreateInvoiceEntityFromSalesDto(salesDto);
             }
             catch (Exception ex)
             {
@@ -126,7 +139,6 @@ namespace TacdisDeluxeAPI.Controllers
                 {
                     db.Payers.Attach(invoice.Payer);
                     db.Salesmen.Attach(invoice.Salesman);
-
                     db.Invoices.Add(invoice);
                     db.SaveChanges();
                 }
@@ -141,17 +153,24 @@ namespace TacdisDeluxeAPI.Controllers
 
         [System.Web.Http.Route("api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder")]
         [System.Web.Http.HttpPost]
-        public IHttpActionResult CreateInvoiceFromWorkOrder(WorkOrderDto workOrderDto)
+        public IHttpActionResult CreateInvoiceFromWorkOrder(string workOrderId)
         {
             var invoice = new InvoiceEntity();
 
+            var woh = new WorkOrderEntity();
+
+            using (var db = new DBContext())
+            {
+                 woh = db.WorkOrder.SingleOrDefault(p => p.WoNr.ToString() == workOrderId);
+            }
+
             try
             {
-                invoice = InvoiceValidator.CreateInvoiceEntityFromWorkOrderDto(workOrderDto);
+                invoice = InvoiceHelper.CreateInvoiceEntityFromWorkOrder(woh);
             }
             catch (Exception ex)
             {
-                return BadRequest("CreateInvoiceFromSales faild!");
+                return BadRequest("CreateInvoiceFromWorkOrder faild!");
             }
 
             try
@@ -160,7 +179,6 @@ namespace TacdisDeluxeAPI.Controllers
                 {
                     db.Payers.Attach(invoice.Payer);
                     db.Salesmen.Attach(invoice.Salesman);
-
                     db.Invoices.Add(invoice);
                     db.SaveChanges();
                 }

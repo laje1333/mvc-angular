@@ -16,6 +16,13 @@
         });
     }
 
+    $scope.checkIfEmpty = function (str, btnId, iconId) {
+        if (str.length == 0) {
+            document.getElementById(iconId).className = 'glyphicon glyphicon-search';
+            document.getElementById(btnId).className = 'btn btn-default';
+        }
+    }
+
     $scope.SaveStatusData = function () {
         $scope.currentWoh = $rootScope.currentWoh;
         var statusData = {
@@ -24,7 +31,9 @@
             isCheckedIn: $scope.woh_IsCheckedIn,
             checkedInDate: $scope.woh_CheckedInDate,
             currentMilage: $scope.woh_CurrentMilage,
-            plannedMechID: $scope.woh_PlannedMechID
+            plannedMechID: $scope.woh_PlannedMechID,
+            salesman: $scope.salesman,
+            payer: $scope.payer
         }
 
         $http({
@@ -34,6 +43,51 @@
         }).success(function () {
             feedbackPopup('Successefully saved', { level: 'success', timeout: 2000 });
         });
+    }
+
+    $scope.GetSalesmanById = function () {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/salesman',
+            params: { empNr: parseInt($scope.empNr) }
+        }
+
+        $http(req).
+         then(function (response) {
+             document.getElementById('searchIcon').className = 'glyphicon glyphicon-ok-sign';
+             document.getElementById('searchButton').className = 'btn btn-success';
+             feedbackPopup('Salesman found', { level: 'success', timeout: 2000 });
+             $scope.salesman = response.data;
+         }, function (response) {
+             document.getElementById('searchIcon').className = 'glyphicon glyphicon-search';
+             document.getElementById('searchButton').className = 'btn btn-default';
+             feedbackPopup('No salesman found', { level: 'warning', timeout: 2000 });
+             $scope.salesman = {};
+             $scope.statusCode = response.statusCode;
+         });
+    }
+
+    $scope.GetPayerById = function () {
+        var req = {
+            method: 'GET',
+            url: 'http://localhost:57661/api/payer',
+            params: { CustNr: parseInt($scope.CustNr) }
+        }
+
+        $http(req).
+         then(function (response) {
+             window.sessionStorage.getItem('Token');
+             document.getElementById('searchIconP').className = 'glyphicon glyphicon-ok-sign';
+             document.getElementById('searchButtonP').className = 'btn btn-success';
+             feedbackPopup('Payer found', { level: 'success', timeout: 2000 });
+             $scope.payer = response.data;
+         }, function (response) {
+             document.getElementById('searchIconP').className = 'glyphicon glyphicon-search';
+             document.getElementById('searchButtonP').className = 'btn btn-default';
+             feedbackPopup('No payer found', { level: 'warning', timeout: 2000 });
+             $scope.payer = {};
+             $scope.statusCode = response.statusCode;
+         });
     }
 
     $scope.GetManageWoj = function () {
@@ -100,7 +154,7 @@
         $http({
             method: 'POST',
             url: "http://localhost:57661/api/workorder/PostWoJData",
-            data: statusData 
+            data: statusData
         }).success(function () {
             feedbackPopup('Successefully saved', { level: 'success', timeout: 2000 });
         });
@@ -135,6 +189,33 @@
             $scope.woh_lastVisDate = components[5].split(',');
             $scope.woh_lastVisMileage = components[6].split(',');
         });
+    }
+
+
+    $scope.WOH_Picklist = function (itemWoj) {
+        $http({
+            method: 'POST',
+            url: "http://localhost:57661/api/workorder/Picklist",
+            params: { wohId: $rootScope.currentWoh }
+        }).success(function () {
+            feedbackPopup('Parts available in storage', { level: 'success', timeout: 2000 });
+        });
+    }
+
+    $scope.WOH_Finalize = function (itemWoj) {
+        $http({
+            method: 'POST',
+            url: 'http://localhost:57661/api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder',
+            params: { wohId: $rootScope.currentWoh }
+        }).
+         then(function (response) {
+             feedbackPopup('Invoice has been created!', { level: 'success', timeout: 4000 });
+             $scope.ok = "It's good";
+         }, function (response) {
+             feedbackPopup('All data needed was not provided!', { level: 'warning', timeout: 4000 });
+             $scope.statusCode = response.statusCode;
+         }
+         );
     }
 });
 
@@ -187,6 +268,7 @@ tacdisDeluxeApp.controller("WorkOrderHeaderController", ["$scope", "$rootScope",
             data: wohData
         }).success(function () {
             feedbackPopup('Successefully added new Workorder', { level: 'success', timeout: 2000 });
+            $scope.GetWOHList();
         });
     }
 
@@ -205,9 +287,10 @@ tacdisDeluxeApp.controller("WorkOrderJobController", ["$scope", "$rootScope", "N
             params: { wohId: $rootScope.currentWoh }
         }).success(function () {
             feedbackPopup('Successefully added new Workorder Job', { level: 'success', timeout: 2000 });
+            $scope.GetWOJList();
         });
     }
-    
+
     $scope.WOJ_Select = function (itemWoj) {
         $rootScope.currentWoJ = itemWoj;
     }
@@ -219,6 +302,7 @@ tacdisDeluxeApp.controller("WorkOrderJobController", ["$scope", "$rootScope", "N
             params: { wohId: $rootScope.currentWoh, wojId: itemWoj }
         }).success(function () {
             feedbackPopup('Successefully removed Workorder Job', { level: 'success', timeout: 2000 });
+            $scope.GetWOJList();
         });
     }
 
@@ -255,6 +339,7 @@ tacdisDeluxeApp.controller("WOActiveKitsController", ["$scope", "$rootScope", "N
             }
         }).success(function () {
             feedbackPopup('Successefully added new Kit', { level: 'success', timeout: 2000 });
+            $scope.GetWJKList();
         });
     }
 
@@ -287,6 +372,7 @@ tacdisDeluxeApp.controller("WOActiveKitsController", ["$scope", "$rootScope", "N
             params: { wohId: $rootScope.currentWoh, wojId: $rootScope.currentWoJ, wjkId: wjkId }
         }).success(function () {
             feedbackPopup('Successefully removed Workorder Job Kit', { level: 'success', timeout: 2000 });
+            $scope.GetWJKList();
         });
     }
 }]);
@@ -305,6 +391,7 @@ tacdisDeluxeApp.controller("WOActiveOpController", ["$scope", "$rootScope", "NgT
             }
         }).success(function () {
             feedbackPopup('Successefully added new Operation', { level: 'success', timeout: 2000 });
+            $scope.GetWJOList();
         });
     }
 
@@ -337,6 +424,7 @@ tacdisDeluxeApp.controller("WOActiveOpController", ["$scope", "$rootScope", "NgT
             params: { wohId: $rootScope.currentWoh, wojId: $rootScope.currentWoJ, wjoId: wjoId }
         }).success(function () {
             feedbackPopup('Successefully removed Workorder Job Operation', { level: 'success', timeout: 2000 });
+            $scope.GetWJOList();
         });
     }
 }]);
@@ -351,10 +439,12 @@ tacdisDeluxeApp.controller("WOActivePartController", ["$scope", "$rootScope", "N
             params: {
                 wohId: $scope.currentWoh,
                 wojId: $scope.currentWoJ,
-                wjpCode: $scope.wjpCode
+                wjpCode: $scope.wjpCode,
+                quantity: $scope.quantity
             }
         }).success(function () {
             feedbackPopup('Successefully added new Part', { level: 'success', timeout: 2000 });
+            $scope.GetWJPList();
         });
     }
 
@@ -387,6 +477,7 @@ tacdisDeluxeApp.controller("WOActivePartController", ["$scope", "$rootScope", "N
             params: { wohId: $rootScope.currentWoh, wojId: $rootScope.currentWoJ, wjpId: wjpId }
         }).success(function () {
             feedbackPopup('Successefully removed Workorder Job Part', { level: 'success', timeout: 2000 });
+            $scope.GetWJPList();
         });
     }
 }]);
