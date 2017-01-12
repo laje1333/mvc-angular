@@ -205,7 +205,7 @@
     $scope.WOH_Finalize = function () {
         $http({
             method: 'POST',
-            url: 'http://localhost:57661/api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder',
+            url: 'http://localhost:57661/api/invoice/CreateInvoice/CreateInvoiceFromWorkOrder',
             params: { workOrderId: $rootScope.currentWoh }
         }).
          then(function (response) {

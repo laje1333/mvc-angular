@@ -121,12 +121,7 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
                 {
                     if (job.WOJ_PartList_Ids.Any())
                     {
-                        List<IdAndAmountDto> partsIds = new List<IdAndAmountDto>();
-
-                        foreach (var Ia in job.WOJ_PartList_Ids)
-                        {
-                            partsIds.Add(Mapper.Map<IdAndAmountEntity, IdAndAmountDto>(Ia));
-                        }
+                        List<IdAndAmountDto> partsIds = job.WOJ_PartList_Ids.Select(Mapper.Map<IdAndAmountEntity, IdAndAmountDto>).ToList();
 
                         var rows = GetInvoiceRowFromParts(partsIds);
 

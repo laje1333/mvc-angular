@@ -226,7 +226,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
      $scope.PostSale = function () {
         var req = {
             method: 'POST',
-            url: 'http://localhost:57661/api/invoice/CreatInvoice/CreateInvoiceFromSales',
+            url: 'http://localhost:57661/api/invoice/CreateInvoice/CreateInvoiceFromSales',
             headers: {},
             data: {
                 Salesman: $rootScope.saleRec.Salesman,
