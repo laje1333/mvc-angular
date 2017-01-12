@@ -13,6 +13,8 @@
             $scope.woh_CurrentMilage = response.data.CurrentMilage;
             $scope.woh_PlannedMechID = response.data.PlannedMechID;
             $scope.woh_PlannedMechName = response.data.PlannedMechName;
+            $scope.salesman = response.data.RespBy,
+            $scope.payer = response.data.MainPayer
         });
     }
 
@@ -205,7 +207,7 @@
     $scope.WOH_Finalize = function () {
         $http({
             method: 'POST',
-            url: 'http://localhost:57661/api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder',
+            url: 'http://localhost:57661/api/invoice/CreateInvoice/CreateInvoiceFromWorkOrder',
             params: { workOrderId: $rootScope.currentWoh }
         }).
          then(function (response) {

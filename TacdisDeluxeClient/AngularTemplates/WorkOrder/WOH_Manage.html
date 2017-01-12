@@ -4,7 +4,7 @@
             <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">Invoice information</div>
-                    <form>
+                    <form style="margin:10px">
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <input type="text" class="form-control" placeholder="Employee Number" ng-model="empNr" ng-change="checkIfEmpty(empNr, 'searchButton', 'searchIcon')">
@@ -15,7 +15,7 @@
                             </div>
                         </div>
                     </form>
-                    <form>
+                    <form style="margin:10px">
                         <div class="input-group">
                             <div class="input-group-btn">
                                 <input type="text" class="form-control" placeholder="Payer number" ng-model="CustNr">
@@ -26,8 +26,18 @@
                             </div>
                         </div>
                     </form>
+                    <div style="margin:10px">
+                        <div class="row">
+                            <div class="col-md-6 text-left" style="border-right: 1px solid #AFAFAF">Salesman:</div>
+                            <div class="col-md-6 text-left">Payer:</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 text-left" style="border-right: 1px solid #AFAFAF">{{salesman.FirstName}} {{salesman.LastName}}</div>
+                            <div class="col-md-6 text-left">{{payer.FirstName}} {{payer.LastName}}</div>
+                        </div>
                     </div>
                 </div>
+            </div>
             <div class="col-md-4" ng-init="GetStatus()">
                 <div class="panel panel-default">
                     <div class="panel-heading">Date Status</div>
