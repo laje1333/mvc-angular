@@ -231,40 +231,4 @@ Maths.Random.String = function(length){
 
 
 
-function ActionEvent(triggerMessage, action) {
-    this.Trigger = triggerMessage;
-    this.Action = action;
-    
-}
-ActionEvent.InvokableObjects = {};
-
-function addActionEvent(object, actionevent) {
-    if (object["Actions"] == undefined) {
-        object.Actions = {};
-        object.InvokeAction = function (trigger) {
-            if (object.Actions[trigger] != undefined) {
-                object.Actions[trigger]();
-            }
-        }
-    }
-    if(actionevent instanceof ActionEvent){
-        object.Actions[actionevent.Trigger] = actionevent.Action;
-        if (ActionEvent.InvokableObjects[actionevent.Trigger] == undefined) {
-            ActionEvent.InvokableObjects[actionevent.Trigger] = [];
-
-        }
-        ActionEvent.InvokableObjects[actionevent.Trigger].push(object);
-    }
-}
-
-function InvokeActionBroadcast(trigger) {
-    if (ActionEvent.InvokableObjects[trigger] != undefined) {
-        var objects = ActionEvent.InvokableObjects[trigger];
-        for (i = 0; i < objects.length; i++) {
-            objects[i].InvokeAction(trigger);
-        }
-    }
-}
-
-
 
