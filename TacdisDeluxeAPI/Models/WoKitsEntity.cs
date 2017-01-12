@@ -30,7 +30,7 @@ namespace TacdisDeluxeAPI.Models
             TotCost = 0;
             foreach (var item in WOJ_PartList)
             {
-                TotCost += item.ItemPrice; //* WOJ_PartList_Ids.Where(p => p.Id == item.Id).FirstOrDefault().Amount;
+                TotCost += item.ItemPrice; //* WOJ_PartList_Ids.Where(p => p.Id == item.ItemId).FirstOrDefault().Amount;
             }
             foreach (var item in WOJ_OPList)
             {

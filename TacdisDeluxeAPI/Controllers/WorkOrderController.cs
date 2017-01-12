@@ -462,7 +462,7 @@ namespace TacdisDeluxeAPI.Controllers
                 IdAndAmountEntity exist = null;
                 foreach (var item in woj.WOJ_PartList_Ids)
                 {
-                    if (item.Id == part.Id)
+                    if (item.Id == part.ItemId)
                     {
                         exist = item;
                         break;

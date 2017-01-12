@@ -192,7 +192,7 @@
     }
 
 
-    $scope.WOH_Picklist = function (itemWoj) {
+    $scope.WOH_Picklist = function () {
         $http({
             method: 'POST',
             url: "http://localhost:57661/api/workorder/Picklist",
@@ -202,11 +202,11 @@
         });
     }
 
-    $scope.WOH_Finalize = function (itemWoj) {
+    $scope.WOH_Finalize = function () {
         $http({
             method: 'POST',
             url: 'http://localhost:57661/api/invoice/CreatInvoice/CreateInvoiceFromWorkOrder',
-            params: { wohId: $rootScope.currentWoh }
+            params: { workOrderId: $rootScope.currentWoh }
         }).
          then(function (response) {
              feedbackPopup('Invoice has been created!', { level: 'success', timeout: 4000 });

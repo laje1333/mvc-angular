@@ -121,7 +121,7 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
                 {
                     if (job.WOJ_PartList_Ids.Any())
                     {
-                        ICollection<IdAndAmountDto> partsIds = null;
+                        List<IdAndAmountDto> partsIds = new List<IdAndAmountDto>();
 
                         foreach (var Ia in job.WOJ_PartList_Ids)
                         {
@@ -167,7 +167,7 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
                         Description = part.ItemDesc,
                         UnitCost = part.ItemPrice,
                         Vat = part.VAT,
-                        Quantity = IA.Amount,
+                        Quantity = (int)IA.Amount,
                         InvoiceRowAmount = part.ItemPrice * IA.Amount
                     });
                 }

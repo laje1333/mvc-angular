@@ -161,16 +161,16 @@ namespace TacdisDeluxeAPI.Controllers
 
             using (var db = new DBContext())
             {
-                 woh = db.WorkOrder.SingleOrDefault(p => p.WoNr.ToString() == workOrderId);
-            }
+                woh = db.WorkOrder.Where(p => p.WoNr.ToString() == workOrderId).Single();
 
-            try
-            {
-                invoice = InvoiceHelper.CreateInvoiceEntityFromWorkOrder(woh);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest("CreateInvoiceFromWorkOrder faild!");
+                try
+                {
+                    invoice = InvoiceHelper.CreateInvoiceEntityFromWorkOrder(woh);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest("CreateInvoiceFromWorkOrder faild!");
+                }
             }
 
             try
