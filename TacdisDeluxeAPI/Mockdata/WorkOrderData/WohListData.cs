@@ -10,67 +10,59 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 {
     public class WohListData
     {
-        private static string separator = ",";
+        private const string Separator = ",";
 
         //WOH
-        internal static string GetWohList(IOrderedQueryable<Models.WorkOrderEntity> woList)
+        internal static string GetWohList(IOrderedQueryable<WorkOrderEntity> woList)
         {
             return "{\"woh\":[" + CreateWohLines(woList) + "]}";
         }
 
-        private static string CreateWohLines(IOrderedQueryable<Models.WorkOrderEntity> woList)
+        private static string CreateWohLines(IEnumerable<WorkOrderEntity> woList)
         {
-            string result = "";
-            List<string> listLine = new List<string>();
+            var result = "";
+            var listLine = woList.Select(WO => CreateLine(WO)).ToList();
 
-            foreach (var WO in woList)
-            {
-                listLine.Add(CreateLine(WO));
-            }
-            result = string.Join(separator, listLine);
+            result = string.Join(Separator, listLine);
             return result;
         }
 
-        private static string CreateLine(Models.WorkOrderEntity WO)
+        private static string CreateLine(WorkOrderEntity wo)
         {
-            WO.UpdateTotCost();
+            wo.UpdateTotCost();
             string custNr = "", empNr = "";
-            if (WO.MainPayer != null)
+            if (wo.MainPayer != null)
             {
-                custNr = WO.MainPayer.CustomerNumber.ToString();
+                custNr = wo.MainPayer.CustomerNumber.ToString();
             }
 
-            if (WO.RespBy != null)
+            if (wo.RespBy != null)
             {
-                empNr = WO.RespBy.EmployeeNumber.ToString();
+                empNr = wo.RespBy.EmployeeNumber.ToString();
             }
 
-            return "{\"WoNr\": \"" + WO.WoNr +
-                    "\",\"RegNr\": \"" + WO.RegNr +
-                    "\",\"Status\": \"" + WO.Status +
-                    "\",\"VehDesc\": \"" + WO.VehDesc +
-                    "\",\"CreatedDate\": \"" + WO.CreatedDate +
+            return "{\"WoNr\": \"" + wo.WoNr +
+                    "\",\"RegNr\": \"" + wo.RegNr +
+                    "\",\"Status\": \"" + wo.Status +
+                    "\",\"VehDesc\": \"" + wo.VehDesc.Replace("\n", " ") +
+                    "\",\"CreatedDate\": \"" + wo.CreatedDate +
                     "\",\"MainPayer\":\"" + custNr +
                     "\",\"RespBy\": \"" + empNr +
-                    "\",\"TotCost\": \"" + WO.TotCost +
+                    "\",\"TotCost\": \"" + wo.TotCost +
                     "\"}";
         }
 
         //WOJ
-        public static string GetWojList(WorkOrderEntity WO)
+        public static string GetWojList(WorkOrderEntity wo)
         {
-            return "{\"woj\":[" + CreateWojLines(WO) + "]}";
+            return "{\"woj\":[" + CreateWojLines(wo) + "]}";
         }
 
-        private static string CreateWojLines(WorkOrderEntity WO)
+        private static string CreateWojLines(WorkOrderEntity wo)
         {
-            string result = "";
-            List<string> listLine = new List<string>();
-            foreach (WoJobEntity woj in WO.WOJ_List)
-            {
-                listLine.Add(CreateLine(woj));
-            }
-            result = string.Join(separator, listLine);
+            var result = "";
+            var listLine = wo.WOJ_List.Select(CreateLine).ToList();
+            result = string.Join(Separator, listLine);
             return result;
         }
 
@@ -89,15 +81,11 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             return "{\"wjk\":[" + CreateWjkLines(wjkList) + "]}";
         }
 
-        private static string CreateWjkLines(ICollection<WoKitsEntity> wjkList)
+        private static string CreateWjkLines(IEnumerable<WoKitsEntity> wjkList)
         {
-            string result = "";
-            List<string> listLine = new List<string>();
-            foreach (var wjk in wjkList)
-            {
-                listLine.Add(CreateLine(wjk));
-            }
-            result = string.Join(separator, listLine);
+            var result = "";
+            var listLine = wjkList.Select(CreateLine).ToList();
+            result = string.Join(Separator, listLine);
             return result;
         }
 
@@ -119,15 +107,11 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
             return "{\"wjo\":[" + CreateWjoLines(wjoList) + "]}";
         }
 
-        private static string CreateWjoLines(ICollection<WoOpEntitys> wjoList)
+        private static string CreateWjoLines(IEnumerable<WoOpEntitys> wjoList)
         {
-            string result = "";
-            List<string> listLine = new List<string>();
-            foreach (var wjo in wjoList)
-            {
-                listLine.Add(CreateLine(wjo));
-            }
-            result = string.Join(separator, listLine);
+            var result = "";
+            var listLine = wjoList.Select(CreateLine).ToList();
+            result = string.Join(Separator, listLine);
             return result;
         }
 
@@ -150,17 +134,18 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 
         private static string CreateWjpLines(WoJobEntity woj)
         {
-            string result = "";
-            List<string> listLine = new List<string>();
-            //var wojDto = Mapper.Map<WoJobEntity, WoJobDto>(new WoJobEntity());
+            var result = "";
+            var listLine = new List<string>();
 
             foreach (var wjp in woj.WOJ_PartList)
             {
-                double amount = woj.WOJ_PartList_Ids.Where(p => p.Id == wjp.Id).FirstOrDefault().Amount;
+                var idAndAmountEntity = woj.WOJ_PartList_Ids.FirstOrDefault(p => p.Id == wjp.Id);
+                if (idAndAmountEntity == null) continue;
+                var amount = idAndAmountEntity.Amount;
 
                 listLine.Add(CreateLine(wjp, amount));
             }
-            result = string.Join(separator, listLine);
+            result = string.Join(Separator, listLine);
             return result;
         }
 
