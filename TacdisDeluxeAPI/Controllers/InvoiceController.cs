@@ -115,7 +115,7 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 invoice = InvoiceHelper.CreateInvoiceEntityFromSalesDto(salesDto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return BadRequest("CreateInvoiceFromSales faild!");
             }
