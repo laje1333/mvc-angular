@@ -125,6 +125,7 @@ namespace TacdisDeluxeAPI.Controllers
                     enti.Vehicles = vehs;
                     enti.Parts = parts;
                     enti.Addons = addons;
+                    enti.Status = request.Status;
                     enti.Salesman = db.Salesmen.Where(x => x.Id == request.Salesman.Id).FirstOrDefault();
                     enti.DateCreated = DateTime.Now;
                     enti.DateEdited = DateTime.Now;
@@ -238,6 +239,7 @@ namespace TacdisDeluxeAPI.Controllers
                     {
                         enti.Salesman = request.Salesman;
                     }
+                    enti.Status = request.Status;
                     enti.DateEdited = DateTime.Now;
                     db.SaveChanges();
 

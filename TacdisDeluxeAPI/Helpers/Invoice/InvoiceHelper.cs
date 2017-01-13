@@ -243,7 +243,8 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
         {
             using (var db = new DBContext())
             {
-                var payer = db.Payers.Single(p => p.Id == int.Parse(id));
+                int i = Convert.ToInt32(id);
+                var payer = db.Payers.Single(p => p.Id == i);
                 return payer;
             }
         }

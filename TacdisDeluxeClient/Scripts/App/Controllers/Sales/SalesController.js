@@ -29,7 +29,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
         $rootScope.saleRec.PayerIds = [];
         $rootScope.totalCost = 0;
     }
-
+    var status = 1;
 
     if ($rootScope.record == null || $rootScope.saleRec == null) {
         $scope.clearSale();
@@ -195,7 +195,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
                 Salesman: $rootScope.saleRec.Salesman,
                 VehicleIds: $rootScope.saleRec.VehicleIds,
                 PartIds: $rootScope.saleRec.PartIds,
-                Status: 1,
+                Status: status,
                 AddonIds: $rootScope.saleRec.AddonIds,
                 PayerIds: $rootScope.saleRec.PayerIds,
                 PaymentType: 1,
@@ -214,7 +214,9 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
          );
     }
 
-     $scope.PostSale = function () {
+    $scope.PostSale = function () {
+        status = 3;
+        $scope.PostOrUpdateSale();
         var req = {
             method: 'POST',
             url: 'http://localhost:57661/api/invoice/CreateInvoice/CreateInvoiceFromSales',
@@ -223,7 +225,7 @@ tacdisDeluxeApp.controller("SalesController", function ($scope, $rootScope, $htt
                 Salesman: $rootScope.saleRec.Salesman,
                 VehicleIds: $rootScope.saleRec.VehicleIds,
                 PartIds: $rootScope.saleRec.PartIds,
-                Status: 1,
+                Status: status,
                 AddonIds: $rootScope.saleRec.AddonIds,
                 PayerIds: $rootScope.saleRec.PayerIds,
                 PaymentType: 1,
