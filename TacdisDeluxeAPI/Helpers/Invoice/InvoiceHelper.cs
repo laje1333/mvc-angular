@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using TacdisDeluxeAPI.DTO;
@@ -13,15 +12,6 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
         public static InvoiceDto ValidateAndUpdateInvoiceDto(InvoiceDto invoice)
         {
             invoice.InvoiceNumber = invoice.InvoiceNumber ?? GetInvoiceNumber();
-
-            //if (invoice.Payer != null && invoice.Payer.Id != null)
-            //    invoice.Payer = GetCustomer(invoice.Payer);
-
-            //if (invoice.Payer != null)
-            //    invoice.Payer.CustomerNumber = invoice.Payer.CustomerNumber ?? GetCustomerNumber();
-
-            //invoice.Salesman = GetSalesman(invoice.Salesman);
-
             invoice.Vat = invoice.Vat ?? 0;
             invoice.InvoiceAmount = invoice.InvoiceAmount ?? 0;
             invoice.AmountPaid = invoice.AmountPaid ?? 0;
