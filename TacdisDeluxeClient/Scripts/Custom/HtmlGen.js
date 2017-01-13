@@ -13,7 +13,7 @@
     }
 
     setLayout(lay){
-        lay.generateLayout(this.parent);
+        lay.generateLayout(this);
         this.layout = lay;
     }
 
@@ -78,6 +78,29 @@
         this.ElementObject.setAttributeNode(att);
     }
 
+    setInputType(typ){
+        var att = document.createAttribute("type");
+        att.value = typ;
+        this.ElementObject.setAttributeNode(att);
+    }
+
+    setValue(val){
+        var att = document.createAttribute("value");
+        att.value = val;
+        this.ElementObject.setAttributeNode(att);
+    }
+
+    setReadOnly(val){
+        if(val){
+            var att = document.createAttribute("readonly");
+            this.ElementObject.setAttributeNode(att);
+        }else{
+            this.ElementObject.removeAttribute("readonly");
+        }
+        
+        
+    }
+
     setDisabled(disable){
         this.ElementObject.disabled = disable;
     }
@@ -117,6 +140,11 @@
     
     generateHtml(parent, location){
         this.ElementObject = document.createElement(this.type);
+
+        if(this.layout instanceof FlowLayout){
+            this.location = "flow";
+        }
+
         if(parent == null || parent == undefined){
         }else if(!(parent instanceof Element)){
             parent.appendChild(this.ElementObject);
@@ -137,6 +165,54 @@
 
 }
 
+class FlowLayout{
+
+    //direction types: left, center, right, top, bottom
+    //flow types: horizontal, vertical
+    constructor(fl, dir){
+        
+        if(fl == undefined){
+            this.flow = "horizontal";
+        }else{
+            this.flow = fl;
+        }
+        if(dir == undefined){
+            this.direction = "left";
+        }else{
+            this.direction = dir;
+        }
+    }
+
+    generateLayout(container){
+        this.MainContainer = new Element("div", container);
+        if(this.flow == "horizontal"){
+            //horizontal
+            if(this.direction == "left"){
+                this.MainContainer.addClass("flex-container-horizontal-start");
+            }else if(this.direction == "center"){
+                this.MainContainer.addClass("flex-container-horizontal-center");
+            }else if(this.direction == "right"){
+                this.MainContainer.addClass("flex-container-horizontal-end");
+            }
+        }else{
+            //vertical
+            if(this.direction == "top"){
+                this.MainContainer.addClass("flex-container-vertical");
+            }else if(this.direction == "center"){
+
+            }else if(this.direction == "bottom"){
+                this.MainContainer.addClass("flex-container-vertical-reverse");
+            }
+        }
+    }
+
+    addElement(element, location){
+        this.MainContainer.getElementObject().appendChild(element);
+    }
+}
+
+
+
 class BorderLayout{
 
     constructor(){
@@ -144,18 +220,22 @@ class BorderLayout{
     }
 
     generateLayout(container){
-        this.North = new Element("div", container);
-        this.North.addClass("col-md-12");
-        this.North.addStyle("padding: 0px");
+        this.Main = new Element("div", container);
+        this.Main.addClass("flex-container-vertical");
 
-        this.CenterContainer = new Element("div", container);
+        this.North = new Element("div", this.Main);
+        this.North.addClass("flex-container-center");
+        this.North.addStyle("padding: 0px; height: 33%");
+
+        this.CenterContainer = new Element("div", this.Main);
         this.CenterContainer.addClass("flex-container");
+        this.CenterContainer.addStyle("height: 33%");
         this.West = new Element("div", this.CenterContainer);
         this.Center = new Element("div", this.CenterContainer);
         this.East = new Element("div", this.CenterContainer);
-        this.South = new Element("div", container);
-        this.South.addClass("col-md-12");
-        this.South.addStyle("padding: 0px");
+        this.South = new Element("div", this.Main);
+        this.South.addClass("flex-container-center");
+        this.South.addStyle("padding: 0px; height: 33%");
     }
 
     static get North() {
