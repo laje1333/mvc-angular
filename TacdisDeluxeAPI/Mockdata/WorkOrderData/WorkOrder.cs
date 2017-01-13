@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
 {
@@ -98,17 +96,6 @@ namespace TacdisDeluxeAPI.Mockdata.WorkOrderData
                 return TotCost;
             }
 
-            public void RegNrChanged(string regNr)
-            {
-                RegNr = regNr;
-                VehDesc = GetRegNrDetails.GetVehDesc(regNr);
-                VehRegDate = GetRegNrDetails.GetVehRegDate(regNr).ToString();
-                VehOwner = GetRegNrDetails.GetOwner(regNr);
-                VehDriver = GetRegNrDetails.GetDriver(regNr);
-                VehPhoneNr = GetRegNrDetails.GetPhoneNr(regNr);
-                VehLastVisDate = GetRegNrDetails.GetLastVisDate(regNr).ToString();
-                VehLastVisMil = GetRegNrDetails.GetLastVisMilage(regNr);
-            }
         }
     }
 }

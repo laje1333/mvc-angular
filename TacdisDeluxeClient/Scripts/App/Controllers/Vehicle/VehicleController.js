@@ -795,35 +795,32 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
                 mainContainer.setLayout(new BorderLayout());
 
 
+
                 var northContainer = new Element("div", mainContainer, BorderLayout.North);
-                northContainer.addStyle("height: 200px; background-color: red;");
-                northContainer.setLayout(new BorderLayout());
-
-                var west = new Element("div", northContainer, BorderLayout.West);
-                west.addStyle("background-color: blue; width: 100px; height: 30px");
-
-                var north = new Element("div", northContainer, BorderLayout.North);
-                north.addStyle("background-color: green; width: 200px; height: 30px");
-
-                var south = new Element("div", northContainer, BorderLayout.South);
-                south.addStyle("background-color: yellow; width: 100px; height: 40px");
+                northContainer.setLayout(new FlowLayout("vertical", "top"));
+                northContainer.addStyle("width: 40px");
 
 
+                var north = new Element("button", northContainer, BorderLayout.North);
+                north.addClass("btn btn-primary btn-sm glyphicon glyphicon-chevron-up");
+                north.addStyle("border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;");
+
+                var center = new Element("input", northContainer, BorderLayout.Center);
+                center.setInputType("text");
+                center.addStyle("text-align: center; margin-bottom: -1px; margin-top: 1px");
+                center.setValue("0");
+                center.setReadOnly(true);
+
+
+                var south = new Element("button", northContainer, BorderLayout.South);
+                south.addClass("btn btn-primary btn-sm glyphicon glyphicon-chevron-down");
+                south.addStyle("margin-bottom: 20px; border-top-left-radius: 0px;border-top-right-radius: 0px;");
 
 
 
-                var centerContainer = new Element("div", mainContainer, BorderLayout.Center);
-                centerContainer.addStyle("background-color: blue;");
-
-                var westContainer = new Element("div", mainContainer, BorderLayout.West);
-                westContainer.addStyle("background-color: green;");
-
-                var eastContainer = new Element("div", mainContainer, BorderLayout.East);
-                eastContainer.addStyle("background-color: yellow;");
 
 
-                var southContainer = new Element("div", mainContainer, BorderLayout.South);
-                southContainer.addStyle("height: 100px; background-color: black;");
+                
 
                 
                 
