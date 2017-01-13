@@ -15,5 +15,6 @@ namespace TacdisDeluxeAPI.DTO
         public string StreeatAddress { get; set; }
         public string ZipCity { get; set; }
         public string Country { get; set; }
+        public string PhoneNr { get; set; }
     }
 }

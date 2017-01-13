@@ -47,7 +47,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
                 });
     }
     $scope.yearSelector = function () {
-        
+
 
         $http.get('http://localhost:57661/api/vehicle?year=' + $scope.modelYear + "&mod=" + $scope.modelType + "&brnd=" + $scope.selectedBrand).
                 then(function (response) {
@@ -322,7 +322,7 @@ tacdisDeluxeApp.controller("VehicleController", function ($scope, $http, $route)
 
             Properties: props,
         }
-        
+
         $http({
             method: 'POST',
             url: "http://localhost:57661/api/Vehicle/AddCar",
@@ -460,13 +460,13 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgT
                     feedbackPopup($scope.newVehicles[0][index].RegNo + " sucessefully deleted", { level: 'info', timeout: 3000 });
                     $scope.newVehicles[0].splice(index, 1);
                     $scope.newVehicleTable.reload();
-                    
-            },
+
+                },
                 function (response) {
                     feedbackPopup("Could not delete vehicle", { level: 'warning', timeout: 2000 });
-       }
+                }
     );
-            
+
         }
 
     }
@@ -476,7 +476,7 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgT
     $scope.orderByField = "REGNR";
 });
 
-tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http){
+tacdisDeluxeApp.controller("VehicleInventoryController", function ($scope, $http) {
     $scope.$on('$viewContentLoaded', hotlinkToMenu);
     $scope.regNumber = "";
 
@@ -514,13 +514,13 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
     $scope.hidePopover = function () {
         $("#info").popover('hide');
     }
-    
+
     $scope.popoverLines = function (text) {
         var temp = text.split("\n");
         var result = "<table class='table table-hover'><thead><tr><th>Engine</th><th>Transmission</th><th>Exterior</th><th>Interior</th></tr></thead><tbody><tr>";
 
 
-	
+
         for (i = 0; i < temp.length; i++) {
             result += "<td>" + temp[i] + "</td>";
         }
@@ -542,7 +542,7 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
 
         $scope.checkForDuplicates(data);
         $scope.transferDisabled = false;
-        
+
 
     }
 
@@ -654,9 +654,9 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
     }
 
     $scope.increaseWorkshopAmount = function () {
-            $scope.workshopInvAmount += 1;
-            $scope.mainInvAmount -= 1;
-            $scope.orderButtonDisabled = false;
+        $scope.workshopInvAmount += 1;
+        $scope.mainInvAmount -= 1;
+        $scope.orderButtonDisabled = false;
     }
 
     $scope.descreaseWorkshopAmount = function () {
@@ -732,7 +732,7 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
                             events: {
                                 click: function () {
                                     $scope.updateAdjustments(this.category);
-                                    
+
                                 }
                             }
                         }
@@ -762,7 +762,7 @@ tacdisDeluxeApp.controller("VehicleInventoryController", function($scope, $http)
 
                 chart.series[0].setData($scope.mainInventoryAmounts, false);
                 chart.series[1].setData($scope.shopInventoryAmounts, true);
-                
+
             });
         });
     }
@@ -789,8 +789,44 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
 
 
 
-                var testElement = new Element("button", document.getElementById("testContainer"));
-                testElement.addClass("btn", "btn-primary", "btn-sm");
+
+
+                var mainContainer = new Element("div", document.getElementById("testContainer"));
+                mainContainer.setLayout(new BorderLayout());
+
+
+                var northContainer = new Element("div", mainContainer, BorderLayout.North);
+                northContainer.addStyle("height: 200px; background-color: red;");
+                northContainer.setLayout(new BorderLayout());
+
+                var west = new Element("div", northContainer, BorderLayout.West);
+                west.addStyle("background-color: blue; width: 100px; height: 30px");
+
+                var north = new Element("div", northContainer, BorderLayout.North);
+                north.addStyle("background-color: green; width: 200px; height: 30px");
+
+                var south = new Element("div", northContainer, BorderLayout.South);
+                south.addStyle("background-color: yellow; width: 100px; height: 40px");
+
+
+
+
+
+                var centerContainer = new Element("div", mainContainer, BorderLayout.Center);
+                centerContainer.addStyle("background-color: blue;");
+
+                var westContainer = new Element("div", mainContainer, BorderLayout.West);
+                westContainer.addStyle("background-color: green;");
+
+                var eastContainer = new Element("div", mainContainer, BorderLayout.East);
+                eastContainer.addStyle("background-color: yellow;");
+
+
+                var southContainer = new Element("div", mainContainer, BorderLayout.South);
+                southContainer.addStyle("height: 100px; background-color: black;");
+
+                
+                
                 //var employee = function (amount) {
                 //    this.salary = amount;
                 //    this.incrementSalary = function(x) {
@@ -798,7 +834,7 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
                 //    }
 
 
-                   
+
                 //}
 
                 //var Staffan = new employee(100000);
@@ -816,8 +852,8 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
 
                 //var result = InvokeActionBroadcast("employeeAction");
                 //var x = Staffan.salary;
-                
-                
+
+
 
 
             }, function (response) {
@@ -903,7 +939,7 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
                     point: {
                         events: {
                             click: function () {
-                                
+
                                 $scope.selectInventory(this.name);
                             }
                         }
@@ -915,7 +951,7 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
                 type: 'pie',
                 name: 'Inventory space',
                 innerSize: '50%',
-                
+
                 data: [
                     ['Workshop inventory', 10.38],
                     ['Main inventory', 56.33],

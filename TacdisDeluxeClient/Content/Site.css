@@ -387,6 +387,21 @@ ul.pagination.ng-table-pagination.ng-scope {
         .resizer { width: 10px; height: 10px; opacity: 0; position:absolute; right: 0; bottom: 0; cursor: se-resize; }
         .clear { clear:inherit; }
 
+.float_center {
+  float: right;
+
+  position: relative;
+  left: -50%; /* or right 50% */
+  text-align: left;
+}
+
+.flex-container {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-around;
+    justify-content: space-around;
+}
+
 
 
 /*div#__ajaxFeedbackMessage {

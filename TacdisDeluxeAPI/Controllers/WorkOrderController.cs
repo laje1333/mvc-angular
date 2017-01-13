@@ -118,54 +118,79 @@ namespace TacdisDeluxeAPI.Controllers
 
         [System.Web.Http.HttpGet]
         [System.Web.Http.Route("GetRegNrInfo")]
-        public List<object> GetRegNrInfo(string WOHID, string regnr)
+        public VehicleServiceDto GetRegNrInfo(string WOHID, string regnr)
         {
             using (DBContext c = new DBContext())
             {
-                List<object> responseArr = new List<object>();
+                VehicleServiceDto vehServDto = new VehicleServiceDto();
                 if (!ValidateRegNr(regnr))
                 {
                     regnr = "";
                 }
                 WorkOrderEntity woh;
+                VehicleEntity veh;
                 try
                 {
                     woh = GetWoh(WOHID, c);
+                    veh = c.Vehicles.Single(p => p.RegNo == regnr);
                 }
                 catch (Exception)
                 {
-                    return responseArr;
+                    return vehServDto;
                 }
                 if (woh == null)
                 {
-                    return responseArr;
+                    return vehServDto;
                 }
 
-                RegNrChanged(woh, regnr.ToUpper());
+                if (woh.RegNr != regnr)
+                {
+                    RegNrChanged(woh, veh);
+                }
 
-                responseArr.Add(woh.VehDesc);
-                responseArr.Add(woh.VehRegDate);
-                responseArr.Add(woh.VehOwner);
-                responseArr.Add(woh.VehDriver);
-                responseArr.Add(woh.VehPhoneNr);
-                responseArr.Add(woh.VehLastVisDate);
-                responseArr.Add(woh.VehLastVisMil);
+                vehServDto.VehDesc = woh.VehDesc;
+                vehServDto.VehRegDate = woh.VehRegDate;
+                vehServDto.VehOwner = woh.VehOwner;
+                vehServDto.VehDriver = woh.VehDriver;
+                vehServDto.VehPhoneNr = woh.VehPhoneNr;
+                vehServDto.VehLastVisDate = woh.VehLastVisDate;
+                vehServDto.VehLastVisMil = woh.VehLastVisMil;
 
                 c.SaveChanges();
-                return responseArr;
+                return vehServDto;
             }
         }
 
-        private void RegNrChanged(WorkOrderEntity woh, string regNr)
+        private void RegNrChanged(WorkOrderEntity woh, VehicleEntity veh)
         {
-            woh.RegNr = regNr;
-            woh.VehDesc = GetRegNrDetails.GetVehDesc(regNr);
-            woh.VehRegDate = GetRegNrDetails.GetVehRegDate(regNr);
-            woh.VehOwner = GetRegNrDetails.GetOwner(regNr);
-            woh.VehDriver = GetRegNrDetails.GetDriver(regNr);
-            woh.VehPhoneNr = GetRegNrDetails.GetPhoneNr(regNr);
-            woh.VehLastVisDate = GetRegNrDetails.GetLastVisDate(regNr);
-            woh.VehLastVisMil = GetRegNrDetails.GetLastVisMilage(regNr);
+            woh.RegNr = veh.RegNo;
+            woh.VehDesc = veh.ItemName;
+            woh.VehRegDate = veh.RegistrationDate;
+            woh.VehOwner = veh.Owner.FirstName + " " + veh.Owner.LastName;
+            woh.VehDriver = veh.Owner.FirstName + " " + veh.Owner.LastName;
+            woh.VehPhoneNr = veh.Owner.PhoneNr;
+            woh.VehLastVisDate = veh.LastServiceDate;
+            woh.VehLastVisMil = veh.Milage.ToString();
+        }
+
+        [System.Web.Http.HttpPost]
+        [System.Web.Http.Route("PostCarData")]
+        public void PostCarData(VehicleServiceDto serviceData)
+        {
+            using (DBContext c = new DBContext())
+            {
+                var woh = GetWoh(serviceData.wohId, c);
+
+                woh.VehDesc = serviceData.VehDesc;
+                woh.VehRegDate = serviceData.VehRegDate;
+                woh.VehOwner = serviceData.VehOwner;
+                woh.VehDriver = serviceData.VehDriver;
+                woh.VehPhoneNr = serviceData.VehPhoneNr;
+                woh.VehLastVisDate = serviceData.VehLastVisDate;
+                woh.VehLastVisMil = serviceData.VehLastVisMil;
+
+                c.SaveChanges();
+            }
         }
 
         private bool ValidateRegNr(string regnr)
@@ -198,7 +223,7 @@ namespace TacdisDeluxeAPI.Controllers
                 woh.PlannedMechID = statusData.plannedMechID;
                 woh.RespBy = Mapper.Map<SalesmanDto, SalesmanEntity>(statusData.salesman);
                 woh.MainPayer = Mapper.Map<PayerDto, PayerEntity>(statusData.payer);
-                
+
                 c.Payers.Attach(woh.MainPayer);
                 c.Salesmen.Attach(woh.RespBy);
 
@@ -335,7 +360,7 @@ namespace TacdisDeluxeAPI.Controllers
         private WoJobEntity GetWoJ(string wohid, string wojid, DBContext c)
         {
             try
-            {                
+            {
                 return GetWoh(wohid, c).WOJ_List.Where(p => p.WoJNr.ToString() == wojid).Single();
             }
             catch (Exception)
@@ -407,7 +432,7 @@ namespace TacdisDeluxeAPI.Controllers
                 c.SaveChanges();
             }
         }
-        
+
         [System.Web.Http.HttpPost]
         [System.Web.Http.Route("RemoveWJO")]
         public void RemoveWJO(string wohId, string wojId, string wjoId)
