@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Tacdis Deluxe 5.0</title>
     <script src="https://use.fontawesome.com/2389a26a6e.js"></script>
-   
+
 
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -22,9 +22,9 @@
     <script src="~/Scripts/App/Factories/IsAuthFactory.js"></script>
     <script src="~/Scripts/global.js"></script>
     <script src="~/Scripts/App/Directives/Vehicle/NewVehicleDirective.js"></script>
-    <link href="~/Content/Custom.css" rel="stylesheet"/>
+    <link href="~/Content/Custom.css" rel="stylesheet" />
 
-    @{ 
+    @{
         var controller = ViewContext.RouteData.Values["controller"].ToString();
         string navPartsCss = controller.ToLower() == "parts" ? "nav-active" : "";
         string navSalesCss = controller.ToLower() == "sales" ? "nav-active" : "";
@@ -34,7 +34,7 @@
     }
 
 </head>
-<body ng-app="tacdisDeluxeApp" ng-controller="LayoutController" ng-init="checkUser()" id="appcontainer">
+<body ng-app="tacdisDeluxeApp" ng-controller="LayoutController" ng-init="checkUser()" id="appcontainer" style="padding-bottom: 0px">
     <div id="__ajaxFeedbackMessage" class="alert alert-dismissable">
         <a class="close" data-dismiss="alert" aria-label="close">&times;</a>
         <span class="message-level glyphicon"></span> <span class="message-text"></span>
@@ -58,16 +58,85 @@
 
                 </ul>
             </div>
+
         </div>
     </div>
     <div class="container body-content" ng-show="auth.isAuth">
         @RenderBody()
+    </div>
+    <div style="bottom: 0; left: 0; position: fixed">
+        <div class="panel panel-primary" style="width: 287.71px; height: 250px; margin-bottom: 0px">
+            <panelheader data-title="Username" style="height: 15%"></panelheader>
+            <div class="panel-body" style="height: 65%; padding: 0px; overflow-y: auto" id="chatcontainer">
+
+            </div>
+
+            <div class="panel-footer" style="height: 50px;">
+                <form>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="message">
+                        <div class="input-group-btn">
+                            <button class="btn btn-primary" type="submit" onclick="appendChatElement('self', 'Tjenare jeppe! Tjenare jeppe! Tjenare jeppe!')">
+                                <i class="glyphicon glyphicon-envelope"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="container body-content" ng-show="!auth.isAuth">
         Redirecting to login page!!!!!!!!!!
     </div>
 
     @RenderSection("scripts", required: false)
+
+
+    <script>
+
+        var chatContainer = new Element("div", document.getElementById("chatcontainer"));
+
+
+        function appendChatElement(from, text) {
+            var dateObject = new Date();
+            var elementRow = new Element("div", chatContainer);
+            elementRow.addStyle("width: 100%;");
+
+
+            var panelContainer = new Element("div", elementRow);
+            if (from == "self") {
+                panelContainer.addClass("panel panel-info");
+            } else {
+                panelContainer.addClass("panel panel-default");
+            }
+
+            var panelHeader = new Element("div", panelContainer);
+            panelHeader.addClass("panel-heading");
+            panelHeader.addStyle("text-align: right; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; font-size: 10px");
+            panelHeader.setText(dateObject.getHours() + ":" + dateObject.getMinutes());
+
+            var contentRow = new Element("div", panelContainer);
+            contentRow.addClass("panel-body-nopadding");
+
+            var chatElement = new Element("h5", contentRow);
+            chatElement.addStyle("margin-left: 4px; margin-right: 4px; word-wrap: break-word;");
+            chatElement.setText(text);
+
+
+            if (from == "self") {
+                panelContainer.addStyle("float:right; max-width: 70%; margin-right: 6px; margin-bottom: 10px");
+                
+               
+            }else {
+                panelContainer.addStyle("float:left; max-width: 70%; margin-left: 6px; margin-bottom: 10px");
+            }
+
+
+            elementRow.addStyle("clear: both");
+
+        }
+
+    </script>
 </body>
 
 </html>

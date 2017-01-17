@@ -789,18 +789,69 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
 
 
 
-                var borderLayoutContainer = new Element("div");
-                borderLayoutContainer.addStyle("width:360px");
-                borderLayoutContainer.setLayout(new BorderLayout());
 
-                var voteComp = new VoteComponent(borderLayoutContainer, BorderLayout.Center);
-                voteComp.setValue(50);
 
-                var westContainer = new Element("div", borderLayoutContainer, BorderLayout.West);
-                westContainer.addStyle("width: 280px");
-                westContainer.setElementObject(document.getElementById("testreplacement"));
+                var button = new Element("button");
+                button.setText("Click me");
+                button.addClass("btn btn-success");
 
-                replaceElementWith("testreplacement", borderLayoutContainer);
+
+                var northContainer = new Element("div");
+                northContainer.setLayout(new FlowLayout("vertical", "top"));
+
+                var button2 = new Element("button", northContainer, "none");
+                button2.setText("Click me2");
+                button2.addClass("btn btn-primary");
+
+                var button3 = new Element("button", northContainer, "none");
+                button3.setText("Click me3");
+                button3.addClass("btn btn-warning");
+
+                var button4 = new Element("button", northContainer, "none");
+                button4.setText("Click me4");
+                button4.addClass("btn btn-danger");
+
+                var button5 = new Element("button", northContainer, "none");
+                button5.setText("Click me2");
+                button5.addClass("btn btn-primary");
+
+                var button6 = new Element("button");
+                button6.setText("Click me3");
+                button6.addClass("btn btn-warning");
+
+                var button7 = new Element("button");
+                button7.setText("Click me4");
+                button7.addClass("btn btn-danger");
+
+                var button8 = new Element("button");
+                button8.setText("Click me34535");
+                button8.addClass("btn btn-danger");
+
+                var button9 = new Element("button");
+                button9.setText("Click me3234535");
+                button9.addClass("btn btn-danger");
+
+                var Tframe = new TFrame(document.getElementById("testContainer"), new BorderLayout());
+                Tframe.setDimension(600, 300);
+                Tframe.setTitle("Title");
+                Tframe.addComponent(northContainer, BorderLayout.North);
+                Tframe.addComponent(button, BorderLayout.West);
+                Tframe.addComponent(button7, BorderLayout.South);
+                Tframe.addComponent(button8, BorderLayout.East);
+                Tframe.addComponent(button9, BorderLayout.Center);
+
+                //var borderLayoutContainer = new Element("div");
+                //borderLayoutContainer.addStyle("width:360px");
+                //borderLayoutContainer.setLayout(new BorderLayout());
+
+                //var voteComp = new TVoteComponent(borderLayoutContainer, BorderLayout.Center);
+                //voteComp.setValue(50);
+
+                //var westContainer = new Element("div", borderLayoutContainer, BorderLayout.West);
+                //westContainer.addStyle("width: 280px");
+                //westContainer.setElementObject(document.getElementById("testreplacement"));
+
+                //replaceElementWith("testreplacement", borderLayoutContainer);
 
                 
 

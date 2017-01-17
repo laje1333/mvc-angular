@@ -100,30 +100,38 @@ tacdisDeluxeApp.directive("tframe", function () {
             eastResize.style.top = "60px";
             eastResize.style.height = tframe.offsetHeight + "px"
 
-            mouseDown({ clientY: 200, clientX: 200 });
-            divMove({ clientY: 201, clientX: 200 });
+            mouseDown({ clientY: 650, clientX: 600 });
+            divMove({ clientY: 651, clientX: 600 });
             mouseUp();
-            initDrag({ clientY: 201, clientX: 200, currentTarget: { id: $scope.resizeId } });
-            doDrag({ clientY: 201, clientX: 200 });
+            initDrag({ clientY: 651, clientX: 600, currentTarget: { id: $scope.resizeId } });
+            doDrag({ clientY: 651, clientX: 600 });
             stopDrag();
-            refreshComponents();
+            
             tbody.style.height = "600px";
             tbody.style.width = "1200px";
-            tframe.style.height = "auto";
+            tframe.style.height = "650px";
+            refreshComponents();
         }
 
+        function clearSelection() {
+            if (document.selection) {
+                document.selection.empty();
+            } else if (window.getSelection) {
+                window.getSelection().removeAllRanges();
+            }
+        }
 
         function refreshComponents() {
             tbody.style.width = (tframe.offsetWidth - 2) + "px";
             tbody.style.height = (tframe.offsetHeight - 50) + "px";
             southResize.style.width = tframe.offsetWidth + "px";
             eastResize.style.height = (tframe.offsetHeight - 42) + "px";
-            eastResize.style.left = (tframe.style.left + 2 + tbody.offsetWidth) + "px";
-            eastResize.style.top = (tframe.style.top + 42) + "px";
-            southResize.style.left = tframe.style.left + "px";
-            southResize.style.top = (tframe.style.top + tbody.offsetHeight + 50) + "px";
-            southEastResize.style.top = (tframe.style.top + tbody.offsetHeight + 50) + "px";
-            southEastResize.style.left = (tframe.style.left + tbody.offsetWidth + 2) + "px";
+            eastResize.style.left = (tframe.offsetLeft + 2 + tbody.offsetWidth) + "px";
+            eastResize.style.top = (tframe.offsetTop + 42) + "px";
+            southResize.style.left = tframe.offsetLeft + "px";
+            southResize.style.top = (tframe.offsetTop + tbody.offsetHeight + 50) + "px";
+            southEastResize.style.top = (tframe.offsetTop + tbody.offsetHeight + 50) + "px";
+            southEastResize.style.left = (tframe.offsetLeft + tbody.offsetWidth + 2) + "px";
         }
 
 
@@ -192,6 +200,7 @@ tacdisDeluxeApp.directive("tframe", function () {
             startHeight = parseInt(document.defaultView.getComputedStyle(tframe).height, 10);
             document.documentElement.addEventListener('mousemove', doDrag, false);
             document.documentElement.addEventListener('mouseup', stopDrag, false);
+            tframe.className += " noselect";
         }
 
         function doDrag(e) {
@@ -219,7 +228,8 @@ tacdisDeluxeApp.directive("tframe", function () {
 
         function stopDrag(e) {
             document.documentElement.removeEventListener('mousemove', doDrag, false); document.documentElement.removeEventListener('mouseup', stopDrag, false);
-
+            tframe.className = tframe.className.replace(new RegExp('(?:^|\\s)' + 'noselect' + '(?:\\s|$)'), 'frame-select');
+            clearSelection();
         }
 
         $scope.exitRequest = function () {
@@ -233,7 +243,7 @@ tacdisDeluxeApp.directive("tframe", function () {
             if (index > -1) {
                 minimizedSlots.splice(index, 1);
             }
-
+            tframe.style.minHeight = "150px";
             tframe.style.position = "relative";
             tframe.style.width = fullScreenSize;
             tframe.style.height = "auto";
@@ -259,6 +269,7 @@ tacdisDeluxeApp.directive("tframe", function () {
                 for (i = 0; i < minimizedSlots.length; i++) {
                     widthOffset += document.getElementById(minimizedSlots[i]).offsetWidth;
                 }
+                tframe.style.minHeight = "0px";
                 tframe.style.position = "fixed";
                 tframe.style.width = "auto";
                 tframe.style.height = "auto";

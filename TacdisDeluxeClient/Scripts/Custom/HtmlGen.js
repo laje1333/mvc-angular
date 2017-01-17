@@ -232,20 +232,23 @@ class BorderLayout{
     generateLayout(container){
         this.Main = new Element("div", container);
         this.Main.addClass("flex-container-vertical");
-        this.Main.addStyle("width: 100%");
-        this.North = new Element("div", this.Main);
-        this.North.addClass("flex-container-center");
-        this.North.addStyle("padding: 0px; height: 33%");
+        this.Main.addStyle("width: 100%; height: 100%; overflow: auto;");
+        this.NorthContainer = new Element("div", this.Main);
+        this.NorthContainer.addClass("flex-container-center");
+        this.NorthContainer.addStyle("padding: 0px; height: 33.33%;");
+        this.North = new Element("div", this.NorthContainer);
 
         this.CenterContainer = new Element("div", this.Main);
         this.CenterContainer.addClass("flex-container");
-        this.CenterContainer.addStyle("height: 33%");
+        this.CenterContainer.addStyle("height: 33.33%;");
         this.West = new Element("div", this.CenterContainer);
         this.Center = new Element("div", this.CenterContainer);
         this.East = new Element("div", this.CenterContainer);
-        this.South = new Element("div", this.Main);
-        this.South.addClass("flex-container-center");
-        this.South.addStyle("padding: 0px; height: 33%");
+        this.SouthContainer = new Element("div", this.Main);
+        this.SouthContainer.addClass("flex-container-center");
+        this.SouthContainer.addStyle("padding: 0px; height: 33.33%;position: relative;");
+        this.South = new Element("div", this.SouthContainer);
+        this.South.addStyle("position: absolute; bottom: 0;");
     }
 
     static get North() {
