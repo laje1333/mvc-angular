@@ -455,19 +455,11 @@ namespace TacdisDeluxeAPI.Controllers
         {
             using (var c = new DBContext())
             {
-                PartEntity part = c.Parts.Single(p => p.ItemId.ToString() == wjpCode);
+                var part = c.Parts.Single(p => p.ItemId.ToString() == wjpCode);
                 var woj = GetWoJ(wohId, wojId, c);
                 woj.WOJ_PartList.Add(part);
 
-                IdAndAmountEntity exist = null;
-                foreach (var item in woj.WOJ_PartList_Ids)
-                {
-                    if (item.Id == part.ItemId)
-                    {
-                        exist = item;
-                        break;
-                    }
-                }
+                var exist = woj.WOJ_PartList_Ids.FirstOrDefault(item => item.Id == part.ItemId);
                 if (exist == null)
                 {
                     woj.WOJ_PartList_Ids.Add(new IdAndAmountEntity(part.ItemId, double.Parse(quantity)));
