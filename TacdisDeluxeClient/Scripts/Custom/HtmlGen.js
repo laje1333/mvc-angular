@@ -17,6 +17,11 @@
         this.layout = lay;
     }
 
+    setElementObject(element){
+        var clone = element.cloneNode(true);
+        this.ElementObject.appendChild(clone);
+    }
+
     addClass(className){
         var att = null;
         if(!this.ElementObject.hasAttributes("class")){
@@ -90,6 +95,10 @@
         this.ElementObject.setAttributeNode(att);
     }
 
+    getValue(){
+        return this.ElementObject.value;
+    }
+
     setReadOnly(val){
         if(val){
             var att = document.createAttribute("readonly");
@@ -122,7 +131,7 @@
 
     addEvent(eventType, action, trigger){
         var eventId;
-        if(trigger == undefined){
+        if(trigger == undefined || trigger == null){
             eventId = Maths.Random.String(15);
         }else{
             eventId = trigger;
@@ -146,6 +155,7 @@
         }
 
         if(parent == null || parent == undefined){
+
         }else if(!(parent instanceof Element)){
             parent.appendChild(this.ElementObject);
         }else{
@@ -222,7 +232,7 @@ class BorderLayout{
     generateLayout(container){
         this.Main = new Element("div", container);
         this.Main.addClass("flex-container-vertical");
-
+        this.Main.addStyle("width: 100%");
         this.North = new Element("div", this.Main);
         this.North.addClass("flex-container-center");
         this.North.addStyle("padding: 0px; height: 33%");
@@ -281,4 +291,10 @@ class BorderLayout{
         }
     }
 
+}
+
+function replaceElementWith(id, element){
+
+    var original = document.getElementById(id);
+    original.parentNode.replaceChild(element.getElementObject(), original);
 }

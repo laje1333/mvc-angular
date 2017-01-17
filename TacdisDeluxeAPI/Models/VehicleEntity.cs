@@ -10,6 +10,10 @@ namespace TacdisDeluxeAPI.Models
 {
     public class VehicleEntity
     {
+        public VehicleEntity()
+        {
+            Owner = new PayerEntity();
+        }
         [Key]
         public int Id { get; set; }
         public string RegNo { get; set; }

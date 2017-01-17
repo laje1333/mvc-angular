@@ -423,14 +423,14 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgT
         feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
         var obj = response.data;
         $scope.records = obj.length;
-        $scope.newVehicles.push(obj);
+        $scope.newVehicles = obj;
         $scope.spinner = false;
 
         $scope.newVehicleTable = new NgTableParams({
 
         },
             {
-                dataset: $scope.newVehicles[0]
+                dataset: $scope.newVehicles
             });
     }, function (response) {
         feedbackPopup("Could not fetch data", { level: 'warning', timeout: 2000 });
@@ -789,36 +789,18 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
 
 
 
+                var borderLayoutContainer = new Element("div");
+                borderLayoutContainer.addStyle("width:360px");
+                borderLayoutContainer.setLayout(new BorderLayout());
 
+                var voteComp = new VoteComponent(borderLayoutContainer, BorderLayout.Center);
+                voteComp.setValue(50);
 
-                var mainContainer = new Element("div", document.getElementById("testContainer"));
-                mainContainer.setLayout(new BorderLayout());
+                var westContainer = new Element("div", borderLayoutContainer, BorderLayout.West);
+                westContainer.addStyle("width: 280px");
+                westContainer.setElementObject(document.getElementById("testreplacement"));
 
-
-
-                var northContainer = new Element("div", mainContainer, BorderLayout.North);
-                northContainer.setLayout(new FlowLayout("vertical", "top"));
-                northContainer.addStyle("width: 40px");
-
-
-                var north = new Element("button", northContainer, BorderLayout.North);
-                north.addClass("btn btn-primary btn-sm glyphicon glyphicon-chevron-up");
-                north.addStyle("border-bottom-left-radius: 0px; border-bottom-right-radius: 0px;");
-
-                var center = new Element("input", northContainer, BorderLayout.Center);
-                center.setInputType("text");
-                center.addStyle("text-align: center; margin-bottom: -1px; margin-top: 1px");
-                center.setValue("0");
-                center.setReadOnly(true);
-
-
-                var south = new Element("button", northContainer, BorderLayout.South);
-                south.addClass("btn btn-primary btn-sm glyphicon glyphicon-chevron-down");
-                south.addStyle("margin-bottom: 20px; border-top-left-radius: 0px;border-top-right-radius: 0px;");
-
-
-
-
+                replaceElementWith("testreplacement", borderLayoutContainer);
 
                 
 

@@ -88,15 +88,22 @@ namespace TacdisDeluxeAPI.Controllers
             }
         }
 
-        public IEnumerable<VehicleEntity> GetAllVehicles()
+        public IHttpActionResult GetAllVehicles()
         {
-            using (DBContext c = new DBContext())
+            try
             {
-                var vehicles = c.Vehicles;
+                using (DBContext c = new DBContext())
+                {
+                    List<VehicleEntity> vehicles = c.Vehicles.ToList();
 
 
 
-                return vehicles.ToList();
+                    return Ok(vehicles);
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
             }
         }
 
