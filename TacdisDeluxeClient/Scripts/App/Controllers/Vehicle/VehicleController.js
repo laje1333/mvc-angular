@@ -423,14 +423,14 @@ tacdisDeluxeApp.controller("VehicleMaintenanceController", function ($scope, NgT
         feedbackPopup("Successefully fetched data", { level: 'success', timeout: 2000 });
         var obj = response.data;
         $scope.records = obj.length;
-        $scope.newVehicles.push(obj);
+        $scope.newVehicles = obj;
         $scope.spinner = false;
 
         $scope.newVehicleTable = new NgTableParams({
 
         },
             {
-                dataset: $scope.newVehicles[0]
+                dataset: $scope.newVehicles
             });
     }, function (response) {
         feedbackPopup("Could not fetch data", { level: 'warning', timeout: 2000 });
@@ -789,41 +789,20 @@ tacdisDeluxeApp.controller("VehicleCreateInventoryController", function ($scope,
 
 
 
+                var borderLayoutContainer = new Element("div");
+                borderLayoutContainer.addStyle("width:360px");
+                borderLayoutContainer.setLayout(new BorderLayout());
 
+                var voteComp = new VoteComponent(borderLayoutContainer, BorderLayout.Center);
+                voteComp.setValue(50);
 
-                var mainContainer = new Element("div", document.getElementById("testContainer"));
-                mainContainer.setLayout(new BorderLayout());
+                var westContainer = new Element("div", borderLayoutContainer, BorderLayout.West);
+                westContainer.addStyle("width: 280px");
+                westContainer.setElementObject(document.getElementById("testreplacement"));
 
+                replaceElementWith("testreplacement", borderLayoutContainer);
 
-                var northContainer = new Element("div", mainContainer, BorderLayout.North);
-                northContainer.addStyle("height: 200px; background-color: red;");
-                northContainer.setLayout(new BorderLayout());
-
-                var west = new Element("div", northContainer, BorderLayout.West);
-                west.addStyle("background-color: blue; width: 100px; height: 30px");
-
-                var north = new Element("div", northContainer, BorderLayout.North);
-                north.addStyle("background-color: green; width: 200px; height: 30px");
-
-                var south = new Element("div", northContainer, BorderLayout.South);
-                south.addStyle("background-color: yellow; width: 100px; height: 40px");
-
-
-
-
-
-                var centerContainer = new Element("div", mainContainer, BorderLayout.Center);
-                centerContainer.addStyle("background-color: blue;");
-
-                var westContainer = new Element("div", mainContainer, BorderLayout.West);
-                westContainer.addStyle("background-color: green;");
-
-                var eastContainer = new Element("div", mainContainer, BorderLayout.East);
-                eastContainer.addStyle("background-color: yellow;");
-
-
-                var southContainer = new Element("div", mainContainer, BorderLayout.South);
-                southContainer.addStyle("height: 100px; background-color: black;");
+                
 
                 
                 

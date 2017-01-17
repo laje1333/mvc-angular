@@ -27,6 +27,7 @@ namespace TacdisDeluxeClient
                         "~/Scripts/Custom/Maths.js",
                         "~/Scripts/Custom/ActionEvents.js",
                         "~/Scripts/Custom/HtmlGen.js",
+                        "~/Scripts/Custom/TElements.js",
                         "~/Scripts/angular-ui/ui-bootstrap.js",
                         "~/Scripts/angular-ui/ui-bootstrap-tpls.js"));
 

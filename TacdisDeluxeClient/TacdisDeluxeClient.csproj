@@ -351,6 +351,7 @@
     <Content Include="Scripts\Custom\ActionEvents.js" />
     <Content Include="Scripts\Custom\HtmlGen.js" />
     <Content Include="Scripts\Custom\Maths.js" />
+    <Content Include="Scripts\Custom\TElements.js" />
     <Content Include="Scripts\Custom\three.min.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />

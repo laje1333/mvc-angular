@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
 using TacdisDeluxeAPI.DTO;
 using TacdisDeluxeAPI.Models;
 using TacdisDeluxeAPI.Models.Enums;
+using System;
 
 namespace TacdisDeluxeAPI.Helpers.Invoice
 {
@@ -41,7 +43,7 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
                 DebitCredit = "Debit",
                 WoNumber = 0,
                 JobNumber = string.Empty,
-                Payer = GetPayer(salesDto.PayerIds.First().ToString()),
+                Payer = GetPayer(salesDto.PayerIds.First()),
                 InvoiceRows = new List<InvoiceRowEntity>()
             };
 
@@ -76,7 +78,9 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
 
             if (invoice.InvoiceRows.Count > 0)
             {
-                invoice.Vat = invoice.InvoiceRows.FirstOrDefault().Vat;
+                var invoiceRowEntity = invoice.InvoiceRows.FirstOrDefault();
+                if (invoiceRowEntity != null)
+                    invoice.Vat = invoiceRowEntity.Vat;
 
                 foreach (var row in invoice.InvoiceRows)
                 {
@@ -229,12 +233,11 @@ namespace TacdisDeluxeAPI.Helpers.Invoice
             }
         }
         
-        private static PayerEntity GetPayer(string id)
+        private static PayerEntity GetPayer(int id)
         {
             using (var db = new DBContext())
             {
-                int i = Convert.ToInt32(id);
-                var payer = db.Payers.Single(p => p.Id == i);
+                var payer = db.Payers.Single(p => p.Id == id);
                 return payer;
             }
         }
