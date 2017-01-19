@@ -36,9 +36,9 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 using (DBContext db = new DBContext())
                 {
-                    SaleEntity saleToDelete = db.Sales.Include("Salesman").Where(x => x.Id == id).FirstOrDefault();
-                    SalesmanEntity deleteSaleOnSalesman = db.Salesmen.Where(x => x.Id == saleToDelete.Salesman.Id).FirstOrDefault();
-                    deleteSaleOnSalesman.Sales.Remove(saleToDelete);
+                    SaleEntity saleToDelete = db.Sales.Include("Salesman").FirstOrDefault(x => x.Id == id);
+                    SalesmanEntity deleteSaleOnSalesman = db.Salesmen.FirstOrDefault(x => x.Id == saleToDelete.Salesman.Id);
+                    if (deleteSaleOnSalesman != null) deleteSaleOnSalesman.Sales.Remove(saleToDelete);
                     db.Sales.Remove(saleToDelete);
                     db.SaveChanges();
                     return Ok();
@@ -92,33 +92,21 @@ namespace TacdisDeluxeAPI.Controllers
 
                     if (request.PayerIds != null)
                     {
-                        foreach (int y in request.PayerIds)
-                        {                           
-                            payers.Add(db.Payers.Where(x => x.Id == y).FirstOrDefault());                           
-                        }
+                        payers.AddRange(request.PayerIds.Select(y => db.Payers.FirstOrDefault(x => x.Id == y)));
                     }
                     if (request.VehicleIds != null)
                     {
-                        foreach (int y in request.VehicleIds)
-                        {
-                            vehs.Add(db.Vehicles.Where(x => x.ItemId == y).FirstOrDefault());
-                        }
+                        vehs.AddRange(request.VehicleIds.Select(y => db.Vehicles.Where(x => x.ItemId == y).FirstOrDefault()));
                     }
 
                     if (request.PartIds != null)
                     {
-                        foreach (IdAndAmountDto y in request.PartIds)
-                        {
-                            parts.Add(db.Parts.Where(x => x.ItemId == y.Id).FirstOrDefault());
-                        }
+                        parts.AddRange(request.PartIds.Select(y => db.Parts.FirstOrDefault(x => x.ItemId == y.Id)));
                     }
                     
                     if(request.AddonIds != null)
                     {
-                        foreach (int y in request.AddonIds)
-                        {
-                            addons.Add(db.Addons.Where(x => x.ItemId == y).FirstOrDefault());
-                        }
+                        addons.AddRange(request.AddonIds.Select(y => db.Addons.FirstOrDefault(x => x.ItemId == y)));
                     }
                     
                     enti.Payers = payers;
@@ -126,12 +114,12 @@ namespace TacdisDeluxeAPI.Controllers
                     enti.Parts = parts;
                     enti.Addons = addons;
                     enti.Status = request.Status;
-                    enti.Salesman = db.Salesmen.Where(x => x.Id == request.Salesman.Id).FirstOrDefault();
+                    enti.Salesman = db.Salesmen.FirstOrDefault(x => x.Id == request.Salesman.Id);
                     enti.DateCreated = DateTime.Now;
                     enti.DateEdited = DateTime.Now;
                     db.Sales.Add(enti);
 
-                    SalesmanEntity salesman = db.Salesmen.Where(x => x.Id == request.Salesman.Id).FirstOrDefault();
+                    SalesmanEntity salesman = db.Salesmen.FirstOrDefault(x => x.Id == request.Salesman.Id);
                     salesman.Sales.Add(enti);
                     db.SaveChanges();
 
@@ -155,12 +143,12 @@ namespace TacdisDeluxeAPI.Controllers
             {
                 using (DBContext db = new DBContext())
                 {
-                    SaleEntity enti = db.Sales.Include("Salesman").Where(x => x.Id == request.Id).FirstOrDefault();
+                    SaleEntity enti = db.Sales.Include("Salesman").FirstOrDefault(x => x.Id == request.Id);
                     if (enti.Payers.First().Id != request.PayerIds[0])
                     {
                         PayerEntity removeFirst = enti.Payers.First();
                         enti.Payers.Remove(removeFirst);
-                        enti.Payers.Add(db.Payers.Where(x => x.Id == request.PayerIds[0]).FirstOrDefault());
+                        enti.Payers.Add(db.Payers.FirstOrDefault(x => x.Id == request.PayerIds[0]));
                     }
                     else if(request.PayerIds == null)
                     {
@@ -191,9 +179,9 @@ namespace TacdisDeluxeAPI.Controllers
                         int len = request.VehicleIds == null ? 0 : request.VehicleIds.Length;
                         for (int i = 0; i < len ; i++ )
                         {
-                            if (!enti.Vehicles.Any(x => x.ItemId == request.VehicleIds[i]))
+                            if (enti.Vehicles.All(x => x.ItemId != request.VehicleIds[i]))
                             {
-                                enti.Vehicles.Add(db.Vehicles.Where(x => x.ItemId == request.VehicleIds[i]).FirstOrDefault());
+                                enti.Vehicles.Add(db.Vehicles.FirstOrDefault(x => x.ItemId == request.VehicleIds[i]));
                             }
                         }
                     }
@@ -210,13 +198,13 @@ namespace TacdisDeluxeAPI.Controllers
                             }
                             else
                             {
-                                if (!request.PartIds.Any(x => x.Id == part.ItemId))
+                                if (request.PartIds.All(x => x.Id != part.ItemId))
                                 {
                                     partsToRemove.Add(part);
                                 }
                                 else
                                 {
-                                    request.PartIds.Remove(request.PartIds.Where(x => x.Id == part.ItemId).FirstOrDefault());
+                                    request.PartIds.Remove(request.PartIds.FirstOrDefault(x => x.Id == part.ItemId));
                                 }
                             }
                             
@@ -229,7 +217,7 @@ namespace TacdisDeluxeAPI.Controllers
                         {
                             foreach (IdAndAmountDto y in request.PartIds)
                             {
-                                enti.Parts.Add(db.Parts.Where(x => x.ItemId == y.Id).FirstOrDefault());
+                                enti.Parts.Add(db.Parts.FirstOrDefault(x => x.ItemId == y.Id));
                             }  
                         }
                           
