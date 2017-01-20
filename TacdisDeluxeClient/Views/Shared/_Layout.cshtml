@@ -22,6 +22,7 @@
     <script src="~/Scripts/App/Factories/IsAuthFactory.js"></script>
     <script src="~/Scripts/global.js"></script>
     <script src="~/Scripts/App/Directives/Vehicle/NewVehicleDirective.js"></script>
+    <script src="~/Scripts/App/Controllers/ChatController.js"></script>
     <link href="~/Content/Custom.css" rel="stylesheet" />
 
     @{
@@ -64,10 +65,18 @@
     <div class="container body-content" ng-show="auth.isAuth">
         @RenderBody()
     </div>
-    <div style="bottom: 0; left: 0; position: fixed">
+    <div style="bottom: 0; left: 0; position: fixed" ng-controller="chatcontroller">
         <div class="panel panel-primary" style="width: 287.71px; height: 250px; margin-bottom: 0px">
-            <panelheader data-title="Username" style="height: 15%"></panelheader>
-            <div class="panel-body" style="height: 65%; padding: 0px; overflow-y: auto" id="chatcontainer">
+
+
+            <div class=" panel-heading" style="height: 15%; padding-top: 4px">
+                Username
+                <button class="btn btn-info btn-sm pull-right" data-toggle="modal" data-target="#chatmodal">
+                    <span class="glyphicon glyphicon-user"></span>
+                </button>
+            </div>
+
+            <div class="panel-body" style="height: 65%; padding: 0px; overflow-y: auto" id="chatcontainer" ng-init="initialize()">
 
             </div>
 
@@ -76,7 +85,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="message">
                         <div class="input-group-btn">
-                            <button class="btn btn-primary" type="submit" onclick="appendChatElement('self', 'Tjenare jeppe! Tjenare jeppe! Tjenare jeppe!')">
+                            <button class="btn btn-primary" type="submit" ng-click="appendChatElement('self', 'Tjenare jeppe! Tjenare jeppe! Tjenare jeppe!')">
                                 <i class="glyphicon glyphicon-envelope"></i>
                             </button>
                         </div>
@@ -84,7 +93,47 @@
                 </form>
             </div>
         </div>
+
+
+
     </div>
+
+    <div class="modal fade" id="chatmodal" role="dialog" ng-controller="chatcontroller">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select chat-member</h4>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="input-group" style="max-width: 280px;">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <div class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <select>
+                        <option>Kalle</option>
+                        <option>Johan</option>
+                        <option>Jesper</option>
+                    </select>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <div class="container body-content" ng-show="!auth.isAuth">
         Redirecting to login page!!!!!!!!!!
     </div>
@@ -92,51 +141,6 @@
     @RenderSection("scripts", required: false)
 
 
-    <script>
-
-        var chatContainer = new Element("div", document.getElementById("chatcontainer"));
-
-
-        function appendChatElement(from, text) {
-            var dateObject = new Date();
-            var elementRow = new Element("div", chatContainer);
-            elementRow.addStyle("width: 100%;");
-
-
-            var panelContainer = new Element("div", elementRow);
-            if (from == "self") {
-                panelContainer.addClass("panel panel-info");
-            } else {
-                panelContainer.addClass("panel panel-default");
-            }
-
-            var panelHeader = new Element("div", panelContainer);
-            panelHeader.addClass("panel-heading");
-            panelHeader.addStyle("text-align: right; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; font-size: 10px");
-            panelHeader.setText(dateObject.getHours() + ":" + dateObject.getMinutes());
-
-            var contentRow = new Element("div", panelContainer);
-            contentRow.addClass("panel-body-nopadding");
-
-            var chatElement = new Element("h5", contentRow);
-            chatElement.addStyle("margin-left: 4px; margin-right: 4px; word-wrap: break-word;");
-            chatElement.setText(text);
-
-
-            if (from == "self") {
-                panelContainer.addStyle("float:right; max-width: 70%; margin-right: 6px; margin-bottom: 10px");
-                
-               
-            }else {
-                panelContainer.addStyle("float:left; max-width: 70%; margin-left: 6px; margin-bottom: 10px");
-            }
-
-
-            elementRow.addStyle("clear: both");
-
-        }
-
-    </script>
 </body>
 
 </html>

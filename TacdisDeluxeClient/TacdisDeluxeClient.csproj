@@ -325,6 +325,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Controllers\Account\AccountController.js" />
+    <Content Include="Scripts\App\Controllers\ChatController.js" />
     <Content Include="Scripts\App\Controllers\IndexController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\InvoiceMenuController.js" />
     <Content Include="Scripts\App\Controllers\Invoice\WsInvoiceMaintenanceController.js" />
